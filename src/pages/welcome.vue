@@ -1,28 +1,34 @@
 <template>
 	<div class="background">
-		<div class="top wow toDown" data-wow-duration="3s">欢迎来到<span>Anime</span></div>
+		<div class="top animate__animated animate__backInDown">欢迎来到<span>Anime</span></div>
 		<div class="introduce">
-			<div class="left wow toRight" data-wow-duration="3.5s">
+			<div class="left animate__animated animate__backInLeft">
 				追番已经成为了我们的一种习惯，每一次的追剧都是我生活中的一段美好回忆。随着时间的推移，遗忘是难免的，但是我们可以通过截图将动漫中的瞬间记录下来。
 			</div>
-			<div class="right wow toLeft" data-wow-duration="4s">
+			<div class="right animate__animated animate__backInRight">
 				追番是很多人的爱好，但是如何决定下一步追的番却是一个让人头疼的问题。我们可以帮助你决定下一步追的番，有效解决您的选择困难症。
 			</div>
 		</div>
-		<div class="button wow fadeIn" data-wow-duration="4s">
-			<button class="loginBtn">登 录</button>
-			<button class="registerBtn">注 册</button>
+		<div class="button animate__animated animate__bounce">
+			<button class="loginBtn" @click="goLogin">登 录</button>
+			<button class="registerBtn" @click="goRegister">注 册</button>
 		</div>
 	</div>
 </template>
 
 <script>
-import {WOW} from 'wowjs';
-
 export default {
 	name: 'WelcomePage',
-	mounted() {
-		new WOW().init();
+	methods: {
+		//登录按钮回调
+		goLogin() {
+			this.$router.push('/login');
+		},
+
+		//注册按钮回调
+		goRegister() {
+
+		}
 	}
 }
 </script>
@@ -51,11 +57,11 @@ export default {
 
 .top {
 	font-size: 3.5em;
-	color: rgba(24, 120, 175);
+	color: rgb(24, 120, 175);
 	letter-spacing: 0.1em;
 	text-align: center;
 	margin-top: 10%;
-	text-shadow: 0 0 3px rgba(24, 120, 175);
+	text-shadow: 0 0 3px rgb(24, 120, 175);
 }
 
 .top span {

@@ -1,5 +1,11 @@
 <template>
-	<transition name="fade" mode="out-in">
+	<transition
+			name="fade"
+			mode="out-in"
+			enter-active-class="animate__animated animate__fadeIn"
+			leave-active-class="animate__animated animate__fadeOut"
+			:duration="{enter: 600, leave: 600}"
+	>
 		<router-view />
 	</transition>
 </template>
@@ -12,7 +18,7 @@ export default {
 
 <style>
 @import '@/style/normalize.css';
-@import '@/style/animation.css';
+@import 'animate.css';
 
 body {
 	font-size: 19px;

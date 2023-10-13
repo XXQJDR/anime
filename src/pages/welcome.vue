@@ -51,7 +51,7 @@ export default {
 .top,
 .left,
 .right,
-.button{
+.button {
 	user-select: none;
 }
 
@@ -102,7 +102,7 @@ export default {
 	background-color: rgb(20, 134, 201);
 	border-radius: 5em;
 	color: white;
-	transition: background-color, box-shadow  0.4s;
+	transition: background-color, box-shadow 0.4s;
 }
 
 .loginBtn:hover,

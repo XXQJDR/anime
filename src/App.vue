@@ -6,7 +6,7 @@
 			leave-active-class="animate__animated animate__fadeOut"
 			:duration="{enter: 600, leave: 600}"
 	>
-		<router-view />
+		<router-view/>
 	</transition>
 </template>
 

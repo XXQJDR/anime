@@ -1,6 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-const Welcome = () =>import('@/pages/welcome.vue');
+
+const Welcome = () => import('@/pages/welcome.vue');
+const Login = () => import('@/pages/login.vue');
 
 Vue.use(VueRouter);
 
@@ -14,6 +16,13 @@ const routes = [
 		component: Welcome,
 		meta: {
 			title: '欢迎来到Anime'
+		}
+	},
+	{
+		path: '/login',
+		component: Login,
+		meta: {
+			title: '登录'
 		}
 	}
 ];

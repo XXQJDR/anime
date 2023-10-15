@@ -27,6 +27,5 @@ body {
 
 body {
 	font-family: 楷体, 微软雅黑, serif;
-	overflow: hidden;
 }
 </style>

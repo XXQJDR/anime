@@ -132,7 +132,6 @@ export default {
 .box {
 	flex: 36% 1 1;
 	box-sizing: border-box;
-	padding: 3rem 5rem;
 }
 
 .background {
@@ -164,6 +163,10 @@ export default {
 	background-image: linear-gradient(50deg, rgb(43, 10, 255), rgb(255, 91, 138) 49%, rgb(255, 91, 138) 53%, rgb(255, 91, 138) 55%, rgb(251, 166, 75) 77%, rgb(249, 155, 82));
 	color: transparent;
 	background-clip: text;
+	margin-top: 1rem;
+}
+
+.box .registerForm {
 	margin-top: 1rem;
 }
 
@@ -206,7 +209,7 @@ export default {
 }
 
 .registerBtn {
-	margin-top: 2rem;
+	margin-top: 1rem;
 }
 
 .registerBtn button {
@@ -233,5 +236,23 @@ export default {
 
 .goLogin a {
 	color: rgb(43, 10, 255);
+}
+
+/*移动端*/
+@media screen and (max-width: 768px) {
+	.background {
+		display: none;
+	}
+
+	.box {
+		padding: 2rem;
+	}
+}
+
+/*PC端*/
+@media screen and (min-width: 770px) {
+	.box {
+		padding: 3rem 5rem;
+	}
 }
 </style>

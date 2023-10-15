@@ -106,7 +106,6 @@ export default {
 .box {
 	flex: 36% 1 1;
 	box-sizing: border-box;
-	padding: 3rem 5rem;
 }
 
 .background {
@@ -215,5 +214,23 @@ export default {
 
 .goRegister a {
 	color: rgb(43, 10, 255);
+}
+
+/*移动端*/
+@media screen and (max-width: 768px) {
+	.background {
+		display: none;
+	}
+
+	.box {
+		padding: 2rem;
+	}
+}
+
+/*PC端*/
+@media screen and (min-width: 770px) {
+	.box {
+		padding: 3rem 5rem;
+	}
 }
 </style>

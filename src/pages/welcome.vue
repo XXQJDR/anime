@@ -2,11 +2,17 @@
 	<div class="background">
 		<div class="top animate__animated animate__backInDown">欢迎来到<span>Anime</span></div>
 		<div class="introduce">
-			<div class="left animate__animated animate__backInLeft">
+			<div class="left left1 animate__animated animate__backInLeft">
 				追番已经成为了我们的一种习惯，每一次的追剧都是我生活中的一段美好回忆。随着时间的推移，遗忘是难免的，但是我们可以通过截图将动漫中的瞬间记录下来。
 			</div>
-			<div class="right animate__animated animate__backInRight">
+			<div class="left left2 animate__animated animate__backInLeft">
+				记录您的追番历程
+			</div>
+			<div class="right right1 animate__animated animate__backInRight">
 				追番是很多人的爱好，但是如何决定下一步追的番却是一个让人头疼的问题。我们可以帮助你决定下一步追的番，有效解决您的选择困难症。
+			</div>
+			<div class="right right2 animate__animated animate__backInRight">
+				帮助您决定一部番
 			</div>
 		</div>
 		<div class="button animate__animated animate__bounce">
@@ -27,7 +33,7 @@ export default {
 
 		//注册按钮回调
 		goRegister() {
-
+			this.$router.push('/register');
 		}
 	}
 }
@@ -56,9 +62,8 @@ export default {
 }
 
 .top {
-	font-size: 3.5em;
 	color: rgb(24, 120, 175);
-	letter-spacing: 0.1em;
+	letter-spacing: 0.3rem;
 	text-align: center;
 	margin-top: 10%;
 	text-shadow: 0 0 3px rgb(24, 120, 175);
@@ -70,25 +75,13 @@ export default {
 
 .introduce {
 	position: relative;
-	height: 35%;
 }
 
 .left,
 .right {
-	font-size: 1em;
+	font-size: 1rem;
 	color: #656565;
-	width: 25%;
 	position: absolute;
-}
-
-.left {
-	top: 20%;
-	left: 3%;
-}
-
-.right {
-	top: 50%;
-	right: 3%;
 }
 
 .button {
@@ -97,21 +90,97 @@ export default {
 
 .loginBtn,
 .registerBtn {
-	width: 10em;
-	height: 3em;
 	background-color: rgb(20, 134, 201);
-	border-radius: 5em;
+	border-radius: 5rem;
 	color: white;
 	transition: background-color, box-shadow 0.4s;
 }
 
-.loginBtn:hover,
-.registerBtn:hover {
-	background-color: rgb(24, 120, 175);
-	box-shadow: 0 0 4px black;
+/*移动端*/
+@media screen and (max-width: 768px) {
+	.top {
+		font-size: 2rem;
+		margin-top: 6rem;
+	}
+
+	.introduce {
+		margin-top: 8rem;
+		height: 5rem;
+	}
+
+	.left1,
+	.right1 {
+		display: none;
+	}
+
+	.left2 {
+		left: 4rem;
+	}
+
+	.right2 {
+		top: 2rem;
+		right: 4rem;
+	}
+
+	.button {
+		margin-top: 5rem;
+	}
+
+	.loginBtn,
+	.registerBtn {
+		width: 8rem;
+		height: 2.5rem;
+	}
+
+	.loginBtn {
+		margin-right: 3%;
+	}
 }
 
-.loginBtn {
-	margin-right: 5%;
+/*PC端*/
+@media screen and (min-width: 770px) {
+	.top {
+		font-size: 3.5rem;
+	}
+
+	.introduce {
+		height: 35%;
+	}
+
+	.left2,
+	.right2 {
+		display: none;
+	}
+
+	.left1,
+	.right1 {
+		width: 25%;
+	}
+
+	.left1 {
+		top: 20%;
+		left: 3%;
+	}
+
+	.right1 {
+		top: 50%;
+		right: 3%;
+	}
+
+	.loginBtn,
+	.registerBtn {
+		width: 10rem;
+		height: 3rem;
+	}
+
+	.loginBtn {
+		margin-right: 5%;
+	}
+
+	.loginBtn:hover,
+	.registerBtn:hover {
+		background-color: rgb(24, 120, 175);
+		box-shadow: 0 0 4px black;
+	}
 }
 </style>

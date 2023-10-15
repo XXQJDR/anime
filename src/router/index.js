@@ -42,6 +42,16 @@ router.beforeEach((to, from, next) => {
 	if (to.meta.title) {
 		document.title = to.meta.title;
 	}
+
+	/* 解决PC端页面不能滚动，而移动端却能滚动的BUG */
+	let arr = [
+		'/welcome',
+		'/login',
+		'/register'
+	];
+	if (arr.includes(to.path)) {
+		document.body.style.setProperty('overflow', 'hidden', 'important');
+	}
 	next();
 });
 

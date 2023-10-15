@@ -9,22 +9,23 @@
 			<el-form
 					:model="formData"
 					label-position="top"
-					:rules="rules" class="loginForm"
+					:rules="rules"
+					class="loginForm"
 					hide-required-asterisk
 					status-icon
 					ref="loginForm"
 			>
 				<el-form-item label="电子邮箱" prop="email">
-					<el-input v-model="emailTemp" @blur="blurHandle('email')" />
+					<el-input v-model="temp.email" @blur="blurHandle('email')" />
 				</el-form-item>
 				<el-form-item label="密码" prop="password">
-					<el-input v-model="passwordTemp" show-password @blur="blurHandle('password')"/>
+					<el-input v-model="temp.password" show-password @blur="blurHandle('password')"/>
 				</el-form-item>
 				<div class="forget">
 					<a href="javascript:void(0);">忘记密码？</a>
 				</div>
 				<div class="loginBtn">
-					<button @click.prevent="login" ref="loginBtn" :disabled="!verifyFlag">登录</button>
+					<button @click.prevent="login" :disabled="!verifyFlag">登录</button>
 				</div>
 				<div class="goRegister">
 					没有账户？去<router-link to="/register">注册</router-link>
@@ -46,17 +47,17 @@ export default {
 				password: ''
 			},
 
-			/*
-			临时变量，由于el-input不支持v-model.lazy。所以利用临时变量来实现延时收集数据
-			 */
-			emailTemp: '',
-			passwordTemp: '',
+			//临时变量，由于el-input不支持v-model.lazy。所以利用临时变量来实现延时收集数据
+			temp: {
+				email: '',
+				password: ''
+			},
 
-			//邮箱校验成功标志
-			emailFlag: false,
-
-			//密码校验成功标志
-			passwordFlag: false,
+			//校验标志
+			flag: {
+				email: false,
+				password: false
+			},
 
 			//校验规则
 			rules: {
@@ -65,7 +66,7 @@ export default {
 				],
 				password: [
 					{required: true, message: '密码不能为空', trigger: 'manual'},
-					{pattern: /^(?![a-zA-Z]+$)(?!\d+$)(?![^\da-zA-Z\s]+$).{6,15}$/, message: '密码由字母、数字、特殊字符，任意2种组成，6-15位', trigger: 'blur'}
+					{pattern: /^(?![a-zA-Z]+$)(?!\d+$)(?![^\da-zA-Z\s]+$).{6,15}$/, message: '密码由字母、数字、特殊字符，任意2种组成，6-15位', trigger: 'manual'}
 				]
 			},
 		}
@@ -78,18 +79,18 @@ export default {
 
 		//输入框失去焦点回调
 		blurHandle(type) {
-			this.formData[type] = this[type + 'Temp'];
+			this.formData[type] = this.temp[type];
 
 			//校验对应字段
 			this.$refs.loginForm.validateField(type, errorMessage => {
-				this[type + 'Flag'] = (errorMessage === '' || errorMessage == null);
+				this.flag[type] = (errorMessage === '' || errorMessage == null);
 			});
 		}
 	},
 	computed: {
 		//表单校验成功标志
 		verifyFlag() {
-			return this.emailFlag && this.passwordFlag;
+			return this.flag.email && this.flag.password;
 		}
 	},
 }
@@ -105,7 +106,7 @@ export default {
 .box {
 	flex: 36% 1 1;
 	box-sizing: border-box;
-	padding: 5em;
+	padding: 3rem 5rem;
 }
 
 .background {
@@ -128,20 +129,20 @@ export default {
 .logo span {
 	font-family: "Segoe Script", serif;
 	vertical-align: middle;
-	font-size: 1.2em;
+	font-size: 1.2rem;
 	font-weight: bold;
 }
 
 .box .title {
-	font-size: 2.5em;
+	font-size: 2.5rem;
 	background-image: linear-gradient(50deg, rgb(43, 10, 255), rgb(255, 91, 138) 49%, rgb(255, 91, 138) 53%, rgb(255, 91, 138) 55%, rgb(251, 166, 75) 77%, rgb(249, 155, 82));
 	color: transparent;
 	background-clip: text;
-	margin-top: 1em;
+	margin-top: 2rem;
 }
 
 .loginForm {
-	margin-top: 3em;
+	margin-top: 2rem;
 }
 
 /deep/ .el-form .el-form-item {
@@ -153,15 +154,16 @@ export default {
 }
 
 /deep/ .el-form .el-form-item * {
-	font-size: 1em;
+	font-size: 1rem;
 }
 
 /deep/ .el-form .el-form-item .el-form-item__content {
-	margin-top: -0.5em;
+	margin-top: -0.5rem;
 }
 
 /deep/ .el-form .el-form-item .el-form-item__error {
-	font-size: 0.8em;
+	font-size: 0.8rem;
+	white-space: nowrap;
 }
 
 /deep/ .el-form-item.is-error .el-input__inner,
@@ -178,15 +180,15 @@ export default {
 }
 
 .forget {
-	margin-top: 2em;
+	margin-top: 2rem;
 }
 .forget a {
-	font-size: 0.8em;
+	font-size: 0.8rem;
 	color: rgb(43, 10, 255);
 }
 
 .loginBtn {
-	margin-top: 1em;
+	margin-top: 1rem;
 }
 
 .loginBtn button {
@@ -207,8 +209,8 @@ export default {
 
 .goRegister {
 	text-align: center;
-	font-size: 0.8em;
-	margin-top: 2em;
+	font-size: 0.8rem;
+	margin-top: 2rem;
 }
 
 .goRegister a {

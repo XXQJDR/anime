@@ -20,8 +20,13 @@ export default {
 @import '@/style/normalize.css';
 @import 'animate.css';
 
+html,
 body {
 	font-size: 19px;
+}
+
+body {
 	font-family: 楷体, 微软雅黑, serif;
+	overflow: hidden;
 }
 </style>

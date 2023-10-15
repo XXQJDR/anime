@@ -132,7 +132,7 @@ export default {
 .box {
 	flex: 36% 1 1;
 	box-sizing: border-box;
-	padding: 3em 5em;
+	padding: 3rem 5rem;
 }
 
 .background {
@@ -155,20 +155,20 @@ export default {
 .logo span {
 	font-family: "Segoe Script", serif;
 	vertical-align: middle;
-	font-size: 1.2em;
+	font-size: 1.2rem;
 	font-weight: bold;
 }
 
 .box .title {
-	font-size: 2.5em;
+	font-size: 2.5rem;
 	background-image: linear-gradient(50deg, rgb(43, 10, 255), rgb(255, 91, 138) 49%, rgb(255, 91, 138) 53%, rgb(255, 91, 138) 55%, rgb(251, 166, 75) 77%, rgb(249, 155, 82));
 	color: transparent;
 	background-clip: text;
-	margin-top: 0.5em;
+	margin-top: 1rem;
 }
 
 /deep/ .el-form .el-form-item {
-	margin-bottom: 1em;
+	margin-bottom: 1rem;
 }
 
 /deep/ .el-form .el-input .el-input__inner {
@@ -176,15 +176,15 @@ export default {
 }
 
 /deep/ .el-form .el-form-item * {
-	font-size: 1em;
+	font-size: 1rem;
 }
 
 /deep/ .el-form .el-form-item .el-form-item__content {
-	margin-top: -0.5em;
+	margin-top: -0.5rem;
 }
 
 /deep/ .el-form .el-form-item .el-form-item__error {
-	font-size: 0.8em;
+	font-size: 0.8rem;
 	white-space: nowrap;
 }
 
@@ -206,7 +206,7 @@ export default {
 }
 
 .registerBtn {
-	margin-top: 2em;
+	margin-top: 2rem;
 }
 
 .registerBtn button {
@@ -227,8 +227,8 @@ export default {
 
 .goLogin {
 	text-align: center;
-	font-size: 0.8em;
-	margin-top: 1em;
+	font-size: 0.8rem;
+	margin-top: 1rem;
 }
 
 .goLogin a {

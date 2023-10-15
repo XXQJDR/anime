@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 
 const Welcome = () => import('@/pages/welcome.vue');
 const Login = () => import('@/pages/login.vue');
+const Register = () => import('@/pages/register.vue')
 
 Vue.use(VueRouter);
 
@@ -23,6 +24,13 @@ const routes = [
 		component: Login,
 		meta: {
 			title: '登录'
+		}
+	},
+	{
+		path: '/register',
+		component: Register,
+		meta: {
+			title: '注册'
 		}
 	}
 ];

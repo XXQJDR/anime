@@ -147,7 +147,7 @@ export default {
 	display: inline-block;
 	width: 32px;
 	height: 32px;
-	background-image: url("@/assets/logo.png");
+	background-image: url("@/assets/logo.svg");
 	vertical-align: middle;
 }
 

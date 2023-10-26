@@ -3,7 +3,12 @@ import VueRouter from "vue-router";
 
 const Welcome = () => import('@/pages/welcome.vue');
 const Login = () => import('@/pages/login.vue');
-const Register = () => import('@/pages/register.vue')
+const Register = () => import('@/pages/register.vue');
+const Home = () => import('@/pages/home/index.vue');
+const Test = () => import('@/pages/test.vue');
+const AnimeList = () => import('@/pages/home/animeList.vue');
+const AnimeRandom = () => import('@/pages/home/animeRandom.vue');
+const AddAnime = () => import('@/pages/home/addAnime.vue');
 
 Vue.use(VueRouter);
 
@@ -32,6 +37,35 @@ const routes = [
 		meta: {
 			title: '注册'
 		}
+	},
+	{
+		path: '/home',
+		component: Home,
+		redirect: '/home/animeList',
+		meta: {
+			title: '主页'
+		},
+		children: [
+			{
+				path: 'animeList',
+				component: AnimeList
+			},
+			{
+				path: 'animeRandom',
+				component: AnimeRandom
+			},
+			{
+				path: 'addAnime',
+				component: AddAnime
+			}
+		]
+	},
+	{
+		path: '/test',
+		component: Test,
+		meta: {
+			title: '测试'
+		}
 	}
 ];
 
@@ -43,15 +77,6 @@ router.beforeEach((to, from, next) => {
 		document.title = to.meta.title;
 	}
 
-	/* 解决PC端页面不能滚动，而移动端却能滚动的BUG */
-	let arr = [
-		'/welcome',
-		'/login',
-		'/register'
-	];
-	if (arr.includes(to.path)) {
-		document.body.style.setProperty('overflow', 'hidden', 'important');
-	}
 	next();
 });
 

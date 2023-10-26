@@ -1,0 +1,524 @@
+<template>
+	<div>
+		<!--region 内容分类名称-->
+		<div class="typeTitle">
+			<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="rectangle-history" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-metatip="true"><path fill="#3c3838" d="M464 224c0-8.8-7.2-16-16-16L64 208c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-224zm-16-64c35.3 0 64 28.7 64 64l0 224c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 224c0-35.3 28.7-64 64-64l384 0zm-8-80c13.3 0 24 10.7 24 24s-10.7 24-24 24L72 128c-13.3 0-24-10.7-24-24s10.7-24 24-24l368 0zM392 0c13.3 0 24 10.7 24 24s-10.7 24-24 24L120 48c-13.3 0-24-10.7-24-24s10.7-24 24-24L392 0z"></path></svg>
+			<div>动漫列表</div>
+		</div>
+		<!--endregion-->
+
+		<!-- region 添加按钮与搜索框 -->
+		<div class="control">
+			<div class="addBtn">
+				<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#f7f3f2" d="M248 72c0-13.3-10.7-24-24-24s-24 10.7-24 24V232H40c-13.3 0-24 10.7-24 24s10.7 24 24 24H200V440c0 13.3 10.7 24 24 24s24-10.7 24-24V280H408c13.3 0 24-10.7 24-24s-10.7-24-24-24H248V72z"></path></svg>
+				<div>添加</div>
+			</div>
+			<div class="search">
+				<form>
+					<svg viewBox="0 0 24 24" focusable="false"><path fill="#cac5c4" d="M23.384,21.619,16.855,15.09a9.284,9.284,0,1,0-1.768,1.768l6.529,6.529a1.266,1.266,0,0,0,1.768,0A1.251,1.251,0,0,0,23.384,21.619ZM2.75,9.5a6.75,6.75,0,1,1,6.75,6.75A6.758,6.758,0,0,1,2.75,9.5Z"></path></svg>
+					<input type="text" placeholder="请输入动漫关键词">
+				</form>
+			</div>
+		</div>
+		<!-- endregion -->
+
+		<!-- region 列表分类 -->
+		<div class="type">
+			<!-- pc端 -->
+			<div class="pc">
+				<div class="btn" @click="selectFlag = 1" :class="{typePcBtnActive:selectFlag===1}">
+					<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="rectangle-history" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-metatip="true"><path :fill="selectFlag===1?'#2B0AFF':'#726e6e'" d="M464 224c0-8.8-7.2-16-16-16L64 208c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-224zm-16-64c35.3 0 64 28.7 64 64l0 224c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 224c0-35.3 28.7-64 64-64l384 0zm-8-80c13.3 0 24 10.7 24 24s-10.7 24-24 24L72 128c-13.3 0-24-10.7-24-24s10.7-24 24-24l368 0zM392 0c13.3 0 24 10.7 24 24s-10.7 24-24 24L120 48c-13.3 0-24-10.7-24-24s10.7-24 24-24L392 0z"></path></svg>
+					<div>全部</div>
+				</div>
+				<div class="btn" @click="selectFlag = 2" :class="{typePcBtnActive:selectFlag===2}">
+					<svg viewBox="0 0 1024 1024" :stroke="selectFlag===2?'#2B0AFF':'#726e6e'" stroke-width="20" xmlns="http://www.w3.org/2000/svg"><path :fill="selectFlag===2?'#2B0AFF':'#726e6e'" d="M939.36 218.912a32 32 0 0 1 45.856 44.672l-538.016 552a32 32 0 0 1-43.776 1.92L63.872 526.048a32 32 0 1 1 41.696-48.544l316.768 271.936L939.36 218.88z"  /></svg>
+					<div>已看</div>
+				</div>
+				<div class="btn" @click="selectFlag = 3" :class="{typePcBtnActive:selectFlag===3}">
+					<svg viewBox="0 0 1024 1024" :stroke="selectFlag===3?'#2B0AFF':'#726e6e'" stroke-width="20" xmlns="http://www.w3.org/2000/svg"><path :fill="selectFlag===3?'#2B0AFF':'#726e6e'" d="M547.2 512l416-416c9.6-9.6 9.6-25.6 0-35.2s-25.6-9.6-35.2 0l-416 416-416-416c-9.6-9.6-25.6-9.6-35.2 0s-9.6 25.6 0 35.2l416 416-416 416c-9.6 9.6-9.6 25.6 0 35.2s25.6 9.6 35.2 0l416-416 416 416c9.6 9.6 25.6 9.6 35.2 0s9.6-25.6 0-35.2L547.2 512z" /></svg>
+					<div>未看</div>
+				</div>
+			</div>
+
+			<!-- 移动端 -->
+			<div class="mobile">
+				<div class="btn">
+					<div class="box" @click="detailFlag = !detailFlag">
+						<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="filter" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="rgb(86, 81, 81)" d="M0 73.7C0 50.7 18.7 32 41.7 32H470.3c23 0 41.7 18.7 41.7 41.7c0 9.6-3.3 18.9-9.4 26.3L336 304.5V447.7c0 17.8-14.5 32.3-32.3 32.3c-7.3 0-14.4-2.5-20.1-7l-92.5-73.4c-9.6-7.6-15.1-19.1-15.1-31.3V304.5L9.4 100C3.3 92.6 0 83.3 0 73.7zM55 80L218.6 280.8c3.5 4.3 5.4 9.6 5.4 15.2v68.4l64 50.8V296c0-5.5 1.9-10.9 5.4-15.2L457 80H55z"></path></svg>
+						<span>{{selectedTypeName}}</span>
+						<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="chevron-down" class="svg-inline--fa fa-chevron-down " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="rgb(86, 81, 81)" d="M239 401c9.4 9.4 24.6 9.4 33.9 0L465 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-175 175L81 175c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9L239 401z"></path></svg>
+					</div>
+					<div class="placeholder"></div>
+				</div>
+				<div class="detail" :id="detailFlag?'enableDetail':'disableDetail'">
+					<div>帅选方式...</div>
+					<ul class="type">
+						<li @click="mobileSelectTypeHandle(1)">
+							<svg v-show="selectFlag===1" viewBox="0 0 14 14" height="16px" width="16px" focusable="false" aria-hidden="true"><polygon points="5.5 11.9993304 14 3.49933039 12.5 2 5.5 8.99933039 1.5 4.9968652 0 6.49933039"></polygon></svg>
+							<span>全部</span>
+						</li>
+						<li @click="mobileSelectTypeHandle(2)">
+							<svg v-show="selectFlag===2" viewBox="0 0 14 14" height="16px" width="16px" focusable="false" aria-hidden="true"><polygon points="5.5 11.9993304 14 3.49933039 12.5 2 5.5 8.99933039 1.5 4.9968652 0 6.49933039"></polygon></svg>
+							<span>已看</span>
+						</li>
+						<li @click="mobileSelectTypeHandle(3)">
+							<svg v-show="selectFlag===3" viewBox="0 0 14 14" height="16px" width="16px" focusable="false" aria-hidden="true"><polygon points="5.5 11.9993304 14 3.49933039 12.5 2 5.5 8.99933039 1.5 4.9968652 0 6.49933039"></polygon></svg>
+							<span>未看</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- endregion -->
+
+		<!-- region 动漫列表 -->
+		<div class="list">
+			<div class="item">
+				<div class="img">
+					<img src="@/assets/home/animeList/86.jpg" alt="">
+				</div>
+				<div class="title">
+					<span>86-不存在的战区</span>
+				</div>
+			</div>
+			<div class="item">
+				<div class="img">
+					<img src="@/assets/home/animeList/罪恶王冠.jpg" alt="">
+				</div>
+				<div class="title">
+					<span>罪恶王冠</span>
+				</div>
+			</div>
+			<div class="item">
+				<div class="img">
+					<img src="@/assets/home/animeList/钢之炼金术师.jpg" alt="">
+				</div>
+				<div class="title">
+					<span>钢之炼金术师</span>
+				</div>
+			</div>
+			<div class="item">
+				<div class="img">
+					<img src="@/assets/home/animeList/火影忍者.jpg" alt="">
+				</div>
+				<div class="title">
+					<span>火影忍者</span>
+				</div>
+			</div>
+			<div class="item"></div>
+			<div class="item"></div>
+			<div class="item"></div>
+			<div class="item"></div>
+			<div class="item"></div>
+		</div>
+		<!-- endregion -->
+	</div>
+</template>
+
+<script>
+export default {
+	name: 'AnimeList',
+	data() {
+		return {
+			//筛选详细页面开启标志
+			detailFlag: false,
+
+			//筛选方式标志，默认为全部
+			selectFlag: 1,
+		}
+	},
+	computed: {
+		//移动端选择的筛选类型名称
+		selectedTypeName() {
+			let name;
+			switch (this.selectFlag) {
+				case 1:
+					name = '全部';
+					break;
+				case 2:
+					name = '已看';
+					break;
+				case 3:
+					name = '未看';
+					break;
+			}
+
+			return name;
+		}
+	},
+	methods: {
+		mobileSelectTypeHandle(type) {
+			this.selectFlag = type;
+
+			//关闭选择页面
+			this.detailFlag = false;
+		},
+	}
+}
+</script>
+
+<style scoped>
+/* region 内容分类名称 */
+.typeTitle {
+	min-width: 110px;
+	font-size: 1.5rem;
+}
+
+.typeTitle svg {
+	display: inline-block;
+	vertical-align: middle;
+	width: 18px;
+	height: 18px;
+}
+
+.typeTitle div {
+	display: inline-block;
+	min-width: 76px;
+	vertical-align: middle;
+	margin-left: 15px;
+	font-weight: bold;
+}
+/* endregion */
+
+/* region 添加按钮与搜索框 */
+.control {
+	display: flex;
+	margin-top: 1.5rem;
+}
+
+.control .addBtn {
+	width: 10%;
+	min-width: 90px;
+	box-sizing: border-box;
+	border-radius: 5px;
+	background-attachment: scroll;
+	background-blend-mode: normal;
+	background-clip: border-box;
+	background-color: rgba(0, 0, 0, 0);
+	background-image: linear-gradient(92.91deg, rgb(51, 0, 217) 2.18%, rgb(157, 32, 201) 44.94%, rgb(223, 122, 108) 99.91%);
+	background-origin: padding-box;
+	background-position-x: 0;
+	background-position-y: 0;
+	background-size: 400%;
+	transition: background-size 0.3s;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.control .addBtn:hover {
+	background-size: 200%;
+}
+
+.control .addBtn svg {
+	display: block;
+	vertical-align: middle;
+	width: 18px;
+	height: 18px;
+}
+
+.control .addBtn div {
+	display: block;
+	vertical-align: middle;
+	margin-left: 10px;
+	font-weight: bold;
+	color: white;
+}
+
+.control .search {
+	width: 100%;
+	margin-left: 1rem;
+	position: relative;
+}
+
+.control .search svg {
+	display: inline-block;
+	vertical-align: middle;
+	width: 18px;
+	height: 18px;
+	position: absolute;
+	top: 14px;
+	left: 14px;
+}
+
+.control .search input {
+	width: 50%;
+	min-width: 250px;
+	height: 44px;
+	box-sizing: border-box;
+	display: inline-block;
+	vertical-align: middle;
+	outline: transparent solid 2px;
+	outline-offset: 2px;
+	border: 1px solid #DCDFE6;
+	border-radius: 5px;
+	transition: border-color, box-shadow 0.3s;
+	padding-left: 45px;
+}
+
+.control .search input:hover {
+	border-color: #C0C4CC;
+}
+
+.control .search input:focus {
+	border-color: rgb(49, 130, 206);
+	box-shadow: rgb(49, 130, 206) 0 0 0 1px;
+}
+/* endregion */
+
+/* region 列表分类 */
+.type {
+	margin-top: 1.3rem;
+}
+
+/* pc端 */
+.type .pc {
+	display: flex;
+}
+
+.type .pc .btn {
+	display: flex;
+	padding: 8px 15px;
+	border-radius: 6px;
+	align-items: center;
+	justify-content: center;
+	color: #726e6e;
+	cursor: pointer;
+	margin-left: 1.2rem;
+	transition: background-color, color 0.3s;
+}
+
+.type .pc .btn:nth-child(1) {
+	margin-left: 0;
+}
+
+.type .pc .btn:hover {
+	background-color: #eae7ff;
+}
+
+.type .pc .btn svg {
+	width: 18px;
+	height: 18px;
+}
+
+.type .pc .btn div {
+	margin-left: 5px;
+	min-width: 38px;
+}
+
+.typePcBtnActive {
+	background-color: #eae7ff !important;
+	color: #2B0AFF !important;
+}
+
+/* 移动端 */
+.type .mobile {
+	display: none;
+	position: relative;
+}
+
+.type .mobile .btn {
+	display: flex;
+	font-size: 1.2rem;
+}
+
+.type .mobile .btn .box {
+	width: 150px;
+	height: 35px;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.type .mobile .btn .placeholder {
+	width: 100%;
+}
+
+.type .mobile .btn .box svg {
+	width: 18px;
+	height: 18px;
+}
+
+.type .mobile .detail {
+	width: 250px;
+	height: 200px;
+	transform-origin: top left;
+	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),0 4px 6px -2px rgba(0, 0, 0, 0.05);
+	transition: all 0.2s;
+	position: absolute;
+	top: 30px;
+	left: 0;
+	box-sizing: border-box;
+	padding: 25px;
+	border-radius: 10px;
+	background-color: white;
+}
+
+#disableDetail {
+	opacity: 0;
+	visibility: hidden;
+	transform: scale(0.8) translateZ(0px);
+}
+
+#enableDetail {
+	opacity: 1;
+	visibility: visible;
+	transform: none;
+}
+
+.type .mobile .detail > div {
+	color: #8f8b8b;
+	font-size: 1.2rem;
+}
+
+.type .mobile .detail > ul {
+	text-align: center;
+	font-size: 1.3rem;
+}
+
+.type .mobile .detail > ul li {
+	padding: 10px 0;
+	border-radius: 10px;
+	border: 1px solid transparent;
+	position: relative;
+	cursor: pointer;
+}
+
+.type .mobile .detail > ul li:hover {
+	background-color: #e5e0df;
+	border: 1px solid #e5e0df;
+}
+
+.type .mobile .detail > ul li svg {
+	position: absolute;
+	top: 50%;
+	left: 50px;
+	transform: translateY(-50%);
+}
+/* endregion */
+
+/* region 动漫列表 */
+.list {
+	margin-top: 1.5rem;
+	display: grid;
+	grid-gap: 20px;
+}
+
+.list .item {
+	/* item过渡时间 */
+	--transitionTime: 0.3s;
+
+	/*宽度与高度的比例*/
+	aspect-ratio: 0.8;
+	border-radius: 5px;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),0 2px 4px -1px rgba(0, 0, 0, 0.06);
+	overflow: hidden;
+	transition: all var(--transitionTime);
+	cursor: pointer;
+}
+
+/* 鼠标移入item给item添加阴影 */
+.list .item:hover {
+	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),0 4px 6px -2px rgba(0, 0, 0, 0.05);
+	transform: translateY(-5px);
+}
+
+/* 鼠标移入item给title添加背景 */
+.list .item:hover .title {
+	background-color: #f7f3f2;
+}
+
+/* 鼠标移入item放大img */
+.list .item:hover .img img {
+	transform: scale(1.1);
+}
+
+.list .item .img {
+	height: 82%;
+}
+
+/* 图片自适应父盒子 */
+.list .item .img img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform var(--transitionTime);
+}
+
+.list .item .title {
+	position: relative;
+	height: 18%;
+	background-color: #FFFFFF;
+	transition: background-color var(--transitionTime);
+}
+
+.list .item .title span {
+	width: 100%;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	text-align: center;
+}
+/* endregion */
+
+/*移动端*/
+@media screen and (max-width: 768px) {
+	.control {
+		display: block;
+	}
+
+	.control .addBtn {
+		width: 100%;
+		height: 45px;
+	}
+
+	.control .search {
+		width: 100%;
+		margin-left: 0;
+		margin-top: 1rem;
+	}
+
+	.control .search input {
+		width: 100%;
+	}
+
+	.type .pc {
+		display: none;
+	}
+
+	.type .mobile {
+		display: block;
+	}
+
+	.list {
+		grid-template-columns: repeat(1, 1fr);
+	}
+
+	.list .item {
+		aspect-ratio: 1;
+	}
+}
+@media screen and (min-width: 768px) and (max-width: 1078px) {
+	.list {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+@media screen and (min-width: 1078px) and (max-width: 1355px) {
+	.list {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+@media screen and (min-width: 1355px) and (max-width: 1668px) {
+	.list {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}
+@media screen and (min-width: 1668px) {
+	.list {
+		grid-template-columns: repeat(5, 1fr);
+	}
+}
+</style>

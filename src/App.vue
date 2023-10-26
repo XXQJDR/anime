@@ -23,9 +23,18 @@ export default {
 html,
 body {
 	font-size: 19px;
+	width: 100%;
 }
 
 body {
 	font-family: 楷体, 微软雅黑, serif;
+}
+
+/*移动端*/
+@media screen and (max-width: 768px) {
+	html,
+	body {
+		font-size: 14px;
+	}
 }
 </style>

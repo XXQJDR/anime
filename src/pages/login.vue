@@ -187,7 +187,7 @@ export default {
 }
 
 .loginBtn {
-	margin-top: 1rem;
+	margin-top: 2rem;
 }
 
 .loginBtn button {
@@ -224,6 +224,10 @@ export default {
 
 	.box {
 		padding: 2rem;
+	}
+
+	.loginForm {
+		margin-top: 5rem;
 	}
 }
 

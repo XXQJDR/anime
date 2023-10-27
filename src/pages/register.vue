@@ -18,6 +18,9 @@
 				<el-form-item label="电子邮箱" prop="email">
 					<el-input v-model="temp.email" @blur="blurHandle('email')" />
 				</el-form-item>
+				<el-form-item label="用户名" prop="username">
+					<el-input v-model="temp.username" @blur="blurHandle('username')" />
+				</el-form-item>
 				<el-form-item label="密码" prop="password">
 					<el-input v-model="temp.password" show-password @blur="blurHandle('password')" />
 				</el-form-item>
@@ -58,6 +61,7 @@ export default {
 			//表单数据
 			formData: {
 				email: '',
+				username: '',
 				password: '',
 				checkPassword: '',
 				checkCode: ''
@@ -66,6 +70,7 @@ export default {
 			//临时变量，由于el-input不支持v-model.lazy。所以利用临时变量来实现延时收集数据
 			temp: {
 				email: '',
+				username: '',
 				password: '',
 				checkPassword: '',
 				checkCode: ''
@@ -74,6 +79,7 @@ export default {
 			//校验标志
 			flag: {
 				email: '',
+				username: '',
 				password: '',
 				checkPassword: '',
 				checkCode: ''
@@ -83,6 +89,9 @@ export default {
 			rules: {
 				email: [
 					{required: true, type: 'email', message:'请输入正确的邮箱格式', trigger: 'manual'}
+				],
+				username: [
+					{required: true, min: 3, max: 10, message: '用户名3-10位', trigger: 'manual'}
 				],
 				password: [
 					{required: true, message: '密码不能为空', trigger: 'manual'},
@@ -163,7 +172,7 @@ export default {
 	background-image: linear-gradient(50deg, rgb(43, 10, 255), rgb(255, 91, 138) 49%, rgb(255, 91, 138) 53%, rgb(255, 91, 138) 55%, rgb(251, 166, 75) 77%, rgb(249, 155, 82));
 	color: transparent;
 	background-clip: text;
-	margin-top: 1rem;
+	margin-top: 2rem;
 }
 
 .box .registerForm {
@@ -209,7 +218,7 @@ export default {
 }
 
 .registerBtn {
-	margin-top: 1rem;
+	margin-top: 2rem;
 }
 
 .registerBtn button {

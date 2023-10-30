@@ -179,44 +179,6 @@ export default {
 	margin-top: 1rem;
 }
 
-/deep/ .el-form .el-form-item {
-	margin-bottom: 1rem;
-}
-
-/deep/ .el-form .el-input .el-input__inner {
-	height: 38px;
-}
-
-/deep/ .el-form .el-form-item * {
-	font-size: 1rem;
-}
-
-/deep/ .el-form .el-form-item .el-form-item__content {
-	margin-top: -0.5rem;
-}
-
-/deep/ .el-form .el-form-item .el-form-item__error {
-	font-size: 0.8rem;
-	white-space: nowrap;
-}
-
-/deep/ .el-form-item.is-error .el-input__inner,
-.el-form-item.is-error .el-input__inner:focus,
-.el-form-item.is-error .el-textarea__inner,
-.el-form-item.is-error .el-textarea__inner:focus,
-.el-message-box__input input.invalid,
-.el-message-box__input input.invalid:focus {
-	border: 2px solid #F56C6C;
-}
-
-/deep/ .el-input__inner:focus {
-	border: 2px solid rgb(49, 130, 206);
-}
-
-/deep/ .el-form .el-form-item .checkCodeInput {
-	width: 50%;
-}
-
 .registerBtn {
 	margin-top: 2rem;
 }
@@ -248,7 +210,7 @@ export default {
 }
 
 /*移动端*/
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 700px) {
 	.background {
 		display: none;
 	}
@@ -263,5 +225,46 @@ export default {
 	.box {
 		padding: 3rem 5rem;
 	}
+}
+</style>
+
+<!-- region 修改element-ui默认样式 -->
+<style>
+.registerForm .el-form-item {
+	margin-bottom: 1rem;
+}
+
+.registerForm .el-input .el-input__inner {
+	height: 38px;
+}
+
+.registerForm .el-input .el-input__inner:focus {
+	border: 2px solid rgb(49, 130, 206);
+}
+
+.registerForm .el-form-item * {
+	font-size: 1rem;
+}
+
+.registerForm .el-form-item .el-form-item__content {
+	margin-top: -0.5rem;
+}
+
+.registerForm .el-form-item .el-form-item__error {
+	font-size: 0.8rem;
+	white-space: nowrap;
+}
+
+.el-form-item.is-error .el-input__inner,
+.el-form-item.is-error .el-input__inner:focus,
+.el-form-item.is-error .el-textarea__inner,
+.el-form-item.is-error .el-textarea__inner:focus,
+.el-message-box__input input.invalid,
+.el-message-box__input input.invalid:focus {
+	border: 2px solid #F56C6C;
+}
+
+.registerForm .el-form-item .checkCodeInput {
+	width: 50%;
 }
 </style>

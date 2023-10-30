@@ -31,7 +31,7 @@ body {
 }
 
 /*移动端*/
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 700px) {
 	html,
 	body {
 		font-size: 14px;

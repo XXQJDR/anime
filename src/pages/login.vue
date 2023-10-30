@@ -144,40 +144,6 @@ export default {
 	margin-top: 2rem;
 }
 
-/deep/ .el-form .el-form-item {
-	height: 81px;
-}
-
-/deep/ .el-form .el-input .el-input__inner {
-	height: 38px;
-}
-
-/deep/ .el-form .el-form-item * {
-	font-size: 1rem;
-}
-
-/deep/ .el-form .el-form-item .el-form-item__content {
-	margin-top: -0.5rem;
-}
-
-/deep/ .el-form .el-form-item .el-form-item__error {
-	font-size: 0.8rem;
-	white-space: nowrap;
-}
-
-/deep/ .el-form-item.is-error .el-input__inner,
-.el-form-item.is-error .el-input__inner:focus,
-.el-form-item.is-error .el-textarea__inner,
-.el-form-item.is-error .el-textarea__inner:focus,
-.el-message-box__input input.invalid,
-.el-message-box__input input.invalid:focus {
-	border: 2px solid #F56C6C;
-}
-
-/deep/ .el-input__inner:focus {
-	border: 2px solid rgb(49, 130, 206);
-}
-
 .forget {
 	margin-top: 2rem;
 }
@@ -217,7 +183,7 @@ export default {
 }
 
 /*移动端*/
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 700px) {
 	.background {
 		display: none;
 	}
@@ -236,5 +202,42 @@ export default {
 	.box {
 		padding: 3rem 5rem;
 	}
+}
+</style>
+
+<!-- region 修改element-ui默认样式 -->
+<style>
+.loginForm .el-form-item {
+	height: 81px;
+}
+
+.loginForm .el-form-item * {
+	font-size: 1rem;
+}
+
+.loginForm .el-input .el-input__inner {
+	height: 38px;
+}
+
+.loginForm .el-input .el-input__inner:focus {
+	border: 2px solid rgb(49, 130, 206);
+}
+
+.loginForm .el-form-item .el-form-item__content {
+	margin-top: -0.5rem;
+}
+
+.loginForm .el-form-item .el-form-item__error {
+	font-size: 0.8rem;
+	white-space: nowrap;
+}
+
+.el-form-item.is-error .el-input__inner,
+.el-form-item.is-error .el-input__inner:focus,
+.el-form-item.is-error .el-textarea__inner,
+.el-form-item.is-error .el-textarea__inner:focus,
+.el-message-box__input input.invalid,
+.el-message-box__input input.invalid:focus {
+	border: 2px solid #F56C6C;
 }
 </style>

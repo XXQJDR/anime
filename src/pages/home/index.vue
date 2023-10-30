@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div class="home">
 		<div class="sidebar" :id="sidebarFlag?'enableSidebar':'disableSidebar'">
 			<div class="user" :class="{userBackground:userDetailFlag}">
 				<div class="avatar">
@@ -27,7 +27,7 @@
 
 		<!-- 点击弹窗的其他区域关闭弹窗 -->
 		<div class="mask" v-show="sidebarFlag && browserIdentity===2" @click="closeSidebar"></div>
-		<div class="content" ref="content">
+		<div class="content">
 			<MobileTopbar v-if="browserIdentity===2" />
 			<router-view />
 		</div>
@@ -67,8 +67,10 @@ export default {
 			const path = pathMap[type] || '';
 			this.$router.push(path);
 
-			//关闭侧边栏
-			this.sidebarFlag = false;
+			//移动端点击后关闭侧边栏
+			if (this.browserIdentity === 2) {
+				this.sidebarFlag = false;
+			}
 		},
 
 		//点击mask遮罩关闭侧边栏
@@ -76,6 +78,14 @@ export default {
 			this.sidebarFlag = false;
 
 			//启用content的滚动事件
+		}
+	},
+	created() {
+		//读取sessionStorage中存储的数据
+		let contentType =sessionStorage.getItem('contentType');
+
+		if (contentType != null) {
+			this.contentType = contentType * 1;
 		}
 	},
 	mounted() {
@@ -94,23 +104,42 @@ export default {
 
 			//禁用content的滚动事件
 		});
+
+		//修改contentType
+		this.$bus.$on('updateContentType', (type) => {
+			this.contentType = type;
+		});
+
+		//监听页面，当页面刷新时将contentType存入sessionStorage
+		window.onbeforeunload =  () => {
+			sessionStorage.setItem('contentType', this.contentType);
+		};
 	},
+	beforeDestroy() {
+		//取消事件监听
+		window.onbeforeunload = () => {};
+
+		//取消所有事件总线
+		this.$bus.$off();
+	}
 }
 </script>
 
 <style scoped>
-.container {
+.home {
+	--sidebarWidth: 250px;
+
 	position: relative;
 }
 
-.container::after {
+.home::after {
 	content: '';
 	display: block;
 	clear: both;
 }
 
-.sidebar {
-	width: 250px;
+.home .sidebar {
+	width: var(--sidebarWidth);
 	height: 100vh;
 	box-sizing: border-box;
 	padding: 1.2rem;
@@ -130,24 +159,25 @@ export default {
 	transform: translateX(0);
 }
 
-.mask {
-	width: calc(100vw - 250px);
+.home .mask {
+	width: calc(100vw - var(--sidebarWidth));
 	height: 100%;
 	position: absolute;
 	right: 0;
 	z-index: 100;
 }
 
-.content {
-	width: calc(100vw - 250px);
+.home .content {
+	/* 减去滚动条的大小 */
+	width: calc(100vw - var(--sidebarWidth) - (100vw - 100%));
 	min-height: 100vh;
 	background-color: #F7F3F2;
 	box-sizing: border-box;
-	padding: 1.3rem 5%;
+	padding: 1.3rem 2%;
 	float: right;
 }
 
-.sidebar .user {
+.home .sidebar .user {
 	width: 100%;
 	display: flex;
 	justify-content: space-evenly;
@@ -163,32 +193,32 @@ export default {
 	background: rgba(0, 0, 0, 0.06);
 }
 
-.sidebar .user:hover {
+.home .sidebar .user:hover {
 	color: #2208cc;
 }
 
-.sidebar .user:hover .arrow i {
+.home .sidebar .user:hover .arrow i {
 	border-color: #2208cc;
 }
 
-.sidebar .user .avatar,
-.sidebar .user .avatar img {
+.home .sidebar .user .avatar,
+.home .sidebar .user .avatar img {
 	width: 32px;
 	height: 32px;
 }
 
-.sidebar .user .avatar {
+.home .sidebar .user .avatar {
 	border-radius: 50%;
 	overflow: hidden;
 	display: inline-block;
 }
 
-.sidebar .user .name {
+.home .sidebar .user .name {
 	width: 60%;
 	line-height: 32px;
 }
 
-.sidebar .user .arrow i {
+.home .sidebar .user .arrow i {
 	width: 1px;
 	height: 1px;
 	border: solid black;
@@ -209,7 +239,7 @@ export default {
 	-webkit-transform: rotate(-135deg);
 }
 
-.sidebar .userDetail {
+.home .sidebar .userDetail {
 	width: 25vw;
 	min-width: 200px;
 	height: 11rem;
@@ -233,11 +263,11 @@ export default {
 	transform: scale(0.8);
 }
 
-.sidebar .btns {
+.home .sidebar .btns {
 	margin-top: 2rem;
 }
 
-.sidebar .btns .btn {
+.home .sidebar .btns .btn {
 	padding: 0.6rem 0.8rem;
 	border-radius: 8px;
 	cursor: pointer;
@@ -245,11 +275,11 @@ export default {
 	transition: all 0.3s;
 }
 
-.sidebar .btns .btn:hover {
+.home .sidebar .btns .btn:hover {
 	background-color: #f7f3f2;
 }
 
-.sidebar .btns svg {
+.home .sidebar .btns svg {
 	display: inline-block;
 	width: 18px;
 	height: 18px;
@@ -257,7 +287,7 @@ export default {
 	vertical-align: middle;
 }
 
-.sidebar .btns .title {
+.home .sidebar .btns .title {
 	display: inline-block;
 	font-size: 0.9rem;
 	vertical-align: middle;
@@ -271,8 +301,8 @@ export default {
 }
 
 /*移动端*/
-@media screen and (max-width: 768px) {
-	.content {
+@media screen and (max-width: 700px) {
+	.home .content {
 		float: none;
 		width: 100vw;
 	}

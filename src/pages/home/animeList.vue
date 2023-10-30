@@ -1,6 +1,6 @@
 <template>
-	<div>
-		<!--region 内容分类名称-->
+	<div class="animeList">
+		<!--region 模块分类名称-->
 		<div class="typeTitle">
 			<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="rectangle-history" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-metatip="true"><path fill="#3c3838" d="M464 224c0-8.8-7.2-16-16-16L64 208c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-224zm-16-64c35.3 0 64 28.7 64 64l0 224c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 224c0-35.3 28.7-64 64-64l384 0zm-8-80c13.3 0 24 10.7 24 24s-10.7 24-24 24L72 128c-13.3 0-24-10.7-24-24s10.7-24 24-24l368 0zM392 0c13.3 0 24 10.7 24 24s-10.7 24-24 24L120 48c-13.3 0-24-10.7-24-24s10.7-24 24-24L392 0z"></path></svg>
 			<div>动漫列表</div>
@@ -9,7 +9,7 @@
 
 		<!-- region 添加按钮与搜索框 -->
 		<div class="control">
-			<div class="addBtn">
+			<div class="addBtn" @click="goAddAnime">
 				<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#f7f3f2" d="M248 72c0-13.3-10.7-24-24-24s-24 10.7-24 24V232H40c-13.3 0-24 10.7-24 24s10.7 24 24 24H200V440c0 13.3 10.7 24 24 24s24-10.7 24-24V280H408c13.3 0 24-10.7 24-24s-10.7-24-24-24H248V72z"></path></svg>
 				<div>添加</div>
 			</div>
@@ -72,7 +72,7 @@
 		<!-- endregion -->
 
 		<!-- region 动漫列表 -->
-		<div class="list">
+		<div class="list" @click="goAnimeDetail">
 			<div class="item">
 				<div class="img">
 					<img src="@/assets/home/animeList/86.jpg" alt="">
@@ -147,46 +147,62 @@ export default {
 		}
 	},
 	methods: {
+		//移动端选择动漫筛选类型
 		mobileSelectTypeHandle(type) {
 			this.selectFlag = type;
 
 			//关闭选择页面
 			this.detailFlag = false;
 		},
+
+		//添加按钮回调
+		goAddAnime() {
+			//将内容改为 添加
+			this.$bus.$emit('updateContentType', 3);
+
+			this.$router.push('/home/addAnime');
+		},
+
+		//添加动漫回调
+		goAnimeDetail(e) {
+			//判断点击元素的父元素是否是'.item'
+			if (e.target.closest('.item') != null) {
+				this.$router.push('/animeDetail');
+				e.target.contains();
+			}
+		}
 	}
 }
 </script>
 
 <style scoped>
-/* region 内容分类名称 */
-.typeTitle {
+/* region 模块分类名称 */
+.animeList .typeTitle {
 	min-width: 110px;
 	font-size: 1.5rem;
+	display: flex;
+	align-items: center;
 }
 
-.typeTitle svg {
-	display: inline-block;
-	vertical-align: middle;
+.animeList .typeTitle svg {
 	width: 18px;
 	height: 18px;
 }
 
-.typeTitle div {
-	display: inline-block;
+.animeList .typeTitle div {
 	min-width: 76px;
-	vertical-align: middle;
 	margin-left: 15px;
 	font-weight: bold;
 }
 /* endregion */
 
 /* region 添加按钮与搜索框 */
-.control {
+.animeList .control {
 	display: flex;
 	margin-top: 1.5rem;
 }
 
-.control .addBtn {
+.animeList .control .addBtn {
 	width: 10%;
 	min-width: 90px;
 	box-sizing: border-box;
@@ -207,18 +223,18 @@ export default {
 	align-items: center;
 }
 
-.control .addBtn:hover {
+.animeList .control .addBtn:hover {
 	background-size: 200%;
 }
 
-.control .addBtn svg {
+.animeList .control .addBtn svg {
 	display: block;
 	vertical-align: middle;
 	width: 18px;
 	height: 18px;
 }
 
-.control .addBtn div {
+.animeList .control .addBtn div {
 	display: block;
 	vertical-align: middle;
 	margin-left: 10px;
@@ -226,13 +242,13 @@ export default {
 	color: white;
 }
 
-.control .search {
+.animeList .control .search {
 	width: 100%;
 	margin-left: 1rem;
 	position: relative;
 }
 
-.control .search svg {
+.animeList .control .search svg {
 	display: inline-block;
 	vertical-align: middle;
 	width: 18px;
@@ -242,7 +258,7 @@ export default {
 	left: 14px;
 }
 
-.control .search input {
+.animeList .control .search input {
 	width: 50%;
 	min-width: 250px;
 	height: 44px;
@@ -253,15 +269,15 @@ export default {
 	outline-offset: 2px;
 	border: 1px solid #DCDFE6;
 	border-radius: 5px;
-	transition: border-color, box-shadow 0.3s;
+	transition: all 0.2s;
 	padding-left: 45px;
 }
 
-.control .search input:hover {
+.animeList .control .search input:hover {
 	border-color: #C0C4CC;
 }
 
-.control .search input:focus {
+.animeList .control .search input:focus {
 	border-color: rgb(49, 130, 206);
 	box-shadow: rgb(49, 130, 206) 0 0 0 1px;
 }
@@ -273,11 +289,11 @@ export default {
 }
 
 /* pc端 */
-.type .pc {
+.animeList .type .pc {
 	display: flex;
 }
 
-.type .pc .btn {
+.animeList .type .pc .btn {
 	display: flex;
 	padding: 8px 15px;
 	border-radius: 6px;
@@ -286,23 +302,23 @@ export default {
 	color: #726e6e;
 	cursor: pointer;
 	margin-left: 1.2rem;
-	transition: background-color, color 0.3s;
+	transition: all 0.3s;
 }
 
-.type .pc .btn:nth-child(1) {
+.animeList .type .pc .btn:nth-child(1) {
 	margin-left: 0;
 }
 
-.type .pc .btn:hover {
+.animeList .type .pc .btn:hover {
 	background-color: #eae7ff;
 }
 
-.type .pc .btn svg {
+.animeList .type .pc .btn svg {
 	width: 18px;
 	height: 18px;
 }
 
-.type .pc .btn div {
+.animeList .type .pc .btn div {
 	margin-left: 5px;
 	min-width: 38px;
 }
@@ -313,17 +329,17 @@ export default {
 }
 
 /* 移动端 */
-.type .mobile {
+.animeList .type .mobile {
 	display: none;
 	position: relative;
 }
 
-.type .mobile .btn {
+.animeList .type .mobile .btn {
 	display: flex;
 	font-size: 1.2rem;
 }
 
-.type .mobile .btn .box {
+.animeList .type .mobile .btn .box {
 	width: 150px;
 	height: 35px;
 	display: flex;
@@ -333,16 +349,16 @@ export default {
 	cursor: pointer;
 }
 
-.type .mobile .btn .placeholder {
+.animeList .type .mobile .btn .placeholder {
 	width: 100%;
 }
 
-.type .mobile .btn .box svg {
+.animeList .type .mobile .btn .box svg {
 	width: 18px;
 	height: 18px;
 }
 
-.type .mobile .detail {
+.animeList .type .mobile .detail {
 	width: 250px;
 	height: 200px;
 	transform-origin: top left;
@@ -369,17 +385,17 @@ export default {
 	transform: none;
 }
 
-.type .mobile .detail > div {
+.animeList .type .mobile .detail > div {
 	color: #8f8b8b;
 	font-size: 1.2rem;
 }
 
-.type .mobile .detail > ul {
+.animeList .type .mobile .detail > ul {
 	text-align: center;
 	font-size: 1.3rem;
 }
 
-.type .mobile .detail > ul li {
+.animeList .type .mobile .detail > ul li {
 	padding: 10px 0;
 	border-radius: 10px;
 	border: 1px solid transparent;
@@ -387,12 +403,12 @@ export default {
 	cursor: pointer;
 }
 
-.type .mobile .detail > ul li:hover {
+.animeList .type .mobile .detail > ul li:hover {
 	background-color: #e5e0df;
 	border: 1px solid #e5e0df;
 }
 
-.type .mobile .detail > ul li svg {
+.animeList .type .mobile .detail > ul li svg {
 	position: absolute;
 	top: 50%;
 	left: 50px;
@@ -401,13 +417,13 @@ export default {
 /* endregion */
 
 /* region 动漫列表 */
-.list {
+.animeList .list {
 	margin-top: 1.5rem;
 	display: grid;
 	grid-gap: 20px;
 }
 
-.list .item {
+.animeList .list .item {
 	/* item过渡时间 */
 	--transitionTime: 0.3s;
 
@@ -421,41 +437,41 @@ export default {
 }
 
 /* 鼠标移入item给item添加阴影 */
-.list .item:hover {
+.animeList .list .item:hover {
 	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),0 4px 6px -2px rgba(0, 0, 0, 0.05);
 	transform: translateY(-5px);
 }
 
 /* 鼠标移入item给title添加背景 */
-.list .item:hover .title {
+.animeList .list .item:hover .title {
 	background-color: #f7f3f2;
 }
 
 /* 鼠标移入item放大img */
-.list .item:hover .img img {
+.animeList .list .item:hover .img img {
 	transform: scale(1.1);
 }
 
-.list .item .img {
+.animeList .list .item .img {
 	height: 82%;
 }
 
 /* 图片自适应父盒子 */
-.list .item .img img {
+.animeList .list .item .img img {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
 	transition: transform var(--transitionTime);
 }
 
-.list .item .title {
+.animeList .list .item .title {
 	position: relative;
 	height: 18%;
 	background-color: #FFFFFF;
 	transition: background-color var(--transitionTime);
 }
 
-.list .item .title span {
+.animeList .list .item .title span {
 	width: 100%;
 	position: absolute;
 	top: 50%;
@@ -465,59 +481,59 @@ export default {
 /* endregion */
 
 /*移动端*/
-@media screen and (max-width: 768px) {
-	.control {
+@media screen and (max-width: 700px) {
+	.animeList .control {
 		display: block;
 	}
 
-	.control .addBtn {
+	.animeList .control .addBtn {
 		width: 100%;
 		height: 45px;
 	}
 
-	.control .search {
+	.animeList .control .search {
 		width: 100%;
 		margin-left: 0;
 		margin-top: 1rem;
 	}
 
-	.control .search input {
+	.animeList .control .search input {
 		width: 100%;
 	}
 
-	.type .pc {
+	.animeList .type .pc {
 		display: none;
 	}
 
-	.type .mobile {
+	.animeList .type .mobile {
 		display: block;
 	}
 
-	.list {
+	.animeList .list {
 		grid-template-columns: repeat(1, 1fr);
 	}
 
-	.list .item {
+	.animeList .list .item {
 		aspect-ratio: 1;
 	}
 }
-@media screen and (min-width: 768px) and (max-width: 1078px) {
-	.list {
+@media screen and (min-width: 700px) and (max-width: 1078px) {
+	.animeList .list {
 		grid-template-columns: repeat(2, 1fr);
 	}
 }
 @media screen and (min-width: 1078px) and (max-width: 1355px) {
-	.list {
+	.animeList .list {
 		grid-template-columns: repeat(3, 1fr);
 	}
 }
 @media screen and (min-width: 1355px) and (max-width: 1668px) {
-	.list {
+	.animeList .list {
 		grid-template-columns: repeat(4, 1fr);
 	}
 }
 @media screen and (min-width: 1668px) {
-	.list {
+	.animeList .list {
 		grid-template-columns: repeat(5, 1fr);
 	}
 }

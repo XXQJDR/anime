@@ -8,7 +8,10 @@ const Home = () => import('@/pages/home/index.vue');
 const Test = () => import('@/pages/test.vue');
 const AnimeList = () => import('@/pages/home/animeList.vue');
 const AnimeRandom = () => import('@/pages/home/animeRandom.vue');
-const AddAnime = () => import('@/pages/home/addAnime.vue');
+const AddAnime = () => import('@/pages/home/addAnime/index.vue');
+const AnimeDetail = () => import('@/pages/animeDetail.vue');
+const AutoRecognize = () => import('@/pages/home/addAnime/autoRecognize.vue')
+const ManualAdd = () => import('@/pages/home/addAnime/manualAdd.vue')
 
 Vue.use(VueRouter);
 
@@ -56,9 +59,27 @@ const routes = [
 			},
 			{
 				path: 'addAnime',
-				component: AddAnime
+				component: AddAnime,
+				redirect: '/home/addAnime/autoRecognize',
+				children: [
+					{
+						path: 'autoRecognize',
+						component: AutoRecognize
+					},
+					{
+						path: 'manualAdd',
+						component: ManualAdd
+					}
+				]
 			}
 		]
+	},
+	{
+		path: '/animeDetail',
+		component: AnimeDetail,
+		meta: {
+			title: '详情'
+		}
 	},
 	{
 		path: '/test',
@@ -70,6 +91,14 @@ const routes = [
 ];
 
 const router = new VueRouter({routes});
+
+//解决跳转相同路由报错问题
+const originalPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function (location) {
+	return originalPush.call(this, location).catch(err => {
+		err
+	})
+};
 
 router.beforeEach((to, from, next) => {
 	/* 路由发生变化修改页面title */

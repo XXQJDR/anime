@@ -28,7 +28,7 @@
 		<!-- 点击弹窗的其他区域关闭弹窗 -->
 		<div class="mask" v-show="sidebarFlag && browserIdentity===2" @click="closeSidebar"></div>
 		<div class="content">
-			<MobileTopbar v-if="browserIdentity===2" />
+			<MobileTopbar v-if="browserIdentity === 2" />
 			<router-view />
 		</div>
 	</div>
@@ -36,6 +36,7 @@
 
 <script>
 import MobileTopbar from "@/components/mobileTopbar.vue";
+import _ from "lodash";
 
 export default {
 	name: 'HomePage',
@@ -49,10 +50,10 @@ export default {
 			contentType: 1,
 
 			//侧边栏显示标志
-			sidebarFlag: true,
+			sidebarFlag: false,
 
 			//浏览器身份，1为pc，2为移动
-			browserIdentity: 1
+			browserIdentity: 2,
 		}
 	},
 	methods: {
@@ -78,7 +79,18 @@ export default {
 			this.sidebarFlag = false;
 
 			//启用content的滚动事件
-		}
+		},
+
+		//动态获取浏览器宽度
+		getWindowInfo: _.debounce(function () {
+			if (window.innerWidth <= 700) {
+				this.browserIdentity = 2;
+				this.sidebarFlag = false;
+			} else {
+				this.browserIdentity = 1;
+				this.sidebarFlag = true;
+			}
+		}, 200),
 	},
 	created() {
 		//读取sessionStorage中存储的数据
@@ -89,14 +101,9 @@ export default {
 		}
 	},
 	mounted() {
-		//通过浏览器视宽来判断浏览器身份
-		if (window.innerWidth <= 768) {
-			this.browserIdentity = 2;
-			this.sidebarFlag = false;
-		} else {
-			this.browserIdentity = 1;
-			this.sidebarFlag = true;
-		}
+		//动态获取浏览器视宽来判断浏览器身份
+		this.getWindowInfo();
+		window.addEventListener('resize', this.getWindowInfo);
 
 		//展示侧边栏并添加
 		this.$bus.$on('switchSidebar', () => {
@@ -118,10 +125,11 @@ export default {
 	beforeDestroy() {
 		//取消事件监听
 		window.onbeforeunload = () => {};
+		window.removeEventListener('resize', this.getWindowInfo);
 
 		//取消所有事件总线
 		this.$bus.$off();
-	}
+	},
 }
 </script>
 

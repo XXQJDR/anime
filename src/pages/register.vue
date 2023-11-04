@@ -172,15 +172,15 @@ export default {
 	background-image: linear-gradient(50deg, rgb(43, 10, 255), rgb(255, 91, 138) 49%, rgb(255, 91, 138) 53%, rgb(255, 91, 138) 55%, rgb(251, 166, 75) 77%, rgb(249, 155, 82));
 	color: transparent;
 	background-clip: text;
-	margin-top: 2rem;
+	/*margin-top: 2rem;*/
 }
 
 .box .registerForm {
-	margin-top: 1rem;
+	/*margin-top: 1rem;*/
 }
 
 .registerBtn {
-	margin-top: 2rem;
+	/*margin-top: 2rem;*/
 }
 
 .registerBtn button {
@@ -202,7 +202,7 @@ export default {
 .goLogin {
 	text-align: center;
 	font-size: 0.8rem;
-	margin-top: 1rem;
+	/*margin-top: 1rem;*/
 }
 
 .goLogin a {
@@ -218,12 +218,28 @@ export default {
 	.box {
 		padding: 2rem;
 	}
+
+	.box .title,
+	.registerBtn {
+		margin-top: 2rem;
+	}
+
+	.box .registerForm,
+	.goLogin {
+		margin-top: 1rem;
+	}
 }
 
 /*PC端*/
 @media screen and (min-width: 770px) {
 	.box {
-		padding: 3rem 5rem;
+		padding: 2rem 3rem;
+	}
+
+	.box .title,
+	.goLogin,
+	.registerBtn {
+		margin-top: 1rem;
 	}
 }
 </style>
@@ -231,7 +247,7 @@ export default {
 <!-- region 修改element-ui默认样式 -->
 <style>
 .registerForm .el-form-item {
-	margin-bottom: 1rem;
+	margin-bottom: 0.5rem;
 }
 
 .registerForm .el-input .el-input__inner {

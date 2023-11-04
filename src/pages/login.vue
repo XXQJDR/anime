@@ -200,7 +200,7 @@ export default {
 /*PC端*/
 @media screen and (min-width: 770px) {
 	.box {
-		padding: 3rem 5rem;
+		padding: 2rem 3rem;
 	}
 }
 </style>

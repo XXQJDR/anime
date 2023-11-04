@@ -22,11 +22,6 @@
 								<span>：</span>
 								<span class="value">TV</span>
 							</div>
-							<div class="otherItem notNecessary">
-								<span class="key">原版名称</span>
-								<span>：</span>
-								<span class="value">86―エイティシックス― 第2クール</span>
-							</div>
 							<div class="otherItem">
 								<span class="key">首播时间</span>
 								<span>：</span>
@@ -76,11 +71,6 @@
 								<span class="key">动画种类</span>
 								<span>：</span>
 								<span class="value">TV</span>
-							</div>
-							<div class="otherItem notNecessary">
-								<span class="key">原版名称</span>
-								<span>：</span>
-								<span class="value">鋼の錬金術師 FULLMETAL ALCHEMIST</span>
 							</div>
 							<div class="otherItem">
 								<span class="key">首播时间</span>
@@ -176,7 +166,9 @@ export default {
 .autoRecognize .form input::-webkit-input-placeholder{
 	text-align: center;
 }
+/* endregion */
 
+/* region 输入建议 */
 .autoRecognize .form .suggestion {
 	width: 100%;
 	min-width: 980px;
@@ -201,7 +193,7 @@ export default {
 }
 
 .autoRecognize .form .suggestion .item .img {
-	height: 240px;
+	height: 200px;
 	border-radius: 5px;
 	overflow: hidden;
 	position: relative;

@@ -185,7 +185,7 @@ export default {
 	justify-content: center;
 	padding: 10px 0;
 	border-bottom: 1px solid rgba(0, 0, 0, .1);
-	transition: background-color 0.2s;
+	transition: background-color 0.3s;
 }
 
 .autoRecognize .form .suggestion .item:last-child {

@@ -15,9 +15,6 @@
 					ref="registerForm"
 					:rules="rules"
 			>
-				<el-form-item label="电子邮箱" prop="email">
-					<el-input v-model="temp.email" @blur="blurHandle('email')" />
-				</el-form-item>
 				<el-form-item label="用户名" prop="username">
 					<el-input v-model="temp.username" @blur="blurHandle('username')" />
 				</el-form-item>
@@ -27,8 +24,13 @@
 				<el-form-item label="确认密码" prop="checkPassword">
 					<el-input v-model="temp.checkPassword" show-password @blur="blurHandle('checkPassword')" />
 				</el-form-item>
+				<el-form-item label="电子邮箱" prop="email">
+					<el-input v-model="temp.email" @blur="blurHandle('email')" />
+				</el-form-item>
 				<el-form-item label="验证码" prop="checkCode">
 					<el-input v-model="temp.checkCode" @blur="blurHandle('checkCode')" class="checkCodeInput" />
+					<button @click="getCode" v-show="time === 61" class="codeBtn1">获取验证码</button>
+					<button style="cursor: not-allowed" v-show="time !== 61" class="codeBtn2">{{ time }}秒后重新获取</button>
 				</el-form-item>
 				<div class="registerBtn">
 					<button @click.prevent="register" :disabled="!verifyFlag">登录</button>
@@ -104,6 +106,9 @@ export default {
 					{required: true, message:'验证码不能为空', trigger: 'manual'}
 				]
 			},
+
+			//倒计时
+			time: 61
 		}
 	},
 	methods: {
@@ -120,6 +125,18 @@ export default {
 			this.$refs.registerForm.validateField(type, errorMessage => {
 				this.flag[type] = (errorMessage === '' || errorMessage == null);
 			});
+		},
+
+		//获取验证码
+		getCode() {
+			this.time--;
+			let interval = setInterval(() => {
+				this.time--;
+				if (this.time === 0) {
+					this.time = 61;
+					clearInterval(interval);
+				}
+			}, 1000);
 		}
 	},
 	computed: {
@@ -172,15 +189,24 @@ export default {
 	background-image: linear-gradient(50deg, rgb(43, 10, 255), rgb(255, 91, 138) 49%, rgb(255, 91, 138) 53%, rgb(255, 91, 138) 55%, rgb(251, 166, 75) 77%, rgb(249, 155, 82));
 	color: transparent;
 	background-clip: text;
-	/*margin-top: 2rem;*/
 }
 
-.box .registerForm {
-	/*margin-top: 1rem;*/
+.codeBtn1,
+.codeBtn2 {
+	width: 50%;
+	border-radius: 5px;
+	background-color: #9C77D1;
+	color: #FFFFFF;
+	box-shadow: 0 0 1px black;
+	font-size: 1rem;
 }
 
-.registerBtn {
-	/*margin-top: 2rem;*/
+.codeBtn1 {
+	transition: font-size .3s;
+}
+
+.codeBtn1:hover {
+	font-size: 1.05rem;
 }
 
 .registerBtn button {
@@ -202,7 +228,6 @@ export default {
 .goLogin {
 	text-align: center;
 	font-size: 0.8rem;
-	/*margin-top: 1rem;*/
 }
 
 .goLogin a {

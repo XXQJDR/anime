@@ -28,12 +28,14 @@
 					<el-input v-model="temp.email" @blur="blurHandle('email')" />
 				</el-form-item>
 				<el-form-item label="验证码" prop="checkCode">
-					<el-input v-model="temp.checkCode" @blur="blurHandle('checkCode')" class="checkCodeInput" />
-					<button @click="getCode" v-show="time === 61" class="codeBtn1">获取验证码</button>
-					<button style="cursor: not-allowed" v-show="time !== 61" class="codeBtn2">{{ time }}秒后重新获取</button>
+					<div class="checkCode">
+						<el-input v-model="temp.checkCode" @blur="blurHandle('checkCode')" class="checkCodeInput" />
+						<div @click="getCode" v-show="time === 61" class="codeBtn1">获取验证码</div>
+						<div v-show="time !== 61" class="codeBtn2">{{ time }}秒后重新获取</div>
+					</div>
 				</el-form-item>
 				<div class="registerBtn">
-					<button @click.prevent="register" :disabled="!verifyFlag">登录</button>
+					<button @click.prevent="register" :disabled="!verifyFlag">注册</button>
 				</div>
 				<div class="goLogin">
 					已有账户？去<router-link to="/login">登录</router-link>
@@ -45,6 +47,8 @@
 </template>
 
 <script>
+import {reqGetEmailCode, reqRegister} from "@/api";
+
 export default {
 	name: 'RegisterPage',
 	data() {
@@ -113,8 +117,17 @@ export default {
 	},
 	methods: {
 		//注册按钮回调
-		register() {
-			console.log(this.formData);
+		async register() {
+			//所有项都已输入
+			if (this.verifyFlag) {
+				console.log(this.formData);
+				let result = await reqRegister(this.formData.username, this.formData.password, this.formData.email, this.formData.checkCode);
+				console.log(result);
+				this.$message({
+					type: result.code === 200 ? 'success' : 'error',
+					message: result.msg
+				});
+			}
 		},
 
 		//输入框失去焦点回调
@@ -127,8 +140,18 @@ export default {
 			});
 		},
 
-		//获取验证码
-		getCode() {
+		//获取验证码回调
+		async getCode() {
+			//判断是否输入邮箱
+			this.$refs.registerForm.validateField('email', errorMessage => {
+				this.flag['email'] = (errorMessage === '' || errorMessage == null);
+			});
+
+			if (!this.flag['email']) {
+				return;
+			}
+
+			//开始倒计时
 			this.time--;
 			let interval = setInterval(() => {
 				this.time--;
@@ -137,6 +160,14 @@ export default {
 					clearInterval(interval);
 				}
 			}, 1000);
+
+			//获取验证码
+			let result = await reqGetEmailCode(this.formData.email);
+			console.log(result);
+			this.$message({
+				type: result.code === 200 ? 'success' : 'error',
+				message: result.msg
+			});
 		}
 	},
 	computed: {
@@ -191,6 +222,10 @@ export default {
 	background-clip: text;
 }
 
+.checkCode {
+	display: flex;
+}
+
 .codeBtn1,
 .codeBtn2 {
 	width: 50%;
@@ -199,14 +234,20 @@ export default {
 	color: #FFFFFF;
 	box-shadow: 0 0 1px black;
 	font-size: 1rem;
+	text-align: center;
 }
 
 .codeBtn1 {
+	cursor: pointer;
 	transition: font-size .3s;
 }
 
 .codeBtn1:hover {
 	font-size: 1.05rem;
+}
+
+.codeBtn2 {
+	cursor: not-allowed;
 }
 
 .registerBtn button {

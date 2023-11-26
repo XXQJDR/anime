@@ -3,105 +3,55 @@
 		<!-- region 输入框 -->
 		<div class="form">
 			<svg viewBox="0 0 24 24" focusable="false"><path fill="#cac5c4" d="M23.384,21.619,16.855,15.09a9.284,9.284,0,1,0-1.768,1.768l6.529,6.529a1.266,1.266,0,0,0,1.768,0A1.251,1.251,0,0,0,23.384,21.619ZM2.75,9.5a6.75,6.75,0,1,1,6.75,6.75A6.758,6.758,0,0,1,2.75,9.5Z"></path></svg>
-			<input type="text" placeholder="请输入关键词" v-model="keyword">
-			<div class="suggestion">
-				<div class="item">
+			<input type="text" placeholder="请输入关键词(搜索请按回车键)" v-model="keyword" @keyup.enter="searchHandle">
+			<div class="suggestion" v-show="suggestionFlag" v-loading="loading">
+				<div class="item" v-for="(anime, index) in suggestionList" :key="index">
 					<div class="img">
-						<img src="@/assets/home/animeList/86.jpg" alt="">
-						<div class="mask">
+						<img :src="anime.cover" alt="">
+						<div class="mask" @click="addAnimeHandle(anime)">
 							<div class="box">
 								<svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path fill="#ffffff" d="M612.37248 411.62752V30.208h-200.74496v381.41952H30.208v200.74496h381.41952v381.41952h200.74496V612.37248h381.41952v-200.74496z"/></svg>
 							</div>
 						</div>
 					</div>
 					<div class="info">
-						<h3 class="title">86-不存在的战区</h3>
+						<h3 class="title">{{anime.title}}</h3>
 						<div class="other">
 							<div class="otherItem notNecessary">
 								<span class="key">动画种类</span>
 								<span>：</span>
-								<span class="value">TV</span>
+								<span class="value">{{anime.kind}}</span>
 							</div>
 							<div class="otherItem">
 								<span class="key">首播时间</span>
 								<span>：</span>
-								<span class="value">2021-10-02</span>
+								<span class="value">{{anime.firstPlayDate}}</span>
 							</div>
 							<div class="otherItem">
 								<span class="key">播放状态</span>
 								<span>：</span>
-								<span class="value">完结</span>
+								<span class="value">{{anime.status}}</span>
 							</div>
 							<div class="otherItem">
 								<span class="key">原作</span>
 								<span>：</span>
-								<span class="value">安里アサト</span>
+								<span class="value">{{anime.original}}</span>
 							</div>
 							<div class="otherItem notNecessary">
 								<span class="key">剧情类型</span>
 								<span>：</span>
-								<span class="value">科幻 战争</span>
+								<span class="value">{{anime.storyType}}</span>
 							</div>
 							<div class="otherItem">
 								<span class="key">制作公司</span>
 								<span>：</span>
-								<span class="value">A-1 Pictures</span>
+								<span class="value">{{anime.company}}</span>
 							</div>
 						</div>
 						<div class="intro">
 							<span class="key">简介</span>
 							<span>：</span>
-							<span class="value">了应对吉亚迪所开发出的完全独立无人战斗兵器“军团”的入侵，其邻国圣格诺利亚共和国开发了无人战斗兵器毁灭之力。但是，无人战斗机只是空有名号，实际是没有被认可为”人“的人们——86——驾驶，被当作道具来使用。由”86“所组成的部队“先锋战队”的队长少年・辛艾，在只能等待着死亡的令人绝望的战场上为了某个目的而战斗着。在那里，共和国军队的精英・蕾娜就任了新任指挥管制官。她小时候有着被86所救助过的经历，因此想把被作为“人形猪”而遭到轻视的他们作为正常人类来对待。只不过是为了战斗而被作为道具使用的少年以及被寄予了未来期望的精英才女，本不应当有所交集的两人，在激烈的战斗中看到了未来——</span>
-						</div>
-					</div>
-				</div>
-				<div class="item">
-					<div class="img">
-						<img src="@/assets/home/animeList/钢之炼金术师.jpg" alt="">
-						<div class="mask">
-							<div class="box">
-								<svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path fill="#ffffff" d="M612.37248 411.62752V30.208h-200.74496v381.41952H30.208v200.74496h381.41952v381.41952h200.74496V612.37248h381.41952v-200.74496z"/></svg>
-							</div>
-						</div>
-					</div>
-					<div class="info">
-						<h3 class="title">钢之炼金术师 FA</h3>
-						<div class="other">
-							<div class="otherItem notNecessary">
-								<span class="key">动画种类</span>
-								<span>：</span>
-								<span class="value">TV</span>
-							</div>
-							<div class="otherItem">
-								<span class="key">首播时间</span>
-								<span>：</span>
-								<span class="value">2009-04-05</span>
-							</div>
-							<div class="otherItem">
-								<span class="key">播放状态</span>
-								<span>：</span>
-								<span class="value">完结</span>
-							</div>
-							<div class="otherItem">
-								<span class="key">原作</span>
-								<span>：</span>
-								<span class="value">荒川弘</span>
-							</div>
-							<div class="otherItem notNecessary">
-								<span class="key">剧情类型</span>
-								<span>：</span>
-								<span class="value">热血 战斗 奇幻</span>
-							</div>
-							<div class="otherItem">
-								<span class="key">制作公司</span>
-								<span>：</span>
-								<span class="value">BONES</span>
-							</div>
-						</div>
-						<div class="intro">
-							<span class="key">简介</span>
-							<span>：</span>
-							<span class="value">《钢之炼金术师 FULLMETAL ALCHEMIST》是根据日本漫画家荒川弘创作的漫画作品改编的二度动画化作品，采用原作漫画剧情，一般简称“钢之炼金术师FA”。电视动画由BONES负责动画制作，于2009年4月5日—2010年7月4日在日本每日放送/日本TBS电视台系电视台播放，全64话。在电视动画最终回结尾宣布制作剧场版的消息，相关剧场版《钢之炼金术师：叹息之丘的圣星》于2011年7月2日在日本上映。所谓的炼金术，就是以“等价交换”为原则，物质的理解、分解、然后再构筑的这个世界上最先端的科学学术。在炼金术的领域中，最大的“禁忌”就是“人体炼成”。因为思念已故的母亲，失去了一切的年幼的兄弟打破了禁忌。装着机械铠的，背负着“钢之炼金术士”之名的哥哥，爱德华·艾尔利克，灵魂附着在巨大的铠甲上的弟弟，阿尔方斯·艾尔利克。两人为了夺回失去的东西，开始了寻找“贤者之石”之旅。随着兄弟两人离“贤者之石”的真相越来越近，也不断地被卷入巨大的阴谋的漩涡之中。幕后操纵的强大阴谋者的存在。渐渐地露出本性的军事国家亚美斯多利斯受虐的民众的无止尽的憎恨和复仇的意念。炼金术招致的无数悲剧。散在的悲剧最终连成一条线，将人们，民众，甚至国家全部卷入其中。即使处于绝望和希望的狭缝之中，艾尔利克兄弟依然继续前进。</span>
+							<span class="value">{{anime.description}}</span>
 						</div>
 					</div>
 				</div>
@@ -112,13 +62,69 @@
 </template>
 
 <script>
+import {reqSearchAnimeForAdd, reqAddAnime} from "@/api";
+import _ from "lodash";
+
 export default {
 	name: 'AutoRecognize',
 	data() {
 		return {
-			keyword: ''
+			//搜索关键词
+			keyword: '',
+
+			//搜索结果列表
+			suggestionList: [],
+
+			//搜索结果框显示标志
+			suggestionFlag: false,
+
+			//加载标志
+			loading: false
 		}
 	},
+	methods: {
+		//按下回车搜索回调
+		searchHandle: _.throttle(async function () {
+			if (this.keyword.length === 0) {
+				return;
+			}
+
+			//显示结果框并开启加载动画
+			this.suggestionFlag = true;
+			this.loading = true;
+
+			//搜索动漫
+			let result = await reqSearchAnimeForAdd(this.keyword);
+			this.suggestionList = result.data || [];
+
+			//关闭加载动画
+			this.loading = false;
+
+			//搜索结果为空关闭结果框
+			if (this.suggestionList.length === 0) {
+				this.suggestionFlag = false;
+			}
+		}, 1000),
+
+		//添加动漫
+		async addAnimeHandle(anime) {
+			let result = await reqAddAnime(anime);
+			this.$message({
+				type: result.code === 200 ? 'success' : 'error',
+				message: result.msg
+			});
+
+			//从搜索结果中删除添加的动漫
+			if (result.code === 200) {
+				this.suggestionList = this.suggestionList.filter(item => item.id !== anime.id);
+			}
+
+			//如果添加的动漫是搜索结果框中最后一个，关闭搜索框
+			if (this.suggestionList.length === 0) {
+				this.suggestionFlag = false;
+			}
+		}
+	}
 }
 </script>
 
@@ -172,6 +178,7 @@ export default {
 .autoRecognize .form .suggestion {
 	width: 100%;
 	min-width: 980px;
+	min-height: 200px;
 	background-color: #FFFFFF;
 	margin-top: 1rem;
 	border-radius: 10px;
@@ -198,6 +205,13 @@ export default {
 	overflow: hidden;
 	position: relative;
 	cursor: pointer;
+}
+
+.autoRecognize .form .suggestion .item .img img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 0.3s;
 }
 
 .autoRecognize .form .suggestion .item .img .mask {
@@ -234,13 +248,6 @@ export default {
 	left: 0;
 	right: 0;
 	margin: auto;
-}
-
-.autoRecognize .form .suggestion .item .img img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	transition: transform 0.3s;
 }
 
 .autoRecognize .form .suggestion .item .info {
@@ -302,7 +309,7 @@ export default {
 	}
 
 	.autoRecognize .form .suggestion .item .img {
-		height: 150px;
+		height: 170px;
 	}
 
 	.autoRecognize .form .suggestion .item .info {

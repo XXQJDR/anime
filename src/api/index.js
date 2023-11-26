@@ -21,3 +21,40 @@ export const reqLogin = (email, password, code) => {
 	let params = {email, password, code};
 	return axios.post('/user/login', params);
 }
+
+//搜索动漫，用于添加动漫
+export const reqSearchAnimeForAdd = (title) => {
+	return axios.get(`/collect/searchAnimeForCrawler/${title}`);
+}
+
+//添加动漫
+export const reqAddAnime = (anime) => {
+	return axios.post('/collect/addAnime', anime);
+}
+
+/**
+ * 获取用户已添加的动漫
+ * params.status
+ * 	1代表查询已看
+ * 	0代表查询未看
+ * 	无代表查询全部
+ */
+export const reqGetPageAnime = (params) => {
+	return axios.post('/collect/getPageAnime', params);
+}
+
+//搜索动漫
+export const reqSearchAnime = (keyword) => {
+	return axios.get(`/collect/searchAnime/${keyword}`);
+}
+
+//更改动漫观看状态
+export const reqUpdateAnimeWacthingStatus = (collectId, status) => {
+	let params = {collectId, status};
+	return axios.post('/collect/updateAnimeWacthingStatus', params);
+}
+
+//将动漫移入垃圾箱
+export const reqLogicalDeletion = (collectId) => {
+	return axios.get(`/collect/logicalDeletion/${collectId}`);
+}

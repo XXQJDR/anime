@@ -14,9 +14,9 @@
 				<div>添加</div>
 			</div>
 			<div class="search">
-				<form>
+				<form @submit.prevent="searchAnime">
 					<svg viewBox="0 0 24 24" focusable="false"><path fill="#cac5c4" d="M23.384,21.619,16.855,15.09a9.284,9.284,0,1,0-1.768,1.768l6.529,6.529a1.266,1.266,0,0,0,1.768,0A1.251,1.251,0,0,0,23.384,21.619ZM2.75,9.5a6.75,6.75,0,1,1,6.75,6.75A6.758,6.758,0,0,1,2.75,9.5Z"></path></svg>
-					<input type="text" placeholder="请输入动漫关键词">
+					<input type="text" placeholder="请输入动漫关键词" v-model="keyword">
 				</form>
 			</div>
 		</div>
@@ -26,15 +26,15 @@
 		<div class="type">
 			<!-- pc端 -->
 			<div class="pc">
-				<div class="btn" @click="selectFlag = 1" :class="{typePcBtnActive:selectFlag===1}">
+				<div class="btn" @click="changeAnimeType(1)" :class="{typePcBtnActive:selectFlag===1}">
 					<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="rectangle-history" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-metatip="true"><path :fill="selectFlag===1?'#2B0AFF':'#726e6e'" d="M464 224c0-8.8-7.2-16-16-16L64 208c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-224zm-16-64c35.3 0 64 28.7 64 64l0 224c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 224c0-35.3 28.7-64 64-64l384 0zm-8-80c13.3 0 24 10.7 24 24s-10.7 24-24 24L72 128c-13.3 0-24-10.7-24-24s10.7-24 24-24l368 0zM392 0c13.3 0 24 10.7 24 24s-10.7 24-24 24L120 48c-13.3 0-24-10.7-24-24s10.7-24 24-24L392 0z"></path></svg>
 					<div>全部</div>
 				</div>
-				<div class="btn" @click="selectFlag = 2" :class="{typePcBtnActive:selectFlag===2}">
+				<div class="btn" @click="changeAnimeType(2)" :class="{typePcBtnActive:selectFlag===2}">
 					<svg viewBox="0 0 1024 1024" :stroke="selectFlag===2?'#2B0AFF':'#726e6e'" stroke-width="20" xmlns="http://www.w3.org/2000/svg"><path :fill="selectFlag===2?'#2B0AFF':'#726e6e'" d="M939.36 218.912a32 32 0 0 1 45.856 44.672l-538.016 552a32 32 0 0 1-43.776 1.92L63.872 526.048a32 32 0 1 1 41.696-48.544l316.768 271.936L939.36 218.88z"  /></svg>
 					<div>已看</div>
 				</div>
-				<div class="btn" @click="selectFlag = 3" :class="{typePcBtnActive:selectFlag===3}">
+				<div class="btn" @click="changeAnimeType(3)" :class="{typePcBtnActive:selectFlag===3}">
 					<svg viewBox="0 0 1024 1024" :stroke="selectFlag===3?'#2B0AFF':'#726e6e'" stroke-width="20" xmlns="http://www.w3.org/2000/svg"><path :fill="selectFlag===3?'#2B0AFF':'#726e6e'" d="M547.2 512l416-416c9.6-9.6 9.6-25.6 0-35.2s-25.6-9.6-35.2 0l-416 416-416-416c-9.6-9.6-25.6-9.6-35.2 0s-9.6 25.6 0 35.2l416 416-416 416c-9.6 9.6-9.6 25.6 0 35.2s25.6 9.6 35.2 0l416-416 416 416c9.6 9.6 25.6 9.6 35.2 0s9.6-25.6 0-35.2L547.2 512z" /></svg>
 					<div>未看</div>
 				</div>
@@ -53,15 +53,15 @@
 				<div class="detail" :id="detailFlag?'enableDetail':'disableDetail'">
 					<div>帅选方式...</div>
 					<ul class="type">
-						<li @click="mobileSelectTypeHandle(1)">
+						<li @click="changeAnimeType(1)">
 							<svg v-show="selectFlag===1" viewBox="0 0 14 14" height="16px" width="16px" focusable="false" aria-hidden="true"><polygon points="5.5 11.9993304 14 3.49933039 12.5 2 5.5 8.99933039 1.5 4.9968652 0 6.49933039"></polygon></svg>
 							<span>全部</span>
 						</li>
-						<li @click="mobileSelectTypeHandle(2)">
+						<li @click="changeAnimeType(2)">
 							<svg v-show="selectFlag===2" viewBox="0 0 14 14" height="16px" width="16px" focusable="false" aria-hidden="true"><polygon points="5.5 11.9993304 14 3.49933039 12.5 2 5.5 8.99933039 1.5 4.9968652 0 6.49933039"></polygon></svg>
 							<span>已看</span>
 						</li>
-						<li @click="mobileSelectTypeHandle(3)">
+						<li @click="changeAnimeType(3)">
 							<svg v-show="selectFlag===3" viewBox="0 0 14 14" height="16px" width="16px" focusable="false" aria-hidden="true"><polygon points="5.5 11.9993304 14 3.49933039 12.5 2 5.5 8.99933039 1.5 4.9968652 0 6.49933039"></polygon></svg>
 							<span>未看</span>
 						</li>
@@ -72,179 +72,95 @@
 		<!-- endregion -->
 
 		<!-- region 动漫列表 -->
-		<div class="list" @click="goAnimeDetail">
-			<div class="item">
-				<div class="img">
-					<img src="@/assets/home/animeList/86.jpg" alt="">
+		<el-skeleton :loading="loading" animated :throttle="500" :count="3">
+				<div slot="template">
+					<el-skeleton-item variant="image" />
+					<el-skeleton-item variant="text" />
+					<el-skeleton-item variant="text" />
 				</div>
-				<div class="content">
-					<div class="info">
-						<div class="title">86-不存在的战区</div>
-						<div class="date">与<span>2023/11/6</span>加入</div>
+				<template>
+					<div class="list" @click="goAnimeDetail">
+						<div class="item" v-for="(anime, index) in animeList" :key="index">
+							<div class="img">
+								<img :src="anime.cover" alt="">
+							</div>
+							<div class="content">
+								<div class="info">
+									<div class="title">{{anime.title}}</div>
+									<div class="date" v-show="selectFlag!==2">与<span>{{anime.createDate}}</span>加入</div>
+									<div class="date" v-show="selectFlag===2">与<span>{{anime.finishedWatchingDate}}</span>看完</div>
+								</div>
+								<div class="control">
+									<el-popover
+											:visible-arrow="false"
+											popper-class="popover"
+											placement="top"
+											width="200"
+											:ref="'popover-' + index"
+											trigger="click">
+										<ul>
+											<li @click="updateAnimeWatchingStatus(index, anime.collectId, true)" v-show="!anime.watchingStatus">
+												<svg width="18px" height="18px" viewBox="0 0 1024 1024" stroke="black" stroke-width="20" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M939.36 218.912a32 32 0 0 1 45.856 44.672l-538.016 552a32 32 0 0 1-43.776 1.92L63.872 526.048a32 32 0 1 1 41.696-48.544l316.768 271.936L939.36 218.88z"  /></svg>
+												<div>标记为已看</div>
+											</li>
+											<li @click="updateAnimeWatchingStatus(index, anime.collectId, false)" v-show="anime.watchingStatus">
+												<svg width="18px" height="18px" viewBox="0 0 1024 1024" stroke="black" stroke-width="20" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M547.2 512l416-416c9.6-9.6 9.6-25.6 0-35.2s-25.6-9.6-35.2 0l-416 416-416-416c-9.6-9.6-25.6-9.6-35.2 0s-9.6 25.6 0 35.2l416 416-416 416c-9.6 9.6-9.6 25.6 0 35.2s25.6 9.6 35.2 0l416-416 416 416c9.6 9.6 25.6 9.6 35.2 0s9.6-25.6 0-35.2L547.2 512z" /></svg>
+												<div>标记为未看</div>
+											</li>
+											<li @click="toDustbin(index, anime.collectId)">
+												<svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M177.1 48h93.7c2.7 0 5.2 1.3 6.7 3.6l19 28.4h-145l19-28.4c1.5-2.2 4-3.6 6.7-3.6zM354.2 80L317.5 24.9C307.1 9.4 289.6 0 270.9 0H177.1c-18.7 0-36.2 9.4-46.6 24.9L93.8 80H80.1 32 24C10.7 80 0 90.7 0 104s10.7 24 24 24H35.6L59.6 452.7c2.5 33.4 30.3 59.3 63.8 59.3H324.6c33.5 0 61.3-25.9 63.8-59.3L412.4 128H424c13.3 0 24-10.7 24-24s-10.7-24-24-24h-8H367.9 354.2zm10.1 48L340.5 449.2c-.6 8.4-7.6 14.8-16 14.8H123.4c-8.4 0-15.3-6.5-16-14.8L83.7 128H364.3z"></path></svg>
+												<div>发送到垃圾箱</div>
+											</li>
+										</ul>
+										<button slot="reference" @click.stop>
+											<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M432 256a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zm-160 0a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zM64 304a48 48 0 1 1 0-96 48 48 0 1 1 0 96z"></path></svg>
+										</button>
+									</el-popover>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div class="control">
-						<el-popover
-								:visible-arrow="false"
-								popper-class="popover"
-								placement="top"
-								width="200"
-								ref="popover-1"
-								trigger="click">
-							<ul>
-								<li @click="editAnime(1)">
-									<svg width="18px" height="18px" viewBox="0 0 1024 1024" stroke="black" stroke-width="20" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M939.36 218.912a32 32 0 0 1 45.856 44.672l-538.016 552a32 32 0 0 1-43.776 1.92L63.872 526.048a32 32 0 1 1 41.696-48.544l316.768 271.936L939.36 218.88z"  /></svg>
-									<div>标记为已看</div>
-								</li>
-								<li @click="editAnime(1)">
-									<svg width="18px" height="18px" viewBox="0 0 1024 1024" stroke="black" stroke-width="20" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M547.2 512l416-416c9.6-9.6 9.6-25.6 0-35.2s-25.6-9.6-35.2 0l-416 416-416-416c-9.6-9.6-25.6-9.6-35.2 0s-9.6 25.6 0 35.2l416 416-416 416c-9.6 9.6-9.6 25.6 0 35.2s25.6 9.6 35.2 0l416-416 416 416c9.6 9.6 25.6 9.6 35.2 0s9.6-25.6 0-35.2L547.2 512z" /></svg>
-									<div>标记为未看</div>
-								</li>
-								<li @click="editAnime(1)">
-									<svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M177.1 48h93.7c2.7 0 5.2 1.3 6.7 3.6l19 28.4h-145l19-28.4c1.5-2.2 4-3.6 6.7-3.6zM354.2 80L317.5 24.9C307.1 9.4 289.6 0 270.9 0H177.1c-18.7 0-36.2 9.4-46.6 24.9L93.8 80H80.1 32 24C10.7 80 0 90.7 0 104s10.7 24 24 24H35.6L59.6 452.7c2.5 33.4 30.3 59.3 63.8 59.3H324.6c33.5 0 61.3-25.9 63.8-59.3L412.4 128H424c13.3 0 24-10.7 24-24s-10.7-24-24-24h-8H367.9 354.2zm10.1 48L340.5 449.2c-.6 8.4-7.6 14.8-16 14.8H123.4c-8.4 0-15.3-6.5-16-14.8L83.7 128H364.3z"></path></svg>
-									<div>发送到垃圾箱</div>
-								</li>
-							</ul>
-							<button slot="reference" @click.stop>
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M432 256a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zm-160 0a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zM64 304a48 48 0 1 1 0-96 48 48 0 1 1 0 96z"></path></svg>
-							</button>
-						</el-popover>
-					</div>
-				</div>
-			</div>
-			<div class="item">
-				<div class="img">
-					<img src="@/assets/home/animeList/罪恶王冠.jpg" alt="">
-				</div>
-				<div class="content">
-					<div class="info">
-						<div class="title">罪恶王冠</div>
-						<div class="date">与<span>2023/11/6</span>加入</div>
-					</div>
-					<div class="control">
-						<el-popover
-								:visible-arrow="false"
-								popper-class="popover"
-								placement="top"
-								width="200"
-								ref="popover-2"
-								trigger="click">
-							<ul>
-								<li @click="editAnime(2)">
-									<svg width="18px" height="18px" viewBox="0 0 1024 1024" stroke="black" stroke-width="20" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M939.36 218.912a32 32 0 0 1 45.856 44.672l-538.016 552a32 32 0 0 1-43.776 1.92L63.872 526.048a32 32 0 1 1 41.696-48.544l316.768 271.936L939.36 218.88z"  /></svg>
-									<div>标记为已看</div>
-								</li>
-								<li @click="editAnime(2)">
-									<svg width="18px" height="18px" viewBox="0 0 1024 1024" stroke="black" stroke-width="20" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M547.2 512l416-416c9.6-9.6 9.6-25.6 0-35.2s-25.6-9.6-35.2 0l-416 416-416-416c-9.6-9.6-25.6-9.6-35.2 0s-9.6 25.6 0 35.2l416 416-416 416c-9.6 9.6-9.6 25.6 0 35.2s25.6 9.6 35.2 0l416-416 416 416c9.6 9.6 25.6 9.6 35.2 0s9.6-25.6 0-35.2L547.2 512z" /></svg>
-									<div>标记为未看</div>
-								</li>
-								<li @click="editAnime(2)">
-									<svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M177.1 48h93.7c2.7 0 5.2 1.3 6.7 3.6l19 28.4h-145l19-28.4c1.5-2.2 4-3.6 6.7-3.6zM354.2 80L317.5 24.9C307.1 9.4 289.6 0 270.9 0H177.1c-18.7 0-36.2 9.4-46.6 24.9L93.8 80H80.1 32 24C10.7 80 0 90.7 0 104s10.7 24 24 24H35.6L59.6 452.7c2.5 33.4 30.3 59.3 63.8 59.3H324.6c33.5 0 61.3-25.9 63.8-59.3L412.4 128H424c13.3 0 24-10.7 24-24s-10.7-24-24-24h-8H367.9 354.2zm10.1 48L340.5 449.2c-.6 8.4-7.6 14.8-16 14.8H123.4c-8.4 0-15.3-6.5-16-14.8L83.7 128H364.3z"></path></svg>
-									<div>发送到垃圾箱</div>
-								</li>
-							</ul>
-							<button slot="reference" @click.stop>
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M432 256a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zm-160 0a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zM64 304a48 48 0 1 1 0-96 48 48 0 1 1 0 96z"></path></svg>
-							</button>
-						</el-popover>
-					</div>
-				</div>
-			</div>
-			<div class="item">
-				<div class="img">
-					<img src="@/assets/home/animeList/钢之炼金术师.jpg" alt="">
-				</div>
-				<div class="content">
-					<div class="info">
-						<div class="title">钢之炼金术师</div>
-						<div class="date">与<span>2023/11/6</span>加入</div>
-					</div>
-					<div class="control">
-						<el-popover
-								:visible-arrow="false"
-								popper-class="popover"
-								placement="top"
-								width="200"
-								ref="popover-3"
-								trigger="click">
-							<ul>
-								<li @click="editAnime(3)">
-									<svg width="18px" height="18px" viewBox="0 0 1024 1024" stroke="black" stroke-width="20" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M939.36 218.912a32 32 0 0 1 45.856 44.672l-538.016 552a32 32 0 0 1-43.776 1.92L63.872 526.048a32 32 0 1 1 41.696-48.544l316.768 271.936L939.36 218.88z"  /></svg>
-									<div>标记为已看</div>
-								</li>
-								<li @click="editAnime(3)">
-									<svg width="18px" height="18px" viewBox="0 0 1024 1024" stroke="black" stroke-width="20" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M547.2 512l416-416c9.6-9.6 9.6-25.6 0-35.2s-25.6-9.6-35.2 0l-416 416-416-416c-9.6-9.6-25.6-9.6-35.2 0s-9.6 25.6 0 35.2l416 416-416 416c-9.6 9.6-9.6 25.6 0 35.2s25.6 9.6 35.2 0l416-416 416 416c9.6 9.6 25.6 9.6 35.2 0s9.6-25.6 0-35.2L547.2 512z" /></svg>
-									<div>标记为未看</div>
-								</li>
-								<li @click="editAnime(3)">
-									<svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M177.1 48h93.7c2.7 0 5.2 1.3 6.7 3.6l19 28.4h-145l19-28.4c1.5-2.2 4-3.6 6.7-3.6zM354.2 80L317.5 24.9C307.1 9.4 289.6 0 270.9 0H177.1c-18.7 0-36.2 9.4-46.6 24.9L93.8 80H80.1 32 24C10.7 80 0 90.7 0 104s10.7 24 24 24H35.6L59.6 452.7c2.5 33.4 30.3 59.3 63.8 59.3H324.6c33.5 0 61.3-25.9 63.8-59.3L412.4 128H424c13.3 0 24-10.7 24-24s-10.7-24-24-24h-8H367.9 354.2zm10.1 48L340.5 449.2c-.6 8.4-7.6 14.8-16 14.8H123.4c-8.4 0-15.3-6.5-16-14.8L83.7 128H364.3z"></path></svg>
-									<div>发送到垃圾箱</div>
-								</li>
-							</ul>
-							<button slot="reference" @click.stop>
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M432 256a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zm-160 0a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zM64 304a48 48 0 1 1 0-96 48 48 0 1 1 0 96z"></path></svg>
-							</button>
-						</el-popover>
-					</div>
-				</div>
-			</div>
-			<div class="item">
-				<div class="img">
-					<img src="@/assets/home/animeList/火影忍者.jpg" alt="">
-				</div>
-				<div class="content">
-					<div class="info">
-						<div class="title">火影忍者</div>
-						<div class="date">与<span>2023/11/6</span>加入</div>
-					</div>
-					<div class="control">
-						<el-popover
-								:visible-arrow="false"
-								popper-class="popover"
-								placement="top"
-								width="200"
-								ref="popover-4"
-								trigger="click">
-							<ul>
-								<li @click="editAnime(4)">
-									<svg width="18px" height="18px" viewBox="0 0 1024 1024" stroke="black" stroke-width="20" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M939.36 218.912a32 32 0 0 1 45.856 44.672l-538.016 552a32 32 0 0 1-43.776 1.92L63.872 526.048a32 32 0 1 1 41.696-48.544l316.768 271.936L939.36 218.88z"  /></svg>
-									<div>标记为已看</div>
-								</li>
-								<li @click="editAnime(4)">
-									<svg width="18px" height="18px" viewBox="0 0 1024 1024" stroke="black" stroke-width="20" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M547.2 512l416-416c9.6-9.6 9.6-25.6 0-35.2s-25.6-9.6-35.2 0l-416 416-416-416c-9.6-9.6-25.6-9.6-35.2 0s-9.6 25.6 0 35.2l416 416-416 416c-9.6 9.6-9.6 25.6 0 35.2s25.6 9.6 35.2 0l416-416 416 416c9.6 9.6 25.6 9.6 35.2 0s9.6-25.6 0-35.2L547.2 512z" /></svg>
-									<div>标记为未看</div>
-								</li>
-								<li @click="editAnime(4)">
-									<svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M177.1 48h93.7c2.7 0 5.2 1.3 6.7 3.6l19 28.4h-145l19-28.4c1.5-2.2 4-3.6 6.7-3.6zM354.2 80L317.5 24.9C307.1 9.4 289.6 0 270.9 0H177.1c-18.7 0-36.2 9.4-46.6 24.9L93.8 80H80.1 32 24C10.7 80 0 90.7 0 104s10.7 24 24 24H35.6L59.6 452.7c2.5 33.4 30.3 59.3 63.8 59.3H324.6c33.5 0 61.3-25.9 63.8-59.3L412.4 128H424c13.3 0 24-10.7 24-24s-10.7-24-24-24h-8H367.9 354.2zm10.1 48L340.5 449.2c-.6 8.4-7.6 14.8-16 14.8H123.4c-8.4 0-15.3-6.5-16-14.8L83.7 128H364.3z"></path></svg>
-									<div>发送到垃圾箱</div>
-								</li>
-							</ul>
-							<button slot="reference" @click.stop>
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M432 256a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zm-160 0a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zM64 304a48 48 0 1 1 0-96 48 48 0 1 1 0 96z"></path></svg>
-							</button>
-						</el-popover>
-					</div>
-				</div>
-			</div>
-			<div class="item"></div>
-			<div class="item"></div>
-			<div class="item"></div>
-			<div class="item"></div>
-			<div class="item"></div>
-		</div>
+				</template>
+			</el-skeleton>
+		<el-empty v-if="emptyFlag" :image-size="250" description="暂无动漫" />
 		<!-- endregion -->
 	</div>
 </template>
 
 <script>
+import {reqGetPageAnime, reqSearchAnime, reqUpdateAnimeWacthingStatus, reqLogicalDeletion} from "@/api";
+import _ from "lodash";
+
 export default {
 	name: 'AnimeList',
 	data() {
 		return {
-			//筛选详细页面开启标志
+			//移动端筛选详细页面开启标志
 			detailFlag: false,
 
 			//筛选方式标志，默认为全部
 			selectFlag: 1,
+
+			//加载动画标志，true显示加载动画
+			loading: false,
+
+			//动漫数据
+			animeList: [],
+
+			//空状态，true显示空状态
+			emptyFlag: false,
+
+			//当前页
+			current: 1,
+
+			//每页显示动漫数量
+			size: 10,
+
+			//搜索关键词
+			keyword: '',
+
+			//是否还有下一页数据
+			hasHext: true
 		}
 	},
 	computed: {
@@ -267,23 +183,15 @@ export default {
 		}
 	},
 	methods: {
-		//移动端选择动漫筛选类型
-		mobileSelectTypeHandle(type) {
-			this.selectFlag = type;
-
-			//关闭选择页面
-			this.detailFlag = false;
-		},
-
 		//添加按钮回调
 		goAddAnime() {
-			//将内容改为 添加
-			this.$bus.$emit('updateContentType', 3);
+			//将内容改为添加
+			this.$store.commit('HOME_CONTENT_TYPE', 3);
 
 			this.$router.push('/home/addAnime');
 		},
 
-		//添加动漫回调
+		//点击动漫进入详情页面
 		goAnimeDetail(e) {
 			//判断点击元素的父元素是否是'.item'
 			if (e.target.closest('.item') != null) {
@@ -291,10 +199,156 @@ export default {
 			}
 		},
 
-		//点击编辑动漫按钮回调
-		editAnime(index) {
+		/**
+		 * 更新动漫观看状态
+		 * @param index 当前动漫在数组中的索引
+		 * @param collectId 记录id
+		 * @param status 状态
+		 * @returns {Promise<void>}
+		 */
+		async updateAnimeWatchingStatus(index, collectId, status) {
 			//关闭编辑动漫弹窗
-			this.$refs['popover-' + index].doClose();
+			this.$refs['popover-' + index][0].doClose();
+
+			//更改服务器数据
+			let result = await reqUpdateAnimeWacthingStatus(collectId, status);
+			this.$message({
+				type: result.code === 200 ? 'success' : 'error',
+				message: result.code === 200 ? '标记成功！' : '标记失败！'
+			});
+
+			//更新列表
+			this.animeList.splice(index, 1);
+		},
+
+		/**
+		 * 将动漫移入垃圾箱
+		 * @param index 当前动漫在数组中的索引
+		 * @param collectId 记录id
+		 * @returns {Promise<void>}
+		 */
+		async toDustbin(index, collectId) {
+			//关闭编辑动漫弹窗
+			this.$refs['popover-' + index][0].doClose();
+
+			let result = await reqLogicalDeletion(collectId);
+			this.$message({
+				type: result.code === 200 ? 'success' : 'error',
+				message: result.code === 200 ? '移入成功！' : '移入失败！'
+			});
+
+			//更新animeList
+			this.animeList.splice(index, 1);
+		},
+
+		//获取对应分类的第一页数据
+		async getFirstPageAnime() {
+			//开启加载动画
+			this.loading = true;
+
+			//根据selectFlag决定参数
+			let params = {
+				current: 1,
+				size: this.size
+			};
+			if (this.selectFlag === 2) {
+				params.status = 1;
+			} else if (this.selectFlag === 3) {
+				params.status = 0;
+			}
+
+			//获取数据
+			let result = await reqGetPageAnime(params);
+			this.animeList = result.data || [];
+
+			this.current++;
+
+			//关闭加载动画
+			this.loading = false;
+
+			//数据为空展示空状态
+			this.emptyFlag = this.animeList.length === 0;
+
+			//数据为空表示下一页无数据
+			this.hasHext = (result.data || []).length !== 0;
+		},
+
+		//获取指定页动漫数据
+		async getPageAnime() {
+			//根据selectFlag决定参数
+			let params = {
+				current: this.current,
+				size: this.size
+			};
+			if (this.selectFlag === 2) {
+				params.status = 1;
+			} else if (this.selectFlag === 3) {
+				params.status = 0;
+			}
+
+			//获取数据
+			let result = await reqGetPageAnime(params);
+			this.animeList = this.animeList.concat(result.data || []);
+
+			//数据为空表示下一页无数据
+			this.hasHext = (result.data || []).length !== 0;
+		},
+
+		//搜索动漫
+		searchAnime: _.throttle(async function () {
+			if (this.keyword.length === 0) {
+				return;
+			}
+
+			//开启加载动画
+			this.loading = true;
+
+			//获取数据
+			let result = await reqSearchAnime(this.keyword);
+			if (result.code !== 200) {
+				this.$message.error(result.msg);
+			}
+			this.animeList = result.data || [];
+
+			//关闭加载动画
+			this.loading = false;
+
+			//数据为空展示空状态
+			this.emptyFlag = this.animeList.length === 0;
+		}, 1000),
+
+		//点击动漫分类按钮
+		changeAnimeType: _.throttle(function (type) {
+			if (this.selectFlag === type) {
+				return;
+			}
+
+			this.selectFlag = type;
+
+			//关闭移动端选择页面
+			this.detailFlag = false;
+
+			//更改当前页为第一页
+			this.current = 1;
+
+			//获取对应分类第一页动漫数据
+			this.getFirstPageAnime();
+		}, 500),
+	},
+	created() {
+		//获取全部分类中第一页数据
+		this.getFirstPageAnime();
+	},
+	mounted() {
+		window.onscroll = () => {
+			let bottomOfWindow = document.documentElement.offsetHeight - document.documentElement.scrollTop - window.innerHeight;
+
+			//当距离底部的距离小于300px时，请求服务器数据
+			if (bottomOfWindow < 300 && this.hasHext) {
+				this.hasHext = false;
+				this.getPageAnime();
+				this.current++;
+			}
 		}
 	}
 }
@@ -603,33 +657,40 @@ export default {
 }
 
 .animeList .list .item .content .info {
-	width: 80%;
+	width: 85%;
 	height: 100%;
 	float: left;
-}
-
-.animeList .list .item .content .info {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-evenly;
-	align-items: center;
+	text-align: center;
+}
+
+.animeList .list .item .content .info .title {
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding-left: 5px;
+	box-sizing: border-box;
 }
 
 .animeList .list .item .content .info .date {
+	width: 100%;
 	font-size: 0.8rem;
 	color: #ada8a8;
 }
 
 .animeList .list .item .content .control {
-	width: 20%;
+	width: 15%;
 	height: 100%;
 	float: right;
 	position: relative;
 }
 
 .animeList .list .item .content .control button {
-	width: 35px;
-	height: 35px;
+	width: 30px;
+	height: 30px;
 	border-radius: 50%;
 	position: absolute;
 	top: 50%;
@@ -656,6 +717,18 @@ export default {
 	right: 0;
 	bottom: 0;
 	margin: auto;
+}
+
+.popover ul li:last-child {
+	color: red;
+}
+
+.popover ul li > svg {
+	margin-left: 10px;
+}
+
+.popover ul li > div {
+	margin-left: 10px;
 }
 /* endregion */
 
@@ -695,6 +768,19 @@ export default {
 	.animeList .list .item {
 		aspect-ratio: 1;
 	}
+
+	.animeList .list .item .content .info {
+		width: 80%;
+	}
+
+	.animeList .list .item .content .control {
+		width: 20%;
+	}
+
+	.animeList .list .item .content .control button {
+		width: 35px;
+		height: 35px;
+	}
 }
 @media screen and (min-width: 700px) and (max-width: 1078px) {
 	.animeList .list {
@@ -719,36 +805,40 @@ export default {
 </style>
 
 <style>
-.popover {
-	border-radius: 1rem;
-	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),0 4px 6px -2px rgba(0, 0, 0, 0.05);
-	font-size: 1rem;
+.el-skeleton {
+	margin-top: 1.5rem;
 }
 
-.popover ul li {
-	display: flex;
-	align-items: center;
-	line-height: 38px;
-	border-radius: 8px;
-	cursor: pointer;
-	border: 1px solid transparent;
-	transition: border,background-color .3s;
+.el-empty .el-empty__description p {
+	font-size: 1.5rem;
 }
 
-.popover ul li:hover {
-	background-color: #e5e0df;
-	border: 1px solid #e5e0df;
+/*移动端*/
+@media screen and (max-width: 700px) {
+	.el-skeleton > div {
+		margin-top: 1rem;
+		width: 100%;
+	}
+
+	.el-skeleton > div .el-skeleton__image {
+		width: 100%;
+		height: 260px;
+	}
 }
 
-.popover ul li:last-child {
-	color: red;
-}
+@media screen and (min-width: 750px) {
+	.el-skeleton {
+		display: flex;
+	}
 
-.popover ul li > svg {
-	margin-left: 10px;
-}
+	.el-skeleton > div {
+		margin-left: 1rem;
+		width: 280px;
+	}
 
-.popover ul li > div {
-	margin-left: 10px;
+	.el-skeleton > div .el-skeleton__image {
+		width: 100%;
+		height: 260px;
+	}
 }
 </style>

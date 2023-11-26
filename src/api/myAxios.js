@@ -2,6 +2,8 @@
 	对axios二次封装
  */
 import _axios from "axios";
+import store from "@/store";
+import {Message} from "element-ui";
 
 //创建一个axios实例
 const axios = _axios.create({
@@ -17,6 +19,11 @@ const axios = _axios.create({
 config对象中包含请求头信息
  */
 axios.interceptors.request.use((config) => {
+	//非/user/**请求添加token
+	if (!config.url.includes('/user')) {
+		config.headers.Authorization = 'Bearer ' + store.state.token;
+	}
+
 	return config;
 });
 
@@ -27,10 +34,24 @@ axios.interceptors.request.use((config) => {
 		2.2 失败回调
  */
 axios.interceptors.response.use((res) => {
+	//token有误或token过期
+	if (res.data.code === 402 || res.data.code === 403) {
+		Message.warning('登录信息已过期，请重新登录！');
+
+		//删除vuex中用户信息
+		store.commit('TOKEN', '');
+		store.commit('USER_INFO', {})
+
+		//删除localStorage中用户信息
+		localStorage.removeItem('token');
+		localStorage.removeItem('userInfo');
+
+		location.href = 'http://localhost/#/login';
+	}
+
 	return res.data;
-	// eslint-disable-next-line no-unused-vars
-}, (error) => {
-	return Promise.reject(new Error('fail'));
+}, error => {
+	return Promise.reject(error)
 });
 
 export default axios;

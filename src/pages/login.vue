@@ -50,6 +50,7 @@
 <script>
 import _ from "lodash";
 import {reqLogin} from "@/api";
+import {jwtDecode} from "jwt-decode";
 
 export default {
 	name: 'LoginPage',
@@ -97,11 +98,24 @@ export default {
 		async login() {
 			if (this.verifyFlag) {
 				let result = await reqLogin(this.formData.email, this.formData.password, this.formData.checkCode);
-				console.log(result);
-				this.$message({
-					type: result.code === 200 ? 'success' : 'error',
-					message: result.msg
-				});
+				if (result.code !== 200) {
+					this.$message.error(result.msg);
+				} else {
+					//解析token获取用户信息
+					let token = result.data;
+					let userInfo = jwtDecode(token);
+
+					//将token存入vuex和localStorage
+					this.$store.commit('TOKEN', token);
+					localStorage.setItem('token', token);
+
+					//将userInfo存入vuex和localStorage
+					this.$store.commit('USER_INFO', userInfo);
+					localStorage.setItem('userInfo', JSON.stringify(userInfo));
+
+					//跳转到首页
+					this.$router.push('/home');
+				}
 			}
 		},
 
@@ -124,7 +138,7 @@ export default {
 	computed: {
 		//表单校验成功标志
 		verifyFlag() {
-			return this.flag.email && this.flag.password;
+			return this.flag.email && this.flag.password && this.flag.checkCode;
 		}
 	},
 }

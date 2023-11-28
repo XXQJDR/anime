@@ -120,13 +120,16 @@ export default {
 		async register() {
 			//所有项都已输入
 			if (this.verifyFlag) {
-				console.log(this.formData);
 				let result = await reqRegister(this.formData.username, this.formData.password, this.formData.email, this.formData.checkCode);
-				console.log(result);
 				this.$message({
 					type: result.code === 200 ? 'success' : 'error',
 					message: result.msg
 				});
+
+				//注册成功后跳转至登录页面
+				if (result.code === 200) {
+					this.$router.push('/login');
+				}
 			}
 		},
 

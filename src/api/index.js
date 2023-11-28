@@ -24,12 +24,12 @@ export const reqLogin = (email, password, code) => {
 
 //搜索动漫，用于添加动漫
 export const reqSearchAnimeForAdd = (title) => {
-	return axios.get(`/collect/searchAnimeForCrawler/${title}`);
+	return axios.get(`/anime/searchAnimeForCrawler/${title}`);
 }
 
 //添加动漫
 export const reqAddAnime = (anime) => {
-	return axios.post('/collect/addAnime', anime);
+	return axios.post('/anime/addAnime', anime);
 }
 
 /**
@@ -40,21 +40,32 @@ export const reqAddAnime = (anime) => {
  * 	无代表查询全部
  */
 export const reqGetPageAnime = (params) => {
-	return axios.post('/collect/getPageAnime', params);
+	return axios.post('/anime/getPageAnime', params);
 }
 
-//搜索动漫
-export const reqSearchAnime = (keyword) => {
-	return axios.get(`/collect/searchAnime/${keyword}`);
+/**
+ * 搜索动漫
+ * @param keyword 搜索关键词
+ * @param status 动漫观看状态
+ * @returns {Promise<axios.AxiosResponse<any>>}
+ */
+export const reqSearchAnime = (keyword, status) => {
+	let params = {keyword, status};
+	return axios.post('/anime/searchAnime', params);
 }
 
 //更改动漫观看状态
 export const reqUpdateAnimeWacthingStatus = (collectId, status) => {
 	let params = {collectId, status};
-	return axios.post('/collect/updateAnimeWacthingStatus', params);
+	return axios.post('/anime/updateAnimeWacthingStatus', params);
 }
 
 //将动漫移入垃圾箱
 export const reqLogicalDeletion = (collectId) => {
-	return axios.get(`/collect/logicalDeletion/${collectId}`);
+	return axios.get(`/anime/logicalDeletion/${collectId}`);
+}
+
+//随机获取动漫
+export const reqRandomAnime = () => {
+	return axios.get('/anime/randomAnime');
 }

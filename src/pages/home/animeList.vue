@@ -218,7 +218,9 @@ export default {
 			});
 
 			//更新列表
-			this.animeList.splice(index, 1);
+			if (this.selectFlag !== 1) {
+				this.animeList.splice(index, 1);
+			}
 		},
 
 		/**
@@ -304,7 +306,7 @@ export default {
 			this.loading = true;
 
 			//获取数据
-			let result = await reqSearchAnime(this.keyword);
+			let result = await reqSearchAnime(this.keyword, this.selectFlag);
 			if (result.code !== 200) {
 				this.$message.error(result.msg);
 			}

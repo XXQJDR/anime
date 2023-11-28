@@ -128,7 +128,7 @@
 </template>
 
 <script>
-import {reqGetPageAnime, reqSearchAnime, reqUpdateAnimeWacthingStatus, reqLogicalDeletion} from "@/api";
+import {reqGetPageAnime, reqSearchAnime, reqUpdateAnimeWacthingStatus, reqUpdateAnimeDeleted} from "@/api";
 import _ from "lodash";
 
 export default {
@@ -233,7 +233,7 @@ export default {
 			//关闭编辑动漫弹窗
 			this.$refs['popover-' + index][0].doClose();
 
-			let result = await reqLogicalDeletion(collectId);
+			let result = await reqUpdateAnimeDeleted(collectId, true);
 			this.$message({
 				type: result.code === 200 ? 'success' : 'error',
 				message: result.code === 200 ? '移入成功！' : '移入失败！'
@@ -803,45 +803,6 @@ export default {
 @media screen and (min-width: 1668px) {
 	.animeList .list {
 		grid-template-columns: repeat(5, 1fr);
-	}
-}
-</style>
-
-<style>
-.el-skeleton {
-	margin-top: 1.5rem;
-}
-
-.el-empty .el-empty__description p {
-	font-size: 1.5rem;
-}
-
-/*移动端*/
-@media screen and (max-width: 700px) {
-	.el-skeleton > div {
-		margin-top: 1rem;
-		width: 100%;
-	}
-
-	.el-skeleton > div .el-skeleton__image {
-		width: 100%;
-		height: 260px;
-	}
-}
-
-@media screen and (min-width: 750px) {
-	.el-skeleton {
-		display: flex;
-	}
-
-	.el-skeleton > div {
-		margin-left: 1rem;
-		width: 280px;
-	}
-
-	.el-skeleton > div .el-skeleton__image {
-		width: 100%;
-		height: 260px;
 	}
 }
 </style>

@@ -27,7 +27,7 @@
 					mode="out-in"
 					enter-active-class="animate__animated animate__fadeIn"
 					leave-active-class="animate__animated animate__fadeOut"
-					:duration="{enter: 600, leave: 600}"
+					:duration="{enter: 400, leave: 400}"
 			>
 				<router-view />
 			</transition>

@@ -4,7 +4,7 @@
 			mode="out-in"
 			enter-active-class="animate__animated animate__fadeIn"
 			leave-active-class="animate__animated animate__fadeOut"
-			:duration="{enter: 600, leave: 600}"
+			:duration="{enter: 400, leave: 400}"
 	>
 		<router-view />
 	</transition>
@@ -36,6 +36,16 @@ body {
 	body {
 		font-size: 14px;
 	}
+
+	.el-skeleton > div {
+		margin-top: 1rem;
+		width: 100%;
+	}
+
+	.el-skeleton > div .el-skeleton__image {
+		width: 100%;
+		height: 260px;
+	}
 }
 
 /* region eleemnt样式修改 */
@@ -63,6 +73,30 @@ body {
 .el-message .el-message__icon,
 .el-message .el-message__content {
 	font-size: 0.9rem;
+}
+
+.el-skeleton {
+	margin-top: 1.5rem;
+}
+
+.el-empty .el-empty__description p {
+	font-size: 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+	.el-skeleton {
+		display: flex;
+	}
+
+	.el-skeleton > div {
+		margin-left: 1rem;
+		width: 280px;
+	}
+
+	.el-skeleton > div .el-skeleton__image {
+		width: 100%;
+		height: 260px;
+	}
 }
 /* endregion */
 </style>

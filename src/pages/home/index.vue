@@ -59,7 +59,6 @@
 
 <script>
 import MobileTopbar from "@/components/mobileTopbar.vue";
-import _ from "lodash";
 import {mapState} from "vuex";
 
 export default {
@@ -103,7 +102,7 @@ export default {
 		},
 
 		//动态获取浏览器宽度
-		getWindowInfo: _.debounce(function () {
+		getWindowInfo() {
 			if (window.innerWidth <= 700) {
 				this.browserIdentity = 2;
 				this.$store.commit('SIDEBAR_FLAG', false);
@@ -111,7 +110,7 @@ export default {
 				this.browserIdentity = 1;
 				this.$store.commit('SIDEBAR_FLAG', true);
 			}
-		}, 200),
+		},
 
 		//退出登录
 		logout() {
@@ -169,6 +168,7 @@ export default {
 
 #disableSidebar {
 	transform: translateX(-100%);
+	background-color: transparent;
 }
 
 #enableSidebar {
@@ -271,16 +271,17 @@ export default {
 	width: calc(100vw - var(--sidebarWidth) - (100vw - 100%));
 	min-height: 100vh;
 	background-color: #F7F3F2;
-	box-sizing: border-box;
 	padding: 1.3rem 2%;
 	float: right;
+	box-sizing: border-box;
+	transition: width .3s;
 }
 
 /*移动端*/
 @media screen and (max-width: 700px) {
 	.home .content {
 		float: none;
-		width: 100vw;
+		width: 100%;
 	}
 
 	.home .sidebar .user > i {

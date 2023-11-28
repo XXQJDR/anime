@@ -177,7 +177,7 @@ export default {
 /* region 输入建议 */
 .autoRecognize .form .suggestion {
 	width: 100%;
-	min-width: 980px;
+	min-width: 710px;
 	min-height: 200px;
 	background-color: #FFFFFF;
 	margin-top: 1rem;
@@ -189,10 +189,11 @@ export default {
 .autoRecognize .form .suggestion .item {
 	width: 100%;
 	display: flex;
-	justify-content: center;
-	padding: 10px 0;
+	justify-content: start;
+	padding: 10px;
 	border-bottom: 1px solid rgba(0, 0, 0, .1);
 	transition: background-color 0.3s;
+	box-sizing: border-box;
 }
 
 .autoRecognize .form .suggestion .item:last-child {
@@ -200,6 +201,7 @@ export default {
 }
 
 .autoRecognize .form .suggestion .item .img {
+	min-width: 144px;
 	height: 200px;
 	border-radius: 5px;
 	overflow: hidden;
@@ -251,7 +253,6 @@ export default {
 }
 
 .autoRecognize .form .suggestion .item .info {
-	width: 780px;
 	padding-left: 15px;
 }
 
@@ -330,6 +331,48 @@ export default {
 
 	.autoRecognize .form .suggestion .item .info .intro {
 		display: none;
+	}
+}
+
+@media screen and (min-width: 700px) and (max-width: 1000px) {
+	.autoRecognize .form .suggestion {
+		min-width: 0;
+	}
+
+	.autoRecognize .form .suggestion .item {
+		justify-content: start;
+	}
+
+	.autoRecognize .form .suggestion .item .info .other {
+		display: block;
+	}
+
+	.autoRecognize .form .suggestion .item .info .other .notNecessary {
+		display: none;
+	}
+
+	.autoRecognize .form .suggestion .item .info .intro {
+		display: none;
+	}
+
+	/* 鼠标移入一行内背景颜色改变 */
+	.autoRecognize .form .suggestion .item:hover {
+		background-color: #F7F3F2;
+	}
+
+	/* 鼠标移入图片展示遮罩 */
+	.autoRecognize .form .suggestion .item .img:hover .mask {
+		opacity: 1;
+	}
+
+	/* 鼠标移入图片，图片放大 */
+	.autoRecognize .form .suggestion .item .img:hover img {
+		transform: scale(1.1);
+	}
+
+	/* 鼠标移入添加按钮，添加按钮旋转 */
+	.autoRecognize .form .suggestion .item .img .mask .box:hover {
+		transform: rotateZ(180deg);
 	}
 }
 

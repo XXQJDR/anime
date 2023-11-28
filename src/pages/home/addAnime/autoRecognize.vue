@@ -163,6 +163,7 @@ export default {
 .autoRecognize .form input:focus {
 	border-color: rgb(49, 130, 206);
 	box-shadow: rgb(49, 130, 206) 0 0 0 1px;
+	background-color: #FFFFFF;
 }
 
 /* placeholder居中 */

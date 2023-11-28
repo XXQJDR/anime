@@ -461,6 +461,7 @@ export default {
 .animeList > .control .search input:focus {
 	border-color: rgb(49, 130, 206);
 	box-shadow: rgb(49, 130, 206) 0 0 0 1px;
+	background-color: #FFFFFF;
 }
 /* endregion */
 

@@ -34,7 +34,9 @@ export const reqAddAnime = (anime) => {
 
 /**
  * 获取用户已添加的动漫
- * params.status
+ * current：当前页
+ * size：每页显示条数
+ * status
  * 	1代表查询已看
  * 	0代表查询未看
  * 	无代表查询全部
@@ -60,12 +62,23 @@ export const reqUpdateAnimeWacthingStatus = (collectId, status) => {
 	return axios.post('/anime/updateAnimeWacthingStatus', params);
 }
 
-//将动漫移入垃圾箱
-export const reqLogicalDeletion = (collectId) => {
-	return axios.get(`/anime/logicalDeletion/${collectId}`);
+//更改动漫逻辑删除状态
+export const reqUpdateAnimeDeleted = (collectId, status) => {
+	let params = {collectId, status};
+	return axios.post('/anime/updateAnimeDeleted', params);
 }
 
 //随机获取动漫
 export const reqRandomAnime = () => {
 	return axios.get('/anime/randomAnime');
+}
+
+//获取加入垃圾箱的动漫
+export const reqGetDustbinData = () => {
+	return axios.get('/anime/getDustbinData');
+}
+
+//彻底删除动漫
+export const reqRemoveAnime = (collectId) => {
+	return axios.get(`/anime/removeAnime/${collectId}`);
 }

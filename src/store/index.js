@@ -16,6 +16,15 @@ const state = {
 
 	//侧边栏显示标志
 	sidebarFlag: false,
+
+	//主页内容类型标志，默认为全部
+	selectFlag: 1,
+
+	//轮播图图片
+	images: [],
+
+	//轮播图对象
+	mySwiper: {}
 };
 const actions = {};
 const mutations = {
@@ -30,6 +39,15 @@ const mutations = {
 	},
 	SIDEBAR_FLAG(state, sidebarFlag) {
 		state.sidebarFlag = sidebarFlag;
+	},
+	SELECT_FLAG(state, selectFlag) {
+		state.selectFlag = selectFlag;
+	},
+	IMAGES(state, images) {
+		state.images = images;
+	},
+	MY_SWIPER(state, mySwiper) {
+		state.mySwiper = mySwiper;
 	}
 };
 

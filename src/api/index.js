@@ -82,3 +82,20 @@ export const reqGetDustbinData = () => {
 export const reqRemoveAnime = (collectId) => {
 	return axios.get(`/anime/removeAnime/${collectId}`);
 }
+
+//获取动漫详细信息
+export const reqGetDetailAnime = (collectId) => {
+	return axios.get(`/anime/getDetailAnime/${collectId}`);
+}
+
+//上传文件
+export const reqUpload = (collectId, fileList) => {
+	let formData = new FormData();
+	fileList.forEach(item => formData.append('fileList', item.raw));
+	return axios.post(`/anime/upload/${collectId}`, formData);
+}
+
+//删除图片
+export const reqRemoveWonderfulMoment = (imageInfo) => {
+	return axios.post('/anime/removeWonderfulMoment', imageInfo);
+}

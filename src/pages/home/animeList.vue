@@ -79,8 +79,8 @@
 					<el-skeleton-item variant="text" />
 				</div>
 				<template>
-					<div class="list" @click="goAnimeDetail">
-						<div class="item" v-for="(anime, index) in animeList" :key="index">
+					<div class="list">
+						<div class="item" @click="goAnimeDetail(anime.collectId)" v-for="(anime, index) in animeList" :key="index">
 							<div class="img">
 								<img :src="anime.cover" alt="">
 							</div>
@@ -130,6 +130,7 @@
 <script>
 import {reqGetPageAnime, reqSearchAnime, reqUpdateAnimeWacthingStatus, reqUpdateAnimeDeleted} from "@/api";
 import _ from "lodash";
+import {mapState} from "vuex";
 
 export default {
 	name: 'AnimeList',
@@ -137,9 +138,6 @@ export default {
 		return {
 			//移动端筛选详细页面开启标志
 			detailFlag: false,
-
-			//筛选方式标志，默认为全部
-			selectFlag: 1,
 
 			//加载动画标志，true显示加载动画
 			loading: false,
@@ -164,6 +162,8 @@ export default {
 		}
 	},
 	computed: {
+		...mapState(['selectFlag']),
+
 		//移动端选择的筛选类型名称
 		selectedTypeName() {
 			let name;
@@ -180,7 +180,7 @@ export default {
 			}
 
 			return name;
-		}
+		},
 	},
 	methods: {
 		//添加按钮回调
@@ -192,11 +192,9 @@ export default {
 		},
 
 		//点击动漫进入详情页面
-		goAnimeDetail(e) {
-			//判断点击元素的父元素是否是'.item'
-			if (e.target.closest('.item') != null) {
-				this.$router.push('/animeDetail');
-			}
+		goAnimeDetail(collectId) {
+			//跳转
+			this.$router.push('/animeDetail?collectId=' + collectId);
 		},
 
 		/**
@@ -325,7 +323,8 @@ export default {
 				return;
 			}
 
-			this.selectFlag = type;
+			//修改内容标志
+			this.$store.commit('SELECT_FLAG', type);
 
 			//关闭移动端选择页面
 			this.detailFlag = false;

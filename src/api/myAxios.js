@@ -46,7 +46,7 @@ axios.interceptors.response.use((res) => {
 		localStorage.removeItem('token');
 		localStorage.removeItem('userInfo');
 
-		location.href = 'http://localhost/#/login';
+		location.href = 'http://192.168.31.112/#/login';
 	}
 
 	return res.data;

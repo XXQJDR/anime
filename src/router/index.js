@@ -15,6 +15,7 @@ const AnimeDetail = () => import('@/pages/animeDetail.vue');
 const AutoRecognize = () => import('@/pages/home/addAnime/autoRecognize.vue');
 const ManualAdd = () => import('@/pages/home/addAnime/manualAdd.vue');
 const Dustbin = () => import('@/pages/home/dustbin.vue');
+const ViewingHistory = () => import('@/pages/home/viewingHistory.vue')
 
 Vue.use(VueRouter);
 
@@ -58,14 +59,17 @@ const routes = [
 				case 'animeList':
 					store.commit('HOME_CONTENT_TYPE', 1);
 					break;
-				case 'animeRandom':
-					store.commit('HOME_CONTENT_TYPE', 2);
-					break;
-				case 'addAnime':
+				case 'viewingHistory':
 					store.commit('HOME_CONTENT_TYPE', 3);
 					break;
-				case 'dustbin':
+				case 'animeRandom':
+					store.commit('HOME_CONTENT_TYPE', 3);
+					break;
+				case 'addAnime':
 					store.commit('HOME_CONTENT_TYPE', 4);
+					break;
+				case 'dustbin':
+					store.commit('HOME_CONTENT_TYPE', 5);
 					break;
 			}
 
@@ -77,6 +81,13 @@ const routes = [
 				component: AnimeList,
 				meta: {
 					title: '动漫列表'
+				}
+			},
+			{
+				path: 'viewingHistory',
+				component: ViewingHistory,
+				meta: {
+					title: '观看历程'
 				}
 			},
 			{

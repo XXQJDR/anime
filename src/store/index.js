@@ -35,7 +35,7 @@ const mutations = {
 		state.token = token;
 	},
 	USER_INFO(state, userInfo) {
-		Object.assign(state.userInfo, userInfo);
+		state.userInfo = userInfo;
 	},
 	HOME_CONTENT_TYPE(state, homeContentType) {
 		state.homeContentType = homeContentType;

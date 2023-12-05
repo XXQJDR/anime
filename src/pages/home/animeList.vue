@@ -335,13 +335,8 @@ export default {
 			//获取对应分类第一页动漫数据
 			this.getFirstPageAnime();
 		}, 500),
-	},
-	created() {
-		//获取全部分类中第一页数据
-		this.getFirstPageAnime();
-	},
-	mounted() {
-		window.onscroll = () => {
+
+		lazyLoading() {
 			let bottomOfWindow = document.documentElement.offsetHeight - document.documentElement.scrollTop - window.innerHeight;
 
 			//当距离底部的距离小于300px时，请求服务器数据
@@ -351,6 +346,16 @@ export default {
 				this.current++;
 			}
 		}
+	},
+	created() {
+		//获取全部分类中第一页数据
+		this.getFirstPageAnime();
+	},
+	mounted() {
+		window.addEventListener('scroll', this.lazyLoading);
+	},
+	beforeDestroy() {
+		window.removeEventListener('scroll', this.lazyLoading);
 	}
 }
 </script>

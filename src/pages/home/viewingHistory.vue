@@ -58,6 +58,8 @@ export default {
 			if (this.current===1) {
 				this.emptyFlag = this.animeList.length===0;
 			}
+
+			this.current++;
 		},
 		lazyLoading() {
 			let bottomOfWindow = document.documentElement.offsetHeight - document.documentElement.scrollTop - window.innerHeight;
@@ -66,14 +68,12 @@ export default {
 			if (bottomOfWindow < 300 && this.hasHext) {
 				this.hasHext = false;
 				this.getPageAnime();
-				this.current++;
 			}
 		}
 	},
 	created() {
 		//获取第一页数据
 		this.getPageAnime();
-		this.current++;
 	},
 	mounted() {
 		window.addEventListener('scroll', this.lazyLoading);

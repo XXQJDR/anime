@@ -9,7 +9,7 @@
 		>
 			<router-view />
 		</transition>
-		<div style="position: fixed; bottom: 0; left: 0; z-index: 9999;">
+		<div style="position: fixed; bottom: 0; left: 0; z-index: 9999;" v-if="browserIdentity===1">
 			<live2d />
 		</div>
 	</div>
@@ -17,6 +17,8 @@
 
 <script>
 import live2d  from 'vue-live2d';
+import {mapState} from "vuex";
+
 export default {
 	name: 'App',
 	components: {live2d},
@@ -31,6 +33,9 @@ export default {
 			}
 		}
 	},
+	computed: {
+		...mapState(['browserIdentity'])
+	}
 }
 </script>
 

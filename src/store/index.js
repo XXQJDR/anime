@@ -24,7 +24,10 @@ const state = {
 	images: [],
 
 	//轮播图对象
-	mySwiper: {}
+	mySwiper: {},
+
+	//浏览器身份，1为pc，2为移动
+	browserIdentity: 2,
 };
 const actions = {};
 const mutations = {
@@ -48,7 +51,10 @@ const mutations = {
 	},
 	MY_SWIPER(state, mySwiper) {
 		state.mySwiper = mySwiper;
-	}
+	},
+	BROWSER_IDENTITY(state, browserIdentity) {
+		state.browserIdentity = browserIdentity;
+	},
 };
 
 //创建并暴露store

@@ -58,20 +58,16 @@
 				<router-view />
 			</transition>
 		</div>
-		<div style="position: fixed; bottom: 0; left: 0; z-index: 9999;" v-if="browserIdentity===1">
-			<live2d />
-		</div>
 	</div>
 </template>
 
 <script>
 import MobileTopbar from "@/components/mobileTopbar.vue";
 import {mapState} from "vuex";
-import live2d  from 'vue-live2d';
 
 export default {
 	name: 'HomePage',
-	components: {MobileTopbar, live2d},
+	components: {MobileTopbar},
 	computed: {
 		...mapState({
 			contentType: 'homeContentType',
@@ -105,17 +101,6 @@ export default {
 			this.$store.commit('SIDEBAR_FLAG', false);
 		},
 
-		//动态获取浏览器宽度
-		getWindowInfo() {
-			if (window.innerWidth <= 700) {
-				this.$store.commit('BROWSER_IDENTITY', 2);
-				this.$store.commit('SIDEBAR_FLAG', false);
-			} else {
-				this.$store.commit('BROWSER_IDENTITY', 1);
-				this.$store.commit('SIDEBAR_FLAG', true);
-			}
-		},
-
 		//退出登录
 		logout() {
 			//清除vuex中的数据
@@ -130,15 +115,6 @@ export default {
 			this.$router.push('/welcome');
 			this.$message.success('退出登录成功！');
 		}
-	},
-	mounted() {
-		//动态获取浏览器视宽来判断浏览器身份
-		this.getWindowInfo();
-		window.addEventListener('resize', this.getWindowInfo);
-	},
-	beforeDestroy() {
-		//取消事件监听
-		window.removeEventListener('resize', this.getWindowInfo);
 	},
 }
 </script>
@@ -165,14 +141,13 @@ export default {
 	position: fixed;
 	top: 0;
 	left: 0;
-	transition: transform 0.2s ease 0s;
+	transition: transform .3s;
 	background-color: white;
 	z-index: 100;
 }
 
 #disableSidebar {
 	transform: translateX(-100%);
-	background-color: transparent;
 }
 
 #enableSidebar {
@@ -292,28 +267,4 @@ export default {
 		font-size: 25px;
 	}
 }
-</style>
-
-<style>
-/* region 看板娘样式 */
-/*关闭看板娘功能面板*/
-.vue-live2d-tool {
-	display: none !important;
-}
-
-/*取消鼠标移上看板娘向右移动*/
-.vue-live2d-main-on-right:hover {
-	padding-right: 0 !important;
-}
-
-.vue-live2d {
-	height: 200px !important;
-	width: 200px !important;
-}
-
-#vue-live2d-main {
-	height: 200px !important;
-	cursor: default;
-}
-/* endregion */
 </style>

@@ -141,7 +141,7 @@ export default {
 			this.$router.back();
 		},
 
-		//文件个数超过最大个数
+		//文件个数超过最大个数回调
 		handleOnExceed() {
 			this.$message.error('文件个数超过最大个数');
 		},

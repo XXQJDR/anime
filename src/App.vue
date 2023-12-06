@@ -102,6 +102,12 @@ body {
 
 .vue-live2d {
 	height: 200px !important;
+	width: 200px !important;
+}
+
+#vue-live2d-main {
+	height: 200px !important;
+	cursor: default;
 }
  /* endregion */
 

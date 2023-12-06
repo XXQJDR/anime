@@ -9,33 +9,12 @@
 		>
 			<router-view />
 		</transition>
-		<div style="position: fixed; bottom: 0; left: 0; z-index: 9999;" v-if="browserIdentity===1">
-			<live2d />
-		</div>
 	</div>
 </template>
 
 <script>
-import live2d  from 'vue-live2d';
-import {mapState} from "vuex";
-
 export default {
 	name: 'App',
-	components: {live2d},
-	data () {
-		return {
-			direction: 'left',
-			tips: {
-				mouseover: [{
-					selector: '.vue-live2d',
-					texts: ['这样可以修改默认语句']
-				}]
-			}
-		}
-	},
-	computed: {
-		...mapState(['browserIdentity'])
-	}
 }
 </script>
 
@@ -88,28 +67,6 @@ body {
 	font-size: 1.5rem;
 }
 /* endregion */
-
-/* region 看板娘样式 */
-/*关闭看板娘功能面板*/
-.vue-live2d-tool {
-	display: none !important;
-}
-
-/*取消鼠标移上看板娘向右移动*/
-.vue-live2d-main-on-right:hover {
-	padding-right: 0 !important;
-}
-
-.vue-live2d {
-	height: 200px !important;
-	width: 200px !important;
-}
-
-#vue-live2d-main {
-	height: 200px !important;
-	cursor: default;
-}
- /* endregion */
 
 /*移动端*/
 @media screen and (max-width: 700px) {

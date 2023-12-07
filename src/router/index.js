@@ -15,7 +15,7 @@ const AnimeDetail = () => import('@/pages/animeDetail.vue');
 const AutoRecognize = () => import('@/pages/home/addAnime/autoRecognize.vue');
 const ManualAdd = () => import('@/pages/home/addAnime/manualAdd.vue');
 const Dustbin = () => import('@/pages/home/dustbin.vue');
-const ViewingHistory = () => import('@/pages/home/viewingHistory.vue')
+const ViewingHistory = () => import('@/pages/home/viewingHistory.vue');
 
 Vue.use(VueRouter);
 
@@ -137,6 +137,17 @@ const routes = [
 		meta: {
 			title: '测试'
 		}
+	},
+	{
+		path: '/404',
+		component: () => import('@/pages/404.vue'),
+		meta: {
+			title: '404'
+		}
+	},
+	{
+		path: '*',
+		redirect: '/404'
 	}
 ];
 
@@ -165,12 +176,10 @@ router.beforeEach((to, from, next) => {
 	}
 
 	//根据前往的路由更改看板娘的位置
-	if (store.state.browserIdentity===1) {
-		if (to.path==='/login' || to.path==='/register') {
-			store.state.live2dPosition = 'right';
-		} else {
-			store.state.live2dPosition = 'left';
-		}
+	if (to.path==='/login' || to.path==='/register') {
+		store.state.live2dPosition = 'right';
+	} else {
+		store.state.live2dPosition = 'left';
 	}
 
 	//组件权限控制

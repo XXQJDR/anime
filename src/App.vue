@@ -29,7 +29,7 @@ export default {
 	methods: {
 		//动态获取浏览器宽度
 		getWindowInfo() {
-			if (window.innerWidth <= 700) {
+			if (window.innerWidth <= 768) {
 				this.$store.commit('BROWSER_IDENTITY', 2);
 				this.$store.commit('SIDEBAR_FLAG', false);
 			} else {
@@ -105,7 +105,7 @@ body {
 	position: fixed;
 	bottom: 0;
 	z-index: 9999;
-	transition: left 1s;
+	transition: left 1.5s;
 }
 
 #left {

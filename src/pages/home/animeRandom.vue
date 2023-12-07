@@ -215,7 +215,7 @@ export default {
 /* endregion */
 
 /*移动端*/
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 768px) {
 	.animeRandom .box {
 		height: calc(100vh - 25px - 38px - 38px);
 		box-sizing: border-box;
@@ -248,7 +248,7 @@ export default {
 	}
 }
 
-@media screen and (min-width: 700px) and (max-width: 1050px) {
+@media screen and (min-width: 768px) and (max-width: 1050px) {
 	.animeRandom .box .boxContent {
 		min-width: 0;
 	}

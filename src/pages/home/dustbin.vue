@@ -280,7 +280,7 @@ export default {
 /* endregion */
 
 /*移动端*/
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 768px) {
 	.dustbin .list {
 		grid-template-columns: repeat(1, 1fr);
 	}
@@ -302,7 +302,7 @@ export default {
 		height: 35px;
 	}
 }
-@media screen and (min-width: 700px) and (max-width: 1078px) {
+@media screen and (min-width: 768px) and (max-width: 1078px) {
 	.dustbin .list {
 		grid-template-columns: repeat(2, 1fr);
 	}

@@ -257,7 +257,7 @@ export default {
 }
 
 /*移动端*/
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 768px) {
 	.home .content {
 		float: none;
 		width: 100%;

@@ -295,7 +295,7 @@ export default {
 /* endregion */
 
 /* 手机端 */
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 768px) {
 	.autoRecognize .form svg {
 		top: 16px;
 	}
@@ -335,7 +335,7 @@ export default {
 	}
 }
 
-@media screen and (min-width: 700px) and (max-width: 1000px) {
+@media screen and (min-width: 768px) and (max-width: 1000px) {
 	.autoRecognize .form .suggestion {
 		min-width: 0;
 	}

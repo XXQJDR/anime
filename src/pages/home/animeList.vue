@@ -740,7 +740,7 @@ export default {
 /* endregion */
 
 /*移动端*/
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 768px) {
 	.animeList .control {
 		display: block;
 	}
@@ -789,7 +789,7 @@ export default {
 		height: 35px;
 	}
 }
-@media screen and (min-width: 700px) and (max-width: 1078px) {
+@media screen and (min-width: 768px) and (max-width: 1078px) {
 	.animeList .list {
 		grid-template-columns: repeat(2, 1fr);
 	}

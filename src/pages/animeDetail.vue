@@ -82,7 +82,7 @@
 				>
 					<el-button type="primary" slot="trigger">选择文件</el-button>
 					<el-button @click="manualUpload" type="success">上传到服务器</el-button>
-					<div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过10MB</div>
+					<div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过10MB;一次性最大上传10个文件</div>
 				</el-upload>
 			</div>
 
@@ -143,7 +143,7 @@ export default {
 
 		//文件个数超过最大个数回调
 		handleOnExceed() {
-			this.$message.error('文件个数超过最大个数');
+			this.$message.error('一次性最大上传10个文件！');
 		},
 
 		//校验文件
@@ -163,7 +163,7 @@ export default {
 
 				//判断文件大小
 				if (file.size / 1024 / 1024 > 10) {
-					this.$message.error(file.name + '文件大小超过最大大小！');
+					this.$message.error(file.name + '上传文件最大大小为10MB！');
 					return false;
 				}
 			}

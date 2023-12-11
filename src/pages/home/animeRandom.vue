@@ -90,7 +90,12 @@ export default {
 				this.$message.error(result.msg);
 				return;
 			}
-			this.anime = result.data;
+			this.anime = result.data || {};
+
+			//无未看动漫
+			if (this.anime.title == null) {
+				this.$message.warning('您的列表里没有一个未看的动漫，快去添加吧！')
+			}
 
 			//关闭加载动画
 			this.loading = false;

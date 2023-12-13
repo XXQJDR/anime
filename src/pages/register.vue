@@ -6,41 +6,43 @@
 				<span>Anime</span>
 			</div>
 			<div class="title">注册</div>
-			<el-form
-					:model="formData"
-					label-position="top"
-					class="registerForm"
-					hide-required-asterisk
-					status-icon
-					ref="registerForm"
-					:rules="rules"
-			>
-				<el-form-item label="电子邮箱" prop="email">
-					<el-input v-model="formData.email" />
-				</el-form-item>
-				<el-form-item label="用户名" prop="username">
-					<el-input v-model="formData.username" />
-				</el-form-item>
-				<el-form-item label="密码" prop="password">
-					<el-input v-model="formData.password" show-password />
-				</el-form-item>
-				<el-form-item label="确认密码" prop="checkPassword">
-					<el-input v-model="formData.checkPassword" show-password />
-				</el-form-item>
-				<el-form-item label="验证码" prop="checkCode">
-					<div class="checkCode">
-						<el-input v-model="formData.checkCode" class="checkCodeInput" />
-						<div @click="getCode" v-show="time === 61" class="codeBtn1">获取验证码</div>
-						<div v-show="time !== 61" class="codeBtn2">{{ time }}秒后重新获取</div>
+			<div class="form">
+				<el-form
+						:model="formData"
+						label-position="top"
+						class="registerForm"
+						hide-required-asterisk
+						status-icon
+						ref="registerForm"
+						:rules="rules"
+				>
+					<el-form-item label="电子邮箱" prop="email">
+						<el-input v-model="formData.email" />
+					</el-form-item>
+					<el-form-item label="用户名" prop="username">
+						<el-input v-model="formData.username" />
+					</el-form-item>
+					<el-form-item label="密码" prop="password">
+						<el-input v-model="formData.password" show-password />
+					</el-form-item>
+					<el-form-item label="确认密码" prop="checkPassword">
+						<el-input v-model="formData.checkPassword" show-password />
+					</el-form-item>
+					<el-form-item label="验证码" prop="checkCode">
+						<div class="checkCode">
+							<el-input v-model="formData.checkCode" class="checkCodeInput" />
+							<div @click="getCode" v-show="time === 61" class="codeBtn1">获取验证码</div>
+							<div v-show="time !== 61" class="codeBtn2">{{ time }}秒后重新获取</div>
+						</div>
+					</el-form-item>
+					<div class="registerBtn">
+						<button @click.prevent="register">注册</button>
 					</div>
-				</el-form-item>
-				<div class="registerBtn">
-					<button @click.prevent="register">注册</button>
-				</div>
-				<div class="goLogin">
-					已有账户？去<router-link to="/login">登录</router-link>
-				</div>
-			</el-form>
+					<div class="goLogin">
+						已有账户？去<router-link to="/login">登录</router-link>
+					</div>
+				</el-form>
+			</div>
 		</div>
 		<div class="background"></div>
 	</div>
@@ -152,12 +154,13 @@ export default {
 .container {
 	display: flex;
 	height: 100vh;
-	user-select: none;
 }
 
 .box {
 	flex: 36% 1 1;
 	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
 }
 
 .background {
@@ -189,6 +192,18 @@ export default {
 	background-image: linear-gradient(50deg, rgb(43, 10, 255), rgb(255, 91, 138) 49%, rgb(255, 91, 138) 53%, rgb(255, 91, 138) 55%, rgb(251, 166, 75) 77%, rgb(249, 155, 82));
 	color: transparent;
 	background-clip: text;
+}
+
+.box .form {
+	flex: 1;
+	position: relative;
+}
+
+.box .registerForm {
+	width: 100%;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
 }
 
 .checkCode {
@@ -255,20 +270,16 @@ export default {
 	}
 
 	.box .title,
-	.registerBtn {
-		margin-top: 2rem;
-	}
-
-	.box .registerForm,
+	.registerBtn,
 	.goLogin {
-		margin-top: 1rem;
+		margin-top: 2rem;
 	}
 }
 
 /*PC端*/
 @media screen and (min-width: 770px) {
 	.box {
-		padding: 2rem 3rem;
+		padding: 2rem 2rem;
 	}
 
 	.box .title,

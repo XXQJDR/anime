@@ -6,42 +6,44 @@
 				<span>Anime</span>
 			</div>
 			<div class="title">登录</div>
-			<el-form
-					:model="formData"
-					label-position="top"
-					:rules="rules"
-					class="loginForm"
-					hide-required-asterisk
-					status-icon
-					ref="loginForm"
-			>
-				<el-form-item label="电子邮箱" prop="email">
-					<el-input v-model="formData.email" />
-				</el-form-item>
-				<el-form-item label="密码" prop="password">
-					<el-input v-model="formData.password" show-password />
-				</el-form-item>
-				<el-form-item label="验证码" prop="checkCode">
-					<div style="display: flex; align-items: center">
-						<el-input v-model="formData.checkCode" class="checkCodeInput" />
-						<img
-								style="cursor: pointer;width: 30%;height: 40px;"
-								src="/api/user/getImageCode"
-								alt="code"
-								@click="changeImageCode"
-								ref="imageCode">
+			<div class="form">
+				<el-form
+						:model="formData"
+						label-position="top"
+						:rules="rules"
+						class="loginForm"
+						hide-required-asterisk
+						status-icon
+						ref="loginForm"
+				>
+					<el-form-item label="电子邮箱" prop="email">
+						<el-input v-model="formData.email" />
+					</el-form-item>
+					<el-form-item label="密码" prop="password">
+						<el-input v-model="formData.password" show-password />
+					</el-form-item>
+					<el-form-item label="验证码" prop="checkCode">
+						<div style="display: flex; align-items: center">
+							<el-input v-model="formData.checkCode" class="checkCodeInput" />
+							<img
+									style="cursor: pointer;width: 30%;height: 40px;"
+									src="/api/user/getImageCode"
+									alt="code"
+									@click="changeImageCode"
+									ref="imageCode">
+						</div>
+					</el-form-item>
+					<div class="forget">
+						<a href="javascript:void(0);">忘记密码？</a>
 					</div>
-				</el-form-item>
-				<div class="forget">
-					<a href="javascript:void(0);">忘记密码？</a>
-				</div>
-				<div class="loginBtn">
-					<button @click.prevent="login">登录</button>
-				</div>
-				<div class="goRegister">
-					没有账户？去<router-link to="/register">注册</router-link>
-				</div>
-			</el-form>
+					<div class="loginBtn">
+						<button @click.prevent="login">登录</button>
+					</div>
+					<div class="goRegister">
+						没有账户？去<router-link to="/register">注册</router-link>
+					</div>
+				</el-form>
+			</div>
 		</div>
 		<div class="background"></div>
 	</div>
@@ -120,12 +122,13 @@ export default {
 .container {
 	display: flex;
 	height: 100vh;
-	user-select: none;
 }
 
 .box {
 	flex: 36% 1 1;
 	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
 }
 
 .background {
@@ -157,11 +160,19 @@ export default {
 	background-image: linear-gradient(50deg, rgb(43, 10, 255), rgb(255, 91, 138) 49%, rgb(255, 91, 138) 53%, rgb(255, 91, 138) 55%, rgb(251, 166, 75) 77%, rgb(249, 155, 82));
 	color: transparent;
 	background-clip: text;
-	margin-top: 2rem;
+	margin-top: 1rem;
+}
+
+.form {
+	flex: 1;
+	position: relative;
 }
 
 .loginForm {
-	margin-top: 2rem;
+	width: 100%;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
 }
 
 .checkCodeInput {
@@ -216,16 +227,12 @@ export default {
 	.box {
 		padding: 2rem;
 	}
-
-	.loginForm {
-		margin-top: 5rem;
-	}
 }
 
 /*PC端*/
 @media screen and (min-width: 770px) {
 	.box {
-		padding: 2rem 3rem;
+		padding: 2rem 2rem;
 	}
 }
 </style>

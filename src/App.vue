@@ -154,6 +154,11 @@ body {
 		width: 100%;
 		height: 260px;
 	}
+
+	/* 修改操作提示信息的宽度 */
+	.el-message {
+		min-width: 300px !important;
+	}
 }
 
 @media screen and (min-width: 750px) {

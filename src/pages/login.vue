@@ -16,16 +16,16 @@
 					ref="loginForm"
 			>
 				<el-form-item label="电子邮箱" prop="email">
-					<el-input v-model="temp.email" @blur="blurHandle('email')" />
+					<el-input v-model="formData.email" />
 				</el-form-item>
 				<el-form-item label="密码" prop="password">
-					<el-input v-model="temp.password" show-password @blur="blurHandle('password')" />
+					<el-input v-model="formData.password" show-password />
 				</el-form-item>
 				<el-form-item label="验证码" prop="checkCode">
 					<div style="display: flex; align-items: center">
-						<el-input v-model="temp.checkCode" @blur="blurHandle('checkCode')" class="checkCodeInput" />
+						<el-input v-model="formData.checkCode" class="checkCodeInput" />
 						<img
-								style="cursor: pointer"
+								style="cursor: pointer;width: 30%;height: 40px;"
 								src="/api/user/getImageCode"
 								alt="code"
 								@click="changeImageCode"
@@ -36,7 +36,7 @@
 					<a href="javascript:void(0);">忘记密码？</a>
 				</div>
 				<div class="loginBtn">
-					<button @click.prevent="login" :disabled="!verifyFlag">登录</button>
+					<button @click.prevent="login">登录</button>
 				</div>
 				<div class="goRegister">
 					没有账户？去<router-link to="/register">注册</router-link>
@@ -63,32 +63,18 @@ export default {
 				checkCode: ''
 			},
 
-			//临时变量，由于el-input不支持v-model.lazy。所以利用临时变量来实现延时收集数据
-			temp: {
-				email: '',
-				password: '',
-				checkCode: ''
-			},
-
-			//校验标志
-			flag: {
-				email: false,
-				password: false,
-				checkCode: false
-			},
-
 			//校验规则
 			rules: {
 				email: [
-					{required: true, type: 'email', message:'请输入正确的邮箱格式', trigger: 'manual'}
+					{required: true, type: 'email', message:'请输入正确的邮箱格式', trigger: 'blur'}
 				],
 				password: [
-					{required: true, message: '密码不能为空', trigger: 'manual'},
+					{required: true, message: '密码不能为空', trigger: 'blur'},
 					{pattern: /^(?![a-zA-Z]+$)(?!\d+$)(?![^\da-zA-Z\s]+$).{6,15}$/, message: '密码由字母、数字、特殊字符，任意2种组成，6-15位', trigger: 'manual'}
 				],
 				checkCode: [
-					{required: true, message: '验证码不能为空', trigger: 'manual'},
-					{pattern: /^[0-9A-Za-z]+$/, message: '验证码格式有误', trigger: 'manual'}
+					{required: true, message: '验证码不能为空', trigger: 'blur'},
+					{pattern: /^[0-9A-Za-z]+$/, message: '验证码格式有误', trigger: 'blur'}
 				]
 			},
 		}
@@ -96,36 +82,28 @@ export default {
 	methods: {
 		//提交表单回调
 		async login() {
-			if (this.verifyFlag) {
-				let result = await reqLogin(this.formData.email, this.formData.password, this.formData.checkCode);
-				if (result.code !== 200) {
-					this.$message.error(result.msg);
-				} else {
-					//解析token获取用户信息
-					let token = result.data;
-					let userInfo = jwtDecode(token);
+			this.$refs['loginForm'].validate(async (valid) => {
+				if (valid) {
+					let result = await reqLogin(this.formData.email, this.formData.password, this.formData.checkCode);
+					if (result.code !== 200) {
+						this.$message.error(result.msg);
+					} else {
+						//解析token获取用户信息
+						let token = result.data;
+						let userInfo = jwtDecode(token);
 
-					//将token存入vuex和localStorage
-					this.$store.commit('TOKEN', token);
-					localStorage.setItem('token', token);
+						//将token存入vuex和localStorage
+						this.$store.commit('TOKEN', token);
+						localStorage.setItem('token', token);
 
-					//将userInfo存入vuex和localStorage
-					this.$store.commit('USER_INFO', userInfo);
-					localStorage.setItem('userInfo', JSON.stringify(userInfo));
+						//将userInfo存入vuex和localStorage
+						this.$store.commit('USER_INFO', userInfo);
+						localStorage.setItem('userInfo', JSON.stringify(userInfo));
 
-					//跳转到首页
-					this.$router.push('/home');
+						//跳转到首页
+						await this.$router.push('/home');
+					}
 				}
-			}
-		},
-
-		//输入框失去焦点回调
-		blurHandle(type) {
-			this.formData[type] = this.temp[type];
-
-			//校验对应字段
-			this.$refs.loginForm.validateField(type, errorMessage => {
-				this.flag[type] = (errorMessage === '' || errorMessage == null);
 			});
 		},
 
@@ -134,12 +112,6 @@ export default {
 			let baseSrc = this.$refs['imageCode'].src.split('?')[0];
 			this.$refs['imageCode'].src = baseSrc+ '?' + Date.now();
 		}, 1000),
-	},
-	computed: {
-		//表单校验成功标志
-		verifyFlag() {
-			return this.flag.email && this.flag.password && this.flag.checkCode;
-		}
 	},
 }
 </script>

@@ -15,27 +15,27 @@
 					ref="registerForm"
 					:rules="rules"
 			>
+				<el-form-item label="电子邮箱" prop="email">
+					<el-input v-model="formData.email" />
+				</el-form-item>
 				<el-form-item label="用户名" prop="username">
-					<el-input v-model="temp.username" @blur="blurHandle('username')" />
+					<el-input v-model="formData.username" />
 				</el-form-item>
 				<el-form-item label="密码" prop="password">
-					<el-input v-model="temp.password" show-password @blur="blurHandle('password')" />
+					<el-input v-model="formData.password" show-password />
 				</el-form-item>
 				<el-form-item label="确认密码" prop="checkPassword">
-					<el-input v-model="temp.checkPassword" show-password @blur="blurHandle('checkPassword')" />
-				</el-form-item>
-				<el-form-item label="电子邮箱" prop="email">
-					<el-input v-model="temp.email" @blur="blurHandle('email')" />
+					<el-input v-model="formData.checkPassword" show-password />
 				</el-form-item>
 				<el-form-item label="验证码" prop="checkCode">
 					<div class="checkCode">
-						<el-input v-model="temp.checkCode" @blur="blurHandle('checkCode')" class="checkCodeInput" />
+						<el-input v-model="formData.checkCode" class="checkCodeInput" />
 						<div @click="getCode" v-show="time === 61" class="codeBtn1">获取验证码</div>
 						<div v-show="time !== 61" class="codeBtn2">{{ time }}秒后重新获取</div>
 					</div>
 				</el-form-item>
 				<div class="registerBtn">
-					<button @click.prevent="register" :disabled="!verifyFlag">注册</button>
+					<button @click.prevent="register">注册</button>
 				</div>
 				<div class="goLogin">
 					已有账户？去<router-link to="/login">登录</router-link>
@@ -73,41 +73,23 @@ export default {
 				checkCode: ''
 			},
 
-			//临时变量，由于el-input不支持v-model.lazy。所以利用临时变量来实现延时收集数据
-			temp: {
-				email: '',
-				username: '',
-				password: '',
-				checkPassword: '',
-				checkCode: ''
-			},
-
-			//校验标志
-			flag: {
-				email: '',
-				username: '',
-				password: '',
-				checkPassword: '',
-				checkCode: ''
-			},
-
 			//校验规则
 			rules: {
 				email: [
-					{required: true, type: 'email', message:'请输入正确的邮箱格式', trigger: 'manual'}
+					{required: true, type: 'email', message:'请输入正确的邮箱格式', trigger: 'blur'}
 				],
 				username: [
-					{required: true, min: 3, max: 10, message: '用户名3-10位', trigger: 'manual'}
+					{required: true, min: 3, max: 10, message: '用户名3-10位', trigger: 'blur'}
 				],
 				password: [
-					{required: true, message: '密码不能为空', trigger: 'manual'},
-					{pattern: /^(?![a-zA-Z]+$)(?!\d+$)(?![^\da-zA-Z\s]+$).{6,15}$/, message: '密码由字母、数字、特殊字符，任意2种组成，6-15位', trigger: 'manual'}
+					{required: true, message: '密码不能为空', trigger: 'blur'},
+					{pattern: /^(?![a-zA-Z]+$)(?!\d+$)(?![^\da-zA-Z\s]+$).{6,15}$/, message: '密码由字母、数字、特殊字符，任意2种组成，6-15位', trigger: 'blur'}
 				],
 				checkPassword: [
-					{validator: validateCheckPassword, trigger: 'manual'}
+					{validator: validateCheckPassword, trigger: 'blur'}
 				],
 				checkCode: [
-					{required: true, message:'验证码不能为空', trigger: 'manual'}
+					{required: true, message:'验证码不能为空', trigger: 'blur'}
 				]
 			},
 
@@ -118,28 +100,19 @@ export default {
 	methods: {
 		//注册按钮回调
 		async register() {
-			//所有项都已输入
-			if (this.verifyFlag) {
-				let result = await reqRegister(this.formData.username, this.formData.password, this.formData.email, this.formData.checkCode);
-				this.$message({
-					type: result.code === 200 ? 'success' : 'error',
-					message: result.msg
-				});
+			this.$refs['registerForm'].validate(async (valid) => {
+				if (valid) {
+					let result = await reqRegister(this.formData.username, this.formData.password, this.formData.email, this.formData.checkCode);
+					this.$message({
+						type: result.code === 200 ? 'success' : 'error',
+						message: result.msg
+					});
 
-				//注册成功后跳转至登录页面
-				if (result.code === 200) {
-					this.$router.push('/login');
+					//注册成功后跳转至登录页面
+					if (result.code === 200) {
+						await this.$router.push('/login');
+					}
 				}
-			}
-		},
-
-		//输入框失去焦点回调
-		blurHandle(type) {
-			this.formData[type] = this.temp[type];
-
-			//校验对应字段
-			this.$refs.registerForm.validateField(type, errorMessage => {
-				this.flag[type] = (errorMessage === '' || errorMessage == null);
 			});
 		},
 
@@ -166,17 +139,10 @@ export default {
 
 			//获取验证码
 			let result = await reqGetEmailCode(this.formData.email);
-			console.log(result);
 			this.$message({
 				type: result.code === 200 ? 'success' : 'error',
 				message: result.msg
 			});
-		}
-	},
-	computed: {
-		//表单校验成功标志
-		verifyFlag() {
-			return this.flag.email && this.flag.password && this.flag.checkPassword && this.flag.checkCode;
 		}
 	},
 }

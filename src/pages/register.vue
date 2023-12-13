@@ -36,7 +36,10 @@
 						</div>
 					</el-form-item>
 					<div class="registerBtn">
-						<button @click.prevent="register">注册</button>
+						<button @click.prevent="register">
+							<i class="el-icon-loading" v-show="loading" />
+							<span>登录</span>
+						</button>
 					</div>
 					<div class="goLogin">
 						已有账户？去<router-link to="/login">登录</router-link>
@@ -66,6 +69,9 @@ export default {
 		};
 
 		return {
+			//注册中加载动画开启标志
+			loading: false,
+
 			//表单数据
 			formData: {
 				email: '',
@@ -104,7 +110,14 @@ export default {
 		async register() {
 			this.$refs['registerForm'].validate(async (valid) => {
 				if (valid) {
+					//开启加载动画
+					this.loading = true;
+
 					let result = await reqRegister(this.formData.username, this.formData.password, this.formData.email, this.formData.checkCode);
+
+					//关闭加载动画
+					this.loading = false;
+
 					this.$message({
 						type: result.code === 200 ? 'success' : 'error',
 						message: result.msg

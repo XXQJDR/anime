@@ -37,7 +37,10 @@
 						<a href="javascript:void(0);">忘记密码？</a>
 					</div>
 					<div class="loginBtn">
-						<button @click.prevent="login">登录</button>
+						<button @click.prevent="login">
+							<i class="el-icon-loading" v-show="loading" />
+							<span>登录</span>
+						</button>
 					</div>
 					<div class="goRegister">
 						没有账户？去<router-link to="/register">注册</router-link>
@@ -58,6 +61,9 @@ export default {
 	name: 'LoginPage',
 	data() {
 		return {
+			//登录中加载动画开启标志
+			loading: false,
+
 			//表单数据
 			formData: {
 				email: '',
@@ -86,7 +92,14 @@ export default {
 		async login() {
 			this.$refs['loginForm'].validate(async (valid) => {
 				if (valid) {
+					//开启加载动画
+					this.loading = true;
+
 					let result = await reqLogin(this.formData.email, this.formData.password, this.formData.checkCode);
+
+					//关闭加载动画
+					this.loading = false;
+
 					if (result.code !== 200) {
 						this.$message.error(result.msg);
 					} else {

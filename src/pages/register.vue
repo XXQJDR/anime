@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div class="container" ref="container">
 		<div class="box">
 			<div class="logo">
 				<i/>
@@ -53,6 +53,7 @@
 
 <script>
 import {reqGetEmailCode, reqRegister} from "@/api";
+import {mapState} from "vuex";
 
 export default {
 	name: 'RegisterPage',
@@ -104,6 +105,9 @@ export default {
 			//倒计时
 			time: 61
 		}
+	},
+	computed: {
+		...mapState(['browserIdentity']),
 	},
 	methods: {
 		//注册按钮回调
@@ -160,6 +164,12 @@ export default {
 			});
 		}
 	},
+	mounted() {
+		//防止移动端软键盘引起页面高度变下
+		if (this.browserIdentity === 2) {
+			this.$refs['container'].style.height = window.innerHeight  + 'px';
+		}
+	}
 }
 </script>
 

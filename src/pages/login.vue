@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div class="container" ref="container">
 		<div class="box">
 			<div class="logo">
 				<i/>
@@ -56,6 +56,7 @@
 import _ from "lodash";
 import {reqLogin} from "@/api";
 import {jwtDecode} from "jwt-decode";
+import {mapState} from "vuex";
 
 export default {
 	name: 'LoginPage',
@@ -86,6 +87,9 @@ export default {
 				]
 			},
 		}
+	},
+	computed: {
+		...mapState(['browserIdentity']),
 	},
 	methods: {
 		//提交表单回调
@@ -128,6 +132,12 @@ export default {
 			this.$refs['imageCode'].src = baseSrc+ '?' + Date.now();
 		}, 1000),
 	},
+	mounted() {
+		//防止移动端软键盘引起页面高度变下
+		if (this.browserIdentity === 2) {
+			this.$refs['container'].style.height = window.innerHeight  + 'px';
+		}
+	}
 }
 </script>
 
@@ -240,12 +250,20 @@ export default {
 	.box {
 		padding: 2rem;
 	}
+
+	.form {
+		min-height: 440px;
+	}
 }
 
 /*PC端*/
 @media screen and (min-width: 770px) {
 	.box {
 		padding: 2rem 2rem;
+	}
+
+	.form {
+		min-height: 480px;
 	}
 }
 </style>

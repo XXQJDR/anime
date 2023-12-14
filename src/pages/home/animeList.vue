@@ -158,7 +158,7 @@ export default {
 			keyword: '',
 
 			//是否还有下一页数据
-			hasHext: true
+			hasNext: false
 		}
 	},
 	computed: {
@@ -259,7 +259,7 @@ export default {
 
 			//获取数据
 			let result = await reqGetPageAnime(params);
-			this.animeList = result.data || [];
+			this.animeList = result.data.records || [];
 
 			this.current++;
 
@@ -270,10 +270,10 @@ export default {
 			this.emptyFlag = this.animeList.length === 0;
 
 			//数据为空表示下一页无数据
-			this.hasHext = (result.data || []).length !== 0;
+			this.hasNext = result.data.current < result.data.pages;
 		},
 
-		//获取指定页动漫数据
+		//分页获取动漫数据
 		async getPageAnime() {
 			//根据selectFlag决定参数
 			let params = {
@@ -288,10 +288,8 @@ export default {
 
 			//获取数据
 			let result = await reqGetPageAnime(params);
-			this.animeList = this.animeList.concat(result.data || []);
-
-			//数据为空表示下一页无数据
-			this.hasHext = (result.data || []).length !== 0;
+			this.animeList = this.animeList.concat(result.data.records || []);
+			this.hasNext = result.data.current < result.data.pages;
 		},
 
 		//搜索动漫
@@ -340,8 +338,8 @@ export default {
 			let bottomOfWindow = document.documentElement.offsetHeight - document.documentElement.scrollTop - window.innerHeight;
 
 			//当距离底部的距离小于300px时，请求服务器数据
-			if (bottomOfWindow < 300 && this.hasHext) {
-				this.hasHext = false;
+			if (bottomOfWindow < 300 && this.hasNext) {
+				this.hasNext = false;
 				this.getPageAnime();
 				this.current++;
 			}

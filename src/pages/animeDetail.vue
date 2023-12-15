@@ -86,7 +86,7 @@
 				</el-upload>
 			</div>
 
-			<div class="wonderfulMoment">
+			<div class="wonderfulMoment" ref="wonderfulMoment">
 				<wc-waterfall :gap="10" :cols="count">
 					<div class="img" v-for="img in images" :key="img.id">
 						<div class="control">
@@ -112,6 +112,7 @@
 <script>
 import {reqGetDetailAnime, reqGetPageWonderfulMoment, reqUpload, reqRemoveWonderfulMoment} from "@/api";
 import WcWaterfall from 'wc-waterfall';
+import _ from "lodash";
 
 export default {
 	name: 'AnimeDetail',
@@ -249,7 +250,7 @@ export default {
 		},
 
 		//删除图片
-		async deleteImage(id) {
+		deleteImage: _.throttle(async function (id) {
 			let result = await reqRemoveWonderfulMoment(id);
 			this.$message({
 				type: result.code === 200 ? 'success' : 'error',
@@ -257,12 +258,12 @@ export default {
 			});
 
 			if (result.code !== 200) {
-				return ;
+				return;
 			}
 
 			//更新数据
 			this.images = this.images.filter(item => item.id !== id);
-		},
+		}, 2000),
 
 		//根据浏览器可视宽度改变瀑布流行数
 		changeWaterfallCount() {

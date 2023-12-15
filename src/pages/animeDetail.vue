@@ -1,5 +1,5 @@
 <template>
-	<div class="animeDetail">
+	<div class="animeDetail" ref="animeDetail">
 		<header>
 			<div class="back">
 				<svg @click="back" width="20px" height="20.00px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
@@ -86,11 +86,11 @@
 				</el-upload>
 			</div>
 
-			<div class="wonderfulMoment" ref="wonderfulMoment">
+			<div class="wonderfulMoment">
 				<wc-waterfall :gap="10" :cols="count">
 					<div class="img" v-for="img in images" :key="img.id">
 						<div class="control">
-							<div class="detail">
+							<div class="detail" @click="openImageView(img.detailImageUrl)">
 								<i class="el-icon-full-screen" />
 							</div>
 							<div class="delete">
@@ -100,9 +100,10 @@
 								<i class="el-icon-download" />
 							</div>
 						</div>
-						<img @error='imgOnError' :src="img.briefImageUrl" alt="">
+						<img class="briefImg" @error='imgOnError' :src="img.briefImageUrl" alt="">
 					</div>
 				</wc-waterfall>
+				<el-image-viewer v-show="showViewer" :url-list="viewImage" :on-close="closeImageView" />
 			</div>
 			<el-empty style="height: 100vh;" v-if="!images.length" :image-size="250" description="暂无精彩瞬间，快来上传吧！"/>
 		</main>
@@ -113,10 +114,12 @@
 import {reqGetDetailAnime, reqGetPageWonderfulMoment, reqUpload, reqRemoveWonderfulMoment} from "@/api";
 import WcWaterfall from 'wc-waterfall';
 import _ from "lodash";
+import elImageViewer from 'element-ui/packages/image/src/image-viewer';
+import {mapState} from "vuex";
 
 export default {
 	name: 'AnimeDetail',
-	components: {WcWaterfall},
+	components: {WcWaterfall, elImageViewer},
 	data() {
 		return {
 			//允许的文件类型
@@ -139,6 +142,12 @@ export default {
 
 			//瀑布流列数
 			count: 4,
+
+			//图片预览标志
+			showViewer: false,
+
+			//预览图片
+			viewImage: [],
 		}
 	},
 	computed: {
@@ -146,6 +155,8 @@ export default {
 		collectId() {
 			return this.$route.query.collectId;
 		},
+
+		...mapState(['browserIdentity']),
 	},
 	methods: {
 		/* 点击箭头滚动到内容区域 */
@@ -214,6 +225,11 @@ export default {
 
 			//更新数据
 			this.images = this.images.concat(result.data || []);
+
+			//pc端根据图片数量改变瀑布流列数
+			if (this.browserIdentity === 1) {
+				this.count = this.images.length >= 4 ? 4 : this.images.length;
+			}
 		},
 
 		//获取动漫详细信息
@@ -263,18 +279,27 @@ export default {
 
 			//更新数据
 			this.images = this.images.filter(item => item.id !== id);
+
+			//pc端根据图片数量改变瀑布流列数
+			if (this.browserIdentity === 1) {
+				this.count = this.images.length >= 4 ? 4 : this.images.length;
+			}
 		}, 2000),
 
 		//根据浏览器可视宽度改变瀑布流行数
 		changeWaterfallCount() {
 			if (window.innerWidth < 768) {
 				this.count = 1;
+				console.log('1');
 			} else if (window.innerWidth >= 768 && window.innerWidth < 1200) {
 				this.count = 2;
+				console.log('2');
 			} else if (window.innerWidth >= 1200 && window.innerWidth < 1668) {
 				this.count = 3;
+				console.log('3');
 			} else {
 				this.count = 4;
+				console.log('4');
 			}
 		},
 
@@ -283,7 +308,25 @@ export default {
 			e.target.style.height = '250px';
 			e.target.style.backgroundColor = 'gray';
 			e.target.parentNode.firstChild.style.display = 'none';
-		}
+		},
+
+		//打开图片预览
+		openImageView(detailImageUrl) {
+			this.viewImage = [];
+			this.viewImage.push(detailImageUrl);
+			this.showViewer = true;
+
+			//关闭背后滚动
+			// document.body.style.overflow = 'hidden';
+		},
+
+		//关闭图片预览
+		closeImageView() {
+			this.showViewer = false;
+
+			//开启背后滚动
+			// document.body.style.overflow = 'auto';
+		},
 	},
 	created() {
 		//获取动漫信息
@@ -305,11 +348,6 @@ export default {
 		window.removeEventListener('scroll', this.lazyLoading);
 		window.removeEventListener('resize', this.changeWaterfallCount);
 	},
-	watch: {
-		images(images) {
-			this.count = images.length >= 4 ? 4 : images.length;
-		}
-	}
 }
 </script>
 
@@ -445,7 +483,7 @@ export default {
 	font-size: 0;
 }
 
-.animeDetail main .wonderfulMoment .img img {
+.animeDetail main .wonderfulMoment .img .briefImg {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
@@ -472,6 +510,7 @@ export default {
 
 .animeDetail main .wonderfulMoment .img .control > div {
 	opacity: 0;
+	visibility: hidden;
 	padding: 5px;
 	cursor: pointer;
 	transition: all .5s;
@@ -480,6 +519,7 @@ export default {
 
 .animeDetail main .wonderfulMoment .img .control:hover > div {
 	opacity: 1;
+	visibility: visible;
 }
 
 .animeDetail main .wonderfulMoment .img .control > div:hover {

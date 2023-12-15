@@ -1,5 +1,5 @@
 <template>
-	<div class="animeDetail" ref="animeDetail">
+	<div class="animeDetail" ref="animeDetail" v-loading.fullscreen="loading">
 		<header>
 			<div class="back">
 				<svg @click="back" width="20px" height="20.00px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
@@ -103,7 +103,7 @@
 						<img class="briefImg" @error='imgOnError' :src="img.briefImageUrl" alt="">
 					</div>
 				</wc-waterfall>
-				<el-image-viewer v-show="showViewer" :url-list="viewImage" :on-close="closeImageView" />
+				<el-image-viewer v-if="showViewer" :url-list="viewImage" :on-close="closeImageView" />
 			</div>
 			<el-empty style="height: 100vh;" v-if="!images.length" :image-size="250" description="暂无精彩瞬间，快来上传吧！"/>
 		</main>
@@ -148,6 +148,9 @@ export default {
 
 			//预览图片
 			viewImage: [],
+
+			//加载标志
+			loading: false,
 		}
 	},
 	computed: {
@@ -209,8 +212,15 @@ export default {
 				return;
 			}
 
+			//开启加载动画
+			this.loading = true;
+
 			//上传文件
 			let result = await reqUpload(this.collectId, this.$refs.upload.uploadFiles);
+
+			//关闭加载动画
+			this.loading = false;
+
 			this.$message({
 				type: result.code === 200 ? 'success' : 'error',
 				message: result.code === 200 ? '上传成功！' : '上传失败！'
@@ -267,7 +277,14 @@ export default {
 
 		//删除图片
 		deleteImage: _.throttle(async function (id) {
+			//开启加载动画
+			this.loading = true;
+
 			let result = await reqRemoveWonderfulMoment(id);
+
+			//关闭加载动画
+			this.loading = false;
+
 			this.$message({
 				type: result.code === 200 ? 'success' : 'error',
 				message: result.code === 200 ? '删除成功！' : '删除失败！'
@@ -317,7 +334,7 @@ export default {
 			this.showViewer = true;
 
 			//关闭背后滚动
-			// document.body.style.overflow = 'hidden';
+			document.body.style.overflow = 'hidden';
 		},
 
 		//关闭图片预览
@@ -325,7 +342,7 @@ export default {
 			this.showViewer = false;
 
 			//开启背后滚动
-			// document.body.style.overflow = 'auto';
+			document.body.style.overflow = 'auto';
 		},
 	},
 	created() {

@@ -93,12 +93,14 @@
 							<div class="detail" @click="openImageView(img.detailImageUrl)">
 								<i class="el-icon-full-screen" />
 							</div>
-							<div class="delete">
-								<i class="el-icon-delete" @click="deleteImage(img.id)" />
+							<div class="delete" @click="deleteImage(img.id)">
+								<i class="el-icon-delete" />
 							</div>
-							<div class="download">
-								<i class="el-icon-download" />
-							</div>
+							<a :href="toDownloadUrl(img.detailImageUrl)" download="">
+								<div class="download">
+									<i class="el-icon-download" />
+								</div>
+							</a>
 						</div>
 						<img class="briefImg" @error='imgOnError' :src="img.briefImageUrl" alt="">
 					</div>
@@ -307,16 +309,12 @@ export default {
 		changeWaterfallCount() {
 			if (window.innerWidth < 768) {
 				this.count = 1;
-				console.log('1');
 			} else if (window.innerWidth >= 768 && window.innerWidth < 1200) {
 				this.count = 2;
-				console.log('2');
 			} else if (window.innerWidth >= 1200 && window.innerWidth < 1668) {
 				this.count = 3;
-				console.log('3');
 			} else {
 				this.count = 4;
-				console.log('4');
 			}
 		},
 
@@ -344,6 +342,11 @@ export default {
 			//开启背后滚动
 			document.body.style.overflow = 'auto';
 		},
+
+		//将访问url转化为下载url
+		toDownloadUrl(url) {
+			return url.replace('upload-images', 'download');
+		}
 	},
 	created() {
 		//获取动漫信息
@@ -525,7 +528,7 @@ export default {
 	background-color: rgba(0, 0, 0, .4);
 }
 
-.animeDetail main .wonderfulMoment .img .control > div {
+.animeDetail main .wonderfulMoment .img .control div {
 	opacity: 0;
 	visibility: hidden;
 	padding: 5px;
@@ -534,12 +537,12 @@ export default {
 	border-radius: 10px;
 }
 
-.animeDetail main .wonderfulMoment .img .control:hover > div {
+.animeDetail main .wonderfulMoment .img .control:hover div {
 	opacity: 1;
 	visibility: visible;
 }
 
-.animeDetail main .wonderfulMoment .img .control > div:hover {
+.animeDetail main .wonderfulMoment .img .control div:hover {
 	background-color: rgb(43, 10, 255);
 }
 /* endregion */

@@ -20,12 +20,6 @@ const state = {
 	//主页内容类型标志，默认为全部
 	selectFlag: 1,
 
-	//轮播图图片
-	images: [],
-
-	//轮播图对象
-	mySwiper: {},
-
 	//浏览器身份，1为pc，2为移动
 	browserIdentity: 2,
 
@@ -48,12 +42,6 @@ const mutations = {
 	},
 	SELECT_FLAG(state, selectFlag) {
 		state.selectFlag = selectFlag;
-	},
-	IMAGES(state, images) {
-		state.images = images;
-	},
-	MY_SWIPER(state, mySwiper) {
-		state.mySwiper = mySwiper;
 	},
 	BROWSER_IDENTITY(state, browserIdentity) {
 		state.browserIdentity = browserIdentity;

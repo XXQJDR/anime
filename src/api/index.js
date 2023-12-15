@@ -88,6 +88,17 @@ export const reqGetDetailAnime = (collectId) => {
 	return axios.get(`/anime/getDetailAnime/${collectId}`);
 }
 
+/**
+ * 获取动漫精彩瞬间
+ * @param current 当前页
+ * @param size 每页展示数量
+ * @param collectId 记录id
+ */
+export const reqGetPageWonderfulMoment = (current, size, collectId) => {
+	let params = {current, size, collectId};
+	return axios.post('/anime/getPageWonderfulMoment', params);
+}
+
 //上传文件
 export const reqUpload = (collectId, fileList) => {
 	let formData = new FormData();
@@ -96,6 +107,6 @@ export const reqUpload = (collectId, fileList) => {
 }
 
 //删除图片
-export const reqRemoveWonderfulMoment = (imageInfo) => {
-	return axios.post('/anime/removeWonderfulMoment', imageInfo);
+export const reqRemoveWonderfulMoment = (id) => {
+	return axios.get(`/anime/removeWonderfulMoment/${id}`);
 }

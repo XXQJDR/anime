@@ -86,12 +86,23 @@
 				</el-upload>
 			</div>
 
-			<!-- 轮播图 -->
-			<div class="carouselImg" v-if="images.length">
-				<CarouselImg ref="carouselImg" :images="images"/>
-				<div class="deleteBtn" @click="deleteImage">
-					<svg width="20px" height="20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path data-v-5d45e6f4="" fill="#ff0000" d="M177.1 48h93.7c2.7 0 5.2 1.3 6.7 3.6l19 28.4h-145l19-28.4c1.5-2.2 4-3.6 6.7-3.6zM354.2 80L317.5 24.9C307.1 9.4 289.6 0 270.9 0H177.1c-18.7 0-36.2 9.4-46.6 24.9L93.8 80H80.1 32 24C10.7 80 0 90.7 0 104s10.7 24 24 24H35.6L59.6 452.7c2.5 33.4 30.3 59.3 63.8 59.3H324.6c33.5 0 61.3-25.9 63.8-59.3L412.4 128H424c13.3 0 24-10.7 24-24s-10.7-24-24-24h-8H367.9 354.2zm10.1 48L340.5 449.2c-.6 8.4-7.6 14.8-16 14.8H123.4c-8.4 0-15.3-6.5-16-14.8L83.7 128H364.3z"></path></svg>
-				</div>
+			<div class="wonderfulMoment">
+				<wc-waterfall :gap="10" :cols="count">
+					<div class="img" v-for="img in images" :key="img.id">
+						<div class="control">
+							<div class="detail">
+								<i class="el-icon-full-screen" />
+							</div>
+							<div class="delete">
+								<i class="el-icon-delete" @click="deleteImage(img.id)" />
+							</div>
+							<div class="download">
+								<i class="el-icon-download" />
+							</div>
+						</div>
+						<img :src="img.briefImageUrl" alt="">
+					</div>
+				</wc-waterfall>
 			</div>
 			<el-empty style="height: 100vh;" v-if="!images.length" :image-size="250" description="暂无精彩瞬间，快来上传吧！"/>
 		</main>
@@ -99,13 +110,12 @@
 </template>
 
 <script>
-import CarouselImg from "@/components/carouselImg.vue";
-import {reqGetDetailAnime, reqUpload, reqRemoveWonderfulMoment} from "@/api";
-import {mapState} from "vuex";
+import {reqGetDetailAnime, reqGetPageWonderfulMoment, reqUpload, reqRemoveWonderfulMoment} from "@/api";
+import WcWaterfall from 'wc-waterfall';
 
 export default {
 	name: 'AnimeDetail',
-	components: {CarouselImg},
+	components: {WcWaterfall},
 	data() {
 		return {
 			//允许的文件类型
@@ -113,19 +123,28 @@ export default {
 
 			//动漫信息
 			anime: {},
+
+			//图片数组
+			images: [],
+
+			//当前页
+			current: 1,
+
+			//每页展示数量
+			size: 20,
+
+			//是否还有下一页数据
+			hasNext: false,
+
+			//瀑布流列数
+			count: 4,
 		}
 	},
 	computed: {
+		//当前动漫记录id
 		collectId() {
 			return this.$route.query.collectId;
 		},
-
-		//当前轮播图展示的序号
-		currentImageIndex() {
-			return this.mySwiper.realIndex;
-		},
-
-		...mapState(['images', 'mySwiper']),
 	},
 	methods: {
 		/* 点击箭头滚动到内容区域 */
@@ -189,12 +208,11 @@ export default {
 				return ;
 			}
 
-			//更新数据
-			await this.getDetailAnime();
-			this.mySwiper.updateSlides();
-
 			//清空上传列表
 			this.$refs.upload.clearFiles();
+
+			//更新数据
+			this.images = this.images.concat(result.data || []);
 		},
 
 		//获取动漫详细信息
@@ -204,26 +222,86 @@ export default {
 				this.$message.error(result.msg);
 				return ;
 			}
-			this.anime = result.data.anime || {};
-			this.$store.commit('IMAGES', result.data.images || [])
+			this.anime = result.data || {};
+		},
+
+		//分页获取动漫精彩瞬间
+		async getPageWonderfulMoment() {
+			let result = await reqGetPageWonderfulMoment(this.current, this.size, this.collectId);
+			if (result.code !== 200) {
+				this.$message.error(result.msg);
+				return ;
+			}
+			this.images = this.images.concat(result.data.records || []);
+			this.hasNext = result.data.current < result.data.pages;
+		},
+
+		//动态加载数据
+		lazyLoading() {
+			let bottomOfWindow = document.documentElement.offsetHeight - document.documentElement.scrollTop - window.innerHeight;
+
+			//当距离底部的距离小于300px时，请求服务器数据
+			if (bottomOfWindow < 300 && this.hasNext) {
+				this.hasNext = false;
+				this.getPageWonderfulMoment();
+				this.current++;
+			}
 		},
 
 		//删除图片
-		async deleteImage() {
-			let result = await reqRemoveWonderfulMoment(this.images[this.currentImageIndex]);
+		async deleteImage(id) {
+			let result = await reqRemoveWonderfulMoment(id);
 			this.$message({
 				type: result.code === 200 ? 'success' : 'error',
 				message: result.code === 200 ? '删除成功！' : '删除失败！'
 			});
 
+			if (result.code !== 200) {
+				return ;
+			}
+
 			//更新数据
-			await this.getDetailAnime();
-			this.mySwiper.updateSlides();
+			this.images = this.images.filter(item => item.id !== id);
+		},
+
+		//根据浏览器可视宽度改变瀑布流行数
+		changeWaterfallCount() {
+			if (window.innerWidth < 768) {
+				this.count = 1;
+			} else if (window.innerWidth >= 768 && window.innerWidth < 1200) {
+				this.count = 2;
+			} else if (window.innerWidth >= 1200 && window.innerWidth < 1668) {
+				this.count = 3;
+			} else {
+				this.count = 4;
+			}
 		}
 	},
 	created() {
+		//获取动漫信息
 		this.getDetailAnime();
+
+		//获取第一页数据
+		this.getPageWonderfulMoment();
+		this.current++;
 	},
+	mounted() {
+		//当滚动条接近底部时加载数据
+		window.addEventListener('scroll', this.lazyLoading);
+
+		//根据浏览器可视宽度改变瀑布流行数
+		this.changeWaterfallCount();
+		window.addEventListener('resize', this.changeWaterfallCount);
+	},
+	beforeDestroy() {
+		window.removeEventListener('scroll', this.lazyLoading);
+		window.removeEventListener('resize', this.changeWaterfallCount);
+	},
+	watch: {
+		images(images) {
+			this.count = images.length >= 4 ? 4 : images.length;
+		}
+	}
 }
 </script>
 
@@ -351,33 +429,53 @@ export default {
 	text-align: center;
 }
 
-.animeDetail main .carouselImg {
-	height: 100vh;
-	position: relative;
+.animeDetail main .wonderfulMoment {
+	overflow: hidden;
 }
 
-.animeDetail main .carouselImg .deleteBtn {
-	width: 3rem;
-	height: 3rem;
-	border-radius: 50%;
-	background-color: rgba(255, 255, 255, .7);
+.animeDetail main .wonderfulMoment .img {
+	font-size: 0;
+}
+
+.animeDetail main .wonderfulMoment .img img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.animeDetail main .wonderfulMoment .img .control {
+	width: 100%;
+	height: 100%;
 	position: absolute;
-	top: 10px;
-	right: 10px;
-	z-index: 100;
+	top: 0;
+	left: 0;
+	background-color: rgba(0, 0, 0, 0);
+	font-size: 2rem;
+	color: #FFFFFF;
+	transition: background-color .5s;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+}
+
+.animeDetail main .wonderfulMoment .img .control:hover {
+	background-color: rgba(0, 0, 0, .4);
+}
+
+.animeDetail main .wonderfulMoment .img .control > div {
+	opacity: 0;
+	padding: 5px;
 	cursor: pointer;
+	transition: all .5s;
+	border-radius: 10px;
 }
 
-.animeDetail main .carouselImg .deleteBtn svg {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	transition: transform .3s;
+.animeDetail main .wonderfulMoment .img .control:hover > div {
+	opacity: 1;
 }
 
-.animeDetail main .carouselImg .deleteBtn:hover svg {
-	transform: translateY(-3px) translate(-50%, -50%);
+.animeDetail main .wonderfulMoment .img .control > div:hover {
+	background-color: rgb(43, 10, 255);
 }
 /* endregion */
 
@@ -415,11 +513,6 @@ export default {
 	.animeDetail main .uploadBox .upload {
 		width: 100%;
 	}
-
-	.animeDetail main .carouselImg {
-		width: 100%;
-		height: 300px;
-	}
 }
 </style>
 
@@ -455,5 +548,10 @@ export default {
 
 .upload .el-upload-list .el-upload-list__item .el-upload-list__item-status-label .el-icon-upload-success {
 	font-size: 1.5rem;
+}
+
+/* 修改瀑布流样式 */
+.img-inner-box {
+	position: relative;
 }
 </style>

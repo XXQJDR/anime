@@ -100,7 +100,7 @@
 								<i class="el-icon-download" />
 							</div>
 						</div>
-						<img :src="img.briefImageUrl" alt="">
+						<img @error='imgOnError' :src="img.briefImageUrl" alt="">
 					</div>
 				</wc-waterfall>
 			</div>
@@ -275,6 +275,13 @@ export default {
 			} else {
 				this.count = 4;
 			}
+		},
+
+		//图片加载失败回调
+		imgOnError(e) {
+			e.target.style.height = '250px';
+			e.target.style.backgroundColor = 'gray';
+			e.target.parentNode.firstChild.style.display = 'none';
 		}
 	},
 	created() {

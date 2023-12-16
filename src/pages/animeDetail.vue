@@ -96,8 +96,8 @@
 							<div class="delete" @click="deleteImage(img.id)">
 								<i class="el-icon-delete" />
 							</div>
-							<a :href="toDownloadUrl(img.detailImageUrl)" download>
-								<div class="download">
+							<a class="download" :href="toDownloadUrl(img.detailImageUrl)" download>
+								<div>
 									<i class="el-icon-download" />
 								</div>
 							</a>
@@ -540,7 +540,9 @@ export default {
 	background-color: rgba(0, 0, 0, .4);
 }
 
-.animeDetail main .wonderfulMoment .img .control div {
+.animeDetail main .wonderfulMoment .img .control .detail,
+.animeDetail main .wonderfulMoment .img .control .delete,
+.animeDetail main .wonderfulMoment .img .control .download {
 	opacity: 0;
 	visibility: hidden;
 	padding: 5px;
@@ -549,12 +551,16 @@ export default {
 	border-radius: 10px;
 }
 
-.animeDetail main .wonderfulMoment .img .control:hover div {
+.animeDetail main .wonderfulMoment .img .control:hover .detail,
+.animeDetail main .wonderfulMoment .img .control:hover .delete,
+.animeDetail main .wonderfulMoment .img .control:hover .download {
 	opacity: 1;
 	visibility: visible;
 }
 
-.animeDetail main .wonderfulMoment .img .control div:hover {
+.animeDetail main .wonderfulMoment .img .control .detail:hover,
+.animeDetail main .wonderfulMoment .img .control .delete:hover,
+.animeDetail main .wonderfulMoment .img .control .download:hover {
 	background-color: rgb(43, 10, 255);
 }
 /* endregion */

@@ -565,7 +565,7 @@ export default {
 }
 /* endregion */
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 768px) {
 	.animeDetail main .animeBox .anime {
 		display: block;
 		width: 100%;
@@ -634,10 +634,5 @@ export default {
 
 .upload .el-upload-list .el-upload-list__item .el-upload-list__item-status-label .el-icon-upload-success {
 	font-size: 1.5rem;
-}
-
-/* 修改瀑布流样式 */
-.img-inner-box {
-	position: relative;
 }
 </style>

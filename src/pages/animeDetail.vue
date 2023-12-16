@@ -96,7 +96,7 @@
 							<div class="delete" @click="deleteImage(img.id)">
 								<i class="el-icon-delete" />
 							</div>
-							<a :href="toDownloadUrl(img.detailImageUrl)" download="">
+							<a :href="toDownloadUrl(img.detailImageUrl)" download>
 								<div class="download">
 									<i class="el-icon-download" />
 								</div>
@@ -307,15 +307,19 @@ export default {
 
 		//根据浏览器可视宽度改变瀑布流行数
 		changeWaterfallCount() {
+			//获取瀑布流最大列数
+			let maxCount;
 			if (window.innerWidth < 768) {
-				this.count = 1;
+				maxCount = 1;
 			} else if (window.innerWidth >= 768 && window.innerWidth < 1200) {
-				this.count = 2;
+				maxCount = 2;
 			} else if (window.innerWidth >= 1200 && window.innerWidth < 1668) {
-				this.count = 3;
+				maxCount = 3;
 			} else {
-				this.count = 4;
+				maxCount = 4;
 			}
+
+			this.count = this.images.length < maxCount ? this.images.length : maxCount;
 		},
 
 		//图片加载失败回调
@@ -346,22 +350,30 @@ export default {
 		//将访问url转化为下载url
 		toDownloadUrl(url) {
 			return url.replace('upload-images', 'download');
+		},
+
+		//初始化图片数据
+		async getFirstPageWonderfulMoment() {
+			//获取第一页数据
+			await this.getPageWonderfulMoment();
+			this.current++;
+
+			//动态获取瀑布流行数
+			this.changeWaterfallCount();
 		}
 	},
 	created() {
 		//获取动漫信息
 		this.getDetailAnime();
 
-		//获取第一页数据
-		this.getPageWonderfulMoment();
-		this.current++;
+		//初始化图片数据
+		this.getFirstPageWonderfulMoment();
 	},
 	mounted() {
 		//当滚动条接近底部时加载数据
 		window.addEventListener('scroll', this.lazyLoading);
 
-		//根据浏览器可视宽度改变瀑布流行数
-		this.changeWaterfallCount();
+		//动态获取瀑布流行数
 		window.addEventListener('resize', this.changeWaterfallCount);
 	},
 	beforeDestroy() {

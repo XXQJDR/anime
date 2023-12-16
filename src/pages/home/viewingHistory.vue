@@ -34,7 +34,7 @@ export default {
 			emptyFlag: false,
 
 			//是否还有下一页数据
-			hasHext: true,
+			hasNext: true,
 		}
 	},
 	methods: {
@@ -50,11 +50,8 @@ export default {
 				this.$message.error('获取数据失败！');
 				return ;
 			}
-			this.animeList = this.animeList.concat(result.data || []);
-
-			//数据为空表示下一页无数据
-			this.hasHext = (result.data || []).length !== 0;
-
+			this.animeList = this.animeList.concat(result.data.records || []);
+			this.hasNext = result.data.current < result.data.pages;
 			if (this.current===1) {
 				this.emptyFlag = this.animeList.length===0;
 			}
@@ -65,8 +62,8 @@ export default {
 			let bottomOfWindow = document.documentElement.offsetHeight - document.documentElement.scrollTop - window.innerHeight;
 
 			//当距离底部的距离小于300px时，请求服务器数据
-			if (bottomOfWindow < 300 && this.hasHext) {
-				this.hasHext = false;
+			if (bottomOfWindow < 300 && this.hasNext) {
+				this.hasNext = false;
 				this.getPageAnime();
 			}
 		}

@@ -139,7 +139,7 @@ body {
 /* endregion */
 
 /*移动端*/
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 768px) {
 	html,
 	body {
 		font-size: 14px;

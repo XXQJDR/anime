@@ -3,7 +3,7 @@
 		<!-- region 输入框 -->
 		<div class="form">
 			<svg viewBox="0 0 24 24" focusable="false"><path fill="#cac5c4" d="M23.384,21.619,16.855,15.09a9.284,9.284,0,1,0-1.768,1.768l6.529,6.529a1.266,1.266,0,0,0,1.768,0A1.251,1.251,0,0,0,23.384,21.619ZM2.75,9.5a6.75,6.75,0,1,1,6.75,6.75A6.758,6.758,0,0,1,2.75,9.5Z"></path></svg>
-			<input type="text" placeholder="请输入关键词(搜索请按回车键)" v-model="keyword" @keyup.enter="searchHandle">
+			<input type="text" placeholder="请输入关键词(搜索请按回车键)" v-model="keyword" @keyup.enter="searchHandle" @focus="handleFocus">
 			<div class="suggestion" v-show="suggestionFlag" v-loading="loading">
 				<div class="item" v-for="(anime, index) in suggestionList" :key="index">
 					<div class="img">
@@ -123,6 +123,11 @@ export default {
 			if (this.suggestionList.length === 0) {
 				this.suggestionFlag = false;
 			}
+		},
+
+		//输入框获取焦点自动全选
+		handleFocus(e) {
+			e.currentTarget.select();
 		}
 	}
 }

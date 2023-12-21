@@ -192,7 +192,7 @@ export default {
 			for (let file of fileList) {
 				//判断文件类型
 				let splitArr = file.name.split('.');
-				if (!this.fileType.includes(splitArr[splitArr.length - 1])) {
+				if (!this.fileType.includes(splitArr[splitArr.length - 1].toLowerCase())) {
 					this.$message.error(file.name + '文件类型错误！');
 					return false;
 				}

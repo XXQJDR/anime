@@ -11,7 +11,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="value-box" @click="goAnimeDetail(item.collectId)">
+						<div class="value-box" @click="goAnimeDetail(item.collectId, item.animeId)">
 							<h4>{{ item.finishedWatchingDate }}</h4>
 							<img :src="item.cover" alt="">
 						</div>
@@ -27,8 +27,8 @@ export default {
 	name: 'TimeLine',
 	props: ['animeList'],
 	methods: {
-		goAnimeDetail(collectId) {
-			this.$router.push('/animeDetail?collectId=' + collectId);
+		goAnimeDetail(collectId, animeId) {
+			this.$router.push(`/animeDetail?collectId=${collectId}&animeId=${animeId}`);
 		}
 	}
 }

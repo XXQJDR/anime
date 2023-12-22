@@ -80,7 +80,7 @@
 				</div>
 				<template>
 					<div class="list">
-						<div class="item" @click="goAnimeDetail(anime.collectId)" v-for="(anime, index) in animeList" :key="index">
+						<div class="item" @click="goAnimeDetail(anime.collectId, anime.animeId)" v-for="(anime, index) in animeList" :key="index">
 							<div class="img">
 								<img :src="anime.cover" alt="">
 							</div>
@@ -192,9 +192,9 @@ export default {
 		},
 
 		//点击动漫进入详情页面
-		goAnimeDetail(collectId) {
+		goAnimeDetail(collectId, animeId) {
 			//跳转
-			this.$router.push('/animeDetail?collectId=' + collectId);
+			this.$router.push(`/animeDetail?collectId=${collectId}&animeId=${animeId}`);
 		},
 
 		/**

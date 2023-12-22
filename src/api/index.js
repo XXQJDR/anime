@@ -84,8 +84,8 @@ export const reqRemoveAnime = (collectId) => {
 }
 
 //获取动漫详细信息
-export const reqGetDetailAnime = (collectId) => {
-	return axios.get(`/anime/getDetailAnime/${collectId}`);
+export const reqGetDetailAnime = (animeId) => {
+	return axios.get(`/anime/getDetailAnime/${animeId}`);
 }
 
 /**

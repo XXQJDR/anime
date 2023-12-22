@@ -161,6 +161,11 @@ export default {
 			return this.$route.query.collectId;
 		},
 
+		//当前动漫id
+		animeId() {
+			return this.$route.query.animeId;
+		},
+
 		...mapState(['browserIdentity']),
 	},
 	methods: {
@@ -246,7 +251,7 @@ export default {
 
 		//获取动漫详细信息
 		async getDetailAnime() {
-			let result = await reqGetDetailAnime(this.collectId);
+			let result = await reqGetDetailAnime(this.animeId);
 			if (result.code !== 200) {
 				this.$message.error(result.msg);
 				return ;

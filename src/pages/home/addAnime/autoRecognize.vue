@@ -97,13 +97,13 @@ export default {
 			let result = await reqSearchAnimeForAdd(this.keyword);
 			this.suggestionList = result.data || [];
 
-			//关闭加载动画
-			this.loading = false;
-
 			//搜索结果为空关闭结果框
 			if (this.suggestionList.length === 0) {
 				this.suggestionFlag = false;
 			}
+
+			//关闭加载动画
+			this.loading = false;
 		}, 1000),
 
 		//添加动漫

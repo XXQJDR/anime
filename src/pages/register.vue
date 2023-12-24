@@ -118,14 +118,13 @@ export default {
 					this.loading = true;
 
 					let result = await reqRegister(this.formData.username, this.formData.password, this.formData.email, this.formData.checkCode);
-
-					//关闭加载动画
-					this.loading = false;
-
 					this.$message({
 						type: result.code === 200 ? 'success' : 'error',
 						message: result.msg
 					});
+
+					//关闭加载动画
+					this.loading = false;
 
 					//注册成功后跳转至登录页面
 					if (result.code === 200) {

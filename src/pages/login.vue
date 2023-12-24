@@ -100,12 +100,11 @@ export default {
 					this.loading = true;
 
 					let result = await reqLogin(this.formData.email, this.formData.password, this.formData.checkCode);
-
-					//关闭加载动画
-					this.loading = false;
-
 					if (result.code !== 200) {
 						this.$message.error(result.msg);
+
+						//关闭加载动画
+						this.loading = false;
 					} else {
 						//解析token获取用户信息
 						let token = result.data;
@@ -118,6 +117,9 @@ export default {
 						//将userInfo存入vuex和localStorage
 						this.$store.commit('USER_INFO', userInfo);
 						localStorage.setItem('userInfo', JSON.stringify(userInfo));
+
+						//关闭加载动画
+						this.loading = false;
 
 						//跳转到首页
 						await this.$router.push('/home');

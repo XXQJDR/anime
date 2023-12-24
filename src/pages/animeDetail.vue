@@ -224,10 +224,6 @@ export default {
 
 			//上传文件
 			let result = await reqUpload(this.collectId, this.$refs.upload.uploadFiles);
-
-			//关闭加载动画
-			this.loading = false;
-
 			this.$message({
 				type: result.code === 200 ? 'success' : 'error',
 				message: result.code === 200 ? '上传成功！' : '上传失败！'
@@ -241,12 +237,15 @@ export default {
 			this.$refs.upload.clearFiles();
 
 			//更新数据
-			this.images = this.images.concat(result.data || []);
+			await this.getFirstPageWonderfulMoment();
 
 			//pc端根据图片数量改变瀑布流列数
 			if (this.browserIdentity === 1) {
 				this.count = this.images.length >= 4 ? 4 : this.images.length;
 			}
+
+			//关闭加载动画
+			this.loading = false;
 		},
 
 		//获取动漫详细信息
@@ -268,6 +267,7 @@ export default {
 			}
 			this.images = this.images.concat(result.data.records || []);
 			this.hasNext = result.data.current < result.data.pages;
+			this.current++;
 		},
 
 		//动态加载数据
@@ -278,7 +278,6 @@ export default {
 			if (bottomOfWindow < 300 && this.hasNext) {
 				this.hasNext = false;
 				this.getPageWonderfulMoment();
-				this.current++;
 			}
 		},
 
@@ -288,9 +287,6 @@ export default {
 			this.loading = true;
 
 			let result = await reqRemoveWonderfulMoment(id);
-
-			//关闭加载动画
-			this.loading = false;
 
 			this.$message({
 				type: result.code === 200 ? 'success' : 'error',
@@ -308,7 +304,10 @@ export default {
 			if (this.browserIdentity === 1) {
 				this.count = this.images.length >= 4 ? 4 : this.images.length;
 			}
-		}, 2000),
+
+			//关闭加载动画
+			this.loading = false;
+		}, 1000),
 
 		//根据浏览器可视宽度改变瀑布流行数
 		changeWaterfallCount() {
@@ -360,7 +359,14 @@ export default {
 		//初始化图片数据
 		async getFirstPageWonderfulMoment() {
 			//获取第一页数据
-			await this.getPageWonderfulMoment();
+			this.current = 1;
+			let result = await reqGetPageWonderfulMoment(this.current, this.size, this.collectId);
+			if (result.code !== 200) {
+				this.$message.error(result.msg);
+				return ;
+			}
+			this.images = result.data.records || []
+			this.hasNext = result.data.current < result.data.pages;
 			this.current++;
 
 			//动态获取瀑布流行数

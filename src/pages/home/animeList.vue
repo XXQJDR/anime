@@ -218,6 +218,8 @@ export default {
 			//更新列表
 			if (this.selectFlag !== 1) {
 				this.animeList.splice(index, 1);
+			} else {
+				this.animeList[index].watchingStatus = !this.animeList[index].watchingStatus;
 			}
 		},
 
@@ -260,17 +262,16 @@ export default {
 			//获取数据
 			let result = await reqGetPageAnime(params);
 			this.animeList = result.data.records || [];
-
 			this.current++;
-
-			//关闭加载动画
-			this.loading = false;
 
 			//数据为空展示空状态
 			this.emptyFlag = this.animeList.length === 0;
 
 			//数据为空表示下一页无数据
 			this.hasNext = result.data.current < result.data.pages;
+
+			//关闭加载动画
+			this.loading = false;
 		},
 
 		//分页获取动漫数据
@@ -290,6 +291,7 @@ export default {
 			let result = await reqGetPageAnime(params);
 			this.animeList = this.animeList.concat(result.data.records || []);
 			this.hasNext = result.data.current < result.data.pages;
+			this.current++;
 		},
 
 		//搜索动漫
@@ -308,11 +310,11 @@ export default {
 			}
 			this.animeList = result.data || [];
 
-			//关闭加载动画
-			this.loading = false;
-
 			//数据为空展示空状态
 			this.emptyFlag = this.animeList.length === 0;
+
+			//关闭加载动画
+			this.loading = false;
 		}, 1000),
 
 		//点击动漫分类按钮
@@ -341,7 +343,6 @@ export default {
 			if (bottomOfWindow < 300 && this.hasNext) {
 				this.hasNext = false;
 				this.getPageAnime();
-				this.current++;
 			}
 		},
 

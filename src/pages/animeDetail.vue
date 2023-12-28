@@ -239,11 +239,6 @@ export default {
 			//更新数据
 			await this.getFirstPageWonderfulMoment();
 
-			//pc端根据图片数量改变瀑布流列数
-			if (this.browserIdentity === 1) {
-				this.count = this.images.length >= 4 ? 4 : this.images.length;
-			}
-
 			//关闭加载动画
 			this.loading = false;
 		},
@@ -369,8 +364,10 @@ export default {
 			this.hasNext = result.data.current < result.data.pages;
 			this.current++;
 
-			//动态获取瀑布流行数
-			this.changeWaterfallCount();
+			//PC端动态改变瀑布流行数
+			if (this.browserIdentity === 1) {
+				this.changeWaterfallCount();
+			}
 		}
 	},
 	created() {

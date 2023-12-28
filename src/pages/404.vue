@@ -378,10 +378,14 @@ h2 {
 }
 
 .container {
+	width: 100vw;
 	height: 100vh;
+	display: flex;
+	align-items: center;
 }
 
 .container .box {
+	width: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;

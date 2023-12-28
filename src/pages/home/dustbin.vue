@@ -89,11 +89,11 @@ export default {
 			}
 			this.animeList = result.data || [];
 
-			//数据为空展示空状态
-			this.emptyFlag = this.animeList.length === 0;
-
 			//关闭加载动画
 			this.loading = false;
+
+			//数据为空展示空状态
+			this.emptyFlag = this.animeList.length === 0;
 		},
 
 		//恢复

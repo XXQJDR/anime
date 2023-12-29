@@ -77,6 +77,14 @@ export default {
 	},
 	beforeDestroy() {
 		window.removeEventListener('scroll', this.lazyLoading);
+	},
+	//从详情页面返回
+	activated() {
+		window.addEventListener('scroll', this.lazyLoading);
+	},
+	//进入详情页面取消滚动加载
+	deactivated() {
+		window.removeEventListener('scroll', this.lazyLoading);
 	}
 }
 </script>

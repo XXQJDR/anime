@@ -17,9 +17,6 @@ const state = {
 	//侧边栏显示标志
 	sidebarFlag: false,
 
-	//主页内容类型标志，默认为全部
-	selectFlag: 1,
-
 	//浏览器身份，1为pc，2为移动
 	browserIdentity: 2,
 
@@ -39,9 +36,6 @@ const mutations = {
 	},
 	SIDEBAR_FLAG(state, sidebarFlag) {
 		state.sidebarFlag = sidebarFlag;
-	},
-	SELECT_FLAG(state, selectFlag) {
-		state.selectFlag = selectFlag;
 	},
 	BROWSER_IDENTITY(state, browserIdentity) {
 		state.browserIdentity = browserIdentity;

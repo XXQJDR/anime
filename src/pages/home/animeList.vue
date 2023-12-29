@@ -136,6 +136,9 @@ export default {
 	name: 'AnimeList',
 	data() {
 		return {
+			//内容类型标志，默认为全部
+			selectFlag: 1,
+
 			//移动端筛选详细页面开启标志
 			detailFlag: false,
 
@@ -324,7 +327,7 @@ export default {
 			}
 
 			//修改内容标志
-			this.$store.commit('SELECT_FLAG', type);
+			this.selectFlag = type;
 
 			//关闭移动端选择页面
 			this.detailFlag = false;
@@ -359,6 +362,14 @@ export default {
 		window.addEventListener('scroll', this.lazyLoading);
 	},
 	beforeDestroy() {
+		window.removeEventListener('scroll', this.lazyLoading);
+	},
+	//从详情页面返回
+	activated() {
+		window.addEventListener('scroll', this.lazyLoading);
+	},
+	//进入详情页面取消滚动加载
+	deactivated() {
 		window.removeEventListener('scroll', this.lazyLoading);
 	}
 }

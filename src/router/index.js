@@ -24,7 +24,6 @@ const routes = [
 	},
 	{
 		path: '/welcome',
-		name: 'welcome',
 		component: Welcome,
 		meta: {
 			title: '欢迎来到Anime'
@@ -32,7 +31,6 @@ const routes = [
 	},
 	{
 		path: '/login',
-		name: 'login',
 		component: Login,
 		meta: {
 			title: '登录'
@@ -40,7 +38,6 @@ const routes = [
 	},
 	{
 		path: '/register',
-		name: 'register',
 		component: Register,
 		meta: {
 			title: '注册'
@@ -48,7 +45,6 @@ const routes = [
 	},
 	{
 		path: '/home',
-		name: 'home',
 		component: Home,
 		redirect: '/home/animeList',
 
@@ -114,7 +110,6 @@ const routes = [
 	},
 	{
 		path: '/animeDetail',
-		name: 'animeDetail',
 		component: AnimeDetail,
 		meta: {
 			title: '详情'
@@ -122,7 +117,6 @@ const routes = [
 	},
 	{
 		path: '/test',
-		name: 'test',
 		component: Test,
 		meta: {
 			title: '测试'
@@ -130,7 +124,6 @@ const routes = [
 	},
 	{
 		path: '/404',
-		name: '404',
 		component: () => import('@/pages/404.vue'),
 		meta: {
 			title: '404'
@@ -145,11 +138,15 @@ const routes = [
 const router = new VueRouter({
 	routes,
 	scrollBehavior (to, from, savedPosition) {
-		if (savedPosition) {
-			return savedPosition
-		} else {
-			return { x: 0, y: 0 }
-		}
+		return new Promise((resolve) => {
+			setTimeout(() => {
+				if (savedPosition) {
+					resolve(savedPosition);
+				} else {
+					resolve({x: 0, y: 0})
+				}
+			}, 450)
+		})
 	}
 });
 

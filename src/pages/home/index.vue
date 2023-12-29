@@ -55,7 +55,9 @@
 					leave-active-class="animate__animated animate__fadeOut"
 					:duration="{enter: 400, leave: 400}"
 			>
-				<router-view />
+				<keep-alive>
+					<router-view />
+				</keep-alive>
 			</transition>
 		</div>
 	</div>
@@ -116,6 +118,9 @@ export default {
 			this.$message.success('退出登录成功！');
 		}
 	},
+	mounted() {
+		console.log('主页加载');
+	}
 }
 </script>
 

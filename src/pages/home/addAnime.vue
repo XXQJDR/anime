@@ -1,5 +1,12 @@
 <template>
-	<div class="autoRecognize">
+	<div class="addAnime">
+		<!-- region 模块分类名称 -->
+		<div class="typeTitle">
+			<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#3c3838" d="M248 72c0-13.3-10.7-24-24-24s-24 10.7-24 24V232H40c-13.3 0-24 10.7-24 24s10.7 24 24 24H200V440c0 13.3 10.7 24 24 24s24-10.7 24-24V280H408c13.3 0 24-10.7 24-24s-10.7-24-24-24H248V72z"></path></svg>
+			<div>添加动漫</div>
+		</div>
+		<!-- endregion -->
+
 		<!-- region 输入框 -->
 		<div class="form">
 			<svg viewBox="0 0 24 24" focusable="false"><path fill="#cac5c4" d="M23.384,21.619,16.855,15.09a9.284,9.284,0,1,0-1.768,1.768l6.529,6.529a1.266,1.266,0,0,0,1.768,0A1.251,1.251,0,0,0,23.384,21.619ZM2.75,9.5a6.75,6.75,0,1,1,6.75,6.75A6.758,6.758,0,0,1,2.75,9.5Z"></path></svg>
@@ -62,11 +69,11 @@
 </template>
 
 <script>
-import {reqSearchAnimeForAdd, reqAddAnime} from "@/api";
 import _ from "lodash";
+import {reqAddAnime, reqSearchAnimeForAdd} from "@/api";
 
 export default {
-	name: 'AutoRecognize',
+	name: 'AddAnime',
 	data() {
 		return {
 			//搜索关键词
@@ -134,13 +141,34 @@ export default {
 </script>
 
 <style scoped>
-/* region 输入框 */
-.autoRecognize .form {
-	width: 100%;
-	position: relative;
+/* region 模块分类名称 */
+.addAnime .typeTitle {
+	min-width: 110px;
+	font-size: 1.5rem;
+	display: flex;
+	align-items: center;
 }
 
-.autoRecognize .form svg {
+.addAnime .typeTitle svg {
+	width: 18px;
+	height: 18px;
+}
+
+.addAnime .typeTitle div {
+	min-width: 76px;
+	margin-left: 15px;
+	font-weight: bold;
+}
+/* endregion */
+
+/* region 输入框 */
+.addAnime .form {
+	width: 100%;
+	position: relative;
+	margin-top: 1rem;
+}
+
+.addAnime .form svg {
 	width: 1.1rem;
 	height: 1.1rem;
 	position: absolute;
@@ -148,7 +176,7 @@ export default {
 	left: 10px;
 }
 
-.autoRecognize .form input {
+.addAnime .form input {
 	width: 100%;
 	height: 45px;
 	outline: transparent solid 2px;
@@ -161,27 +189,27 @@ export default {
 	text-align: center;
 }
 
-.autoRecognize .form input:hover {
+.addAnime .form input:hover {
 	border-color: #C0C4CC;
 }
 
-.autoRecognize .form input:focus {
+.addAnime .form input:focus {
 	border-color: rgb(49, 130, 206);
 	box-shadow: rgb(49, 130, 206) 0 0 0 1px;
 	background-color: #FFFFFF;
 }
 
 /* placeholder居中 */
-.autoRecognize .form input::-ms-input-placeholder{
+.addAnime .form input::-ms-input-placeholder{
 	text-align: center;
 }
-.autoRecognize .form input::-webkit-input-placeholder{
+.addAnime .form input::-webkit-input-placeholder{
 	text-align: center;
 }
 /* endregion */
 
 /* region 输入建议 */
-.autoRecognize .form .suggestion {
+.addAnime .form .suggestion {
 	width: 100%;
 	min-width: 710px;
 	min-height: 200px;
@@ -192,7 +220,7 @@ export default {
 	font-size: 0.9rem;
 }
 
-.autoRecognize .form .suggestion .item {
+.addAnime .form .suggestion .item {
 	width: 100%;
 	display: flex;
 	justify-content: start;
@@ -202,11 +230,11 @@ export default {
 	box-sizing: border-box;
 }
 
-.autoRecognize .form .suggestion .item:last-child {
+.addAnime .form .suggestion .item:last-child {
 	border-bottom: none;
 }
 
-.autoRecognize .form .suggestion .item .img {
+.addAnime .form .suggestion .item .img {
 	min-width: 144px;
 	height: 200px;
 	border-radius: 5px;
@@ -215,14 +243,14 @@ export default {
 	cursor: pointer;
 }
 
-.autoRecognize .form .suggestion .item .img img {
+.addAnime .form .suggestion .item .img img {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
 	transition: transform 0.3s;
 }
 
-.autoRecognize .form .suggestion .item .img .mask {
+.addAnime .form .suggestion .item .img .mask {
 	width: 100%;
 	height: 100%;
 	background-color: rgba(0, 0, 0, .4);
@@ -233,7 +261,7 @@ export default {
 	transition: opacity 0.3s;
 }
 
-.autoRecognize .form .suggestion .item .img .mask .box {
+.addAnime .form .suggestion .item .img .mask .box {
 	width: 50px;
 	height: 50px;
 	background-color: rgba(0, 0, 0, .5);
@@ -247,7 +275,7 @@ export default {
 	transition: all .5s;
 }
 
-.autoRecognize .form .suggestion .item .img .mask .box svg {
+.addAnime .form .suggestion .item .img .mask .box svg {
 	width: 25px;
 	height: 25px;
 	position: absolute;
@@ -258,15 +286,15 @@ export default {
 	margin: auto;
 }
 
-.autoRecognize .form .suggestion .item .info {
+.addAnime .form .suggestion .item .info {
 	padding-left: 15px;
 }
 
-.autoRecognize .form .suggestion .item .info h3 {
+.addAnime .form .suggestion .item .info h3 {
 	margin-bottom: 5px;
 }
 
-.autoRecognize .form .suggestion .item .info .other {
+.addAnime .form .suggestion .item .info .other {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	grid-auto-rows: 30px;
@@ -274,17 +302,17 @@ export default {
 	margin-top: 15px;
 }
 
-.autoRecognize .form .suggestion .item .info .other .otherItem {
+.addAnime .form .suggestion .item .info .other .otherItem {
 	justify-items: start;
 }
 
-.autoRecognize .form .suggestion .item .info .other .otherItem .key {
+.addAnime .form .suggestion .item .info .other .otherItem .key {
 	display: inline-block;
 	width: 69px;
 	text-align: right;
 }
 
-.autoRecognize .form .suggestion .item .info .intro {
+.addAnime .form .suggestion .item .info .intro {
 	margin-top: 5px;
 	word-break: break-all;
 	overflow: hidden;
@@ -293,91 +321,91 @@ export default {
 	-webkit-box-orient: vertical;
 }
 
-.autoRecognize .form .suggestion .item .info .other .otherItem .value,
-.autoRecognize .form .suggestion .item .info .intro .value {
+.addAnime .form .suggestion .item .info .other .otherItem .value,
+.addAnime .form .suggestion .item .info .intro .value {
 	color: #726e6e;
 }
 /* endregion */
 
 /* 手机端 */
 @media screen and (max-width: 768px) {
-	.autoRecognize .form svg {
+	.addAnime .form svg {
 		top: 16px;
 	}
 
-	.autoRecognize .form .suggestion {
+	.addAnime .form .suggestion {
 		width: 100%;
 		min-width: auto;
 		font-size: 1rem;
 	}
 
-	.autoRecognize .form .suggestion .item {
+	.addAnime .form .suggestion .item {
 		padding: 5px 0;
 	}
 
-	.autoRecognize .form .suggestion .item .img {
+	.addAnime .form .suggestion .item .img {
 		height: 170px;
 	}
 
-	.autoRecognize .form .suggestion .item .info {
+	.addAnime .form .suggestion .item .info {
 		width: 220px;
 	}
 
-	.autoRecognize .form .suggestion .item .info .other {
+	.addAnime .form .suggestion .item .info .other {
 		display: block;
 	}
 
-	.autoRecognize .form .suggestion .item .info .other .notNecessary {
+	.addAnime .form .suggestion .item .info .other .notNecessary {
 		display: none;
 	}
 
-	.autoRecognize .form .suggestion .item .info .other .otherItem .key {
+	.addAnime .form .suggestion .item .info .other .otherItem .key {
 		width: 56px;
 	}
 
-	.autoRecognize .form .suggestion .item .info .intro {
+	.addAnime .form .suggestion .item .info .intro {
 		display: none;
 	}
 }
 
 @media screen and (min-width: 768px) and (max-width: 1000px) {
-	.autoRecognize .form .suggestion {
+	.addAnime .form .suggestion {
 		min-width: 0;
 	}
 
-	.autoRecognize .form .suggestion .item {
+	.addAnime .form .suggestion .item {
 		justify-content: start;
 	}
 
-	.autoRecognize .form .suggestion .item .info .other {
+	.addAnime .form .suggestion .item .info .other {
 		display: block;
 	}
 
-	.autoRecognize .form .suggestion .item .info .other .notNecessary {
+	.addAnime .form .suggestion .item .info .other .notNecessary {
 		display: none;
 	}
 
-	.autoRecognize .form .suggestion .item .info .intro {
+	.addAnime .form .suggestion .item .info .intro {
 		display: none;
 	}
 
 	/* 鼠标移入一行内背景颜色改变 */
-	.autoRecognize .form .suggestion .item:hover {
+	.addAnime .form .suggestion .item:hover {
 		background-color: #F7F3F2;
 	}
 
 	/* 鼠标移入图片展示遮罩 */
-	.autoRecognize .form .suggestion .item .img:hover .mask {
+	.addAnime .form .suggestion .item .img:hover .mask {
 		opacity: 1;
 	}
 
 	/* 鼠标移入图片，图片放大 */
-	.autoRecognize .form .suggestion .item .img:hover img {
+	.addAnime .form .suggestion .item .img:hover img {
 		transform: scale(1.1);
 	}
 
 	/* 鼠标移入添加按钮，添加按钮旋转 */
-	.autoRecognize .form .suggestion .item .img .mask .box:hover {
+	.addAnime .form .suggestion .item .img .mask .box:hover {
 		transform: rotateZ(180deg);
 	}
 }
@@ -385,22 +413,22 @@ export default {
 /* pc端 */
 @media screen and (min-width: 1000px) {
 	/* 鼠标移入一行内背景颜色改变 */
-	.autoRecognize .form .suggestion .item:hover {
+	.addAnime .form .suggestion .item:hover {
 		background-color: #F7F3F2;
 	}
 
 	/* 鼠标移入图片展示遮罩 */
-	.autoRecognize .form .suggestion .item .img:hover .mask {
+	.addAnime .form .suggestion .item .img:hover .mask {
 		opacity: 1;
 	}
 
 	/* 鼠标移入图片，图片放大 */
-	.autoRecognize .form .suggestion .item .img:hover img {
+	.addAnime .form .suggestion .item .img:hover img {
 		transform: scale(1.1);
 	}
 
 	/* 鼠标移入添加按钮，添加按钮旋转 */
-	.autoRecognize .form .suggestion .item .img .mask .box:hover {
+	.addAnime .form .suggestion .item .img .mask .box:hover {
 		transform: rotateZ(180deg);
 	}
 }

@@ -7,7 +7,9 @@
 				leave-active-class="animate__animated animate__fadeOut"
 				:duration="{enter: 400, leave: 400}"
 		>
-			<router-view />
+			<keep-alive include="home">
+				<router-view />
+			</keep-alive>
 		</transition>
 
 		<div class="live2dBox" v-if="browserIdentity===1" :id="live2dPosition">

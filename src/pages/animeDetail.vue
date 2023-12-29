@@ -367,6 +367,8 @@ export default {
 			//PC端动态改变瀑布流行数
 			if (this.browserIdentity === 1) {
 				this.changeWaterfallCount();
+			} else {
+				this.count = 1;
 			}
 		}
 	},

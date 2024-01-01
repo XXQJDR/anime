@@ -380,11 +380,14 @@ export default {
 		this.getFirstPageWonderfulMoment();
 	},
 	mounted() {
-		//当滚动条接近底部时加载数据
-		window.addEventListener('scroll', this.lazyLoading);
+		//设置500毫秒延时，防止路由切换滚动行为导致加载数据
+		setTimeout(() => {
+			//当滚动条接近底部时加载数据
+			window.addEventListener('scroll', this.lazyLoading);
 
-		//动态获取瀑布流行数
-		window.addEventListener('resize', this.changeWaterfallCount);
+			//动态获取瀑布流行数
+			window.addEventListener('resize', this.changeWaterfallCount);
+		}, 500);
 	},
 	beforeDestroy() {
 		window.removeEventListener('scroll', this.lazyLoading);

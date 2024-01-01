@@ -128,9 +128,8 @@
 </template>
 
 <script>
-import {reqGetPageAnime, reqSearchAnime, reqUpdateAnimeWacthingStatus, reqUpdateAnimeDeleted} from "@/api";
+import {reqGetPageAnime, reqSearchAnime, reqUpdateAnimeDeleted, reqUpdateAnimeWacthingStatus} from "@/api";
 import _ from "lodash";
-import {mapState} from "vuex";
 
 export default {
 	name: 'AnimeList',
@@ -165,8 +164,6 @@ export default {
 		}
 	},
 	computed: {
-		...mapState(['selectFlag']),
-
 		//移动端选择的筛选类型名称
 		selectedTypeName() {
 			let name;

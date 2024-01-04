@@ -6,7 +6,12 @@ module.exports = defineConfig({
     port: 80,
 
     //解决跨域问题
-    proxy: 'http://localhost:8080'
-    // proxy: 'http://192.168.31.112:8080'
+    // proxy: 'http://192.168.64.133:8080',
+    proxy: {
+      '/api': {
+        // target: 'http://192.168.64.133:8080'
+        target: 'http://localhost:8080'
+      }
+    }
   }
 })

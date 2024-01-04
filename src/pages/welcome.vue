@@ -1,6 +1,6 @@
 <template>
 	<div class="background">
-		<div class="top animate__animated animate__backInDown">欢迎来到<span>Anime</span></div>
+		<div class="logo-font animate__animated animate__backInDown">welcome to anime</div>
 		<div class="introduce">
 			<div class="left left1 animate__animated animate__backInLeft">
 				追番已经成为了我们的一种习惯，每一次的追剧都是我生活中的一段美好回忆。随着时间的推移，遗忘是难免的，但是我们可以通过截图将动漫中的瞬间记录下来。
@@ -54,23 +54,29 @@ export default {
 	overflow: hidden;
 }
 
-.top,
 .left,
 .right,
 .button {
 	user-select: none;
 }
 
-.top {
-	color: rgb(24, 120, 175);
-	letter-spacing: 0.3rem;
-	text-align: center;
-	margin-top: 10%;
-	text-shadow: 0 0 3px rgb(24, 120, 175);
+@font-face {
+	font-family: 'logofont';
+	font-display: swap;
+	src: url("@/font/logo/Vampire Wars.ttf");
 }
 
-.top span {
-	font-family: "Segoe Script", serif;
+.logo-font {
+	font-family: "logofont" !important;
+	font-style: normal;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	background-image: linear-gradient(50deg, rgb(43, 10, 255), rgb(255, 91, 138) 49%, rgb(255, 91, 138) 53%, rgb(255, 91, 138) 55%, rgb(251, 166, 75) 77%, rgb(249, 155, 82));
+	background-clip: text;
+	color: transparent;
+	margin-top: 10%;
+	text-align: center;
+	letter-spacing: 0.3rem;
 }
 
 .introduce {
@@ -98,7 +104,7 @@ export default {
 
 /*移动端*/
 @media screen and (max-width: 768px) {
-	.top {
+	.logo-font {
 		font-size: 2rem;
 		margin-top: 6rem;
 	}
@@ -139,7 +145,7 @@ export default {
 
 /*PC端*/
 @media screen and (min-width: 770px) {
-	.top {
+	.logo-font {
 		font-size: 3.5rem;
 	}
 

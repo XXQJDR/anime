@@ -3,7 +3,7 @@
 		<div class="box">
 			<div class="logo">
 				<i/>
-				<span>Anime</span>
+				<span class="logo-font">Anime</span>
 			</div>
 			<div class="title">注册</div>
 			<div class="form">
@@ -202,11 +202,24 @@ export default {
 	vertical-align: middle;
 }
 
-.logo span {
-	font-family: "Segoe Script", serif;
+@font-face {
+	font-family: 'logofont';
+	font-display: swap;
+	src: url("@/font/logo/Vampire Wars.ttf");
+}
+
+.logo-font {
+	font-family: "logofont" !important;
+	font-style: normal;
 	vertical-align: middle;
-	font-size: 1.2rem;
-	font-weight: bold;
+	font-size: 1.8rem;
+	letter-spacing: .5rem;
+	margin-left: 5px;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	background-image: linear-gradient(50deg, rgb(43, 10, 255), rgb(255, 91, 138) 49%, rgb(255, 91, 138) 53%, rgb(255, 91, 138) 55%, rgb(251, 166, 75) 77%, rgb(249, 155, 82));
+	color: transparent;
+	background-clip: text;
 }
 
 .box .title {

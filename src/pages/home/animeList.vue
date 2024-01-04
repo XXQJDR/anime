@@ -42,17 +42,14 @@
 
 			<!-- 移动端 -->
 			<div class="mobile">
-				<div class="btn">
-					<div class="box" @click="detailFlag = !detailFlag">
-						<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="filter" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="rgb(86, 81, 81)" d="M0 73.7C0 50.7 18.7 32 41.7 32H470.3c23 0 41.7 18.7 41.7 41.7c0 9.6-3.3 18.9-9.4 26.3L336 304.5V447.7c0 17.8-14.5 32.3-32.3 32.3c-7.3 0-14.4-2.5-20.1-7l-92.5-73.4c-9.6-7.6-15.1-19.1-15.1-31.3V304.5L9.4 100C3.3 92.6 0 83.3 0 73.7zM55 80L218.6 280.8c3.5 4.3 5.4 9.6 5.4 15.2v68.4l64 50.8V296c0-5.5 1.9-10.9 5.4-15.2L457 80H55z"></path></svg>
-						<span>{{selectedTypeName}}</span>
-						<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="chevron-down" class="svg-inline--fa fa-chevron-down " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="rgb(86, 81, 81)" d="M239 401c9.4 9.4 24.6 9.4 33.9 0L465 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-175 175L81 175c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9L239 401z"></path></svg>
-					</div>
-					<div class="placeholder"></div>
+				<div class="btn" @click="detailFlag = !detailFlag">
+					<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="filter" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="rgb(86, 81, 81)" d="M0 73.7C0 50.7 18.7 32 41.7 32H470.3c23 0 41.7 18.7 41.7 41.7c0 9.6-3.3 18.9-9.4 26.3L336 304.5V447.7c0 17.8-14.5 32.3-32.3 32.3c-7.3 0-14.4-2.5-20.1-7l-92.5-73.4c-9.6-7.6-15.1-19.1-15.1-31.3V304.5L9.4 100C3.3 92.6 0 83.3 0 73.7zM55 80L218.6 280.8c3.5 4.3 5.4 9.6 5.4 15.2v68.4l64 50.8V296c0-5.5 1.9-10.9 5.4-15.2L457 80H55z"></path></svg>
+					<span>{{selectedTypeName}}</span>
+					<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="chevron-down" class="svg-inline--fa fa-chevron-down " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="rgb(86, 81, 81)" d="M239 401c9.4 9.4 24.6 9.4 33.9 0L465 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-175 175L81 175c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9L239 401z"></path></svg>
 				</div>
 				<div class="detail" :id="detailFlag?'enableDetail':'disableDetail'">
 					<div>帅选方式...</div>
-					<ul class="type">
+					<ul>
 						<li @click="changeAnimeType(1)">
 							<svg v-show="selectFlag===1" viewBox="0 0 14 14" height="16px" width="16px" focusable="false" aria-hidden="true"><polygon points="5.5 11.9993304 14 3.49933039 12.5 2 5.5 8.99933039 1.5 4.9968652 0 6.49933039"></polygon></svg>
 							<span>全部</span>
@@ -67,6 +64,25 @@
 						</li>
 					</ul>
 				</div>
+			</div>
+
+			<!-- 统计动漫总数 -->
+			<div class="total">
+				<template v-if="selectFlag===1">
+					<span>已加入</span>
+					<CountTo ref="refcountofore" :start-val="0" :end-val="total" class="number-font" :duration="2000" />
+					<span>部动漫</span>
+				</template>
+				<template v-if="selectFlag===2">
+					<span>已经看了</span>
+					<CountTo ref="refcountofore" :start-val="0" :end-val="total" class="number-font" :duration="2000" />
+					<span>部动漫</span>
+				</template>
+				<template v-if="selectFlag===3">
+					<span>还有</span>
+					<CountTo ref="refcountofore" :start-val="0" :end-val="total" class="number-font" :duration="2000" />
+					<span>部动漫未看</span>
+				</template>
 			</div>
 		</div>
 		<!-- endregion -->
@@ -130,9 +146,11 @@
 <script>
 import {reqGetPageAnime, reqSearchAnime, reqUpdateAnimeDeleted, reqUpdateAnimeWacthingStatus} from "@/api";
 import _ from "lodash";
+import CountTo from "vue-count-to";
 
 export default {
 	name: 'AnimeList',
+	components: {CountTo},
 	data() {
 		return {
 			//内容类型标志，默认为全部
@@ -160,7 +178,10 @@ export default {
 			keyword: '',
 
 			//是否还有下一页数据
-			hasNext: false
+			hasNext: false,
+
+			//动漫总数
+			total: 0
 		}
 	},
 	computed: {
@@ -221,6 +242,9 @@ export default {
 			} else {
 				this.animeList[index].watchingStatus = !this.animeList[index].watchingStatus;
 			}
+
+			//更新动漫统计数量
+			this.total--;
 		},
 
 		/**
@@ -241,6 +265,9 @@ export default {
 
 			//更新animeList
 			this.animeList.splice(index, 1);
+
+			//更新动漫总数
+			this.total--;
 		},
 
 		//获取对应分类的第一页数据
@@ -269,6 +296,9 @@ export default {
 
 			//数据为空表示下一页无数据
 			this.hasNext = result.data.current < result.data.pages;
+
+			//获取动漫总数
+			this.total = result.data.total;
 
 			//关闭加载动画
 			this.loading = false;
@@ -482,8 +512,29 @@ export default {
 /* endregion */
 
 /* region 列表分类 */
+@font-face {
+	font-family: 'numberfont';
+	font-display: swap;
+	src: url("@/font/number/webfont.ttf");
+}
+
+.number-font {
+	font-family: "numberfont" !important;
+	font-style: normal;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	background-image: linear-gradient(50deg, rgb(43, 10, 255), rgb(255, 91, 138) 49%, rgb(255, 91, 138) 53%, rgb(255, 91, 138) 55%, rgb(251, 166, 75) 77%, rgb(249, 155, 82));
+	background-clip: text;
+	color: transparent;
+	font-size: 1.5rem;
+}
+
 .type {
+	height: 38px;
 	margin-top: 1.3rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 /* pc端 */
@@ -528,30 +579,23 @@ export default {
 
 /* 移动端 */
 .animeList .type .mobile {
+	height: 100%;
 	display: none;
 	position: relative;
 }
 
 .animeList .type .mobile .btn {
+	width: 120px;
+	height: 100%;
 	display: flex;
 	font-size: 1.2rem;
-}
-
-.animeList .type .mobile .btn .box {
-	width: 150px;
-	height: 35px;
-	display: flex;
 	justify-content: space-evenly;
 	align-items: center;
 	border-radius: 5px;
 	cursor: pointer;
 }
 
-.animeList .type .mobile .btn .placeholder {
-	width: 100%;
-}
-
-.animeList .type .mobile .btn .box svg {
+.animeList .type .mobile .btn svg {
 	width: 18px;
 	height: 18px;
 }
@@ -566,9 +610,10 @@ export default {
 	top: 30px;
 	left: 0;
 	box-sizing: border-box;
-	padding: 25px;
+	padding: 0 25px;
 	border-radius: 10px;
 	background-color: white;
+	z-index: 100;
 }
 
 #disableDetail {
@@ -586,11 +631,13 @@ export default {
 .animeList .type .mobile .detail > div {
 	color: #8f8b8b;
 	font-size: 1.2rem;
+	margin-top: 25px;
 }
 
 .animeList .type .mobile .detail > ul {
 	text-align: center;
 	font-size: 1.3rem;
+	margin-top: 10px;
 }
 
 .animeList .type .mobile .detail > ul li {

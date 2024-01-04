@@ -7,6 +7,13 @@
 		</div>
 		<!--endregion-->
 
+		<!-- 动漫统计 -->
+		<div class="total">
+			<span>已经看了</span>
+			<CountTo ref="refcountofore" :start-val="0" :end-val="total" class="number-font" :duration="2000" />
+			<span>部动漫</span>
+		</div>
+
 		<TimeLine v-show="!emptyFlag" :animeList="animeList" />
 		<el-empty v-if="emptyFlag" :image-size="250" description="暂无历程，快去观看吧！" />
 	</div>
@@ -15,10 +22,11 @@
 <script>
 import TimeLine from "@/components/timeLine.vue";
 import {reqGetPageAnime} from '@/api';
+import CountTo from "vue-count-to";
 
 export default {
 	name: 'ViewingHistory',
-	components: {TimeLine},
+	components: {CountTo, TimeLine},
 	data() {
 		return {
 			//动漫列表
@@ -35,9 +43,13 @@ export default {
 
 			//是否还有下一页数据
 			hasNext: true,
+
+			//动漫总数
+			total: 0,
 		}
 	},
 	methods: {
+		//分页获取东看
 		async getPageAnime() {
 			//获取数据
 			let params = {
@@ -58,6 +70,8 @@ export default {
 
 			this.current++;
 		},
+
+		//滚动分页
 		lazyLoading() {
 			let bottomOfWindow = document.documentElement.offsetHeight - document.documentElement.scrollTop - window.innerHeight;
 
@@ -66,11 +80,35 @@ export default {
 				this.hasNext = false;
 				this.getPageAnime();
 			}
+		},
+
+		//获取第一页数据
+		async getFirstPageAnime() {
+			this.current = 1;
+
+			//获取数据
+			let params = {
+				current: this.current,
+				size: this.size,
+				status: 1
+			}
+			let result = await reqGetPageAnime(params);
+			if (result.code !== 200) {
+				this.$message.error('获取数据失败！');
+				return;
+			}
+			this.animeList = this.animeList.concat(result.data.records || []);
+			this.hasNext = result.data.current < result.data.pages;
+			if (this.current === 1) {
+				this.emptyFlag = this.animeList.length === 0;
+			}
+			this.current++;
+			this.total = result.data.total;
 		}
 	},
 	created() {
 		//获取第一页数据
-		this.getPageAnime();
+		this.getFirstPageAnime();
 	},
 	mounted() {
 		window.addEventListener('scroll', this.lazyLoading);
@@ -107,6 +145,31 @@ export default {
 	min-width: 76px;
 	margin-left: 15px;
 	font-weight: bold;
+}
+/* endregion */
+
+/* region 动漫统计 */
+@font-face {
+	font-family: 'numberfont';
+	font-display: swap;
+	src: url("@/font/number/webfont.ttf");
+}
+
+.number-font {
+	font-family: "numberfont" !important;
+	font-style: normal;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	background-image: linear-gradient(50deg, rgb(43, 10, 255), rgb(255, 91, 138) 49%, rgb(255, 91, 138) 53%, rgb(255, 91, 138) 55%, rgb(251, 166, 75) 77%, rgb(249, 155, 82));
+	background-clip: text;
+	color: transparent;
+	font-size: 2rem;
+}
+
+.viewingHistory .total {
+	text-align: center;
+	margin: 1rem 0;
+	font-size: 1.5rem;
 }
 /* endregion */
 </style>

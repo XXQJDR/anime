@@ -15,6 +15,8 @@
 		<div class="live2dBox" v-if="browserIdentity===1" :id="live2dPosition">
 			<live2d />
 		</div>
+
+		<el-backtop :right="20" style="width: 50px;height: 50px;"></el-backtop>
 	</div>
 </template>
 

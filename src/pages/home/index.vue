@@ -250,7 +250,7 @@ export default {
 	width: calc(100vw - var(--sidebarWidth) - (100vw - 100%));
 	min-height: 100vh;
 	background-color: #F7F3F2;
-	padding: 1.3rem 2%;
+	padding: 1.3rem 2% 10px 2%;
 	float: right;
 	box-sizing: border-box;
 	transition: width .3s;
@@ -261,6 +261,7 @@ export default {
 	.home .content {
 		float: none;
 		width: 100%;
+		padding-top: 0;
 	}
 
 	.home .sidebar .user > i {

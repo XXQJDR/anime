@@ -43,7 +43,6 @@ export default {
 		}
 	},
 	mounted() {
-		console.log('绑定');
 		window.addEventListener("scroll", this.scrolling);
 	},
 	beforeDestroy() {
@@ -54,8 +53,9 @@ export default {
 
 <style scoped>
 .mobileTopbar {
-	--mobileTopbarHeight: 45px;
+	--mobileTopbarHeight: 50px;
 	height: var(--mobileTopbarHeight);
+	margin-bottom: 10px;
 }
 
 .mobileTopbar .box {

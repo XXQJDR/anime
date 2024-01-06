@@ -127,7 +127,8 @@ export default {
 
 /* region 随机模块 */
 .animeRandom .box {
-	height: calc(100vh - 33px - 50px);
+	/*height: calc(100vh - 33px - 50px);*/
+	height: 500px;
 	box-sizing: border-box;
 	position: relative;
 }

@@ -15,7 +15,15 @@
 		</div>
 
 		<TimeLine v-show="!emptyFlag" :animeList="animeList" />
+
+		<!-- 空标志 -->
 		<el-empty v-if="emptyFlag" :image-size="250" description="暂无历程，快去观看吧！" />
+
+		<!-- 滚动加载动画 -->
+		<scroll-animation :loading="loading" />
+
+		<!-- 结束标志 -->
+		<end-hr content="我也是有底线的！" v-show="loadingAllAnimeFlag" />
 	</div>
 </template>
 
@@ -23,10 +31,12 @@
 import TimeLine from "@/components/timeLine.vue";
 import {reqGetPageAnime} from '@/api';
 import CountTo from "vue-count-to";
+import EndHr from "@/components/endHr.vue";
+import ScrollAnimation from "@/components/scrollAnimation.vue";
 
 export default {
 	name: 'ViewingHistory',
-	components: {CountTo, TimeLine},
+	components: {EndHr, CountTo, TimeLine, ScrollAnimation},
 	data() {
 		return {
 			//动漫列表
@@ -46,11 +56,23 @@ export default {
 
 			//动漫总数
 			total: 0,
+
+			//加载动画标志
+			loading: false,
+		}
+	},
+	computed: {
+		//动漫是否全部加载完成，true代表加载完所有动漫
+		loadingAllAnimeFlag() {
+			return this.animeList.length === this.total;
 		}
 	},
 	methods: {
 		//分页获取东看
 		async getPageAnime() {
+			//开启加载动画
+			this.loading = true;
+
 			//获取数据
 			let params = {
 				current: this.current,
@@ -69,6 +91,9 @@ export default {
 			}
 
 			this.current++;
+
+			//关闭加载动画
+			this.loading = false;
 		},
 
 		//滚动分页

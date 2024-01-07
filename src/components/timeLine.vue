@@ -123,6 +123,10 @@ div {
 	border-radius: 5px;
 }
 
+.items .itembox:last-child {
+	padding-bottom: 10px;
+}
+
 @media screen and (max-width: 1000px) {
 	.itembox {
 		--lineWidth: 30px;
@@ -158,10 +162,6 @@ div {
 		right: inherit;
 		left: 0;
 		transform: translate(-55%, 55%);
-	}
-
-	.items .itembox:last-child {
-		padding-bottom: 100px;
 	}
 }
 </style>

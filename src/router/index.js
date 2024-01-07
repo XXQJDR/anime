@@ -55,7 +55,7 @@ const routes = [
 					store.commit('HOME_CONTENT_TYPE', 1);
 					break;
 				case 'viewingHistory':
-					store.commit('HOME_CONTENT_TYPE', 3);
+					store.commit('HOME_CONTENT_TYPE', 2);
 					break;
 				case 'animeRandom':
 					store.commit('HOME_CONTENT_TYPE', 3);

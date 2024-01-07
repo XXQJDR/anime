@@ -1,5 +1,5 @@
 <template>
-	<div class="animeDetail" ref="animeDetail" v-loading.fullscreen="loading">
+	<div class="animeDetail" ref="animeDetail" v-loading.fullscreen="controlLoading">
 		<header>
 			<div class="back">
 				<svg @click="back" width="20px" height="20.00px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
@@ -86,6 +86,7 @@
 				</el-upload>
 			</div>
 
+			<!-- 瀑布流 -->
 			<div class="wonderfulMoment">
 				<wc-waterfall :gap="10" :cols="count">
 					<div class="img" v-for="img in images" :key="img.id">
@@ -107,7 +108,15 @@
 				</wc-waterfall>
 				<el-image-viewer v-if="showViewer" :url-list="viewImage" :on-close="closeImageView" />
 			</div>
+
+			<!-- 空标志 -->
 			<el-empty style="height: 100vh;" v-if="!images.length" :image-size="250" description="暂无精彩瞬间，快来上传吧！"/>
+
+			<!-- 滚动加载动画 -->
+			<scroll-animation :loading="scrollLoading" />
+
+			<!-- 结束标志 -->
+			<end-hr content="我也是有底线的！" v-show="loadingAllAnimeFlag" />
 		</main>
 	</div>
 </template>
@@ -118,10 +127,12 @@ import WcWaterfall from 'wc-waterfall';
 import _ from "lodash";
 import elImageViewer from 'element-ui/packages/image/src/image-viewer';
 import {mapState} from "vuex";
+import ScrollAnimation from "@/components/scrollAnimation.vue";
+import EndHr from "@/components/endHr.vue";
 
 export default {
 	name: 'AnimeDetail',
-	components: {WcWaterfall, elImageViewer},
+	components: {WcWaterfall, elImageViewer, ScrollAnimation, EndHr},
 	data() {
 		return {
 			//允许的文件类型
@@ -151,8 +162,14 @@ export default {
 			//预览图片
 			viewImage: [],
 
-			//加载标志
-			loading: false,
+			//操作加载标志
+			controlLoading: false,
+
+			//滚动加载标志
+			scrollLoading: false,
+
+			//图片总数
+			imagesTotal: 0,
 		}
 	},
 	computed: {
@@ -166,7 +183,12 @@ export default {
 			return this.$route.query.animeId;
 		},
 
-		...mapState(['browserIdentity']),
+		//动漫是否全部加载完成，true代表加载完所有动漫
+		loadingAllAnimeFlag() {
+			return this.images.length === this.imagesTotal;
+		},
+
+		...mapState(['browserIdentity'])
 	},
 	methods: {
 		/* 点击箭头滚动到内容区域 */
@@ -220,7 +242,7 @@ export default {
 			}
 
 			//开启加载动画
-			this.loading = true;
+			this.controlLoading = true;
 
 			//上传文件
 			let result = await reqUpload(this.collectId, this.$refs.upload.uploadFiles);
@@ -240,7 +262,7 @@ export default {
 			await this.getFirstPageWonderfulMoment();
 
 			//关闭加载动画
-			this.loading = false;
+			this.controlLoading = false;
 		},
 
 		//获取动漫详细信息
@@ -255,6 +277,9 @@ export default {
 
 		//分页获取动漫精彩瞬间
 		async getPageWonderfulMoment() {
+			//开启加载动画
+			this.scrollLoading = true;
+
 			let result = await reqGetPageWonderfulMoment(this.current, this.size, this.collectId);
 			if (result.code !== 200) {
 				this.$message.error(result.msg);
@@ -263,6 +288,9 @@ export default {
 			this.images = this.images.concat(result.data.records || []);
 			this.hasNext = result.data.current < result.data.pages;
 			this.current++;
+
+			//关闭加载动画
+			this.scrollLoading = false;
 		},
 
 		//动态加载数据
@@ -279,7 +307,7 @@ export default {
 		//删除图片
 		deleteImage: _.throttle(async function (id) {
 			//开启加载动画
-			this.loading = true;
+			this.controlLoading = true;
 
 			let result = await reqRemoveWonderfulMoment(id);
 
@@ -301,7 +329,7 @@ export default {
 			}
 
 			//关闭加载动画
-			this.loading = false;
+			this.controlLoading = false;
 		}, 1000),
 
 		//根据浏览器可视宽度改变瀑布流行数
@@ -362,6 +390,7 @@ export default {
 			}
 			this.images = result.data.records || []
 			this.hasNext = result.data.current < result.data.pages;
+			this.imagesTotal = result.data.total;
 			this.current++;
 
 			//PC端动态改变瀑布流行数

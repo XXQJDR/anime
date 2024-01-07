@@ -88,7 +88,7 @@
 		<!-- endregion -->
 
 		<!-- region 动漫列表 -->
-		<el-skeleton :loading="loading" animated :throttle="500" :count="3">
+		<el-skeleton :loading="skeletonLoading" animated :throttle="500" :count="3">
 				<div slot="template">
 					<el-skeleton-item variant="image" />
 					<el-skeleton-item variant="text" />
@@ -140,6 +140,12 @@
 			</el-skeleton>
 		<el-empty v-if="emptyFlag" :image-size="250" description="暂无动漫" />
 		<!-- endregion -->
+
+		<!-- region 滚动加载动画 -->
+		<scroll-animation :loading="scrollLoading" />
+
+		<!-- 结束标志 -->
+		<end-hr content="我也是有底线的！" v-show="loadingAllAnimeFlag" />
 	</div>
 </template>
 
@@ -147,10 +153,12 @@
 import {reqGetPageAnime, reqSearchAnime, reqUpdateAnimeDeleted, reqUpdateAnimeWacthingStatus} from "@/api";
 import _ from "lodash";
 import CountTo from "vue-count-to";
+import EndHr from "@/components/endHr.vue";
+import ScrollAnimation from "@/components/scrollAnimation.vue";
 
 export default {
 	name: 'AnimeList',
-	components: {CountTo},
+	components: {CountTo, EndHr, ScrollAnimation},
 	data() {
 		return {
 			//内容类型标志，默认为全部
@@ -159,8 +167,11 @@ export default {
 			//移动端筛选详细页面开启标志
 			detailFlag: false,
 
-			//加载动画标志，true显示加载动画
-			loading: false,
+			//骨架加载动画标志
+			skeletonLoading: false,
+
+			//滚动加载动画标志
+			scrollLoading: false,
 
 			//动漫数据
 			animeList: [],
@@ -202,6 +213,11 @@ export default {
 
 			return name;
 		},
+
+		//动漫是否全部加载完成，true代表加载完所有动漫
+		loadingAllAnimeFlag() {
+			return this.animeList.length === this.total;
+		}
 	},
 	methods: {
 		//添加按钮回调
@@ -273,7 +289,7 @@ export default {
 		//获取对应分类的第一页数据
 		async getFirstPageAnime() {
 			//开启加载动画
-			this.loading = true;
+			this.skeletonLoading = true;
 
 			//根据selectFlag决定参数
 			let params = {
@@ -301,11 +317,14 @@ export default {
 			this.total = result.data.total;
 
 			//关闭加载动画
-			this.loading = false;
+			this.skeletonLoading = false;
 		},
 
 		//分页获取动漫数据
 		async getPageAnime() {
+			//开启加载动画
+			this.scrollLoading = true;
+
 			//根据selectFlag决定参数
 			let params = {
 				current: this.current,
@@ -322,6 +341,9 @@ export default {
 			this.animeList = this.animeList.concat(result.data.records || []);
 			this.hasNext = result.data.current < result.data.pages;
 			this.current++;
+
+			//关闭加载动画
+			this.scrollLoading = false;
 		},
 
 		//搜索动漫
@@ -331,7 +353,7 @@ export default {
 			}
 
 			//开启加载动画
-			this.loading = true;
+			this.skeletonLoading = true;
 
 			//获取数据
 			let result = await reqSearchAnime(this.keyword, this.selectFlag);
@@ -341,7 +363,7 @@ export default {
 			this.animeList = result.data || [];
 
 			//关闭加载动画
-			this.loading = false;
+			this.skeletonLoading = false;
 
 			//数据为空展示空状态
 			this.emptyFlag = this.animeList.length === 0;

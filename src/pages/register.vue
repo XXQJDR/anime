@@ -137,13 +137,7 @@ export default {
 		//获取验证码回调
 		async getCode() {
 			//判断是否输入邮箱
-			this.$refs.registerForm.validateField('email', errorMessage => {
-				this.flag['email'] = (errorMessage === '' || errorMessage == null);
-			});
-
-			if (!this.flag['email']) {
-				return;
-			}
+			this.$refs.registerForm.validateField('email');
 
 			//开始倒计时
 			this.time--;

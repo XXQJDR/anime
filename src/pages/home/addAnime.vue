@@ -14,7 +14,7 @@
 			<div class="suggestion" v-show="suggestionFlag" v-loading="loading">
 				<div class="item" v-for="(anime, index) in suggestionList" :key="index">
 					<div class="img">
-						<img :src="anime.cover" alt="">
+						<img v-lazy="anime.cover" alt="">
 						<div class="mask" @click="addAnimeHandle(anime)">
 							<div class="box">
 								<svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path fill="#ffffff" d="M612.37248 411.62752V30.208h-200.74496v381.41952H30.208v200.74496h381.41952v381.41952h200.74496V612.37248h381.41952v-200.74496z"/></svg>
@@ -235,8 +235,9 @@ export default {
 }
 
 .addAnime .form .suggestion .item .img {
-	min-width: 144px;
-	height: 200px;
+	min-width: 147px;
+	max-width: 147px;
+	height: 205px;
 	border-radius: 5px;
 	overflow: hidden;
 	position: relative;
@@ -344,6 +345,8 @@ export default {
 	}
 
 	.addAnime .form .suggestion .item .img {
+		min-width: 122px;
+		max-width: 122px;
 		height: 170px;
 	}
 

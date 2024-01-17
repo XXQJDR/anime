@@ -24,7 +24,7 @@
 			<div class="animeBox">
 				<div class="anime">
 					<div class="img">
-						<img :src="anime.cover" alt="">
+						<img v-lazy="anime.cover" alt="">
 					</div>
 					<div class="info">
 						<h3>{{anime.title}}</h3>
@@ -103,7 +103,7 @@
 								</div>
 							</a>
 						</div>
-						<img class="briefImg" @error='imgOnError' :src="img.briefImageUrl" alt="">
+						<img class="briefImg" v-lazy="img.briefImageUrl" @load='imgOnLoad' alt="">
 					</div>
 				</wc-waterfall>
 				<el-image-viewer v-if="showViewer" :url-list="viewImage" :on-close="closeImageView" />
@@ -325,7 +325,7 @@ export default {
 
 			//pc端根据图片数量改变瀑布流列数
 			if (this.browserIdentity === 1) {
-				this.count = this.images.length >= 4 ? 4 : this.images.length;
+				this.changeWaterfallCount();
 			}
 
 			//关闭加载动画
@@ -349,11 +349,11 @@ export default {
 			this.count = this.images.length < maxCount ? this.images.length : maxCount;
 		},
 
-		//图片加载失败回调
-		imgOnError(e) {
-			e.target.style.height = '250px';
-			e.target.style.backgroundColor = 'gray';
-			e.target.parentNode.firstChild.style.display = 'none';
+		//图片加载成功回调
+		imgOnLoad(e) {
+			if (!e.target.src.includes('default')) {
+				e.target.parentNode.firstChild.style.display = 'flex';
+			}
 		},
 
 		//打开图片预览
@@ -504,8 +504,17 @@ export default {
 	border-radius: 5px;
 }
 
-.animeDetail main .animeBox .anime .img img {
+.animeDetail main .animeBox .anime .img {
+	min-width: 215px;
+	max-width: 215px;
 	height: 300px;
+	overflow: hidden;
+}
+
+.animeDetail main .animeBox .anime .img img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
 
 .animeDetail main .animeBox .anime .info {
@@ -555,6 +564,17 @@ export default {
 
 .animeDetail main .wonderfulMoment .img {
 	font-size: 0;
+	text-align: center;
+}
+
+/* 修改图片加载动画大小 */
+.animeDetail main .wonderfulMoment .img img[lazy="loading"] {
+	height: 250px;
+}
+
+/* 修改图片加载失败图片大小 */
+.animeDetail main .wonderfulMoment .img img[lazy="error"] {
+	height: 250px;
 }
 
 .animeDetail main .wonderfulMoment .img .briefImg {
@@ -573,7 +593,7 @@ export default {
 	font-size: 2rem;
 	color: #FFFFFF;
 	transition: background-color .5s;
-	display: flex;
+	display: none;
 	justify-content: space-evenly;
 	align-items: center;
 }
@@ -615,7 +635,19 @@ export default {
 	}
 
 	.animeDetail main .animeBox .anime .img {
-		text-align: center;
+		margin: 0 auto;
+	}
+
+	/* 修改图片加载动画大小 */
+	.animeDetail main .wonderfulMoment .img img[lazy="loading"] {
+		width: 100%;
+		height: 250px;
+	}
+
+	/* 修改图片加载失败图片大小 */
+	.animeDetail main .wonderfulMoment .img img[lazy="error"] {
+		width: 100%;
+		height: 250px;
 	}
 
 	.animeDetail main .animeBox .anime .info {

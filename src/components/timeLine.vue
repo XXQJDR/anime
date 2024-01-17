@@ -13,7 +13,9 @@
 						</div>
 						<div class="value-box" @click="goAnimeDetail(item.collectId, item.animeId)">
 							<h4>{{ item.finishedWatchingDate }}</h4>
-							<img :src="item.cover" alt="">
+							<div class="img">
+								<img v-lazy="item.cover" alt="">
+							</div>
 						</div>
 					</div>
 				</div>
@@ -118,9 +120,19 @@ div {
 	margin: 10px 0;
 }
 
-.value-box img {
+.value-box .img {
+	min-width: 215px;
+	max-width: 215px;
 	height: 300px;
 	border-radius: 5px;
+	overflow: hidden;
+	margin: 0 auto;
+}
+
+.value-box img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
 
 .items .itembox:last-child {

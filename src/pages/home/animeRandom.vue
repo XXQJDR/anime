@@ -11,8 +11,8 @@
 		<div class="box">
 			<div class="boxContent">
 				<div class="anime" v-loading="loading">
-					<div class="img">
-						<img :src="anime.cover" alt="">
+					<div class="img" v-show="anime.cover">
+						<img v-lazy="anime.cover" alt="">
 					</div>
 					<div class="info" v-show="anime.title!=null">
 						<h3 class="title">{{anime.title}}</h3>
@@ -127,14 +127,13 @@ export default {
 
 /* region 随机模块 */
 .animeRandom .box {
-	/*height: calc(100vh - 33px - 50px);*/
 	height: 500px;
 	box-sizing: border-box;
 	position: relative;
 }
 
 .animeRandom .box .boxContent {
-	width: 90%;
+	width: 100%;
 	min-width: 745px;
 	position: absolute;
 	top: 50%;
@@ -143,14 +142,23 @@ export default {
 }
 
 .animeRandom .box .anime {
+	min-height: 235px;
 	border-radius: 5px;
 	display: flex;
 	padding: 1rem;
 	background-color: #FFFFFF;
 }
 
+.animeRandom .box .anime .img {
+	min-width: 165px;
+	max-width: 165px;
+	height: 235px;
+}
+
 .animeRandom .box .anime .img img {
-	height: 230px;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
 
 .animeRandom .box .anime .info {
@@ -222,18 +230,19 @@ export default {
 
 /*移动端*/
 @media screen and (max-width: 768px) {
-	.animeRandom .box {
-		height: calc(100vh - 25px - 38px - 38px);
-		box-sizing: border-box;
-	}
-
 	.animeRandom .box .boxContent {
 		width: 100%;
 		min-width: 0;
 		padding: 5px;
 	}
 
-	.animeRandom .box .boxContent .anime .img img {
+	.animeRandom .box .boxContent .anime {
+		min-height: 170px;
+	}
+
+	.animeRandom .box .boxContent .anime .img {
+		min-width: 122px;
+		max-width: 122px;
 		height: 170px;
 	}
 

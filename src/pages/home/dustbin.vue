@@ -18,7 +18,7 @@
 				<div class="list">
 					<div class="item" v-for="(anime, index) in animeList" :key="index">
 						<div class="img">
-							<img :src="anime.cover" alt="">
+							<img v-lazy="anime.cover" alt="">
 						</div>
 						<div class="content">
 							<div class="info">{{anime.title}}</div>

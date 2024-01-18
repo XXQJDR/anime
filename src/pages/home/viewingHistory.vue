@@ -136,14 +136,19 @@ export default {
 		this.getFirstPageAnime();
 	},
 	mounted() {
-		window.addEventListener('scroll', this.lazyLoading);
+		//设置500延时，防止切换到该页面时滚动页面触发滚动事件导致重复获取数据
+		setTimeout(() => {
+			window.addEventListener('scroll', this.lazyLoading);
+		}, 500);
 	},
 	beforeDestroy() {
 		window.removeEventListener('scroll', this.lazyLoading);
 	},
 	//从详情页面返回
 	activated() {
-		window.addEventListener('scroll', this.lazyLoading);
+		setTimeout(() => {
+			window.addEventListener('scroll', this.lazyLoading);
+		}, 500);
 	},
 	//进入详情页面取消滚动加载
 	deactivated() {

@@ -408,14 +408,18 @@ export default {
 		this.getFirstPageAnime();
 	},
 	mounted() {
-		window.addEventListener('scroll', this.lazyLoading);
+		setTimeout(() => {
+			window.addEventListener('scroll', this.lazyLoading);
+		}, 500);
 	},
 	beforeDestroy() {
 		window.removeEventListener('scroll', this.lazyLoading);
 	},
 	//从详情页面返回
 	activated() {
-		window.addEventListener('scroll', this.lazyLoading);
+		setTimeout(() => {
+			window.addEventListener('scroll', this.lazyLoading);
+		}, 500);
 	},
 	//进入详情页面取消滚动加载
 	deactivated() {

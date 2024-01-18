@@ -64,7 +64,7 @@ export default {
 	computed: {
 		//动漫是否全部加载完成，true代表加载完所有动漫
 		loadingAllAnimeFlag() {
-			return this.animeList.length === this.total;
+			return this.animeList.length === this.total && this.animeList.length !== 0;
 		}
 	},
 	methods: {

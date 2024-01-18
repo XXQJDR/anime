@@ -185,7 +185,7 @@ export default {
 
 		//动漫是否全部加载完成，true代表加载完所有动漫
 		loadingAllAnimeFlag() {
-			return this.images.length === this.imagesTotal;
+			return this.images.length === this.imagesTotal && this.images.length !== 0;
 		},
 
 		...mapState(['browserIdentity'])

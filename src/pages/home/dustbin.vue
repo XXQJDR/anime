@@ -131,195 +131,179 @@ export default {
 }
 </script>
 
-<style scoped>
-/* region 模块分类名称 */
-.dustbin .typeTitle {
-	min-width: 110px;
-	font-size: 1.5rem;
-	display: flex;
-	align-items: center;
-}
+<style scoped lang="scss">
+.dustbin {
+	/* 模块分类名称 */
+	.typeTitle {
+		min-width: 110px;
+		font-size: 1.5rem;
+		display: flex;
+		align-items: center;
 
-.dustbin .typeTitle svg {
-	width: 18px;
-	height: 18px;
-}
+		svg {
+			width: 18px;
+			height: 18px;
+		}
 
-.dustbin .typeTitle div {
-	min-width: 76px;
-	margin-left: 15px;
-	font-weight: bold;
-}
-/* endregion */
-
-/* region 动漫列表 */
-.dustbin .list {
-	margin-top: 1.5rem;
-	display: grid;
-	grid-gap: 20px;
-}
-
-.dustbin .list .item {
-	/* item过渡时间 */
-	--transitionTime: 0.3s;
-
-	/*宽度与高度的比例*/
-	aspect-ratio: 0.8;
-	border-radius: 5px;
-	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),0 2px 4px -1px rgba(0, 0, 0, 0.06);
-	overflow: hidden;
-	transition: all var(--transitionTime);
-	cursor: pointer;
-}
-
-/* 鼠标移入item给item添加阴影 */
-.dustbin .list .item:hover {
-	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),0 4px 6px -2px rgba(0, 0, 0, 0.05);
-	transform: translateY(-1px);
-}
-
-/* 鼠标移入item给content添加背景 */
-.dustbin .list .item:hover .content {
-	background-color: #f7f3f2;
-}
-
-/* 鼠标移入item放大img */
-.dustbin .list .item:hover .img img {
-	transform: scale(1.1);
-}
-
-.dustbin .list .item .img {
-	height: 82%;
-	overflow: hidden;
-}
-
-/* 图片自适应父盒子 */
-.dustbin .list .item .img img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	transition: transform var(--transitionTime);
-}
-
-.dustbin .list .item .content {
-	height: 18%;
-	background-color: #FFFFFF;
-	transition: background-color var(--transitionTime);
-}
-
-.dustbin .list .item .content::after {
-	content: '';
-	display: block;
-	clear: both;
-}
-
-.dustbin .list .item .content .info {
-	width: 85%;
-	height: 100%;
-	float: left;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-evenly;
-	text-align: center;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	padding-left: 5px;
-	box-sizing: border-box;
-}
-
-.dustbin .list .item .content .control {
-	width: 15%;
-	height: 100%;
-	float: right;
-	position: relative;
-}
-
-.dustbin .list .item .content .control button {
-	width: 30px;
-	height: 30px;
-	border-radius: 50%;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	transition: color, background-color .3s;
-
-	/* svg颜色 */
-	color: #ada8a8;
-}
-
-/* 移入文字傍的按钮改变按钮背景色和svg颜色 */
-.dustbin .list .item .content .control button:hover {
-	background-color: #e5e0df;
-	color: #3c3838;
-}
-
-.dustbin .list .item .content .control button svg {
-	width: 20px;
-	height: 18px;
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	margin: auto;
-}
-
-.popover ul li:last-child {
-	color: red;
-}
-
-.popover ul li > svg {
-	margin-left: 10px;
-}
-
-.popover ul li > div {
-	margin-left: 10px;
-}
-/* endregion */
-
-/*移动端*/
-@media screen and (max-width: 768px) {
-	.dustbin .list {
-		grid-template-columns: repeat(1, 1fr);
+		div {
+			min-width: 76px;
+			margin-left: 15px;
+			font-weight: bold;
+		}
 	}
 
-	.dustbin .list .item {
-		aspect-ratio: 1;
-	}
+	/* 动漫列表 */
+	.list {
+		margin-top: 1.5rem;
+		display: grid;
+		grid-gap: 20px;
 
-	.dustbin .list .item .content .info {
-		width: 80%;
-	}
+		@media screen and (max-width: 768px) {
+			grid-template-columns: repeat(1, 1fr);
+		}
 
-	.dustbin .list .item .content .control {
-		width: 20%;
-	}
 
-	.dustbin .list .item .content .control button {
-		width: 35px;
-		height: 35px;
+		@media screen and (min-width: 768px) and (max-width: 1078px) {
+			grid-template-columns: repeat(2, 1fr);
+		}
+		@media screen and (min-width: 1078px) and (max-width: 1355px) {
+			grid-template-columns: repeat(3, 1fr);
+		}
+		@media screen and (min-width: 1355px) and (max-width: 1668px) {
+			grid-template-columns: repeat(4, 1fr);
+		}
+		@media screen and (min-width: 1668px) {
+			grid-template-columns: repeat(5, 1fr);
+		}
+
+		.item {
+			/* item过渡时间 */
+			$transitionTime: 0.3s;
+
+			/*宽度与高度的比例*/
+			aspect-ratio: 0.8;
+			border-radius: 5px;
+			box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),0 2px 4px -1px rgba(0, 0, 0, 0.06);
+			overflow: hidden;
+			transition: all $transitionTime;
+			cursor: pointer;
+
+			/* 鼠标移入item给item添加阴影 */
+			&:hover {
+				box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),0 4px 6px -2px rgba(0, 0, 0, 0.05);
+				transform: translateY(-1px);
+
+				/* 鼠标移入item给content添加背景 */
+				.content {
+					background-color: #f7f3f2;
+				}
+
+				/* 鼠标移入item放大img */
+				.img img {
+					transform: scale(1.1);
+				}
+			}
+
+			@media screen and (max-width: 768px) {
+				aspect-ratio: 1;
+			}
+
+			.img {
+				height: 82%;
+				overflow: hidden;
+
+				img {
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+					transition: transform $transitionTime;
+				}
+			}
+
+			.content {
+				height: 18%;
+				background-color: #FFFFFF;
+				transition: background-color $transitionTime;
+
+				&::after {
+					content: '';
+					display: block;
+					clear: both;
+				}
+
+				.info {
+					width: 85%;
+					height: 100%;
+					float: left;
+					display: flex;
+					flex-direction: column;
+					justify-content: space-evenly;
+					text-align: center;
+					white-space: nowrap;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					padding-left: 5px;
+					box-sizing: border-box;
+
+					@media screen and (max-width: 768px) {
+						width: 80%;
+					}
+				}
+
+				.control {
+					width: 15%;
+					height: 100%;
+					float: right;
+					position: relative;
+
+					@media screen and (max-width: 768px) {
+						width: 20%;
+					}
+
+					button {
+						width: 30px;
+						height: 30px;
+						border-radius: 50%;
+						position: absolute;
+						top: 50%;
+						left: 50%;
+						transform: translate(-50%, -50%);
+						transition: color, background-color .3s;
+
+						/* svg颜色 */
+						color: #ada8a8;
+
+						/* 移入文字旁的按钮改变按钮背景色和svg颜色 */
+						&:hover {
+							background-color: #e5e0df;
+							color: #3c3838;
+						}
+
+						@media screen and (max-width: 768px) {
+							width: 35px;
+							height: 35px;
+						}
+
+						svg {
+							width: 20px;
+							height: 18px;
+							position: absolute;
+							top: 0;
+							left: 0;
+							right: 0;
+							bottom: 0;
+							margin: auto;
+						}
+					}
+				}
+			}
+		}
 	}
 }
-@media screen and (min-width: 768px) and (max-width: 1078px) {
-	.dustbin .list {
-		grid-template-columns: repeat(2, 1fr);
-	}
-}
-@media screen and (min-width: 1078px) and (max-width: 1355px) {
-	.dustbin .list {
-		grid-template-columns: repeat(3, 1fr);
-	}
-}
-@media screen and (min-width: 1355px) and (max-width: 1668px) {
-	.dustbin .list {
-		grid-template-columns: repeat(4, 1fr);
-	}
-}
-@media screen and (min-width: 1668px) {
-	.dustbin .list {
-		grid-template-columns: repeat(5, 1fr);
-	}
-}
+</style>
+
+<style lang="scss">
+/* 弹出框样式 */
+@import '@/style/element';
+@include anime-control-popover-style;
 </style>

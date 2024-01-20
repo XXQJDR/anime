@@ -428,470 +428,455 @@ export default {
 }
 </script>
 
-<style scoped>
-/* region 模块分类名称 */
-.animeList .typeTitle {
-	min-width: 110px;
-	font-size: 1.5rem;
-	display: flex;
-	align-items: center;
-}
-
-.animeList .typeTitle svg {
-	width: 18px;
-	height: 18px;
-}
-
-.animeList .typeTitle div {
-	min-width: 76px;
-	margin-left: 15px;
-	font-weight: bold;
-}
-/* endregion */
-
-/* region 添加按钮与搜索框 */
-.animeList > .control {
-	display: flex;
-	margin-top: 1.5rem;
-}
-
-.animeList > .control .addBtn {
-	width: 10%;
-	min-width: 90px;
-	box-sizing: border-box;
-	border-radius: 5px;
-	background-attachment: scroll;
-	background-blend-mode: normal;
-	background-clip: border-box;
-	background-color: rgba(0, 0, 0, 0);
-	background-image: linear-gradient(92.91deg, rgb(51, 0, 217) 2.18%, rgb(157, 32, 201) 44.94%, rgb(223, 122, 108) 99.91%);
-	background-origin: padding-box;
-	background-position-x: 0;
-	background-position-y: 0;
-	background-size: 400%;
-	transition: background-size 0.3s;
-	cursor: pointer;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.animeList > .control .addBtn:hover {
-	background-size: 200%;
-}
-
-.animeList > .control .addBtn svg {
-	display: block;
-	vertical-align: middle;
-	width: 18px;
-	height: 18px;
-}
-
-.animeList > .control .addBtn div {
-	display: block;
-	vertical-align: middle;
-	margin-left: 10px;
-	font-weight: bold;
-	color: white;
-}
-
-.animeList > .control .search {
-	width: 100%;
-	margin-left: 1rem;
-	position: relative;
-}
-
-.animeList > .control .search svg {
-	display: inline-block;
-	vertical-align: middle;
-	width: 18px;
-	height: 18px;
-	position: absolute;
-	top: 14px;
-	left: 14px;
-}
-
-.animeList > .control .search input {
-	width: 50%;
-	min-width: 250px;
-	height: 44px;
-	box-sizing: border-box;
-	display: inline-block;
-	vertical-align: middle;
-	outline: transparent solid 2px;
-	outline-offset: 2px;
-	border: 1px solid #DCDFE6;
-	border-radius: 5px;
-	transition: all 0.2s;
-	padding-left: 45px;
-}
-
-.animeList > .control .search input:hover {
-	border-color: #C0C4CC;
-}
-
-.animeList > .control .search input:focus {
-	border-color: rgb(49, 130, 206);
-	box-shadow: rgb(49, 130, 206) 0 0 0 1px;
-	background-color: #FFFFFF;
-}
-/* endregion */
-
-/* region 列表分类 */
+<style scoped lang="scss">
 @font-face {
 	font-family: 'numberfont';
 	font-display: swap;
 	src: url("@/font/number/webfont.ttf");
 }
 
-.number-font {
-	font-family: "numberfont" !important;
-	font-style: normal;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	background-image: linear-gradient(50deg, rgb(43, 10, 255), rgb(255, 91, 138) 49%, rgb(255, 91, 138) 53%, rgb(255, 91, 138) 55%, rgb(251, 166, 75) 77%, rgb(249, 155, 82));
-	background-clip: text;
-	color: transparent;
-	font-size: 1.5rem;
-}
+.animeList {
+	/* 模块分类名称 */
+	.typeTitle {
+		min-width: 110px;
+		font-size: 1.5rem;
+		display: flex;
+		align-items: center;
 
-.type {
-	height: 38px;
-	margin-top: 1.3rem;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
+		svg {
+			width: 18px;
+			height: 18px;
+		}
 
-/* pc端 */
-.animeList .type .pc {
-	display: flex;
-}
-
-.animeList .type .pc .btn {
-	display: flex;
-	padding: 8px 15px;
-	border-radius: 6px;
-	align-items: center;
-	justify-content: center;
-	color: #726e6e;
-	cursor: pointer;
-	margin-left: 1.2rem;
-	transition: all 0.3s;
-}
-
-.animeList .type .pc .btn:nth-child(1) {
-	margin-left: 0;
-}
-
-.animeList .type .pc .btn:hover {
-	background-color: #eae7ff;
-}
-
-.animeList .type .pc .btn svg {
-	width: 18px;
-	height: 18px;
-}
-
-.animeList .type .pc .btn div {
-	margin-left: 5px;
-	min-width: 38px;
-}
-
-.typePcBtnActive {
-	background-color: #eae7ff !important;
-	color: #2B0AFF !important;
-}
-
-/* 移动端 */
-.animeList .type .mobile {
-	height: 100%;
-	display: none;
-	position: relative;
-}
-
-.animeList .type .mobile .btn {
-	width: 120px;
-	height: 100%;
-	display: flex;
-	font-size: 1.2rem;
-	justify-content: space-evenly;
-	align-items: center;
-	border-radius: 5px;
-	cursor: pointer;
-}
-
-.animeList .type .mobile .btn svg {
-	width: 18px;
-	height: 18px;
-}
-
-.animeList .type .mobile .detail {
-	width: 250px;
-	height: 200px;
-	transform-origin: top left;
-	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),0 4px 6px -2px rgba(0, 0, 0, 0.05);
-	transition: all 0.2s;
-	position: absolute;
-	top: 30px;
-	left: 0;
-	box-sizing: border-box;
-	padding: 0 25px;
-	border-radius: 10px;
-	background-color: white;
-	z-index: 100;
-}
-
-#disableDetail {
-	opacity: 0;
-	visibility: hidden;
-	transform: scale(0.8) translateZ(0px);
-}
-
-#enableDetail {
-	opacity: 1;
-	visibility: visible;
-	transform: none;
-}
-
-.animeList .type .mobile .detail > div {
-	color: #8f8b8b;
-	font-size: 1.2rem;
-	margin-top: 25px;
-}
-
-.animeList .type .mobile .detail > ul {
-	text-align: center;
-	font-size: 1.3rem;
-	margin-top: 10px;
-}
-
-.animeList .type .mobile .detail > ul li {
-	padding: 10px 0;
-	border-radius: 10px;
-	border: 1px solid transparent;
-	position: relative;
-	cursor: pointer;
-}
-
-.animeList .type .mobile .detail > ul li:hover {
-	background-color: #e5e0df;
-	border: 1px solid #e5e0df;
-}
-
-.animeList .type .mobile .detail > ul li svg {
-	position: absolute;
-	top: 50%;
-	left: 50px;
-	transform: translateY(-50%);
-}
-/* endregion */
-
-/* region 动漫列表 */
-.animeList .list {
-	margin-top: 1.5rem;
-	display: grid;
-	grid-gap: 20px;
-}
-
-.animeList .list .item {
-	/* item过渡时间 */
-	--transitionTime: 0.3s;
-
-	/*宽度与高度的比例*/
-	aspect-ratio: 0.8;
-	border-radius: 5px;
-	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),0 2px 4px -1px rgba(0, 0, 0, 0.06);
-	overflow: hidden;
-	transition: all var(--transitionTime);
-	cursor: pointer;
-}
-
-/* 鼠标移入item给item添加阴影 */
-.animeList .list .item:hover {
-	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),0 4px 6px -2px rgba(0, 0, 0, 0.05);
-	transform: translateY(-1px);
-}
-
-/* 鼠标移入item给content添加背景 */
-.animeList .list .item:hover .content {
-	background-color: #f7f3f2;
-}
-
-/* 鼠标移入item放大img */
-.animeList .list .item:hover .img img {
-	transform: scale(1.1);
-}
-
-.animeList .list .item .img {
-	height: 82%;
-	overflow: hidden;
-}
-
-/* 图片自适应父盒子 */
-.animeList .list .item .img img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	transition: transform var(--transitionTime);
-}
-
-.animeList .list .item .content {
-	height: 18%;
-	background-color: #FFFFFF;
-	transition: background-color var(--transitionTime);
-}
-
-.animeList .list .item .content::after {
-	content: '';
-	display: block;
-	clear: both;
-}
-
-.animeList .list .item .content .info {
-	width: 85%;
-	height: 100%;
-	float: left;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-evenly;
-	text-align: center;
-}
-
-.animeList .list .item .content .info .title {
-	width: 100%;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	padding-left: 5px;
-	box-sizing: border-box;
-}
-
-.animeList .list .item .content .info .date {
-	width: 100%;
-	font-size: 0.8rem;
-	color: #ada8a8;
-}
-
-.animeList .list .item .content .control {
-	width: 15%;
-	height: 100%;
-	float: right;
-	position: relative;
-}
-
-.animeList .list .item .content .control button {
-	width: 30px;
-	height: 30px;
-	border-radius: 50%;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	transition: color, background-color .3s;
-
-	/* svg颜色 */
-	color: #ada8a8;
-}
-
-/* 移入文字傍的按钮改变按钮背景色和svg颜色 */
-.animeList .list .item .content .control button:hover {
-	background-color: #e5e0df;
-	color: #3c3838;
-}
-
-.animeList .list .item .content .control button svg {
-	width: 20px;
-	height: 18px;
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	margin: auto;
-}
-
-.popover ul li:last-child {
-	color: red;
-}
-
-.popover ul li > svg {
-	margin-left: 10px;
-}
-
-.popover ul li > div {
-	margin-left: 10px;
-}
-/* endregion */
-
-/*移动端*/
-@media screen and (max-width: 768px) {
-	.animeList .control {
-		display: block;
+		div {
+			min-width: 76px;
+			margin-left: 15px;
+			font-weight: bold;
+		}
 	}
 
-	.animeList .control .addBtn {
-		width: 100%;
-		height: 45px;
+	/* 添加按钮与搜索框 */
+	> .control {
+		display: flex;
+		margin-top: 1.5rem;
+
+		@media screen and (max-width: 768px) {
+			display: block;
+		}
+
+		.addBtn {
+			width: 10%;
+			min-width: 90px;
+			box-sizing: border-box;
+			border-radius: 5px;
+			background-attachment: scroll;
+			background-blend-mode: normal;
+			background-clip: border-box;
+			background-color: rgba(0, 0, 0, 0);
+			background-image: linear-gradient(92.91deg, rgb(51, 0, 217) 2.18%, rgb(157, 32, 201) 44.94%, rgb(223, 122, 108) 99.91%);
+			background-origin: padding-box;
+			background-position-x: 0;
+			background-position-y: 0;
+			background-size: 400%;
+			transition: background-size 0.3s;
+			cursor: pointer;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			&:hover {
+				background-size: 200%;
+			}
+
+			@media screen and (max-width: 768px) {
+				width: 100%;
+				height: 45px;
+			}
+
+			svg {
+				display: block;
+				vertical-align: middle;
+				width: 18px;
+				height: 18px;
+			}
+
+			div {
+				display: block;
+				vertical-align: middle;
+				margin-left: 10px;
+				font-weight: bold;
+				color: white;
+			}
+		}
+
+		.search {
+			width: 100%;
+			margin-left: 1rem;
+			position: relative;
+
+			@media screen and (max-width: 768px) {
+				width: 100%;
+				margin-left: 0;
+				margin-top: 1rem;
+			}
+
+			svg {
+				display: inline-block;
+				vertical-align: middle;
+				width: 18px;
+				height: 18px;
+				position: absolute;
+				top: 14px;
+				left: 14px;
+			}
+
+			input {
+				width: 50%;
+				min-width: 250px;
+				height: 44px;
+				box-sizing: border-box;
+				display: inline-block;
+				vertical-align: middle;
+				outline: transparent solid 2px;
+				outline-offset: 2px;
+				border: 1px solid #DCDFE6;
+				border-radius: 5px;
+				transition: all 0.2s;
+				padding-left: 45px;
+
+				&:hover {
+					border-color: #C0C4CC;
+				}
+
+				&:focus {
+					border-color: rgb(49, 130, 206);
+					box-shadow: rgb(49, 130, 206) 0 0 0 1px;
+					background-color: #FFFFFF;
+				}
+
+				@media screen and (max-width: 768px) {
+					width: 100%;
+				}
+			}
+		}
 	}
 
-	.animeList .control .search {
-		width: 100%;
-		margin-left: 0;
-		margin-top: 1rem;
+	/* 列表分类 */
+	.type {
+		height: 38px;
+		margin-top: 1.3rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		/* pc */
+		.pc {
+			display: flex;
+
+			@media screen and (max-width: 768px) {
+				display: none;
+			}
+
+			.btn {
+				display: flex;
+				padding: 8px 15px;
+				border-radius: 6px;
+				align-items: center;
+				justify-content: center;
+				color: #726e6e;
+				cursor: pointer;
+				margin-left: 1.2rem;
+				transition: all 0.3s;
+
+				&:nth-child(1) {
+					margin-left: 0;
+				}
+
+				&:hover {
+					background-color: #eae7ff;
+				}
+
+				svg {
+					width: 18px;
+					height: 18px;
+				}
+
+				div {
+					margin-left: 5px;
+					min-width: 38px;
+				}
+			}
+
+			.typePcBtnActive {
+				background-color: #eae7ff !important;
+				color: #2B0AFF !important;
+			}
+		}
+
+		/* 移动端 */
+		.mobile {
+			height: 100%;
+			display: none;
+			position: relative;
+
+			@media screen and (max-width: 768px) {
+				display: block;
+			}
+
+			.btn {
+				width: 120px;
+				height: 100%;
+				display: flex;
+				font-size: 1.2rem;
+				justify-content: space-evenly;
+				align-items: center;
+				border-radius: 5px;
+				cursor: pointer;
+
+				svg {
+					width: 18px;
+					height: 18px;
+				}
+			}
+
+			#disableDetail {
+				opacity: 0;
+				visibility: hidden;
+				transform: scale(0.8) translateZ(0px);
+			}
+
+			#enableDetail {
+				opacity: 1;
+				visibility: visible;
+				transform: none;
+			}
+
+			.detail {
+				width: 250px;
+				height: 200px;
+				transform-origin: top left;
+				box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),0 4px 6px -2px rgba(0, 0, 0, 0.05);
+				transition: all 0.2s;
+				position: absolute;
+				top: 30px;
+				left: 0;
+				box-sizing: border-box;
+				padding: 0 25px;
+				border-radius: 10px;
+				background-color: white;
+				z-index: 100;
+
+				> div {
+					color: #8f8b8b;
+					font-size: 1.2rem;
+					margin-top: 25px;
+				}
+
+				> ul {
+					text-align: center;
+					font-size: 1.3rem;
+					margin-top: 10px;
+
+					li {
+						padding: 10px 0;
+						border-radius: 10px;
+						border: 1px solid transparent;
+						position: relative;
+						cursor: pointer;
+
+						&:hover {
+							background-color: #e5e0df;
+							border: 1px solid #e5e0df;
+						}
+
+						svg {
+							position: absolute;
+							top: 50%;
+							left: 50px;
+							transform: translateY(-50%);
+						}
+					}
+				}
+			}
+		}
+
+		/* 统计 */
+		.total .number-font {
+			font-family: "numberfont" !important;
+			font-style: normal;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			background-image: linear-gradient(50deg, rgb(43, 10, 255), rgb(255, 91, 138) 49%, rgb(255, 91, 138) 53%, rgb(255, 91, 138) 55%, rgb(251, 166, 75) 77%, rgb(249, 155, 82));
+			background-clip: text;
+			color: transparent;
+			font-size: 1.5rem;
+		}
 	}
 
-	.animeList .control .search input {
-		width: 100%;
-	}
+	/* 动漫列表 */
+	.list {
+		margin-top: 1.5rem;
+		display: grid;
+		grid-gap: 20px;
 
-	.animeList .type .pc {
-		display: none;
-	}
+		@media screen and (max-width: 768px) {
+			grid-template-columns: repeat(1, 1fr);
+		}
 
-	.animeList .type .mobile {
-		display: block;
-	}
+		@media screen and (min-width: 768px) and (max-width: 1078px) {
+			grid-template-columns: repeat(2, 1fr);
+		}
 
-	.animeList .list {
-		grid-template-columns: repeat(1, 1fr);
-	}
+		@media screen and (min-width: 1078px) and (max-width: 1355px) {
+			grid-template-columns: repeat(3, 1fr);
+		}
 
-	.animeList .list .item {
-		aspect-ratio: 1;
-	}
+		@media screen and (min-width: 1355px) and (max-width: 1668px) {
+			grid-template-columns: repeat(4, 1fr);
+		}
+		@media screen and (min-width: 1668px) {
+			grid-template-columns: repeat(5, 1fr);
+		}
 
-	.animeList .list .item .content .info {
-		width: 80%;
-	}
+		.item {
+			/* item过渡时间 */
+			$transitionTime: 0.3s;
 
-	.animeList .list .item .content .control {
-		width: 20%;
-	}
+			/*宽度与高度的比例*/
+			aspect-ratio: 0.8;
+			border-radius: 5px;
+			box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),0 2px 4px -1px rgba(0, 0, 0, 0.06);
+			overflow: hidden;
+			transition: all $transitionTime;
+			cursor: pointer;
 
-	.animeList .list .item .content .control button {
-		width: 35px;
-		height: 35px;
+			/* 鼠标移入item给item添加阴影 */
+			&:hover {
+				box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),0 4px 6px -2px rgba(0, 0, 0, 0.05);
+				transform: translateY(-1px);
+
+				/* 鼠标移入item给content添加背景 */
+				.content {
+					background-color: #f7f3f2;
+				}
+
+				/* 鼠标移入item放大img */
+				.img img {
+					transform: scale(1.1);
+				}
+			}
+
+			@media screen and (max-width: 768px) {
+				aspect-ratio: 1;
+			}
+
+			.img {
+				height: 82%;
+				overflow: hidden;
+
+				/* 图片自适应父盒子 */
+				img {
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+					transition: transform $transitionTime;
+				}
+			}
+
+			.content {
+				height: 18%;
+				background-color: #FFFFFF;
+				transition: background-color $transitionTime;
+
+				&::after {
+					content: '';
+					display: block;
+					clear: both;
+				}
+
+				.info {
+					width: 85%;
+					height: 100%;
+					float: left;
+					display: flex;
+					flex-direction: column;
+					justify-content: space-evenly;
+					text-align: center;
+
+					@media screen and (max-width: 768px) {
+						width: 80%;
+					}
+
+					.title {
+						width: 100%;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						padding-left: 5px;
+						box-sizing: border-box;
+					}
+
+					.date {
+						width: 100%;
+						font-size: 0.8rem;
+						color: #ada8a8;
+					}
+				}
+
+				.control {
+					width: 15%;
+					height: 100%;
+					float: right;
+					position: relative;
+
+					@media screen and (max-width: 768px) {
+						width: 20%;
+					}
+
+					button {
+						width: 30px;
+						height: 30px;
+						border-radius: 50%;
+						position: absolute;
+						top: 50%;
+						left: 50%;
+						transform: translate(-50%, -50%);
+						transition: color, background-color .3s;
+
+						/* svg颜色 */
+						color: #ada8a8;
+
+						/* 移入文字旁的按钮改变按钮背景色和svg颜色 */
+						&:hover {
+							background-color: #e5e0df;
+							color: #3c3838;
+						}
+
+						@media screen and (max-width: 768px) {
+							width: 35px;
+							height: 35px;
+						}
+
+						svg {
+							width: 20px;
+							height: 18px;
+							position: absolute;
+							top: 0;
+							left: 0;
+							right: 0;
+							bottom: 0;
+							margin: auto;
+						}
+					}
+				}
+			}
+		}
 	}
 }
-@media screen and (min-width: 768px) and (max-width: 1078px) {
-	.animeList .list {
-		grid-template-columns: repeat(2, 1fr);
-	}
-}
-@media screen and (min-width: 1078px) and (max-width: 1355px) {
-	.animeList .list {
-		grid-template-columns: repeat(3, 1fr);
-	}
-}
-@media screen and (min-width: 1355px) and (max-width: 1668px) {
-	.animeList .list {
-		grid-template-columns: repeat(4, 1fr);
-	}
-}
-@media screen and (min-width: 1668px) {
-	.animeList .list {
-		grid-template-columns: repeat(5, 1fr);
-	}
-}
+</style>
+
+<style lang="scss">
+/* 弹出框样式 */
+@import '@/style/element';
+@include anime-control-popover-style;
 </style>

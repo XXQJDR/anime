@@ -2,17 +2,21 @@
 	<div class="background">
 		<div class="logo-font animate__animated animate__backInDown">welcome to anime</div>
 		<div class="introduce">
-			<div class="left left1 animate__animated animate__backInLeft">
-				追番已经成为了我们的一种习惯，每一次的追剧都是我生活中的一段美好回忆。随着时间的推移，遗忘是难免的，但是我们可以通过截图将动漫中的瞬间记录下来。
+			<div class="pc">
+				<div class="left animate__animated animate__backInLeft">
+					追番已经成为了我们的一种习惯，每一次的追剧都是我生活中的一段美好回忆。随着时间的推移，遗忘是难免的，但是我们可以通过截图将动漫中的瞬间记录下来。
+				</div>
+				<div class="right animate__animated animate__backInRight">
+					追番是很多人的爱好，但是如何决定下一步追的番却是一个让人头疼的问题。我们可以帮助你决定下一步追的番，有效解决您的选择困难症。
+				</div>
 			</div>
-			<div class="left left2 animate__animated animate__backInLeft">
-				记录您的追番历程
-			</div>
-			<div class="right right1 animate__animated animate__backInRight">
-				追番是很多人的爱好，但是如何决定下一步追的番却是一个让人头疼的问题。我们可以帮助你决定下一步追的番，有效解决您的选择困难症。
-			</div>
-			<div class="right right2 animate__animated animate__backInRight">
-				帮助您决定一部番
+			<div class="mobile">
+				<div class="left animate__animated animate__backInLeft">
+					记录您的追番历程
+				</div>
+				<div class="right animate__animated animate__backInRight">
+					帮助您决定一部番
+				</div>
 			</div>
 		</div>
 		<div class="button animate__animated animate__bounce">
@@ -40,6 +44,12 @@ export default {
 </script>
 
 <style scoped>
+@font-face {
+	font-family: 'logofont';
+	font-display: swap;
+	src: url("@/font/logo/Vampire Wars.ttf");
+}
+
 .background {
 	width: 100vw;
 	height: 100vh;
@@ -52,141 +62,105 @@ export default {
 	/* 让背景图基于容器大小伸缩 */
 	background-size: cover;
 	overflow: hidden;
-}
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
 
-.left,
-.right,
-.button {
-	user-select: none;
-}
-
-@font-face {
-	font-family: 'logofont';
-	font-display: swap;
-	src: url("@/font/logo/Vampire Wars.ttf");
-}
-
-.logo-font {
-	font-family: "logofont" !important;
-	font-style: normal;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	background-image: linear-gradient(50deg, rgb(43, 10, 255), rgb(255, 91, 138) 49%, rgb(255, 91, 138) 53%, rgb(255, 91, 138) 55%, rgb(251, 166, 75) 77%, rgb(249, 155, 82));
-	background-clip: text;
-	color: transparent;
-	margin-top: 10%;
-	text-align: center;
-	letter-spacing: 0.3rem;
-}
-
-.introduce {
-	position: relative;
-}
-
-.left,
-.right {
-	font-size: 1rem;
-	color: #656565;
-	position: absolute;
-}
-
-.button {
-	text-align: center;
-}
-
-.loginBtn,
-.registerBtn {
-	background-color: rgb(20, 134, 201);
-	border-radius: 5rem;
-	color: white;
-	transition: background-color, box-shadow 0.4s;
-}
-
-/*移动端*/
-@media screen and (max-width: 768px) {
 	.logo-font {
-		font-size: 2rem;
-		margin-top: 6rem;
+		font-family: "logofont" !important;
+		font-style: normal;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		background-image: linear-gradient(50deg, rgb(43, 10, 255), rgb(255, 91, 138) 49%, rgb(255, 91, 138) 53%, rgb(255, 91, 138) 55%, rgb(251, 166, 75) 77%, rgb(249, 155, 82));
+		background-clip: text;
+		color: transparent;
+		text-align: center;
+		letter-spacing: 0.3rem;
+		font-size: 3.5rem;
+
+		@media screen and (max-width: 768px) {
+			font-size: 2rem;
+		}
 	}
 
 	.introduce {
-		margin-top: 8rem;
-		height: 5rem;
-	}
+		color: #656565;
+		text-align: center;
+		letter-spacing: 0.3rem;
 
-	.left1,
-	.right1 {
-		display: none;
-	}
+		.pc	{
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
 
-	.left2 {
-		left: 4rem;
-	}
+			@media screen and (max-width: 768px) {
+				display: none;
+			}
 
-	.right2 {
-		top: 2rem;
-		right: 4rem;
+			.left {
+				width: 25%;
+				margin-bottom: 3rem;
+			}
+
+			.right {
+				width: 25%;
+				margin-top: 3rem;
+			}
+		}
+
+		.mobile {
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+
+			@media screen and (min-width: 770px) {
+				display: none;
+			}
+
+			.left {
+				margin-bottom: 3rem;
+			}
+
+			.right {
+				margin-top: 3rem;
+			}
+		}
 	}
 
 	.button {
-		margin-top: 5rem;
-	}
+		text-align: center;
 
-	.loginBtn,
-	.registerBtn {
-		width: 8rem;
-		height: 2.5rem;
-	}
+		.loginBtn,
+		.registerBtn {
+			width: 10rem;
+			height: 3rem;
+			background-color: rgb(20, 134, 201);
+			border-radius: 5rem;
+			color: white;
+			transition: all 0.4s;
 
-	.loginBtn {
-		margin-right: 3%;
-	}
-}
+			&:hover {
+				background-color: rgb(24, 120, 175);
+				box-shadow: 0 0 4px black;
+			}
+		}
 
-/*PC端*/
-@media screen and (min-width: 770px) {
-	.logo-font {
-		font-size: 3.5rem;
-	}
+		.loginBtn {
+			margin-right: 3rem;
+			@media screen and (max-width: 768px) {
+				width: 80%;
+				height: 3.5rem;
+				margin-right: 0;
+			}
+		}
 
-	.introduce {
-		height: 35%;
-	}
-
-	.left2,
-	.right2 {
-		display: none;
-	}
-
-	.left1,
-	.right1 {
-		width: 25%;
-	}
-
-	.left1 {
-		top: 20%;
-		left: 3%;
-	}
-
-	.right1 {
-		top: 50%;
-		right: 3%;
-	}
-
-	.loginBtn,
-	.registerBtn {
-		width: 10rem;
-		height: 3rem;
-	}
-
-	.loginBtn {
-		margin-right: 5%;
-	}
-
-	.loginBtn:hover,
-	.registerBtn:hover {
-		background-color: rgb(24, 120, 175);
-		box-shadow: 0 0 4px black;
+		.registerBtn {
+			@media screen and (max-width: 768px) {
+				width: 80%;
+				height: 3.5rem;
+				margin-top: 2rem;
+			}
+		}
 	}
 }
 </style>

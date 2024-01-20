@@ -425,45 +425,7 @@ export default {
 }
 </script>
 
-<style scoped>
-/* region header */
-.animeDetail header {
-	width: 100%;
-	height: 100vh;
-	background: url("@/assets/animeDetail/background.jpg") no-repeat fixed center center;
-	background-size: cover;
-	position: relative;
-}
-
-.animeDetail header .back {
-	display: flex;
-	justify-content: space-evenly;
-	align-items: center;
-	background-color: #FFFFFF;
-	position: fixed;
-	z-index: 1000;
-	top: 1rem;
-	left: 1rem;
-	font-size: 0.9rem;
-	padding: 10px;
-	border-radius: 10px;
-	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
-
-.animeDetail header .back > svg:nth-child(1) {
-	cursor: pointer;
-	transition: color, transform .3s;
-}
-
-.animeDetail header .back > svg:nth-child(1):hover {
-	color: #2B0AFF;
-	transform: translateY(-2px);
-}
-
-.animeDetail header .back > svg:nth-child(2) {
-	color: #cac5c4;
-}
-
+<style scoped lang="scss">
 /* 箭头跳动动画 */
 @keyframes bounce {
 	0%, 100% {
@@ -476,237 +438,263 @@ export default {
 	}
 }
 
-.animeDetail header .arrow {
-	position: absolute;
-	bottom: 3rem;
-	width: 100%;
-	text-align: center;
-	animation: bounce 1s infinite;
-	cursor: pointer;
-}
-
-/* endregion */
-
-/* region main */
-.animeDetail main {
-	min-height: 100vh;
-	overflow: hidden;
-}
-
-.animeDetail main .animeBox .anime {
-	width: 95%;
-	margin: 0 auto;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding: 1rem;
-	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-	border-radius: 5px;
-}
-
-.animeDetail main .animeBox .anime .img {
-	min-width: 215px;
-	max-width: 215px;
-	height: 300px;
-	overflow: hidden;
-}
-
-.animeDetail main .animeBox .anime .img img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-}
-
-.animeDetail main .animeBox .anime .info {
-	min-width: 700px;
-	margin-left: 15px;
-}
-
-.animeDetail main .animeBox .anime .info .other {
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	grid-auto-rows: 30px;
-	line-height: 30px;
-	margin-top: 15px;
-}
-
-.animeDetail main .animeBox .anime .info .other .otherItem {
-	justify-items: start;
-}
-
-.animeDetail main .animeBox .anime .info .other .otherItem .key {
-	display: inline-block;
-	width: 76px;
-	text-align: right;
-}
-
-.animeDetail main .animeBox .anime .info .intro {
-	margin-top: 5px;
-}
-
-.animeDetail main .uploadBox {
-	margin: 1rem 0;
-}
-
-.animeDetail main .uploadBox .upload {
-	width: 70%;
-	margin: 0 auto;
-	box-sizing: border-box;
-	padding: 1rem;
-	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-	border-radius: 5px;
-	text-align: center;
-}
-
-.animeDetail main .wonderfulMoment {
-	overflow: hidden;
-}
-
-.animeDetail main .wonderfulMoment .img {
-	font-size: 0;
-	text-align: center;
-}
-
-/* 修改图片加载动画大小 */
-.animeDetail main .wonderfulMoment .img img[lazy="loading"] {
-	height: 250px;
-}
-
-/* 修改图片加载失败图片大小 */
-.animeDetail main .wonderfulMoment .img img[lazy="error"] {
-	height: 250px;
-}
-
-.animeDetail main .wonderfulMoment .img .briefImg {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-}
-
-.animeDetail main .wonderfulMoment .img .control {
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
-	background-color: rgba(0, 0, 0, 0);
-	font-size: 2rem;
-	color: #FFFFFF;
-	transition: background-color .5s;
-	display: none;
-	justify-content: space-evenly;
-	align-items: center;
-}
-
-.animeDetail main .wonderfulMoment .img .control:hover {
-	background-color: rgba(0, 0, 0, .4);
-}
-
-.animeDetail main .wonderfulMoment .img .control .detail,
-.animeDetail main .wonderfulMoment .img .control .delete,
-.animeDetail main .wonderfulMoment .img .control .download {
-	opacity: 0;
-	visibility: hidden;
-	padding: 5px;
-	cursor: pointer;
-	transition: all .5s;
-	border-radius: 10px;
-}
-
-.animeDetail main .wonderfulMoment .img .control:hover .detail,
-.animeDetail main .wonderfulMoment .img .control:hover .delete,
-.animeDetail main .wonderfulMoment .img .control:hover .download {
-	opacity: 1;
-	visibility: visible;
-}
-
-.animeDetail main .wonderfulMoment .img .control .detail:hover,
-.animeDetail main .wonderfulMoment .img .control .delete:hover,
-.animeDetail main .wonderfulMoment .img .control .download:hover {
-	background-color: rgb(43, 10, 255);
-}
-/* endregion */
-
-@media screen and (max-width: 768px) {
-	.animeDetail main .animeBox .anime {
-		display: block;
+.animeDetail {
+	header {
 		width: 100%;
-		box-sizing: border-box;
+		height: 100vh;
+		background: url("@/assets/animeDetail/background.jpg") no-repeat fixed center center;
+		background-size: cover;
+		position: relative;
+
+		.back {
+			display: flex;
+			justify-content: space-evenly;
+			align-items: center;
+			background-color: #FFFFFF;
+			position: fixed;
+			z-index: 1000;
+			top: 1rem;
+			left: 1rem;
+			font-size: 0.9rem;
+			padding: 10px;
+			border-radius: 10px;
+			box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+			> svg:nth-child(1) {
+				cursor: pointer;
+				transition: color, transform .3s;
+				&:hover {
+					color: #2B0AFF;
+					transform: translateY(-2px);
+				}
+			}
+
+			> svg:nth-child(2) {
+				color: #cac5c4;
+			}
+		}
+
+		.arrow {
+			position: absolute;
+			bottom: 3rem;
+			width: 100%;
+			text-align: center;
+			animation: bounce 1s infinite;
+			cursor: pointer;
+		}
 	}
 
-	.animeDetail main .animeBox .anime .img {
-		margin: 0 auto;
-	}
+	main {
+		min-height: 100vh;
+		overflow: hidden;
 
-	/* 修改图片加载动画大小 */
-	.animeDetail main .wonderfulMoment .img img[lazy="loading"] {
-		width: 100%;
-		height: 250px;
-	}
+		.animeBox {
+			.anime {
+				width: 95%;
+				margin: 0 auto;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				padding: 1rem;
+				box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+				border-radius: 5px;
 
-	/* 修改图片加载失败图片大小 */
-	.animeDetail main .wonderfulMoment .img img[lazy="error"] {
-		width: 100%;
-		height: 250px;
-	}
+				@media screen and (max-width: 768px) {
+					display: block;
+					width: 100%;
+					box-sizing: border-box;
+				}
 
-	.animeDetail main .animeBox .anime .info {
-		width: 100%;
-		min-width: 0;
-		box-sizing: border-box;
-		margin-left: 0;
-	}
+				.img {
+					min-width: 215px;
+					max-width: 215px;
+					height: 300px;
+					overflow: hidden;
 
-	.animeDetail main .animeBox .anime .info h3 {
-		text-align: center;
-	}
+					@media screen and (max-width: 768px) {
+						margin: 0 auto;
 
-	.animeDetail main .animeBox .anime .info .other .otherItem .key {
-		width: 68px;
-		font-size: 1.2rem;
-	}
+						/* 修改图片加载动画和加载失败大小 */
+						img[lazy="loading"],
+						img[lazy="error"] {
+							width: 100%;
+							height: 250px;
+						}
+					}
 
-	.animeDetail main .animeBox .anime .info .intro {
-		font-size: 1.2rem;
-	}
+					img {
+						width: 100%;
+						height: 100%;
+						object-fit: cover;
+					}
+				}
 
-	.animeDetail main .uploadBox .upload {
-		width: 100%;
+				.info {
+					min-width: 700px;
+					margin-left: 15px;
+
+					@media screen and (max-width: 768px) {
+						width: 100%;
+						min-width: 0;
+						box-sizing: border-box;
+						margin-left: 0;
+					}
+
+					h3 {
+						@media screen and (max-width: 768px) {
+							text-align: center;
+						}
+					}
+
+					.other {
+						display: grid;
+						grid-template-columns: repeat(2, 1fr);
+						grid-auto-rows: 30px;
+						line-height: 30px;
+						margin-top: 15px;
+
+						.otherItem {
+							justify-items: start;
+
+							.key {
+								display: inline-block;
+								width: 76px;
+								text-align: right;
+
+								@media screen and (max-width: 768px) {
+									width: 68px;
+									font-size: 1.2rem;
+								}
+							}
+						}
+					}
+
+					.intro {
+						margin-top: 5px;
+
+						@media screen and (max-width: 768px) {
+							font-size: 1.2rem;
+						}
+					}
+				}
+			}
+		}
+
+		.uploadBox {
+			margin: 1rem 0;
+
+			.upload {
+				width: 70%;
+				margin: 0 auto;
+				box-sizing: border-box;
+				padding: 1rem;
+				box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+				border-radius: 5px;
+				text-align: center;
+
+				@media screen and (max-width: 768px) {
+					width: 100%;
+				}
+			}
+		}
+
+		.wonderfulMoment {
+			overflow: hidden;
+
+			.img {
+				font-size: 0;
+				text-align: center;
+
+				/* 修改图片加载动画和加载失败大小 */
+				img[lazy="loading"],
+				img[lazy="error"] {
+					height: 250px;
+				}
+
+				.briefImg {
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+				}
+
+				.control {
+					width: 100%;
+					height: 100%;
+					position: absolute;
+					top: 0;
+					left: 0;
+					background-color: rgba(0, 0, 0, 0);
+					font-size: 2rem;
+					color: #FFFFFF;
+					transition: background-color .5s;
+					display: none;
+					justify-content: space-evenly;
+					align-items: center;
+					&:hover {
+						background-color: rgba(0, 0, 0, .4);
+
+						.detail,
+						.delete,
+						.download {
+							opacity: 1;
+							visibility: visible;
+						}
+					}
+
+					.detail,
+					.delete,
+					.download {
+						opacity: 0;
+						visibility: hidden;
+						padding: 5px;
+						cursor: pointer;
+						transition: all .5s;
+						border-radius: 10px;
+
+						&:hover {
+							background-color: rgb(43, 10, 255);
+						}
+					}
+				}
+			}
+		}
 	}
 }
 </style>
 
-<style>
-.upload .el-button--success,
-.upload .el-upload--text .el-button,
-.upload .el-upload__tip,
-.upload .el-upload-list .el-upload-list__item * {
-	font-size: 1rem;
-}
+<style lang="scss">
+.upload {
+	.el-button--success,
+	.el-upload--text .el-button,
+	.el-upload__tip,
+	.el-upload-list .el-upload-list__item * {
+		font-size: 1rem;
+	}
 
-.upload .el-button--success {
-	margin-left: 10px;
-}
+	.el-button--success {
+		margin-left: 10px;
+	}
 
-.upload .el-upload-list {
-	margin-top: 10px;
-}
+	.el-upload-list {
+		margin-top: 10px;
+	}
 
-.upload .el-upload-list .el-upload-list__item {
-	line-height: 45px;
-	margin: 0;
-}
+	.el-upload-list .el-upload-list__item {
+		line-height: 45px;
+		margin: 0;
 
-.upload .el-upload-list .el-upload-list__item .el-icon-close {
-	top: 10px;
-	font-size: 1.5rem;
-}
+		.el-icon-close {
+			top: 10px;
+			font-size: 1.5rem;
+		}
 
-.upload .el-upload-list .el-upload-list__item .el-upload-list__item-status-label {
-	top: 10px;
-}
+		.el-upload-list__item-status-label {
+			top: 10px;
 
-.upload .el-upload-list .el-upload-list__item .el-upload-list__item-status-label .el-icon-upload-success {
-	font-size: 1.5rem;
+			.el-icon-upload-success {
+				font-size: 1.5rem;
+			}
+		}
+	}
 }
 </style>

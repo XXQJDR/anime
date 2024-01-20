@@ -140,299 +140,257 @@ export default {
 }
 </script>
 
-<style scoped>
-/* region 模块分类名称 */
-.addAnime .typeTitle {
-	min-width: 110px;
-	font-size: 1.5rem;
-	display: flex;
-	align-items: center;
-}
+<style scoped lang="scss">
+.addAnime {
+	/* 模块分类名称 */
+	.typeTitle {
+		min-width: 110px;
+		font-size: 1.5rem;
+		display: flex;
+		align-items: center;
 
-.addAnime .typeTitle svg {
-	width: 18px;
-	height: 18px;
-}
+		svg {
+			width: 18px;
+			height: 18px;
+		}
 
-.addAnime .typeTitle div {
-	min-width: 76px;
-	margin-left: 15px;
-	font-weight: bold;
-}
-/* endregion */
-
-/* region 输入框 */
-.addAnime .form {
-	width: 100%;
-	position: relative;
-	margin-top: 1rem;
-}
-
-.addAnime .form svg {
-	width: 1.1rem;
-	height: 1.1rem;
-	position: absolute;
-	top: 12px;
-	left: 10px;
-}
-
-.addAnime .form input {
-	width: 100%;
-	height: 45px;
-	outline: transparent solid 2px;
-	outline-offset: 2px;
-	border: 1px solid #DCDFE6;
-	border-radius: 5px;
-	transition: all 0.2s;
-
-	/* 使输入文字居中 */
-	text-align: center;
-}
-
-.addAnime .form input:hover {
-	border-color: #C0C4CC;
-}
-
-.addAnime .form input:focus {
-	border-color: rgb(49, 130, 206);
-	box-shadow: rgb(49, 130, 206) 0 0 0 1px;
-	background-color: #FFFFFF;
-}
-
-/* placeholder居中 */
-.addAnime .form input::-ms-input-placeholder{
-	text-align: center;
-}
-.addAnime .form input::-webkit-input-placeholder{
-	text-align: center;
-}
-/* endregion */
-
-/* region 输入建议 */
-.addAnime .form .suggestion {
-	width: 100%;
-	min-width: 710px;
-	min-height: 200px;
-	background-color: #FFFFFF;
-	margin-top: 1rem;
-	border-radius: 10px;
-	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-	font-size: 0.9rem;
-}
-
-.addAnime .form .suggestion .item {
-	width: 100%;
-	display: flex;
-	justify-content: start;
-	padding: 10px;
-	border-bottom: 1px solid rgba(0, 0, 0, .1);
-	transition: background-color 0.3s;
-	box-sizing: border-box;
-}
-
-.addAnime .form .suggestion .item:last-child {
-	border-bottom: none;
-}
-
-.addAnime .form .suggestion .item .img {
-	min-width: 147px;
-	max-width: 147px;
-	height: 205px;
-	border-radius: 5px;
-	overflow: hidden;
-	position: relative;
-	cursor: pointer;
-}
-
-.addAnime .form .suggestion .item .img img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	transition: transform 0.3s;
-}
-
-.addAnime .form .suggestion .item .img .mask {
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0, 0, 0, .4);
-	position: absolute;
-	top: 0;
-	left: 0;
-	opacity: 0;
-	transition: opacity 0.3s;
-}
-
-.addAnime .form .suggestion .item .img .mask .box {
-	width: 50px;
-	height: 50px;
-	background-color: rgba(0, 0, 0, .5);
-	border-radius: 50%;
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	margin: auto;
-	transition: all .5s;
-}
-
-.addAnime .form .suggestion .item .img .mask .box svg {
-	width: 25px;
-	height: 25px;
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	margin: auto;
-}
-
-.addAnime .form .suggestion .item .info {
-	padding-left: 15px;
-}
-
-.addAnime .form .suggestion .item .info h3 {
-	margin-bottom: 5px;
-}
-
-.addAnime .form .suggestion .item .info .other {
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	grid-auto-rows: 30px;
-	line-height: 30px;
-	margin-top: 15px;
-}
-
-.addAnime .form .suggestion .item .info .other .otherItem {
-	justify-items: start;
-}
-
-.addAnime .form .suggestion .item .info .other .otherItem .key {
-	display: inline-block;
-	width: 69px;
-	text-align: right;
-}
-
-.addAnime .form .suggestion .item .info .intro {
-	margin-top: 5px;
-	word-break: break-all;
-	overflow: hidden;
-	display: -webkit-box;
-	-webkit-line-clamp: 3;
-	-webkit-box-orient: vertical;
-}
-
-.addAnime .form .suggestion .item .info .other .otherItem .value,
-.addAnime .form .suggestion .item .info .intro .value {
-	color: #726e6e;
-}
-/* endregion */
-
-/* 手机端 */
-@media screen and (max-width: 768px) {
-	.addAnime .form svg {
-		top: 16px;
+		div {
+			min-width: 76px;
+			margin-left: 15px;
+			font-weight: bold;
+		}
 	}
 
-	.addAnime .form .suggestion {
+	/* 输入框 */
+	.form {
 		width: 100%;
-		min-width: auto;
-		font-size: 1rem;
-	}
+		position: relative;
+		margin-top: 1rem;
 
-	.addAnime .form .suggestion .item {
-		padding: 5px 0;
-	}
+		svg {
+			width: 1.1rem;
+			height: 1.1rem;
+			position: absolute;
+			top: 12px;
+			left: 10px;
 
-	.addAnime .form .suggestion .item .img {
-		min-width: 122px;
-		max-width: 122px;
-		height: 170px;
-	}
+			@media screen and (max-width: 768px) {
+				top: 16px;
+			}
+		}
 
-	.addAnime .form .suggestion .item .info {
-		width: 220px;
-	}
+		input {
+			width: 100%;
+			height: 45px;
+			outline: transparent solid 2px;
+			outline-offset: 2px;
+			border: 1px solid #DCDFE6;
+			border-radius: 5px;
+			transition: all 0.2s;
 
-	.addAnime .form .suggestion .item .info .other {
-		display: block;
-	}
+			/* 使输入文字居中 */
+			text-align: center;
+			&:hover {
+				border-color: #C0C4CC;
+			}
+			&:focus {
+				border-color: rgb(49, 130, 206);
+				box-shadow: rgb(49, 130, 206) 0 0 0 1px;
+				background-color: #FFFFFF;
+			}
 
-	.addAnime .form .suggestion .item .info .other .notNecessary {
-		display: none;
-	}
+			/* placeholder居中 */
+			&::-ms-input-placeholder,
+			&::-webkit-input-placeholder {
+				text-align: center;
+			}
+		}
 
-	.addAnime .form .suggestion .item .info .other .otherItem .key {
-		width: 56px;
-	}
+		/* 输入建议 */
+		.suggestion {
+			width: 100%;
+			min-width: 710px;
+			min-height: 200px;
+			background-color: #FFFFFF;
+			margin-top: 1rem;
+			border-radius: 10px;
+			box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+			font-size: 0.9rem;
 
-	.addAnime .form .suggestion .item .info .intro {
-		display: none;
-	}
-}
+			@media screen and (max-width: 768px) {
+				width: 100%;
+				min-width: auto;
+				font-size: 1rem;
+			}
 
-@media screen and (min-width: 768px) and (max-width: 1000px) {
-	.addAnime .form .suggestion {
-		min-width: 0;
-	}
+			@media screen and (min-width: 768px) and (max-width: 1000px) {
+				min-width: 0;
+			}
 
-	.addAnime .form .suggestion .item {
-		justify-content: start;
-	}
+			.item {
+				width: 100%;
+				display: flex;
+				justify-content: start;
+				align-items: center;
+				padding: 10px;
+				border-bottom: 1px solid rgba(0, 0, 0, .1);
+				transition: background-color 0.3s;
+				box-sizing: border-box;
 
-	.addAnime .form .suggestion .item .info .other {
-		display: block;
-	}
+				@media screen and (max-width: 768px) {
+					padding: 5px 0;
+				}
 
-	.addAnime .form .suggestion .item .info .other .notNecessary {
-		display: none;
-	}
+				@media screen and (min-width: 768px) {
+					/* 鼠标移入一行内背景颜色改变 */
+					&:hover {
+						background-color: #F7F3F2;
+					}
+				}
 
-	.addAnime .form .suggestion .item .info .intro {
-		display: none;
-	}
+				&:last-child {
+					border-bottom: none;
+				}
 
-	/* 鼠标移入一行内背景颜色改变 */
-	.addAnime .form .suggestion .item:hover {
-		background-color: #F7F3F2;
-	}
+				.img {
+					min-width: 147px;
+					max-width: 147px;
+					height: 205px;
+					border-radius: 5px;
+					overflow: hidden;
+					position: relative;
+					cursor: pointer;
 
-	/* 鼠标移入图片展示遮罩 */
-	.addAnime .form .suggestion .item .img:hover .mask {
-		opacity: 1;
-	}
+					@media screen and (max-width: 768px) {
+						min-width: 122px;
+						max-width: 122px;
+						height: 170px;
+					}
 
-	/* 鼠标移入图片，图片放大 */
-	.addAnime .form .suggestion .item .img:hover img {
-		transform: scale(1.1);
-	}
+					@media screen and (min-width: 768px) {
+						&:hover {
+							/* 鼠标移入图片展示遮罩 */
+							.mask {
+								opacity: 1;
+							}
 
-	/* 鼠标移入添加按钮，添加按钮旋转 */
-	.addAnime .form .suggestion .item .img .mask .box:hover {
-		transform: rotateZ(180deg);
-	}
-}
+							/* 鼠标移入图片，图片放大 */
+							img {
+								transform: scale(1.1);
+							}
+						}
 
-/* pc端 */
-@media screen and (min-width: 1000px) {
-	/* 鼠标移入一行内背景颜色改变 */
-	.addAnime .form .suggestion .item:hover {
-		background-color: #F7F3F2;
-	}
+						/* 鼠标移入添加按钮，添加按钮旋转 */
+						.mask .box:hover {
+							transform: rotateZ(180deg);
+						}
+					}
 
-	/* 鼠标移入图片展示遮罩 */
-	.addAnime .form .suggestion .item .img:hover .mask {
-		opacity: 1;
-	}
+					img {
+						width: 100%;
+						height: 100%;
+						object-fit: cover;
+						transition: transform 0.3s;
+					}
 
-	/* 鼠标移入图片，图片放大 */
-	.addAnime .form .suggestion .item .img:hover img {
-		transform: scale(1.1);
-	}
+					.mask {
+						width: 100%;
+						height: 100%;
+						background-color: rgba(0, 0, 0, .4);
+						position: absolute;
+						top: 0;
+						left: 0;
+						opacity: 0;
+						transition: opacity 0.3s;
 
-	/* 鼠标移入添加按钮，添加按钮旋转 */
-	.addAnime .form .suggestion .item .img .mask .box:hover {
-		transform: rotateZ(180deg);
+						.box {
+							width: 50px;
+							height: 50px;
+							background-color: rgba(0, 0, 0, .5);
+							border-radius: 50%;
+							position: absolute;
+							top: 0;
+							bottom: 0;
+							left: 0;
+							right: 0;
+							margin: auto;
+							transition: all .5s;
+
+							svg {
+								width: 25px;
+								height: 25px;
+								position: absolute;
+								top: 0;
+								bottom: 0;
+								left: 0;
+								right: 0;
+								margin: auto;
+							}
+						}
+					}
+				}
+
+				.info {
+					padding: 0 15px;
+
+					h3 {
+						margin-bottom: 5px;
+					}
+
+					.other {
+						display: grid;
+						grid-template-columns: repeat(2, 1fr);
+						grid-auto-rows: 30px;
+						line-height: 30px;
+
+						@media screen and (max-width: 1000px) {
+							display: block;
+						}
+
+						.notNecessary {
+							@media screen and (max-width: 1000px) {
+								display: none;
+							}
+						}
+
+						.otherItem {
+							justify-items: start;
+
+							.key {
+								display: inline-block;
+								width: 69px;
+								text-align: right;
+
+								@media screen and (max-width: 768px) {
+									width: 56px;
+								}
+							}
+
+							.value {
+								color: #726e6e;
+							}
+						}
+					}
+
+					.intro {
+						margin-top: 5px;
+						word-break: break-all;
+						overflow: hidden;
+						display: -webkit-box;
+						-webkit-line-clamp: 3;
+						-webkit-box-orient: vertical;
+
+						@media screen and (max-width: 1000px) {
+							display: none;
+						}
+
+						.value {
+							color: #726e6e;
+						}
+					}
+				}
+			}
+		}
 	}
 }
 </style>

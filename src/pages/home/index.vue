@@ -119,153 +119,131 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .home {
-	--sidebarWidth: 250px;
+	$sidebarWidth: 250px;
 
 	position: relative;
-}
 
-.home::after {
-	content: '';
-	display: block;
-	clear: both;
-}
-
-/* region 侧边栏 */
-.home .sidebar {
-	width: var(--sidebarWidth);
-	height: 100vh;
-	box-sizing: border-box;
-	padding: 1.2rem;
-	position: fixed;
-	top: 0;
-	left: 0;
-	transition: transform .3s;
-	background-color: white;
-	z-index: 100;
-}
-
-#disableSidebar {
-	transform: translateX(-100%);
-}
-
-#enableSidebar {
-	transform: translateX(0);
-}
-
-.home .sidebar .user {
-	width: 100%;
-	display: flex;
-	align-items: center;
-	padding: 12px 5px;
-	cursor: pointer;
-	user-select: none;
-	box-sizing: border-box;
-	border-radius: 10px;
-	transition: background-color .3s;
-	font-size: 1.1rem;
-}
-
-.home .sidebar .user:hover {
-	background-color: #EAE7FF;
-}
-
-.home .sidebar .user > i {
-	color: #2b0aff;
-	width: 12%;
-}
-
-.home .sidebar .user > div {
-	width: 88%;
-	text-align: center;
-}
-
-.popover ul li {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.popover ul li > div {
-	margin-left: 10px;
-}
-
-.popover ul li:last-child {
-	color: red;
-}
-
-.home .sidebar .btns {
-	margin-top: 2rem;
-}
-
-.home .sidebar .btns .btn {
-	padding: 0.6rem 0.8rem;
-	border-radius: 8px;
-	cursor: pointer;
-	margin-top: 1rem;
-	transition: all 0.3s;
-}
-
-.home .sidebar .btns .btn:hover {
-	background-color: #f7f3f2;
-}
-
-.home .sidebar .btns svg {
-	display: inline-block;
-	width: 18px;
-	height: 18px;
-	color: #726e6e;
-	vertical-align: middle;
-}
-
-.home .sidebar .btns .title {
-	display: inline-block;
-	font-size: 0.9rem;
-	vertical-align: middle;
-	margin-left: 8px;
-}
-
-.btnActive {
-	background-color: #eae7ff !important;
-	color: #2b0aff;
-	font-weight: 700;
-}
-
-.dialog * {
-	font-size: 0.9rem;
-}
-/* endregion */
-
-.home .mask {
-	width: calc(100vw - var(--sidebarWidth));
-	height: 100%;
-	position: absolute;
-	right: 0;
-	z-index: 100;
-}
-
-.home .content {
-	/* 减去滚动条的大小 */
-	width: calc(100vw - var(--sidebarWidth) - (100vw - 100%));
-	min-height: 100vh;
-	background-color: #F7F3F2;
-	padding: 1.3rem 2% 10px 2%;
-	float: right;
-	box-sizing: border-box;
-	transition: width .3s;
-}
-
-/*移动端*/
-@media screen and (max-width: 768px) {
-	.home .content {
-		float: none;
-		width: 100%;
-		padding-top: 0;
+	&::after {
+		content: '';
+		display: block;
+		clear: both;
 	}
 
-	.home .sidebar .user > i {
-		font-size: 25px;
+	/* 侧边栏 */
+	#disableSidebar {
+		transform: translateX(-100%);
+	}
+
+	#enableSidebar {
+		transform: translateX(0);
+	}
+
+	.sidebar {
+		width: $sidebarWidth;
+		height: 100vh;
+		box-sizing: border-box;
+		padding: 1.2rem;
+		position: fixed;
+		top: 0;
+		left: 0;
+		transition: transform .3s;
+		background-color: white;
+		z-index: 100;
+
+		.user {
+			width: 100%;
+			display: flex;
+			align-items: center;
+			padding: 12px 5px;
+			cursor: pointer;
+			user-select: none;
+			box-sizing: border-box;
+			border-radius: 10px;
+			transition: background-color .3s;
+			font-size: 1.1rem;
+
+			&:hover {
+				background-color: #EAE7FF;
+			}
+
+			> i {
+				color: #2b0aff;
+				width: 12%;
+
+				@media screen and (max-width: 768px) {
+					font-size: 25px;
+				}
+			}
+
+			> div {
+				width: 88%;
+				text-align: center;
+			}
+		}
+
+		.btns {
+			margin-top: 2rem;
+
+			.btn {
+				padding: 0.6rem 0.8rem;
+				border-radius: 8px;
+				cursor: pointer;
+				margin-top: 1rem;
+				transition: all 0.3s;
+
+				&:hover {
+					background-color: #f7f3f2;
+				}
+			}
+
+			svg {
+				display: inline-block;
+				width: 18px;
+				height: 18px;
+				color: #726e6e;
+				vertical-align: middle;
+			}
+
+			.title {
+				display: inline-block;
+				font-size: 0.9rem;
+				vertical-align: middle;
+				margin-left: 8px;
+			}
+
+			.btnActive {
+				background-color: #eae7ff !important;
+				color: #2b0aff;
+				font-weight: 700;
+			}
+		}
+	}
+
+	.mask {
+		width: calc(100vw - $sidebarWidth);
+		height: 100%;
+		position: absolute;
+		right: 0;
+		z-index: 100;
+	}
+
+	.content {
+		/* 减去滚动条的大小 */
+		width: calc(100vw - $sidebarWidth - (100vw - 100%));
+		min-height: 100vh;
+		background-color: #F7F3F2;
+		padding: 1.3rem 2% 10px 2%;
+		float: right;
+		box-sizing: border-box;
+		transition: width .3s;
+
+		@media screen and (max-width: 768px) {
+			float: none;
+			width: 100%;
+			padding-top: 0;
+		}
 	}
 }
 </style>

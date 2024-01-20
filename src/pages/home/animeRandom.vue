@@ -104,180 +104,167 @@ export default {
 }
 </script>
 
-<style scoped>
-/* region 模块分类名称 */
-.animeRandom .typeTitle {
-	min-width: 110px;
-	font-size: 1.5rem;
-	display: flex;
-	align-items: center;
-}
+<style scoped lang="scss">
+.animeRandom {
+	/* 模块分类名称 */
+	.typeTitle {
+		min-width: 110px;
+		font-size: 1.5rem;
+		display: flex;
+		align-items: center;
 
-.animeRandom .typeTitle svg {
-	width: 18px;
-	height: 18px;
-}
+		svg {
+			width: 18px;
+			height: 18px;
+		}
 
-.animeRandom .typeTitle div {
-	min-width: 76px;
-	margin-left: 15px;
-	font-weight: bold;
-}
-/* endregion */
-
-/* region 随机模块 */
-.animeRandom .box {
-	height: 500px;
-	box-sizing: border-box;
-	position: relative;
-}
-
-.animeRandom .box .boxContent {
-	width: 100%;
-	min-width: 745px;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-}
-
-.animeRandom .box .anime {
-	min-height: 235px;
-	border-radius: 5px;
-	display: flex;
-	padding: 1rem;
-	background-color: #FFFFFF;
-}
-
-.animeRandom .box .anime .img {
-	min-width: 165px;
-	max-width: 165px;
-	height: 235px;
-}
-
-.animeRandom .box .anime .img img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-}
-
-.animeRandom .box .anime .info {
-	padding-left: 15px;
-}
-
-.animeRandom .box .anime .info h3 {
-	margin-top: 5px;
-}
-
-.animeRandom .box .anime .info .other {
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-
-	/* 默认行高 */
-	grid-auto-rows: 30px;
-	line-height: 30px;
-	margin-top: 15px;
-}
-
-.animeRandom .box .anime .info .other .otherItem {
-	justify-items: start;
-}
-
-.animeRandom .box .anime .info .other .otherItem .key {
-	display: inline-block;
-	width: 76px;
-	text-align: right;
-}
-
-.animeRandom .box .anime .info .intro {
-	margin-top: 5px;
-	word-break: break-all;
-	overflow: hidden;
-	display: -webkit-box;
-	-webkit-line-clamp: 3;
-	-webkit-box-orient: vertical;
-}
-
-.animeRandom .box .anime .info .other .otherItem .value,
-.animeRandom .box .anime .info .intro .value {
-	color: #726e6e;
-}
-
-.animeRandom .box .control {
-	margin-top: 2rem;
-}
-
-.animeRandom .box .control .btn {
-	width: 90px;
-	height: 40px;
-	padding: 10px;
-	text-align: center;
-	line-height: 40px;
-	border-radius: 5px;
-	background-image: linear-gradient(92.91deg, rgb(51, 0, 217) 2.18%, rgb(157, 32, 201) 44.94%, rgb(223, 122, 108) 99.91%);
-	background-size: 400%;
-	color: #FFFFFF;
-	cursor: pointer;
-	margin: 0 auto;
-	transition: background-size .3s;
-}
-
-.animeRandom .box .control .btn:hover {
-	background-size: 200%;
-}
-
-/* endregion */
-
-/*移动端*/
-@media screen and (max-width: 768px) {
-	.animeRandom .box .boxContent {
-		width: 100%;
-		min-width: 0;
-		padding: 5px;
+		div {
+			min-width: 76px;
+			margin-left: 15px;
+			font-weight: bold;
+		}
 	}
 
-	.animeRandom .box .boxContent .anime {
-		min-height: 170px;
-	}
+	/* 随机模块 */
+	> .box {
+		height: 500px;
+		box-sizing: border-box;
+		position: relative;
 
-	.animeRandom .box .boxContent .anime .img {
-		min-width: 122px;
-		max-width: 122px;
-		height: 170px;
-	}
+		.boxContent {
+			width: 100%;
+			min-width: 745px;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
 
-	.animeRandom .box .boxContent .anime .info .other {
-		display: block;
-	}
+			@media screen and (max-width: 768px) {
+				width: 100%;
+				min-width: 0;
+				padding: 5px;
+			}
 
-	.animeRandom .box .boxContent .anime .info .other .notNecessary {
-		display: none;
-	}
+			@media screen and (min-width: 768px) and (max-width: 1050px) {
+				min-width: 0;
+			}
+		}
 
-	.animeRandom .box .boxContent .anime .info .other .otherItem .key {
-		width: 56px;
-	}
+		.anime {
+			min-height: 235px;
+			border-radius: 5px;
+			display: flex;
+			padding: 1rem;
+			background-color: #FFFFFF;
 
-	.animeRandom .box .boxContent .anime .info .intro {
-		display: none;
-	}
-}
+			@media screen and (max-width: 768px) {
+				min-height: 170px;
+			}
 
-@media screen and (min-width: 768px) and (max-width: 1050px) {
-	.animeRandom .box .boxContent {
-		min-width: 0;
-	}
+			.img {
+				min-width: 165px;
+				max-width: 165px;
+				height: 235px;
 
-	.animeRandom .box .boxContent .anime .info .other {
-		display: block;
-	}
+				@media screen and (max-width: 768px) {
+					min-width: 122px;
+					max-width: 122px;
+					height: 170px;
+				}
 
-	.animeRandom .box .boxContent .anime .info .other .notNecessary {
-		display: none;
-	}
+				img {
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+				}
+			}
 
-	.animeRandom .box .boxContent .anime .info .intro {
-		display: none;
+			.info {
+				padding-left: 15px;
+
+				h3 {
+					margin-top: 5px;
+				}
+
+				.other {
+					display: grid;
+					grid-template-columns: repeat(2, 1fr);
+
+					/* 默认行高 */
+					grid-auto-rows: 30px;
+					line-height: 30px;
+					margin-top: 15px;
+
+					@media screen and (max-width: 1050px) {
+						display: block;
+					}
+
+					.notNecessary {
+						@media screen and (max-width: 1050px) {
+							display: none;
+						}
+					}
+
+					.otherItem {
+						justify-items: start;
+
+						.key {
+							display: inline-block;
+							width: 76px;
+							text-align: right;
+
+							@media screen and (max-width: 768px) {
+								width: 56px;
+							}
+						}
+
+						.value {
+							color: #726e6e;
+						}
+					}
+				}
+
+				.intro {
+					margin-top: 5px;
+					word-break: break-all;
+					overflow: hidden;
+					display: -webkit-box;
+					-webkit-line-clamp: 3;
+					-webkit-box-orient: vertical;
+
+					@media screen and (max-width: 1050px) {
+						display: none;
+					}
+
+					.value {
+						color: #726e6e;
+					}
+				}
+			}
+		}
+
+		.control {
+			margin-top: 2rem;
+
+			.btn {
+				width: 90px;
+				height: 40px;
+				padding: 10px;
+				text-align: center;
+				line-height: 40px;
+				border-radius: 5px;
+				background-image: linear-gradient(92.91deg, rgb(51, 0, 217) 2.18%, rgb(157, 32, 201) 44.94%, rgb(223, 122, 108) 99.91%);
+				background-size: 400%;
+				color: #FFFFFF;
+				cursor: pointer;
+				margin: 0 auto;
+				transition: background-size .3s;
+
+				&:hover {
+					background-size: 200%;
+				}
+			}
+		}
 	}
 }
 </style>

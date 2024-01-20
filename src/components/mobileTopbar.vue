@@ -51,47 +51,48 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .mobileTopbar {
-	--mobileTopbarHeight: 50px;
-	height: var(--mobileTopbarHeight);
+	$mobileTopbarHeight: 50px;
+
+	height: $mobileTopbarHeight;
 	margin-bottom: 10px;
-}
 
-.mobileTopbar .box {
-	width: 100vw;
-	height: var(--mobileTopbarHeight);
-	display: flex;
-	align-items: center;
-	font-size: 1.3rem;
-	font-weight: bold;
-	border-bottom: 1px solid rgb(229, 224, 223);
-	margin-bottom: 8px;
-	position: fixed;
-	top: 0;
-	left: 0;
-	z-index: 5;
-	background-color: #F7F3F2;
-	transition: all .5s;
-}
+	.box {
+		width: 100vw;
+		height: $mobileTopbarHeight;
+		display: flex;
+		align-items: center;
+		font-size: 1.3rem;
+		font-weight: bold;
+		border-bottom: 1px solid rgb(229, 224, 223);
+		margin-bottom: 8px;
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 5;
+		background-color: #F7F3F2;
+		transition: all .5s;
 
-.mobileTopbar .box .icon {
-	height: 100%;
-	width: 10%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
+		.icon {
+			height: 100%;
+			width: 10%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 
-.mobileTopbar .box .info {
-	height: 100%;
-	width: 90%;
-	text-align: center;
-	line-height: var(--mobileTopbarHeight);
-}
+			svg {
+				width: 18px;
+				height: 18px;
+			}
+		}
 
-.mobileTopbar .box .icon svg {
-	width: 18px;
-	height: 18px;
+		.info {
+			height: 100%;
+			width: 90%;
+			text-align: center;
+			line-height: $mobileTopbarHeight;
+		}
+	}
 }
 </style>

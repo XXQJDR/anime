@@ -166,184 +166,183 @@ export default {
 }
 </script>
 
-<style scoped>
-.container {
-	display: flex;
-	height: 100vh;
-}
-
-.box {
-	flex: 36% 1 1;
-	box-sizing: border-box;
-	display: flex;
-	flex-direction: column;
-}
-
-.background {
-	flex: 64% 1 1;
-	background-image: url("@/assets/login/background.jpg");
-	background-position: center bottom;
-	background-repeat: no-repeat;
-	background-attachment: fixed;
-	background-size: cover;
-}
-
-.logo i {
-	display: inline-block;
-	width: 32px;
-	height: 32px;
-	background-image: url("@/assets/logo.svg");
-	vertical-align: middle;
-}
-
+<style scoped lang="scss">
 @font-face {
 	font-family: 'logofont';
 	font-display: swap;
 	src: url("@/font/logo/Vampire Wars.ttf");
 }
 
-.logo-font {
-	font-family: "logofont" !important;
-	font-style: normal;
-	vertical-align: middle;
-	font-size: 1.8rem;
-	letter-spacing: .5rem;
-	margin-left: 5px;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	background-image: linear-gradient(50deg, rgb(43, 10, 255), rgb(255, 91, 138) 49%, rgb(255, 91, 138) 53%, rgb(255, 91, 138) 55%, rgb(251, 166, 75) 77%, rgb(249, 155, 82));
-	color: transparent;
-	background-clip: text;
-}
-
-.box .title {
-	font-size: 2.5rem;
-	background-image: linear-gradient(50deg, rgb(43, 10, 255), rgb(255, 91, 138) 49%, rgb(255, 91, 138) 53%, rgb(255, 91, 138) 55%, rgb(251, 166, 75) 77%, rgb(249, 155, 82));
-	color: transparent;
-	background-clip: text;
-}
-
-.box .form {
-	flex: 1;
-	position: relative;
-}
-
-.box .registerForm {
-	width: 100%;
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-}
-
-.checkCode {
+.container {
 	display: flex;
-}
+	height: 100vh;
 
-.codeBtn1,
-.codeBtn2 {
-	width: 50%;
-	border-radius: 5px;
-	background-color: #9C77D1;
-	color: #FFFFFF;
-	box-shadow: 0 0 1px black;
-	font-size: 1rem;
-	text-align: center;
-}
-
-.codeBtn1 {
-	cursor: pointer;
-	transition: font-size .3s;
-}
-
-.codeBtn1:hover {
-	font-size: 1.05rem;
-}
-
-.codeBtn2 {
-	cursor: not-allowed;
-}
-
-.registerBtn button {
-	width: 100%;
-	box-sizing: border-box;
-	padding: 8px 0;
-	border: 1px solid #e5e0df;
-	border-radius: 5px;
-	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),0 2px 4px -1px rgba(0, 0, 0, 0.06);
-	background: linear-gradient(180deg, #FFFFFF 0%, #FCF9F5 100%);
-	transition: opacity 0.5s;
-}
-
-.registerBtn button:disabled {
-	opacity: 0.4;
-	cursor: not-allowed;
-}
-
-.goLogin {
-	text-align: center;
-	font-size: 0.8rem;
-}
-
-.goLogin a {
-	color: rgb(43, 10, 255);
-}
-
-/*移动端*/
-@media screen and (max-width: 768px) {
 	.background {
-		display: none;
+		flex: 64% 1 1;
+		background-image: url("@/assets/login/background.jpg");
+		background-position: center bottom;
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+		background-size: cover;
+
+		@media screen and (max-width: 768px) {
+			display: none;
+		}
 	}
 
 	.box {
-		padding: 2rem;
-	}
-
-	.box .title,
-	.registerBtn,
-	.goLogin {
-		margin-top: 2rem;
-	}
-}
-
-/*PC端*/
-@media screen and (min-width: 770px) {
-	.box {
+		flex: 36% 1 1;
+		box-sizing: border-box;
+		display: flex;
+		flex-direction: column;
 		padding: 2rem 2rem;
-	}
 
-	.box .title,
-	.goLogin,
-	.registerBtn {
-		margin-top: 1rem;
+		@media screen and (max-width: 768px) {
+			padding: 2rem;
+		}
+
+		.logo {
+			i {
+				display: inline-block;
+				width: 32px;
+				height: 32px;
+				background-image: url("@/assets/logo.svg");
+				vertical-align: middle;
+			}
+
+			.logo-font {
+				font-family: "logofont" !important;
+				font-style: normal;
+				vertical-align: middle;
+				font-size: 1.8rem;
+				letter-spacing: .5rem;
+				margin-left: 5px;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+				background-image: linear-gradient(50deg, rgb(43, 10, 255), rgb(255, 91, 138) 49%, rgb(255, 91, 138) 53%, rgb(255, 91, 138) 55%, rgb(251, 166, 75) 77%, rgb(249, 155, 82));
+				color: transparent;
+				background-clip: text;
+			}
+		}
+
+		.title {
+			font-size: 2.5rem;
+			background-image: linear-gradient(50deg, rgb(43, 10, 255), rgb(255, 91, 138) 49%, rgb(255, 91, 138) 53%, rgb(255, 91, 138) 55%, rgb(251, 166, 75) 77%, rgb(249, 155, 82));
+			color: transparent;
+			background-clip: text;
+			margin-top: 1rem;
+
+			@media screen and (max-width: 768px) {
+				margin-top: 2rem;
+			}
+		}
+
+		.form {
+			flex: 1;
+			position: relative;
+
+			.registerForm {
+				width: 100%;
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+
+				.checkCode {
+					display: flex;
+
+					.codeBtn1,
+					.codeBtn2 {
+						width: 50%;
+						border-radius: 5px;
+						background-color: #9C77D1;
+						color: #FFFFFF;
+						box-shadow: 0 0 1px black;
+						font-size: 1rem;
+						text-align: center;
+					}
+
+					.codeBtn1 {
+						cursor: pointer;
+						transition: font-size .3s;
+						&:hover {
+							font-size: 1.05rem;
+						}
+					}
+
+					.codeBtn2 {
+						cursor: not-allowed;
+					}
+				}
+
+				.registerBtn {
+					margin-top: 1rem;
+
+					@media screen and (max-width: 768px) {
+						margin-top: 2rem;
+					}
+
+					button {
+						width: 100%;
+						box-sizing: border-box;
+						padding: 8px 0;
+						border: 1px solid #e5e0df;
+						border-radius: 5px;
+						box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),0 2px 4px -1px rgba(0, 0, 0, 0.06);
+						background: linear-gradient(180deg, #FFFFFF 0%, #FCF9F5 100%);
+						transition: opacity 0.5s;
+
+						&:disabled {
+							opacity: 0.4;
+							cursor: not-allowed;
+						}
+					}
+				}
+
+				.goLogin {
+					text-align: center;
+					font-size: 0.8rem;
+					margin-top: 1rem;
+
+					@media screen and (max-width: 768px) {
+						margin-top: 2rem;
+					}
+
+					a {
+						color: rgb(43, 10, 255);
+					}
+				}
+			}
+		}
 	}
 }
 </style>
 
 <!-- region 修改element-ui默认样式 -->
-<style>
-.registerForm .el-form-item {
-	margin-bottom: 0.5rem;
-}
+<style lang="scss">
+.registerForm {
+	.el-form-item {
+		margin-bottom: 0.5rem;
 
-.registerForm .el-input .el-input__inner {
-	height: 38px;
-}
+		* {
+			font-size: 1rem;
+		}
 
-.registerForm .el-input .el-input__inner:focus {
-	border: 2px solid rgb(49, 130, 206);
-}
+		.el-form-item__content {
+			margin-top: -0.5rem;
+		}
 
-.registerForm .el-form-item * {
-	font-size: 1rem;
-}
+		.el-form-item__error {
+			font-size: 0.8rem;
+			white-space: nowrap;
+		}
+	}
 
-.registerForm .el-form-item .el-form-item__content {
-	margin-top: -0.5rem;
-}
-
-.registerForm .el-form-item .el-form-item__error {
-	font-size: 0.8rem;
-	white-space: nowrap;
+	.el-input .el-input__inner {
+		height: 38px;
+		&:focus {
+			border: 2px solid rgb(49, 130, 206);
+		}
+	}
 }
 
 .el-form-item.is-error .el-input__inner,

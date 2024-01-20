@@ -17,19 +17,19 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .scrollAnimation {
 	height: 40px;
 	position: relative;
 	margin-top: 10px;
-}
 
-.scrollAnimation .box {
-	position: absolute;
-	top: 0;
-	left: 50%;
-	transform: translateX(-50%);
-	display: flex;
-	align-items: center;
+	.box {
+		position: absolute;
+		top: 0;
+		left: 50%;
+		transform: translateX(-50%);
+		display: flex;
+		align-items: center;
+	}
 }
 </style>

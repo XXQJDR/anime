@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
 		<div class="box">
-			<div>
+			<div class="animation">
 				<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 800 600">
 					<g>
 						<defs>
@@ -253,7 +253,7 @@
 					</g>
 				</svg>
 			</div>
-			<div style="text-align: center;">
+			<div class="text">
 				<h1>404</h1>
 				<h2>UH OH! 页面丢失</h2>
 				<p>您所寻找的页面不存在。你可以点击下面的按钮，返回主页。
@@ -361,7 +361,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 svg {
 	width: 100%;
 	visibility: hidden;
@@ -382,63 +382,77 @@ h2 {
 	height: 100vh;
 	display: flex;
 	align-items: center;
-}
-
-.container .box {
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.btn {
-	z-index: 1;
 	overflow: hidden;
-	background: transparent;
-	position: relative;
-	padding: 8px 50px;
-	border-radius: 30px;
-	cursor: pointer;
-	font-size: 1em;
-	letter-spacing: 2px;
-	-webkit-transition: 0.2s ease;
-	transition: 0.2s ease;
-	font-weight: bold;
-	margin: 5px 0px;
-}
 
-.btn {
-	border: 4px solid #2ccf6d;
-	color: #0e0620;
-}
+	.box {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 
-.btn.green:before {
-	content: "";
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 0%;
-	height: 100%;
-	background: #2ccf6d;
-	z-index: -1;
-	-webkit-transition: 0.2s ease;
-	transition: 0.2s ease;
-}
+		.animation,
+		.text {
+			width: 50%;
+		}
 
-.btn.green:hover {
-	color: #fff;
-	background: #2ccf6d;
-	-webkit-transition: 0.2s ease;
-	transition: 0.2s ease;
-}
+		.text {
+			text-align: center;
+		}
 
-.btn.green:hover:before {
-	width: 100%;
-}
+		@media screen and (max-width: 768px) {
+			display: block;
 
-@media screen and (max-width: 768px) {
-	.container .box {
-		display: block;
+			.animation {
+				width: 70%;
+				margin: 0 auto;
+			}
+
+			.text {
+				width: 100%;
+			}
+		}
+
+		.btn {
+			z-index: 1;
+			overflow: hidden;
+			background: transparent;
+			position: relative;
+			padding: 8px 50px;
+			border-radius: 30px;
+			cursor: pointer;
+			font-size: 1em;
+			letter-spacing: 2px;
+			-webkit-transition: 0.2s ease;
+			transition: 0.2s ease;
+			font-weight: bold;
+			margin: 5px 0px;
+			border: 4px solid #2ccf6d;
+			color: #0e0620;
+
+			&.green:before {
+				content: "";
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 0;
+				height: 100%;
+				background: #2ccf6d;
+				z-index: -1;
+				-webkit-transition: 0.2s ease;
+				transition: 0.2s ease;
+			}
+
+			&.green:hover {
+				color: #fff;
+				background: #2ccf6d;
+				-webkit-transition: 0.2s ease;
+				transition: 0.2s ease;
+			}
+
+			&.green:hover:before {
+				width: 100%;
+			}
+		}
 	}
 }
 </style>

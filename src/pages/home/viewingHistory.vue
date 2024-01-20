@@ -157,49 +157,50 @@ export default {
 }
 </script>
 
-<style scoped>
-/* region 模块分类名称 */
-.viewingHistory .typeTitle {
-	min-width: 110px;
-	font-size: 1.5rem;
-	display: flex;
-	align-items: center;
-}
-
-.viewingHistory .typeTitle svg {
-	width: 18px;
-	height: 18px;
-}
-
-.viewingHistory .typeTitle div {
-	min-width: 76px;
-	margin-left: 15px;
-	font-weight: bold;
-}
-/* endregion */
-
-/* region 动漫统计 */
+<style scoped lang="scss">
 @font-face {
 	font-family: 'numberfont';
 	font-display: swap;
 	src: url("@/font/number/webfont.ttf");
 }
 
-.number-font {
-	font-family: "numberfont" !important;
-	font-style: normal;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	background-image: linear-gradient(50deg, rgb(43, 10, 255), rgb(255, 91, 138) 49%, rgb(255, 91, 138) 53%, rgb(255, 91, 138) 55%, rgb(251, 166, 75) 77%, rgb(249, 155, 82));
-	background-clip: text;
-	color: transparent;
-	font-size: 2rem;
-}
+.viewingHistory {
+	/* 模块分类名称 */
+	.typeTitle {
+		min-width: 110px;
+		font-size: 1.5rem;
+		display: flex;
+		align-items: center;
 
-.viewingHistory .total {
-	text-align: center;
-	margin: 1rem 0;
-	font-size: 1.5rem;
+		svg {
+			width: 18px;
+			height: 18px;
+		}
+
+		div {
+			min-width: 76px;
+			margin-left: 15px;
+			font-weight: bold;
+		}
+	}
+
+	/* 动漫统计 */
+	.total {
+		text-align: center;
+		margin: 1rem 0;
+		font-size: 1.5rem;
+
+		.number-font {
+			font-family: "numberfont" !important;
+			font-style: normal;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			background-image: linear-gradient(50deg, rgb(43, 10, 255), rgb(255, 91, 138) 49%, rgb(255, 91, 138) 53%, rgb(255, 91, 138) 55%, rgb(251, 166, 75) 77%, rgb(249, 155, 82));
+			background-clip: text;
+			color: transparent;
+			font-size: 2rem;
+		}
+	}
 }
 /* endregion */
 </style>

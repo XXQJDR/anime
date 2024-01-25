@@ -103,6 +103,9 @@ export default {
 					if (result.code !== 200) {
 						this.$message.error(result.msg);
 
+						//刷新验证码
+						this.changeImageCode();
+
 						//关闭加载动画
 						this.loading = false;
 					} else {

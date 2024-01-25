@@ -348,6 +348,7 @@ export default {
 
 			//更新数据
 			this.images = this.images.filter(item => item.id !== id);
+			this.imagesTotal--;
 
 			//pc端根据图片数量改变瀑布流列数
 			if (this.browserIdentity === 1) {

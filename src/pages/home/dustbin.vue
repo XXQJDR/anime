@@ -84,7 +84,13 @@ export default {
 			//获取数据
 			let result = await reqGetDustbinData();
 			if (result.code !== 200) {
-				this.$message.error(result.msg);
+				if (result.code !== 402 && result.code !== 403) {
+					this.$message.error(result.msg);
+				}
+
+				//关闭加载动画
+				this.loading = false;
+
 				return ;
 			}
 			this.animeList = result.data || [];
@@ -102,10 +108,15 @@ export default {
 			this.$refs['popover-' + index][0].doClose();
 
 			let result = await reqUpdateAnimeDeleted(collectId, false);
-			this.$message({
-				type: result.code === 200 ? 'success' : 'error',
-				message: result.code === 200 ? '恢复成功' : '恢复失败'
-			});
+			if (result.code !== 200) {
+				if (result.code !== 402 && result.code !== 403) {
+					this.$message.error('恢复失败！');
+				}
+
+				return ;
+			}
+
+			this.$message.success('恢复成功！');
 
 			//更新列表
 			this.animeList.splice(index, 1);
@@ -117,10 +128,15 @@ export default {
 			this.$refs['popover-' + index][0].doClose();
 
 			let result = await reqRemoveAnime(collectId);
-			this.$message({
-				type: result.code === 200 ? 'success' : 'error',
-				message: result.code === 200 ? '删除成功' : '删除失败'
-			});
+			if (result.code !== 200) {
+				if (result.code !== 402 && result.code !== 403) {
+					this.$message.error('删除失败！');
+				}
+
+				return ;
+			}
+
+			this.$message.success('删除成功！');
 
 			//更新列表
 			this.animeList.splice(index, 1);

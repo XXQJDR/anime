@@ -4,6 +4,9 @@
 import _axios from "axios";
 import store from "@/store";
 import {Message} from "element-ui";
+import router from "@/router";
+
+const source = _axios.CancelToken.source();
 
 //创建一个axios实例
 const axios = _axios.create({
@@ -18,11 +21,14 @@ const axios = _axios.create({
 请求拦截器
 config对象中包含请求头信息
  */
-axios.interceptors.request.use((config) => {
+axios.interceptors.request.use(config => {
 	//非/user/**请求添加token
 	if (!config.url.includes('/user')) {
 		config.headers.Authorization = 'Bearer ' + store.state.token;
 	}
+
+	//全局添加cancelToken
+	config.cancelToken = source.token;
 
 	return config;
 });
@@ -33,9 +39,12 @@ axios.interceptors.request.use((config) => {
 		2.1 成功回调
 		2.2 失败回调
  */
-axios.interceptors.response.use((res) => {
+axios.interceptors.response.use(res => {
 	//token有误或token过期
 	if (res.data.code === 402 || res.data.code === 403) {
+		//取消其他正在进行的请求
+		source.cancel();
+
 		Message.warning('登录信息已过期，请重新登录！');
 
 		//删除vuex中用户信息
@@ -46,12 +55,20 @@ axios.interceptors.response.use((res) => {
 		localStorage.removeItem('token');
 		localStorage.removeItem('userInfo');
 
-		location.href = 'http://192.168.31.112/#/login';
+		//跳转刷新页面，刷新页面防止页面回到上次路由位置
+		router.push('/login').then(() => {
+			location.reload();
+		});
 	}
 
 	return res.data;
 }, error => {
-	return Promise.reject(error)
+	//取消请求的情况下，终端Promise调用链
+	if (_axios.isCancel(error)) {
+		return new Promise(() => {});
+	} else {
+		return Promise.reject(error);
+	}
 });
 
 export default axios;

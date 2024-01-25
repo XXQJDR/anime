@@ -116,15 +116,18 @@ export default {
 		//添加动漫
 		async addAnimeHandle(anime) {
 			let result = await reqAddAnime(anime);
-			this.$message({
-				type: result.code === 200 ? 'success' : 'error',
-				message: result.msg
-			});
+			if (result.code !== 200) {
+				if (result.code !== 402 && result.code !== 403) {
+					this.$message.error(result.msg);
+				}
+
+				return ;
+			}
+
+			this.$message.success(result.msg);
 
 			//从搜索结果中删除添加的动漫
-			if (result.code === 200) {
-				this.suggestionList = this.suggestionList.filter(item => item.id !== anime.id);
-			}
+			this.suggestionList = this.suggestionList.filter(item => item.id !== anime.id);
 
 			//如果添加的动漫是搜索结果框中最后一个，关闭搜索框
 			if (this.suggestionList.length === 0) {

@@ -246,12 +246,19 @@ export default {
 
 			//上传文件
 			let result = await reqUpload(this.collectId, this.$refs.upload.uploadFiles);
-			this.$message({
-				type: result.code === 200 ? 'success' : 'error',
-				message: result.code === 200 ? '上传成功！' : '上传失败！'
-			});
 
 			if (result.code !== 200) {
+				//402为token过期，403为token有误
+				if (result.code !== 402 && result.code !== 403) {
+					this.$message({
+						type: result.code === 200 ? 'success' : 'error',
+						message: result.code === 200 ? '上传成功！' : '上传失败！'
+					});
+				}
+
+				//关闭加载动画
+				this.controlLoading = false;
+
 				return ;
 			}
 
@@ -269,7 +276,11 @@ export default {
 		async getDetailAnime() {
 			let result = await reqGetDetailAnime(this.animeId);
 			if (result.code !== 200) {
-				this.$message.error(result.msg);
+				//402为token过期，403为token有误
+				if (result.code !== 402 && result.code !== 403) {
+					this.$message.error(result.msg);
+				}
+
 				return ;
 			}
 			this.anime = result.data || {};
@@ -281,10 +292,19 @@ export default {
 			this.scrollLoading = true;
 
 			let result = await reqGetPageWonderfulMoment(this.current, this.size, this.collectId);
+
 			if (result.code !== 200) {
-				this.$message.error(result.msg);
+				//402为token过期，403为token有误
+				if (result.code !== 402 && result.code !== 403) {
+					this.$message.error(result.msg);
+				}
+
+				//关闭加载动画
+				this.scrollLoading = false;
+
 				return ;
 			}
+
 			this.images = this.images.concat(result.data.records || []);
 			this.hasNext = result.data.current < result.data.pages;
 			this.current++;
@@ -311,12 +331,18 @@ export default {
 
 			let result = await reqRemoveWonderfulMoment(id);
 
-			this.$message({
-				type: result.code === 200 ? 'success' : 'error',
-				message: result.code === 200 ? '删除成功！' : '删除失败！'
-			});
-
 			if (result.code !== 200) {
+				//402为token过期，403为token有误
+				if (result.code !== 402 && result.code !== 403) {
+					this.$message({
+						type: result.code === 200 ? 'success' : 'error',
+						message: result.code === 200 ? '删除成功！' : '删除失败！'
+					});
+				}
+
+				//关闭加载动画
+				this.controlLoading = false;
+
 				return;
 			}
 
@@ -385,7 +411,11 @@ export default {
 			this.current = 1;
 			let result = await reqGetPageWonderfulMoment(this.current, this.size, this.collectId);
 			if (result.code !== 200) {
-				this.$message.error(result.msg);
+				//402为token过期，403为token有误
+				if (result.code !== 402 && result.code !== 403) {
+					this.$message.error(result.msg);
+				}
+
 				return ;
 			}
 			this.images = result.data.records || []

@@ -247,11 +247,15 @@ export default {
 
 			//更改服务器数据
 			let result = await reqUpdateAnimeWacthingStatus(collectId, status);
-			this.$message({
-				type: result.code === 200 ? 'success' : 'error',
-				message: result.code === 200 ? '标记成功！' : '标记失败！'
-			});
+			if (result.code !== 200) {
+				if (result.code !== 402 && result.code !== 403) {
+					this.$message.error('标记失败！');
+				}
 
+				return ;
+			}
+
+			this.$message.success('标记成功！');
 			//更新列表
 			if (this.selectFlag !== 1) {
 				this.animeList.splice(index, 1);
@@ -274,11 +278,15 @@ export default {
 			this.$refs['popover-' + index][0].doClose();
 
 			let result = await reqUpdateAnimeDeleted(collectId, true);
-			this.$message({
-				type: result.code === 200 ? 'success' : 'error',
-				message: result.code === 200 ? '移入成功！' : '移入失败！'
-			});
+			if (result.code !== 200) {
+				if (result.code !== 402 && result.code !== 403) {
+					this.$message.error('移入失败！');
+				}
 
+				return ;
+			}
+
+			this.$message.success('移入成功！');
 			//更新animeList
 			this.animeList.splice(index, 1);
 
@@ -304,6 +312,17 @@ export default {
 
 			//获取数据
 			let result = await reqGetPageAnime(params);
+			if (result.code !== 200) {
+				if (result.code !== 402 && result.code !== 403) {
+					this.$message.error('数据获取失败！');
+				}
+
+				//关闭加载动画
+				this.skeletonLoading = false;
+
+				return ;
+			}
+
 			this.animeList = result.data.records || [];
 			this.current++;
 
@@ -338,6 +357,17 @@ export default {
 
 			//获取数据
 			let result = await reqGetPageAnime(params);
+			if (result.code !== 200) {
+				if (result.code !== 402 && result.code !== 403) {
+					this.$message.error('数据获取失败！');
+				}
+
+				//关闭加载动画
+				this.scrollLoading = false;
+
+				return ;
+			}
+
 			this.animeList = this.animeList.concat(result.data.records || []);
 			this.hasNext = result.data.current < result.data.pages;
 			this.current++;
@@ -358,7 +388,14 @@ export default {
 			//获取数据
 			let result = await reqSearchAnime(this.keyword, this.selectFlag);
 			if (result.code !== 200) {
-				this.$message.error(result.msg);
+				if (result.code !== 402 && result.code !== 403) {
+					this.$message.error(result.msg);
+				}
+
+				//关闭加载动画
+				this.skeletonLoading = false;
+
+				return ;
 			}
 			this.animeList = result.data || [];
 

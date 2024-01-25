@@ -87,7 +87,14 @@ export default {
 			//获取数据
 			let result = await reqRandomAnime();
 			if (result.code !== 200) {
-				this.$message.error(result.msg);
+				//402、403分别为token过期和token有误
+				if (result.code !== 402 && result.code !== 403) {
+					this.$message.error(result.msg);
+				}
+
+				//关闭加载动画
+				this.loading = false;
+
 				return;
 			}
 			this.anime = result.data || {};

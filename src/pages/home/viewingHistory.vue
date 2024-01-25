@@ -81,9 +81,16 @@ export default {
 			}
 			let result = await reqGetPageAnime(params);
 			if (result.code !== 200) {
-				this.$message.error('获取数据失败！');
+				if (result.code !== 402 && result.code !== 403) {
+					this.$message.error('获取数据失败！');
+				}
+
+				//关闭加载动画
+				this.loading = false;
+
 				return ;
 			}
+
 			this.animeList = this.animeList.concat(result.data.records || []);
 			this.hasNext = result.data.current < result.data.pages;
 			if (this.current===1) {
@@ -119,7 +126,10 @@ export default {
 			}
 			let result = await reqGetPageAnime(params);
 			if (result.code !== 200) {
-				this.$message.error('获取数据失败！');
+				if (result.code !== 402 && result.code !== 403) {
+					this.$message.error('获取数据失败！');
+				}
+
 				return;
 			}
 			this.animeList = this.animeList.concat(result.data.records || []);

@@ -38,7 +38,7 @@
 					<div class="registerBtn">
 						<button @click.prevent="register">
 							<i class="el-icon-loading" v-show="loading" />
-							<span>登录</span>
+							<span>注册</span>
 						</button>
 					</div>
 					<div class="goLogin">
@@ -120,7 +120,7 @@ export default {
 					let result = await reqRegister(this.formData.username, this.formData.password, this.formData.email, this.formData.checkCode);
 					this.$message({
 						type: result.code === 200 ? 'success' : 'error',
-						message: result.msg
+						message: result.code === 200 ? '注册成功！' : '注册失败！'
 					});
 
 					//关闭加载动画

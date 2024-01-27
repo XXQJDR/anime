@@ -75,15 +75,13 @@ export default {
 			//校验规则
 			rules: {
 				email: [
-					{required: true, type: 'email', message:'请输入正确的邮箱格式', trigger: 'blur'}
+					{required: true, message: '邮箱不能为空', trigger: 'blur'}
 				],
 				password: [
-					{required: true, message: '密码不能为空', trigger: 'blur'},
-					{pattern: /^(?![a-zA-Z]+$)(?!\d+$)(?![^\da-zA-Z\s]+$).{6,15}$/, message: '密码由字母、数字、特殊字符，任意2种组成，6-15位', trigger: 'manual'}
+					{required: true, message: '密码不能为空', trigger: 'blur'}
 				],
 				checkCode: [
 					{required: true, message: '验证码不能为空', trigger: 'blur'},
-					{pattern: /^[0-9A-Za-z]+$/, message: '验证码格式有误', trigger: 'blur'}
 				]
 			},
 		}

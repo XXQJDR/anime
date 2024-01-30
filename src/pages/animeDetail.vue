@@ -250,10 +250,7 @@ export default {
 			if (result.code !== 200) {
 				//402为token过期，403为token有误
 				if (result.code !== 402 && result.code !== 403) {
-					this.$message({
-						type: result.code === 200 ? 'success' : 'error',
-						message: result.code === 200 ? '上传成功！' : '上传失败！'
-					});
+					this.$message.error('上传失败！');
 				}
 
 				//关闭加载动画
@@ -261,6 +258,8 @@ export default {
 
 				return ;
 			}
+
+			this.$message.success('上传成功！');
 
 			//清空上传列表
 			this.$refs.upload.clearFiles();
@@ -334,10 +333,7 @@ export default {
 			if (result.code !== 200) {
 				//402为token过期，403为token有误
 				if (result.code !== 402 && result.code !== 403) {
-					this.$message({
-						type: result.code === 200 ? 'success' : 'error',
-						message: result.code === 200 ? '删除成功！' : '删除失败！'
-					});
+					this.$message.error('删除失败！');
 				}
 
 				//关闭加载动画
@@ -345,6 +341,8 @@ export default {
 
 				return;
 			}
+
+			this.$message.success('上传成功！');
 
 			//更新数据
 			this.images = this.images.filter(item => item.id !== id);

@@ -342,7 +342,7 @@ export default {
 				return;
 			}
 
-			this.$message.success('上传成功！');
+			this.$message.success('删除成功！');
 
 			//更新数据
 			this.images = this.images.filter(item => item.id !== id);

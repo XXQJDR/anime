@@ -6,7 +6,6 @@
 
 - [anime前台页面在这里](https://github.com/XXQJDR/anime)
 - [anime后台页面在这里](https://github.com/XXQJDR/anime-admin)
-- [anime后端在这里](https://github.com/XXQJDR/anime-api)
 - [线上地址在这里](http://47.108.90.243/)
 
 <img src="images/list.png" width="100%">

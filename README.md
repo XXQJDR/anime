@@ -2,8 +2,6 @@
 
 # <center>Anime</center>
 
-------
-
 <center>一个你的动漫历程记录者</center>
 
 - [anime前台页面在这里](https://github.com/XXQJDR/anime)

@@ -101,7 +101,7 @@
 								<img v-lazy="anime.cover" alt="">
 							</div>
 							<div class="content">
-								<el-tooltip effect="dark" :content="anime.title" placement="top" :visible-arrow="false">
+								<el-tooltip effect="dark" :content="anime.title" placement="top" :visible-arrow="false" open-delay="300">
 									<div class="info">
 										<div class="title">{{anime.title}}</div>
 										<div class="date" v-show="selectFlag!==2">与<span>{{anime.createDate}}</span>加入</div>
@@ -794,16 +794,10 @@ export default {
 			/* 鼠标移入item给item添加阴影 */
 			&:hover {
 				box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),0 4px 6px -2px rgba(0, 0, 0, 0.05);
-				transform: translateY(-1px);
 
 				/* 鼠标移入item给content添加背景 */
 				.content {
 					background-color: #f7f3f2;
-				}
-
-				/* 鼠标移入item放大img */
-				.img img {
-					transform: scale(1.1);
 				}
 			}
 
@@ -814,6 +808,13 @@ export default {
 			.img {
 				height: 82%;
 				overflow: hidden;
+
+				/* 鼠标移入图片放大图片 */
+				&:hover {
+					img {
+						transform: scale(1.1);
+					}
+				}
 
 				/* 图片自适应父盒子 */
 				img {

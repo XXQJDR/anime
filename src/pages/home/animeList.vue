@@ -445,6 +445,7 @@ export default {
 		this.getFirstPageAnime();
 	},
 	mounted() {
+		console.log(window.innerWidth);
 		setTimeout(() => {
 			window.addEventListener('scroll', this.lazyLoading);
 		}, 500);
@@ -756,22 +757,23 @@ export default {
 		display: grid;
 		grid-gap: 20px;
 
-		@media screen and (max-width: 768px) {
+		@media screen and (max-width: 600px) {
 			grid-template-columns: repeat(1, 1fr);
 		}
 
-		@media screen and (min-width: 768px) and (max-width: 1078px) {
+		@media screen and (min-width: 600px) and (max-width: 1000px) {
 			grid-template-columns: repeat(2, 1fr);
 		}
 
-		@media screen and (min-width: 1078px) and (max-width: 1355px) {
+		@media screen and (min-width: 1000px) and (max-width: 1260px) {
 			grid-template-columns: repeat(3, 1fr);
 		}
 
-		@media screen and (min-width: 1355px) and (max-width: 1668px) {
+		@media screen and (min-width: 1260px) and (max-width: 1500px) {
 			grid-template-columns: repeat(4, 1fr);
 		}
-		@media screen and (min-width: 1668px) {
+
+		@media screen and (min-width: 1500px) {
 			grid-template-columns: repeat(5, 1fr);
 		}
 

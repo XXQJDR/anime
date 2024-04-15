@@ -28,43 +28,13 @@
 					</div>
 					<div class="info">
 						<h3>{{anime.title}}</h3>
-						<div class="other">
-							<div class="otherItem notNecessary">
-								<span class="key">动画种类</span>
-								<span>：</span>
-								<span class="value">{{anime.kind}}</span>
-							</div>
-							<div class="otherItem">
-								<span class="key">首播时间</span>
-								<span>：</span>
-								<span class="value">{{anime.firstPlayDate}}</span>
-							</div>
-							<div class="otherItem">
-								<span class="key">播放状态</span>
-								<span>：</span>
-								<span class="value">{{anime.status}}</span>
-							</div>
-							<div class="otherItem">
-								<span class="key">原作</span>
-								<span>：</span>
-								<span class="value">{{anime.original}}</span>
-							</div>
-							<div class="otherItem notNecessary">
-								<span class="key">剧情类型</span>
-								<span>：</span>
-								<span class="value">{{anime.storyType}}</span>
-							</div>
-							<div class="otherItem">
-								<span class="key">制作公司</span>
-								<span>：</span>
-								<span class="value">{{anime.company}}</span>
-							</div>
-						</div>
-						<div class="intro">
-							<span class="key">简介</span>
-							<span>：</span>
-							<span class="value">{{anime.description}}</span>
-						</div>
+						<div>动画种类：{{anime.kind}}</div>
+						<div>首播时间：{{anime.firstPlayDate}}</div>
+						<div>播放状态：{{anime.status}}</div>
+						<div>原作：{{anime.original}}</div>
+						<div>剧情类型：{{anime.storyType}}</div>
+						<div>制作公司：{{anime.company}}</div>
+						<div>简介：{{anime.description}}</div>
 					</div>
 				</div>
 			</div>
@@ -535,20 +505,14 @@ export default {
 				}
 
 				.img {
-					min-width: 215px;
-					max-width: 215px;
+					width: 215px;
 					height: 300px;
 					overflow: hidden;
 
 					@media screen and (max-width: 768px) {
 						margin: 0 auto;
-
-						/* 修改图片加载动画和加载失败大小 */
-						img[lazy="loading"],
-						img[lazy="error"] {
-							width: 100%;
-							height: 250px;
-						}
+						width: 150px;
+						height: 208px;
 					}
 
 					img {
@@ -559,7 +523,7 @@ export default {
 				}
 
 				.info {
-					min-width: 700px;
+					flex: 1;
 					margin-left: 15px;
 
 					@media screen and (max-width: 768px) {
@@ -569,40 +533,14 @@ export default {
 						margin-left: 0;
 					}
 
+					div {
+						margin-top: 8px;
+					}
+
 					h3 {
 						@media screen and (max-width: 768px) {
 							text-align: center;
-						}
-					}
-
-					.other {
-						display: grid;
-						grid-template-columns: repeat(2, 1fr);
-						grid-auto-rows: 30px;
-						line-height: 30px;
-						margin-top: 15px;
-
-						.otherItem {
-							justify-items: start;
-
-							.key {
-								display: inline-block;
-								width: 76px;
-								text-align: right;
-
-								@media screen and (max-width: 768px) {
-									width: 68px;
-									font-size: 1.2rem;
-								}
-							}
-						}
-					}
-
-					.intro {
-						margin-top: 5px;
-
-						@media screen and (max-width: 768px) {
-							font-size: 1.2rem;
+							margin-top: 5px;
 						}
 					}
 				}

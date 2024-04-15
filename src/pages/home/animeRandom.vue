@@ -9,55 +9,25 @@
 
 		<!-- region 随机模块 -->
 		<div class="box">
-			<div class="boxContent">
-				<div class="anime" v-loading="loading">
-					<div class="img" v-show="anime.cover">
-						<img v-lazy="anime.cover" alt="">
-					</div>
-					<div class="info" v-show="anime.title!=null">
-						<h3 class="title">{{anime.title}}</h3>
-						<div class="other">
-							<div class="otherItem notNecessary">
-								<span class="key">动画种类</span>
-								<span>：</span>
-								<span class="value">{{anime.kind}}</span>
-							</div>
-							<div class="otherItem">
-								<span class="key">首播时间</span>
-								<span>：</span>
-								<span class="value">{{anime.firstPlayDate}}</span>
-							</div>
-							<div class="otherItem">
-								<span class="key">播放状态</span>
-								<span>：</span>
-								<span class="value">{{anime.status}}</span>
-							</div>
-							<div class="otherItem">
-								<span class="key">原作</span>
-								<span>：</span>
-								<span class="value">{{anime.original}}</span>
-							</div>
-							<div class="otherItem notNecessary">
-								<span class="key">剧情类型</span>
-								<span>：</span>
-								<span class="value">{{anime.storyType}}</span>
-							</div>
-							<div class="otherItem">
-								<span class="key">制作公司</span>
-								<span>：</span>
-								<span class="value">{{anime.company}}</span>
-							</div>
-						</div>
-						<div class="intro">
-							<span class="key">简介</span>
-							<span>：</span>
-							<span class="value">{{anime.description}}</span>
-						</div>
-					</div>
+			<div class="anime" v-loading="loading">
+				<div class="img" v-show="anime.cover">
+					<img v-lazy="anime.cover" alt="">
 				</div>
-				<div class="control">
-					<div class="btn" @click="randomAnime">随机</div>
+				<div class="info" v-show="anime.title!=null">
+					<h3>{{anime.title}}</h3>
+					<div>动画种类：{{anime.kind}}</div>
+					<div>首播时间：{{anime.firstPlayDate}}</div>
+					<div>播放状态：{{anime.status}}</div>
+					<div>原作：{{anime.original}}</div>
+					<div>剧情类型：{{anime.storyType}}</div>
+					<div>制作公司：{{anime.company}}</div>
+					<el-tooltip effect="dark" :content="anime.description" placement="top" :visible-arrow="false">
+						<div class="intro">简介：{{anime.description}}</div>
+					</el-tooltip>
 				</div>
+			</div>
+			<div class="control">
+				<div class="btn" @click="randomAnime">随机</div>
 			</div>
 		</div>
 		<!-- endregion -->
@@ -134,48 +104,27 @@ export default {
 
 	/* 随机模块 */
 	> .box {
-		height: 500px;
-		box-sizing: border-box;
-		position: relative;
-
-		.boxContent {
-			width: 100%;
-			min-width: 745px;
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-
-			@media screen and (max-width: 768px) {
-				width: 100%;
-				min-width: 0;
-				padding: 5px;
-			}
-
-			@media screen and (min-width: 768px) and (max-width: 1050px) {
-				min-width: 0;
-			}
-		}
+		margin-top: 3rem;
 
 		.anime {
-			min-height: 235px;
+			min-height: 350px;
 			border-radius: 5px;
 			display: flex;
+			align-items: center;
 			padding: 1rem;
 			background-color: #FFFFFF;
+			box-sizing: border-box;
 
 			@media screen and (max-width: 768px) {
-				min-height: 170px;
+				min-height: 300px;
 			}
 
 			.img {
-				min-width: 165px;
-				max-width: 165px;
+				width: 165px;
 				height: 235px;
 
 				@media screen and (max-width: 768px) {
-					min-width: 122px;
-					max-width: 122px;
+					width: 122px;
 					height: 170px;
 				}
 
@@ -187,71 +136,29 @@ export default {
 			}
 
 			.info {
+				flex: 1;
 				padding-left: 15px;
 
-				h3 {
-					margin-top: 5px;
-				}
-
-				.other {
-					display: grid;
-					grid-template-columns: repeat(2, 1fr);
-
-					/* 默认行高 */
-					grid-auto-rows: 30px;
-					line-height: 30px;
-					margin-top: 15px;
-
-					@media screen and (max-width: 1050px) {
-						display: block;
-					}
-
-					.notNecessary {
-						@media screen and (max-width: 1050px) {
-							display: none;
-						}
-					}
-
-					.otherItem {
-						justify-items: start;
-
-						.key {
-							display: inline-block;
-							width: 76px;
-							text-align: right;
-
-							@media screen and (max-width: 768px) {
-								width: 56px;
-							}
-						}
-
-						.value {
-							color: #726e6e;
-						}
-					}
+				div {
+					margin-top: 8px;
 				}
 
 				.intro {
-					margin-top: 5px;
 					word-break: break-all;
 					overflow: hidden;
 					display: -webkit-box;
 					-webkit-line-clamp: 3;
 					-webkit-box-orient: vertical;
 
-					@media screen and (max-width: 1050px) {
-						display: none;
-					}
-
-					.value {
-						color: #726e6e;
+					@media screen and (max-width: 768px) {
+						-webkit-line-clamp: 5;
 					}
 				}
 			}
 		}
 
 		.control {
-			margin-top: 2rem;
+			margin-top: 3rem;
 
 			.btn {
 				width: 90px;
@@ -274,4 +181,9 @@ export default {
 		}
 	}
 }
+</style>
+
+<style lang="scss">
+@import '@/style/element';
+@include tooltip-style;
 </style>

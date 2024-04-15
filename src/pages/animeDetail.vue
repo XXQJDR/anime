@@ -26,7 +26,7 @@
 					<div class="img">
 						<img v-lazy="anime.cover" alt="">
 					</div>
-					<div class="info">
+					<div class="info" v-show="anime.title!=null">
 						<h3>{{anime.title}}</h3>
 						<div>动画种类：{{anime.kind}}</div>
 						<div>首播时间：{{anime.firstPlayDate}}</div>

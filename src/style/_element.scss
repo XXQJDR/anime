@@ -86,6 +86,7 @@
 /* 文字提示el-Tooltip样式 */
 @mixin tooltip-style {
   .el-tooltip__popper {
-    font-size: .8rem;
+    font-size: .9rem;
+    max-width: 60%;
   }
 }

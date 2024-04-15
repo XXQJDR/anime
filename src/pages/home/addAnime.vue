@@ -22,44 +22,16 @@
 						</div>
 					</div>
 					<div class="info">
-						<h3 class="title">{{anime.title}}</h3>
-						<div class="other">
-							<div class="otherItem notNecessary">
-								<span class="key">动画种类</span>
-								<span>：</span>
-								<span class="value">{{anime.kind}}</span>
-							</div>
-							<div class="otherItem">
-								<span class="key">首播时间</span>
-								<span>：</span>
-								<span class="value">{{anime.firstPlayDate}}</span>
-							</div>
-							<div class="otherItem">
-								<span class="key">播放状态</span>
-								<span>：</span>
-								<span class="value">{{anime.status}}</span>
-							</div>
-							<div class="otherItem">
-								<span class="key">原作</span>
-								<span>：</span>
-								<span class="value">{{anime.original}}</span>
-							</div>
-							<div class="otherItem notNecessary">
-								<span class="key">剧情类型</span>
-								<span>：</span>
-								<span class="value">{{anime.storyType}}</span>
-							</div>
-							<div class="otherItem">
-								<span class="key">制作公司</span>
-								<span>：</span>
-								<span class="value">{{anime.company}}</span>
-							</div>
-						</div>
-						<div class="intro">
-							<span class="key">简介</span>
-							<span>：</span>
-							<span class="value">{{anime.description}}</span>
-						</div>
+						<h3>{{anime.title}}</h3>
+						<div>动画种类：{{anime.kind}}</div>
+						<div>首播时间：{{anime.firstPlayDate}}</div>
+						<div>播放状态：{{anime.status}}</div>
+						<div>原作：{{anime.original}}</div>
+						<div>剧情类型：{{anime.storyType}}</div>
+						<div>制作公司：{{anime.company}}</div>
+						<el-tooltip effect="dark" :content="anime.description" placement="top" :visible-arrow="false" :open-delay="300">
+							<div class="intro">简介：{{anime.description}}</div>
+						</el-tooltip>
 					</div>
 				</div>
 			</div>
@@ -212,23 +184,11 @@ export default {
 		/* 输入建议 */
 		.suggestion {
 			width: 100%;
-			min-width: 710px;
-			min-height: 200px;
+			min-height: 300px;
 			background-color: #FFFFFF;
 			margin-top: 1rem;
 			border-radius: 10px;
 			box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-			font-size: 0.9rem;
-
-			@media screen and (max-width: 768px) {
-				width: 100%;
-				min-width: auto;
-				font-size: 1rem;
-			}
-
-			@media screen and (min-width: 768px) and (max-width: 1000px) {
-				min-width: 0;
-			}
 
 			.item {
 				width: 100%;
@@ -256,8 +216,7 @@ export default {
 				}
 
 				.img {
-					min-width: 147px;
-					max-width: 147px;
+					width: 147px;
 					height: 205px;
 					border-radius: 5px;
 					overflow: hidden;
@@ -265,8 +224,7 @@ export default {
 					cursor: pointer;
 
 					@media screen and (max-width: 768px) {
-						min-width: 122px;
-						max-width: 122px;
+						width: 122px;
 						height: 170px;
 					}
 
@@ -334,66 +292,28 @@ export default {
 				}
 
 				.info {
+					flex: 1;
 					padding: 0 15px;
 
-					h3 {
-						margin-bottom: 5px;
-					}
-
-					.other {
-						display: grid;
-						grid-template-columns: repeat(2, 1fr);
-						grid-auto-rows: 30px;
-						line-height: 30px;
-
-						@media screen and (max-width: 1000px) {
-							display: block;
-						}
-
-						.notNecessary {
-							@media screen and (max-width: 1000px) {
-								display: none;
-							}
-						}
-
-						.otherItem {
-							justify-items: start;
-
-							.key {
-								display: inline-block;
-								width: 69px;
-								text-align: right;
-
-								@media screen and (max-width: 768px) {
-									width: 56px;
-								}
-							}
-
-							.value {
-								color: #726e6e;
-							}
-						}
+					div {
+						margin-top: 8px;
 					}
 
 					.intro {
-						margin-top: 5px;
 						word-break: break-all;
 						overflow: hidden;
 						display: -webkit-box;
 						-webkit-line-clamp: 3;
 						-webkit-box-orient: vertical;
-
-						@media screen and (max-width: 1000px) {
-							display: none;
-						}
-
-						.value {
-							color: #726e6e;
-						}
 					}
 				}
 			}
 		}
 	}
 }
+</style>
+
+<style lang="scss">
+@import '@/style/element';
+@include tooltip-style;
 </style>

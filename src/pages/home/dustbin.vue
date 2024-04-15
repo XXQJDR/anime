@@ -21,7 +21,9 @@
 							<img v-lazy="anime.cover" alt="">
 						</div>
 						<div class="content">
-							<div class="info">{{anime.title}}</div>
+							<el-tooltip effect="dark" :content="anime.title" placement="top" :visible-arrow="false" :open-delay="300">
+								<div class="info">{{anime.title}}</div>
+							</el-tooltip>
 							<div class="control">
 								<el-popover
 										:visible-arrow="false"
@@ -322,4 +324,5 @@ export default {
 /* 弹出框样式 */
 @import '@/style/element';
 @include anime-control-popover-style;
+@include tooltip-style;
 </style>

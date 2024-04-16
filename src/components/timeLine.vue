@@ -16,6 +16,7 @@
 							<div class="img">
 								<img v-lazy="item.cover" alt="">
 							</div>
+							<h3>{{item.title}}</h3>
 						</div>
 					</div>
 				</div>
@@ -37,6 +38,10 @@ export default {
 </script>
 
 <style scoped>
+h3 {
+	margin-top: 8px;
+}
+
 div {
 	box-sizing: border-box;
 }
@@ -101,7 +106,7 @@ div {
 
 .item .value-box {
 	text-align: center;
-	padding: 1rem 30px;
+	padding: 15px;
 	background: #ffffff;
 	box-shadow: 8px 7px 20px 0 #dae5f6;
 	border-radius: 4px;
@@ -117,13 +122,12 @@ div {
 .value-box h4 {
 	font-size: 24px;
 	color: #2b0aff;
-	margin: 10px 0;
+	margin-bottom: 8px;
 }
 
 .value-box .img {
-	min-width: 215px;
-	max-width: 215px;
-	height: 300px;
+	width: 170px;
+	height: 236px;
 	border-radius: 5px;
 	overflow: hidden;
 	margin: 0 auto;
@@ -144,11 +148,17 @@ div {
 		--lineWidth: 30px;
 		padding-bottom: 100px;
 	}
+
+	.value-box .img {
+		width: 122px;
+		height: 170px;
+	}
 }
 
 @media screen and (min-width: 1000px) {
 	.items {
 		display: flex;
+		justify-content: center;
 		flex-wrap: wrap;
 	}
 

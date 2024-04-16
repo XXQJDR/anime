@@ -216,8 +216,8 @@ export default {
 				}
 
 				.img {
-					width: 147px;
-					height: 205px;
+					width: 170px;
+					height: 236px;
 					border-radius: 5px;
 					overflow: hidden;
 					position: relative;

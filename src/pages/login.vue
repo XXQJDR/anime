@@ -27,7 +27,7 @@
 							<el-input v-model="formData.checkCode" class="checkCodeInput" />
 							<img
 									style="cursor: pointer;width: 30%;height: 40px;"
-									src="/api/user/getImageCode"
+									:src="checkCodeUrl"
 									alt="code"
 									@click="changeImageCode"
 									ref="imageCode">
@@ -64,6 +64,9 @@ export default {
 		return {
 			//登录中加载动画开启标志
 			loading: false,
+
+			//根据环境不同验证码url不同
+			checkCodeUrl: `${process.env.VUE_APP_BASE_URL}/user/getImageCode`,
 
 			//表单数据
 			formData: {

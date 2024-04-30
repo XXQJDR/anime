@@ -11,7 +11,7 @@ const source = _axios.CancelToken.source();
 //创建一个axios实例
 const axios = _axios.create({
 	//基础路径
-	baseURL: 'http://47.108.90.243/api',
+	baseURL: process.env.VUE_APP_BASE_URL,
 
 	//请求超时时间
 	timeout: 20000

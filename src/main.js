@@ -20,3 +20,5 @@ new Vue({
 	router,
 	store,
 }).$mount('#app')
+
+console.log(process.env);

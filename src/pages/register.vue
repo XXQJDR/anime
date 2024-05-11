@@ -1,5 +1,5 @@
 <template>
-	<div class="container" ref="container">
+	<div class="register" ref="register">
 		<div class="box">
 			<div class="logo">
 				<i/>
@@ -160,7 +160,7 @@ export default {
 	mounted() {
 		//防止移动端软键盘引起页面高度变下
 		if (this.browserIdentity === 2) {
-			this.$refs['container'].style.height = window.innerHeight  + 'px';
+			this.$refs['register'].style.height = window.innerHeight  + 'px';
 		}
 	}
 }
@@ -173,9 +173,10 @@ export default {
 	src: url("@/font/logo/Vampire Wars.ttf");
 }
 
-.container {
+.register {
 	display: flex;
 	height: 100vh;
+	overflow: hidden;
 
 	.background {
 		flex: 64% 1 1;
@@ -195,7 +196,7 @@ export default {
 		box-sizing: border-box;
 		display: flex;
 		flex-direction: column;
-		padding: 2rem 2rem;
+		padding: 1rem;
 
 		@media screen and (max-width: 768px) {
 			padding: 2rem;
@@ -214,7 +215,7 @@ export default {
 				font-family: "logofont" !important;
 				font-style: normal;
 				vertical-align: middle;
-				font-size: 1.8rem;
+				font-size: 1.4rem;
 				letter-spacing: .5rem;
 				margin-left: 5px;
 				-webkit-font-smoothing: antialiased;
@@ -226,14 +227,14 @@ export default {
 		}
 
 		.title {
-			font-size: 2.5rem;
+			font-size: 1.8rem;
 			background-image: linear-gradient(50deg, rgb(43, 10, 255), rgb(255, 91, 138) 49%, rgb(255, 91, 138) 53%, rgb(255, 91, 138) 55%, rgb(251, 166, 75) 77%, rgb(249, 155, 82));
 			color: transparent;
 			background-clip: text;
-			margin-top: 1rem;
+			margin: 10px 0;
 
 			@media screen and (max-width: 768px) {
-				margin-top: 2rem;
+				margin: 20px 0;
 			}
 		}
 

@@ -1,5 +1,5 @@
 <template>
-	<div class="container" ref="container">
+	<div class="login" ref="login">
 		<div class="box">
 			<div class="logo">
 				<i/>
@@ -141,7 +141,7 @@ export default {
 	mounted() {
 		//防止移动端软键盘引起页面高度变下
 		if (this.browserIdentity === 2) {
-			this.$refs['container'].style.height = window.innerHeight  + 'px';
+			this.$refs['login'].style.height = window.innerHeight  + 'px';
 		}
 	}
 }
@@ -154,7 +154,7 @@ export default {
 	src: url("@/font/logo/Vampire Wars.ttf");
 }
 
-.container {
+.login {
 	display: flex;
 	height: 100vh;
 

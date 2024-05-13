@@ -54,7 +54,6 @@
 <script>
 import {reqIsRegister, reqGetEmailCode, reqRegister} from "@/api";
 import {mapState} from "vuex";
-import _ from "lodash";
 
 export default {
 	name: 'RegisterPage',
@@ -71,8 +70,9 @@ export default {
 		};
 
 		//自定义邮箱验证码规则
-		let validateCheckCode = (rule, value, callback) => {
-			if (this.isRegister()) {
+		let validateCheckCode = async (rule, value, callback) => {
+			let result = await reqIsRegister(this.formData.email);
+			if (result.code !== 200) {
 				callback(new Error('该邮箱已注册！'));
 			} else {
 				callback();
@@ -121,12 +121,6 @@ export default {
 		...mapState(['browserIdentity']),
 	},
 	methods: {
-		//判断是否注册过 true: 已注册
-		isRegister: _.throttle(async function () {
-			let result = await reqIsRegister(this.formData.email);
-			return result.code !== 200;
-		}, 500),
-
 		//注册按钮回调
 		async register() {
 			this.$refs['registerForm'].validate(async (valid) => {

@@ -146,7 +146,7 @@ div {
 @media screen and (max-width: 1000px) {
 	.itembox {
 		--lineWidth: 30px;
-		padding-bottom: 100px;
+		padding-bottom: 50px;
 	}
 
 	.value-box .img {
@@ -158,7 +158,6 @@ div {
 @media screen and (min-width: 1000px) {
 	.items {
 		display: flex;
-		justify-content: center;
 		flex-wrap: wrap;
 	}
 
@@ -170,7 +169,7 @@ div {
 		border-right: none;
 		padding-right: 0;
 		padding-left: 50px;
-		margin-top: 400px;
+		margin-top: 340px;
 		padding-bottom: 0;
 	}
 

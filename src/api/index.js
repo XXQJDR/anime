@@ -1,5 +1,10 @@
 import axios from "@/api/myAxios";
 
+//判断邮箱是否已注册
+export const reqIsRegister = (email) => {
+	return axios.get(`/user/isRegister/${email}`);
+}
+
 //获取邮箱验证码
 export const reqGetEmailCode = (email) => {
 	return axios.get(`/user/getEmailCode/${email}`);

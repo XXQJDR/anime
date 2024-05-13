@@ -52,8 +52,9 @@
 </template>
 
 <script>
-import {reqGetEmailCode, reqRegister} from "@/api";
+import {reqIsRegister, reqGetEmailCode, reqRegister} from "@/api";
 import {mapState} from "vuex";
+import _ from "lodash";
 
 export default {
 	name: 'RegisterPage',
@@ -64,6 +65,15 @@ export default {
 				callback(new Error('请再次输入密码'));
 			} else if (value !== this.formData.password) {
 				callback(new Error('两次输入密码不一致!'));
+			} else {
+				callback();
+			}
+		};
+
+		//自定义邮箱验证码规则
+		let validateCheckCode = (rule, value, callback) => {
+			if (this.isRegister()) {
+				callback(new Error('该邮箱已注册！'));
 			} else {
 				callback();
 			}
@@ -85,7 +95,8 @@ export default {
 			//校验规则
 			rules: {
 				email: [
-					{required: true, type: 'email', message:'请输入正确的邮箱格式', trigger: 'blur'}
+					{required: true, type: 'email', message:'请输入正确的邮箱格式', trigger: 'blur'},
+					{validator: validateCheckCode, trigger: 'blur'}
 				],
 				username: [
 					{required: true, min: 3, max: 10, message: '用户名3-10位', trigger: 'blur'}
@@ -98,7 +109,7 @@ export default {
 					{validator: validateCheckPassword, trigger: 'blur'}
 				],
 				checkCode: [
-					{required: true, message:'验证码不能为空', trigger: 'blur'}
+					{required: true, message: '验证码不能为空！' , trigger: 'blur'}
 				]
 			},
 
@@ -110,6 +121,12 @@ export default {
 		...mapState(['browserIdentity']),
 	},
 	methods: {
+		//判断是否注册过 true: 已注册
+		isRegister: _.throttle(async function () {
+			let result = await reqIsRegister(this.formData.email);
+			return result.code !== 200;
+		}, 500),
+
 		//注册按钮回调
 		async register() {
 			this.$refs['registerForm'].validate(async (valid) => {
@@ -234,6 +251,7 @@ export default {
 			margin: 10px 0;
 
 			@media screen and (max-width: 768px) {
+				font-size: 2.5rem;
 				margin: 20px 0;
 			}
 		}

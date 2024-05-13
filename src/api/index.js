@@ -50,17 +50,6 @@ export const reqGetPageAnime = (params) => {
 	return axios.post('/anime/getPageAnime', params);
 }
 
-/**
- * 搜索动漫
- * @param keyword 搜索关键词
- * @param status 动漫观看状态
- * @returns {Promise<axios.AxiosResponse<any>>}
- */
-export const reqSearchAnime = (keyword, status) => {
-	let params = {keyword, status};
-	return axios.post('/anime/searchAnime', params);
-}
-
 //更改动漫观看状态
 export const reqUpdateAnimeWacthingStatus = (collectId, status) => {
 	let params = {collectId, status};

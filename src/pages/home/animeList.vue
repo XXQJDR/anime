@@ -152,7 +152,7 @@
 </template>
 
 <script>
-import {reqGetPageAnime, reqSearchAnime, reqUpdateAnimeDeleted, reqUpdateAnimeWacthingStatus} from "@/api";
+import {reqGetPageAnime, reqUpdateAnimeDeleted, reqUpdateAnimeWacthingStatus} from "@/api";
 import _ from "lodash";
 import CountTo from "vue-count-to";
 import EndHr from "@/components/endHr.vue";
@@ -222,6 +222,11 @@ export default {
 		}
 	},
 	methods: {
+		//搜索动漫
+		searchAnime: _.throttle(function () {
+			this.getFirstPageAnime();
+		}, 1000),
+
 		//添加按钮回调
 		goAddAnime() {
 			//将内容改为添加
@@ -301,10 +306,13 @@ export default {
 			//开启加载动画
 			this.skeletonLoading = true;
 
+			this.current = 1;
+
 			//根据selectFlag决定参数
 			let params = {
-				current: 1,
-				size: this.size
+				current: this.current,
+				size: this.size,
+				keyword: this.keyword
 			};
 			if (this.selectFlag === 2) {
 				params.status = 1;
@@ -349,7 +357,8 @@ export default {
 			//根据selectFlag决定参数
 			let params = {
 				current: this.current,
-				size: this.size
+				size: this.size,
+				keyword: this.keyword
 			};
 			if (this.selectFlag === 2) {
 				params.status = 1;
@@ -371,42 +380,12 @@ export default {
 			}
 
 			this.animeList = this.animeList.concat(result.data.records || []);
-			this.hasNext = result.data.current < result.data.pages;
 			this.current++;
+			this.hasNext = result.data.current < result.data.pages;
 
 			//关闭加载动画
 			this.scrollLoading = false;
 		},
-
-		//搜索动漫
-		searchAnime: _.throttle(async function () {
-			if (this.keyword.length === 0) {
-				return;
-			}
-
-			//开启加载动画
-			this.skeletonLoading = true;
-
-			//获取数据
-			let result = await reqSearchAnime(this.keyword, this.selectFlag);
-			if (result.code !== 200) {
-				if (result.code !== 402 && result.code !== 403) {
-					this.$message.error(result.msg);
-				}
-
-				//关闭加载动画
-				this.skeletonLoading = false;
-
-				return ;
-			}
-			this.animeList = result.data || [];
-
-			//关闭加载动画
-			this.skeletonLoading = false;
-
-			//数据为空展示空状态
-			this.emptyFlag = this.animeList.length === 0;
-		}, 1000),
 
 		//点击动漫分类按钮
 		changeAnimeType: _.throttle(function (type) {

@@ -575,7 +575,8 @@ export default {
 				/* 修改图片加载动画和加载失败大小 */
 				img[lazy="loading"],
 				img[lazy="error"] {
-					height: 250px;
+					/* 保持宽高之比为16 / 9 */
+					aspect-ratio: 16 / 9;
 				}
 
 				.briefImg {

@@ -190,6 +190,10 @@ export default {
 			border-radius: 10px;
 			box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
+			@media screen and (max-width: 768px) {
+				min-height: 230px;
+			}
+
 			.item {
 				width: 100%;
 				display: flex;

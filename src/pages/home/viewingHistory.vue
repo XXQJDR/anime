@@ -77,7 +77,7 @@ export default {
 			let params = {
 				current: this.current,
 				size: this.size,
-				status: 1
+				status: 'FINISHED'
 			}
 			let result = await reqGetPageAnime(params);
 			if (result.code !== 200) {
@@ -122,7 +122,7 @@ export default {
 			let params = {
 				current: this.current,
 				size: this.size,
-				status: 1
+				status: 'FINISHED'
 			}
 			let result = await reqGetPageAnime(params);
 			if (result.code !== 200) {

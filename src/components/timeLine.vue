@@ -12,7 +12,7 @@
 							</div>
 						</div>
 						<div class="value-box" @click="goAnimeDetail(item.collectId, item.animeId)">
-							<h4>{{ item.finishedWatchingDate }}</h4>
+							<h4>{{ item.finishedDate }}</h4>
 							<div class="img">
 								<img v-lazy="item.cover" alt="">
 							</div>

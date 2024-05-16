@@ -41,19 +41,16 @@ export const reqAddAnime = (anime) => {
  * 获取用户已添加的动漫
  * current：当前页
  * size：每页显示条数
- * status
- * 	1代表查询已看
- * 	0代表查询未看
- * 	无代表查询全部
+ * status：观看状态，null代表查询全部
  */
 export const reqGetPageAnime = (params) => {
 	return axios.post('/anime/getPageAnime', params);
 }
 
 //更改动漫观看状态
-export const reqUpdateAnimeWacthingStatus = (collectId, status) => {
+export const reqUpdateAnimeWatchStatus = (collectId, status) => {
 	let params = {collectId, status};
-	return axios.post('/anime/updateAnimeWacthingStatus', params);
+	return axios.post('/anime/updateAnimeWatchStatus', params);
 }
 
 //更改动漫逻辑删除状态

@@ -105,7 +105,7 @@
 									<div class="info">
 										<div class="title">{{anime.title}}</div>
 										<div class="date" v-show="selectFlag!==2">与<span>{{anime.createDate}}</span>加入</div>
-										<div class="date" v-show="selectFlag===2">与<span>{{anime.finishedWatchingDate}}</span>看完</div>
+										<div class="date" v-show="selectFlag===2">与<span>{{anime.finishedDate}}</span>看完</div>
 									</div>
 								</el-tooltip>
 								<div class="control">
@@ -117,11 +117,11 @@
 											:ref="'popover-' + index"
 											trigger="click">
 										<ul>
-											<li @click="updateAnimeWatchingStatus(index, anime.collectId, true)" v-show="!anime.watchingStatus">
+											<li @click="updateAnimeWatchStatus(index, anime.collectId, 'FINISHED')" v-show="anime.watchStatus !== 'FINISHED'">
 												<svg width="18px" height="18px" viewBox="0 0 1024 1024" stroke="black" stroke-width="20" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M939.36 218.912a32 32 0 0 1 45.856 44.672l-538.016 552a32 32 0 0 1-43.776 1.92L63.872 526.048a32 32 0 1 1 41.696-48.544l316.768 271.936L939.36 218.88z"  /></svg>
 												<div>标记为已看</div>
 											</li>
-											<li @click="updateAnimeWatchingStatus(index, anime.collectId, false)" v-show="anime.watchingStatus">
+											<li @click="updateAnimeWatchStatus(index, anime.collectId, 'NO_WATCH')" v-show="anime.watchStatus !== 'NO_WATCH'">
 												<svg width="18px" height="18px" viewBox="0 0 1024 1024" stroke="black" stroke-width="20" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M547.2 512l416-416c9.6-9.6 9.6-25.6 0-35.2s-25.6-9.6-35.2 0l-416 416-416-416c-9.6-9.6-25.6-9.6-35.2 0s-9.6 25.6 0 35.2l416 416-416 416c-9.6 9.6-9.6 25.6 0 35.2s25.6 9.6 35.2 0l416-416 416 416c9.6 9.6 25.6 9.6 35.2 0s9.6-25.6 0-35.2L547.2 512z" /></svg>
 												<div>标记为未看</div>
 											</li>
@@ -152,7 +152,7 @@
 </template>
 
 <script>
-import {reqGetPageAnime, reqUpdateAnimeDeleted, reqUpdateAnimeWacthingStatus} from "@/api";
+import {reqGetPageAnime, reqUpdateAnimeDeleted, reqUpdateAnimeWatchStatus} from "@/api";
 import _ from "lodash";
 import CountTo from "vue-count-to";
 import EndHr from "@/components/endHr.vue";
@@ -248,12 +248,12 @@ export default {
 		 * @param status 状态
 		 * @returns {Promise<void>}
 		 */
-		async updateAnimeWatchingStatus(index, collectId, status) {
+		async updateAnimeWatchStatus(index, collectId, status) {
 			//关闭编辑动漫弹窗
 			this.$refs['popover-' + index][0].doClose();
 
 			//更改服务器数据
-			let result = await reqUpdateAnimeWacthingStatus(collectId, status);
+			let result = await reqUpdateAnimeWatchStatus(collectId, status);
 			if (result.code !== 200) {
 				if (result.code !== 402 && result.code !== 403) {
 					this.$message.error('标记失败！');
@@ -264,14 +264,13 @@ export default {
 
 			this.$message.success('标记成功！');
 			//更新列表
-			if (this.selectFlag !== 1) {
+			this.animeList[index].watchStatus = status;
+			if (this.selectFlag !== 1) { //全部
 				this.animeList.splice(index, 1);
-			} else {
-				this.animeList[index].watchingStatus = !this.animeList[index].watchingStatus;
-			}
 
-			//更新动漫统计数量
-			this.total--;
+				//更新动漫统计数量
+				this.total--;
+			}
 		},
 
 		/**
@@ -314,10 +313,10 @@ export default {
 				size: this.size,
 				keyword: this.keyword
 			};
-			if (this.selectFlag === 2) {
-				params.status = 1;
-			} else if (this.selectFlag === 3) {
-				params.status = 0;
+			if (this.selectFlag === 2) { //已看
+				params.status = 'FINISHED';
+			} else if (this.selectFlag === 3) { //未看
+				params.status = 'NO_WATCH';
 			}
 
 			//获取数据
@@ -360,10 +359,10 @@ export default {
 				size: this.size,
 				keyword: this.keyword
 			};
-			if (this.selectFlag === 2) {
-				params.status = 1;
-			} else if (this.selectFlag === 3) {
-				params.status = 0;
+			if (this.selectFlag === 2) { //已看
+				params.status = 'FINISHED';
+			} else if (this.selectFlag === 3) { //未看
+				params.status = 'NO_WATCH';
 			}
 
 			//获取数据

@@ -2,6 +2,7 @@
 /* element弹出框样式 */
 @mixin anime-control-popover-style {
   .el-popover {
+    width: auto !important;
     border-radius: 10px !important;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
     font-size: 0.9rem !important;
@@ -14,22 +15,28 @@
       cursor: pointer;
       border: 1px solid transparent;
       transition: border,background-color .3s;
+      padding: 0 15px;
 
       &:hover {
         background-color: #e5e0df;
         border: 1px solid #e5e0df;
       }
 
-      &:last-child {
-        color: red;
-      }
-
-      > svg {
-        margin-left: 10px;
-      }
-
       > div {
         margin-left: 10px;
+      }
+
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      &:last-child {
+        color: red;
+
+        svg {
+          fill: red;
+        }
       }
     }
   }

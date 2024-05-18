@@ -2,7 +2,9 @@
 	<div class="animeList">
 		<!--region 模块分类名称-->
 		<div class="typeTitle">
-			<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="rectangle-history" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-metatip="true"><path fill="#3c3838" d="M464 224c0-8.8-7.2-16-16-16L64 208c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-224zm-16-64c35.3 0 64 28.7 64 64l0 224c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 224c0-35.3 28.7-64 64-64l384 0zm-8-80c13.3 0 24 10.7 24 24s-10.7 24-24 24L72 128c-13.3 0-24-10.7-24-24s10.7-24 24-24l368 0zM392 0c13.3 0 24 10.7 24 24s-10.7 24-24 24L120 48c-13.3 0-24-10.7-24-24s10.7-24 24-24L392 0z"></path></svg>
+			<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="rectangle-history" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-metatip="true">
+				<path d="M464 224c0-8.8-7.2-16-16-16L64 208c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-224zm-16-64c35.3 0 64 28.7 64 64l0 224c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 224c0-35.3 28.7-64 64-64l384 0zm-8-80c13.3 0 24 10.7 24 24s-10.7 24-24 24L72 128c-13.3 0-24-10.7-24-24s10.7-24 24-24l368 0zM392 0c13.3 0 24 10.7 24 24s-10.7 24-24 24L120 48c-13.3 0-24-10.7-24-24s10.7-24 24-24L392 0z"></path>
+			</svg>
 			<div>动漫列表</div>
 		</div>
 		<!--endregion-->
@@ -10,12 +12,16 @@
 		<!-- region 添加按钮与搜索框 -->
 		<div class="control">
 			<div class="addBtn" @click="goAddAnime">
-				<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#f7f3f2" d="M248 72c0-13.3-10.7-24-24-24s-24 10.7-24 24V232H40c-13.3 0-24 10.7-24 24s10.7 24 24 24H200V440c0 13.3 10.7 24 24 24s24-10.7 24-24V280H408c13.3 0 24-10.7 24-24s-10.7-24-24-24H248V72z"></path></svg>
+				<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+					<path d="M248 72c0-13.3-10.7-24-24-24s-24 10.7-24 24V232H40c-13.3 0-24 10.7-24 24s10.7 24 24 24H200V440c0 13.3 10.7 24 24 24s24-10.7 24-24V280H408c13.3 0 24-10.7 24-24s-10.7-24-24-24H248V72z"></path>
+				</svg>
 				<div>添加</div>
 			</div>
 			<div class="search">
 				<form @submit.prevent="searchAnime">
-					<svg viewBox="0 0 24 24" focusable="false"><path fill="#cac5c4" d="M23.384,21.619,16.855,15.09a9.284,9.284,0,1,0-1.768,1.768l6.529,6.529a1.266,1.266,0,0,0,1.768,0A1.251,1.251,0,0,0,23.384,21.619ZM2.75,9.5a6.75,6.75,0,1,1,6.75,6.75A6.758,6.758,0,0,1,2.75,9.5Z"></path></svg>
+					<svg viewBox="0 0 24 24" focusable="false">
+						<path d="M23.384,21.619,16.855,15.09a9.284,9.284,0,1,0-1.768,1.768l6.529,6.529a1.266,1.266,0,0,0,1.768,0A1.251,1.251,0,0,0,23.384,21.619ZM2.75,9.5a6.75,6.75,0,1,1,6.75,6.75A6.758,6.758,0,0,1,2.75,9.5Z"></path>
+					</svg>
 					<input type="text" placeholder="请输入动漫关键词" v-model="keyword" @focus="handleFocus">
 				</form>
 			</div>
@@ -27,15 +33,21 @@
 			<!-- pc端 -->
 			<div class="pc">
 				<div class="btn" @click="changeAnimeType(1)" :class="{typePcBtnActive:selectFlag===1}">
-					<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="rectangle-history" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-metatip="true"><path :fill="selectFlag===1?'#2B0AFF':'#726e6e'" d="M464 224c0-8.8-7.2-16-16-16L64 208c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-224zm-16-64c35.3 0 64 28.7 64 64l0 224c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 224c0-35.3 28.7-64 64-64l384 0zm-8-80c13.3 0 24 10.7 24 24s-10.7 24-24 24L72 128c-13.3 0-24-10.7-24-24s10.7-24 24-24l368 0zM392 0c13.3 0 24 10.7 24 24s-10.7 24-24 24L120 48c-13.3 0-24-10.7-24-24s10.7-24 24-24L392 0z"></path></svg>
+					<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="rectangle-history" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-metatip="true">
+						<path d="M464 224c0-8.8-7.2-16-16-16L64 208c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16l384 0c8.8 0 16-7.2 16-16l0-224zm-16-64c35.3 0 64 28.7 64 64l0 224c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 224c0-35.3 28.7-64 64-64l384 0zm-8-80c13.3 0 24 10.7 24 24s-10.7 24-24 24L72 128c-13.3 0-24-10.7-24-24s10.7-24 24-24l368 0zM392 0c13.3 0 24 10.7 24 24s-10.7 24-24 24L120 48c-13.3 0-24-10.7-24-24s10.7-24 24-24L392 0z"></path>
+					</svg>
 					<div>全部</div>
 				</div>
 				<div class="btn" @click="changeAnimeType(2)" :class="{typePcBtnActive:selectFlag===2}">
-					<svg viewBox="0 0 1024 1024" :stroke="selectFlag===2?'#2B0AFF':'#726e6e'" stroke-width="20" xmlns="http://www.w3.org/2000/svg"><path :fill="selectFlag===2?'#2B0AFF':'#726e6e'" d="M939.36 218.912a32 32 0 0 1 45.856 44.672l-538.016 552a32 32 0 0 1-43.776 1.92L63.872 526.048a32 32 0 1 1 41.696-48.544l316.768 271.936L939.36 218.88z"  /></svg>
+					<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+						<path d="M939.36 218.912a32 32 0 0 1 45.856 44.672l-538.016 552a32 32 0 0 1-43.776 1.92L63.872 526.048a32 32 0 1 1 41.696-48.544l316.768 271.936L939.36 218.88z"></path>
+					</svg>
 					<div>已看</div>
 				</div>
 				<div class="btn" @click="changeAnimeType(3)" :class="{typePcBtnActive:selectFlag===3}">
-					<svg viewBox="0 0 1024 1024" :stroke="selectFlag===3?'#2B0AFF':'#726e6e'" stroke-width="20" xmlns="http://www.w3.org/2000/svg"><path :fill="selectFlag===3?'#2B0AFF':'#726e6e'" d="M547.2 512l416-416c9.6-9.6 9.6-25.6 0-35.2s-25.6-9.6-35.2 0l-416 416-416-416c-9.6-9.6-25.6-9.6-35.2 0s-9.6 25.6 0 35.2l416 416-416 416c-9.6 9.6-9.6 25.6 0 35.2s25.6 9.6 35.2 0l416-416 416 416c9.6 9.6 25.6 9.6 35.2 0s9.6-25.6 0-35.2L547.2 512z" /></svg>
+					<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+						<path d="M547.2 512l416-416c9.6-9.6 9.6-25.6 0-35.2s-25.6-9.6-35.2 0l-416 416-416-416c-9.6-9.6-25.6-9.6-35.2 0s-9.6 25.6 0 35.2l416 416-416 416c-9.6 9.6-9.6 25.6 0 35.2s25.6 9.6 35.2 0l416-416 416 416c9.6 9.6 25.6 9.6 35.2 0s9.6-25.6 0-35.2L547.2 512z"></path>
+					</svg>
 					<div>未看</div>
 				</div>
 			</div>
@@ -43,23 +55,33 @@
 			<!-- 移动端 -->
 			<div class="mobile">
 				<div class="btn" @click="detailFlag = !detailFlag">
-					<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="filter" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="rgb(86, 81, 81)" d="M0 73.7C0 50.7 18.7 32 41.7 32H470.3c23 0 41.7 18.7 41.7 41.7c0 9.6-3.3 18.9-9.4 26.3L336 304.5V447.7c0 17.8-14.5 32.3-32.3 32.3c-7.3 0-14.4-2.5-20.1-7l-92.5-73.4c-9.6-7.6-15.1-19.1-15.1-31.3V304.5L9.4 100C3.3 92.6 0 83.3 0 73.7zM55 80L218.6 280.8c3.5 4.3 5.4 9.6 5.4 15.2v68.4l64 50.8V296c0-5.5 1.9-10.9 5.4-15.2L457 80H55z"></path></svg>
+					<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="filter" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+						<path d="M0 73.7C0 50.7 18.7 32 41.7 32H470.3c23 0 41.7 18.7 41.7 41.7c0 9.6-3.3 18.9-9.4 26.3L336 304.5V447.7c0 17.8-14.5 32.3-32.3 32.3c-7.3 0-14.4-2.5-20.1-7l-92.5-73.4c-9.6-7.6-15.1-19.1-15.1-31.3V304.5L9.4 100C3.3 92.6 0 83.3 0 73.7zM55 80L218.6 280.8c3.5 4.3 5.4 9.6 5.4 15.2v68.4l64 50.8V296c0-5.5 1.9-10.9 5.4-15.2L457 80H55z"></path>
+					</svg>
 					<span>{{selectedTypeName}}</span>
-					<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="chevron-down" class="svg-inline--fa fa-chevron-down " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="rgb(86, 81, 81)" d="M239 401c9.4 9.4 24.6 9.4 33.9 0L465 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-175 175L81 175c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9L239 401z"></path></svg>
+					<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="chevron-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+						<path d="M239 401c9.4 9.4 24.6 9.4 33.9 0L465 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-175 175L81 175c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9L239 401z"></path>
+					</svg>
 				</div>
 				<div class="detail" :id="detailFlag?'enableDetail':'disableDetail'">
 					<div>帅选方式...</div>
 					<ul>
 						<li @click="changeAnimeType(1)">
-							<svg v-show="selectFlag===1" viewBox="0 0 14 14" height="16px" width="16px" focusable="false" aria-hidden="true"><polygon points="5.5 11.9993304 14 3.49933039 12.5 2 5.5 8.99933039 1.5 4.9968652 0 6.49933039"></polygon></svg>
+							<svg v-show="selectFlag===1" viewBox="0 0 14 14" focusable="false" aria-hidden="true">
+								<polygon points="5.5 11.9993304 14 3.49933039 12.5 2 5.5 8.99933039 1.5 4.9968652 0 6.49933039"></polygon>
+							</svg>
 							<span>全部</span>
 						</li>
 						<li @click="changeAnimeType(2)">
-							<svg v-show="selectFlag===2" viewBox="0 0 14 14" height="16px" width="16px" focusable="false" aria-hidden="true"><polygon points="5.5 11.9993304 14 3.49933039 12.5 2 5.5 8.99933039 1.5 4.9968652 0 6.49933039"></polygon></svg>
+							<svg v-show="selectFlag===2" viewBox="0 0 14 14" focusable="false" aria-hidden="true">
+								<polygon points="5.5 11.9993304 14 3.49933039 12.5 2 5.5 8.99933039 1.5 4.9968652 0 6.49933039"></polygon>
+							</svg>
 							<span>已看</span>
 						</li>
 						<li @click="changeAnimeType(3)">
-							<svg v-show="selectFlag===3" viewBox="0 0 14 14" height="16px" width="16px" focusable="false" aria-hidden="true"><polygon points="5.5 11.9993304 14 3.49933039 12.5 2 5.5 8.99933039 1.5 4.9968652 0 6.49933039"></polygon></svg>
+							<svg v-show="selectFlag===3" viewBox="0 0 14 14" focusable="false" aria-hidden="true">
+								<polygon points="5.5 11.9993304 14 3.49933039 12.5 2 5.5 8.99933039 1.5 4.9968652 0 6.49933039"></polygon>
+							</svg>
 							<span>未看</span>
 						</li>
 					</ul>
@@ -118,20 +140,28 @@
 											trigger="click">
 										<ul>
 											<li @click="updateAnimeWatchStatus(index, anime.collectId, 'FINISHED')" v-show="anime.watchStatus !== 'FINISHED'">
-												<svg width="18px" height="18px" viewBox="0 0 1024 1024" stroke="black" stroke-width="20" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M939.36 218.912a32 32 0 0 1 45.856 44.672l-538.016 552a32 32 0 0 1-43.776 1.92L63.872 526.048a32 32 0 1 1 41.696-48.544l316.768 271.936L939.36 218.88z"  /></svg>
+												<svg stroke="black" stroke-width="20px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+													<path d="M939.36 218.912a32 32 0 0 1 45.856 44.672l-538.016 552a32 32 0 0 1-43.776 1.92L63.872 526.048a32 32 0 1 1 41.696-48.544l316.768 271.936L939.36 218.88z"></path>
+												</svg>
 												<div>标记为已看</div>
 											</li>
 											<li @click="updateAnimeWatchStatus(index, anime.collectId, 'NO_WATCH')" v-show="anime.watchStatus !== 'NO_WATCH'">
-												<svg width="18px" height="18px" viewBox="0 0 1024 1024" stroke="black" stroke-width="20" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M547.2 512l416-416c9.6-9.6 9.6-25.6 0-35.2s-25.6-9.6-35.2 0l-416 416-416-416c-9.6-9.6-25.6-9.6-35.2 0s-9.6 25.6 0 35.2l416 416-416 416c-9.6 9.6-9.6 25.6 0 35.2s25.6 9.6 35.2 0l416-416 416 416c9.6 9.6 25.6 9.6 35.2 0s9.6-25.6 0-35.2L547.2 512z" /></svg>
+												<svg stroke="black" stroke-width="20px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+													<path d="M547.2 512l416-416c9.6-9.6 9.6-25.6 0-35.2s-25.6-9.6-35.2 0l-416 416-416-416c-9.6-9.6-25.6-9.6-35.2 0s-9.6 25.6 0 35.2l416 416-416 416c-9.6 9.6-9.6 25.6 0 35.2s25.6 9.6 35.2 0l416-416 416 416c9.6 9.6 25.6 9.6 35.2 0s9.6-25.6 0-35.2L547.2 512z"></path>
+												</svg>
 												<div>标记为未看</div>
 											</li>
 											<li @click="toDustbin(index, anime.collectId)">
-												<svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M177.1 48h93.7c2.7 0 5.2 1.3 6.7 3.6l19 28.4h-145l19-28.4c1.5-2.2 4-3.6 6.7-3.6zM354.2 80L317.5 24.9C307.1 9.4 289.6 0 270.9 0H177.1c-18.7 0-36.2 9.4-46.6 24.9L93.8 80H80.1 32 24C10.7 80 0 90.7 0 104s10.7 24 24 24H35.6L59.6 452.7c2.5 33.4 30.3 59.3 63.8 59.3H324.6c33.5 0 61.3-25.9 63.8-59.3L412.4 128H424c13.3 0 24-10.7 24-24s-10.7-24-24-24h-8H367.9 354.2zm10.1 48L340.5 449.2c-.6 8.4-7.6 14.8-16 14.8H123.4c-8.4 0-15.3-6.5-16-14.8L83.7 128H364.3z"></path></svg>
+												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+													<path d="M177.1 48h93.7c2.7 0 5.2 1.3 6.7 3.6l19 28.4h-145l19-28.4c1.5-2.2 4-3.6 6.7-3.6zM354.2 80L317.5 24.9C307.1 9.4 289.6 0 270.9 0H177.1c-18.7 0-36.2 9.4-46.6 24.9L93.8 80H80.1 32 24C10.7 80 0 90.7 0 104s10.7 24 24 24H35.6L59.6 452.7c2.5 33.4 30.3 59.3 63.8 59.3H324.6c33.5 0 61.3-25.9 63.8-59.3L412.4 128H424c13.3 0 24-10.7 24-24s-10.7-24-24-24h-8H367.9 354.2zm10.1 48L340.5 449.2c-.6 8.4-7.6 14.8-16 14.8H123.4c-8.4 0-15.3-6.5-16-14.8L83.7 128H364.3z"></path>
+												</svg>
 												<div>发送到垃圾箱</div>
 											</li>
 										</ul>
 										<button slot="reference" @click.stop>
-											<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M432 256a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zm-160 0a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zM64 304a48 48 0 1 1 0-96 48 48 0 1 1 0 96z"></path></svg>
+											<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+												<path d="M432 256a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zm-160 0a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zM64 304a48 48 0 1 1 0-96 48 48 0 1 1 0 96z"></path>
+											</svg>
 										</button>
 									</el-popover>
 								</div>
@@ -461,14 +491,16 @@ export default {
 		align-items: center;
 
 		svg {
-			width: 18px;
-			height: 18px;
+			width: 20px;
+			height: 20px;
+			fill: #3c3838;
 		}
 
 		div {
 			min-width: 76px;
 			margin-left: 15px;
 			font-weight: bold;
+			color: #3c3838;
 		}
 	}
 
@@ -515,6 +547,7 @@ export default {
 				vertical-align: middle;
 				width: 18px;
 				height: 18px;
+				fill: #f7f3f2;
 			}
 
 			div {
@@ -545,6 +578,7 @@ export default {
 				position: absolute;
 				top: 14px;
 				left: 14px;
+				fill: #cac5c4;
 			}
 
 			input {
@@ -616,6 +650,9 @@ export default {
 				svg {
 					width: 18px;
 					height: 18px;
+					fill: #726e6e;
+					stroke: #726e6e;
+					stroke-width: 5px;
 				}
 
 				div {
@@ -627,6 +664,11 @@ export default {
 			.typePcBtnActive {
 				background-color: #eae7ff !important;
 				color: #2B0AFF !important;
+
+				svg {
+					fill: #2B0AFF;
+					stroke: #2B0AFF;
+				}
 			}
 		}
 
@@ -653,6 +695,7 @@ export default {
 				svg {
 					width: 18px;
 					height: 18px;
+					fill: rgb(86, 81, 81);
 				}
 			}
 
@@ -707,6 +750,8 @@ export default {
 						}
 
 						svg {
+							width: 16px;
+							height: 16px;
 							position: absolute;
 							top: 50%;
 							left: 50px;
@@ -862,9 +907,6 @@ export default {
 						transform: translate(-50%, -50%);
 						transition: color, background-color .3s;
 
-						/* svg颜色 */
-						color: #ada8a8;
-
 						/* 移入文字旁的按钮改变按钮背景色和svg颜色 */
 						&:hover {
 							background-color: #e5e0df;
@@ -885,6 +927,7 @@ export default {
 							right: 0;
 							bottom: 0;
 							margin: auto;
+							fill: #ada8a8;
 						}
 					}
 				}

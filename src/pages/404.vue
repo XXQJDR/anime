@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="box">
 			<div class="animation">
-				<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 800 600">
+				<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
 					<g>
 						<defs>
 							<clipPath id="GlassClip">

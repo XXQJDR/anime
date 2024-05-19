@@ -241,13 +241,15 @@ export default {
 
 	.content {
 		/* 减去滚动条的大小 */
-		width: calc(100vw - $sidebarWidth - (100vw - 100%));
+		width: calc(100vw - $sidebarWidth);
+		margin-right: calc(100% - 100vw);
 		min-height: 100vh;
 		background-color: #F7F3F2;
 		padding: 1.3rem 2% 10px 2%;
-		float: right;
+		position: absolute;
+		top: 0;
+		right: 0;
 		box-sizing: border-box;
-		transition: width .3s;
 
 		@media screen and (max-width: 768px) {
 			float: none;

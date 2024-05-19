@@ -50,24 +50,7 @@ const routes = [
 
 		//解决刷新主页contentType重置的问题
 		beforeEnter(to, from, next) {
-			switch (to.path.split('/')[2]) {
-				case 'animeList':
-					store.commit('HOME_CONTENT_TYPE', 1);
-					break;
-				case 'viewingHistory':
-					store.commit('HOME_CONTENT_TYPE', 2);
-					break;
-				case 'animeRandom':
-					store.commit('HOME_CONTENT_TYPE', 3);
-					break;
-				case 'addAnime':
-					store.commit('HOME_CONTENT_TYPE', 4);
-					break;
-				case 'dustbin':
-					store.commit('HOME_CONTENT_TYPE', 5);
-					break;
-			}
-
+			store.commit('HOME_CONTENT_TYPE', to.path.split('/')[2]);
 			next();
 		},
 		children: [

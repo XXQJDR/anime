@@ -2,17 +2,8 @@
 	<div class="addAnime">
 		<!-- region 模块分类名称 -->
 		<div class="typeTitle">
-			<svg
-					aria-hidden="true"
-					focusable="false"
-					data-prefix="far"
-					data-icon="plus"
-					role="img"
-					xmlns="http://www.w3.org/2000/svg"
-					viewBox="0 0 448 512">
-				<path
-						d="M248 72c0-13.3-10.7-24-24-24s-24 10.7-24 24V232H40c-13.3 0-24 10.7-24 24s10.7 24 24 24H200V440c0 13.3 10.7 24 24 24s24-10.7 24-24V280H408c13.3 0 24-10.7 24-24s-10.7-24-24-24H248V72z"
-				/>
+			<svg width="22px" height="22px" aria-hidden="true" focusable="false" data-prefix="far" data-icon="plus" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+				<path d="M248 72c0-13.3-10.7-24-24-24s-24 10.7-24 24V232H40c-13.3 0-24 10.7-24 24s10.7 24 24 24H200V440c0 13.3 10.7 24 24 24s24-10.7 24-24V280H408c13.3 0 24-10.7 24-24s-10.7-24-24-24H248V72z"/>
 			</svg>
 			<div>添加动漫</div>
 		</div>
@@ -20,12 +11,8 @@
 
 		<!-- region 输入框 -->
 		<div class="form">
-			<svg
-					viewBox="0 0 24 24"
-					focusable="false">
-				<path
-						d="M23.384,21.619,16.855,15.09a9.284,9.284,0,1,0-1.768,1.768l6.529,6.529a1.266,1.266,0,0,0,1.768,0A1.251,1.251,0,0,0,23.384,21.619ZM2.75,9.5a6.75,6.75,0,1,1,6.75,6.75A6.758,6.758,0,0,1,2.75,9.5Z"
-				/>
+			<svg width="20px" height="20px" viewBox="0 0 24 24" focusable="false">
+				<path d="M23.384,21.619,16.855,15.09a9.284,9.284,0,1,0-1.768,1.768l6.529,6.529a1.266,1.266,0,0,0,1.768,0A1.251,1.251,0,0,0,23.384,21.619ZM2.75,9.5a6.75,6.75,0,1,1,6.75,6.75A6.758,6.758,0,0,1,2.75,9.5Z"/>
 			</svg>
 			<input type="text" placeholder="请输入关键词(搜索请按回车键)" v-model="keyword" @keyup.enter="searchHandle" @focus="handleFocus">
 			<div class="suggestion" v-show="suggestionFlag" v-loading="loading">
@@ -34,7 +21,9 @@
 						<img v-lazy="anime.cover" alt="">
 						<div class="mask" @click="addAnimeHandle(anime)">
 							<div class="box">
-								<svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path fill="#ffffff" d="M612.37248 411.62752V30.208h-200.74496v381.41952H30.208v200.74496h381.41952v381.41952h200.74496V612.37248h381.41952v-200.74496z"/></svg>
+								<svg width="25px" height="25px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+									<path d="M612.37248 411.62752V30.208h-200.74496v381.41952H30.208v200.74496h381.41952v381.41952h200.74496V612.37248h381.41952v-200.74496z"/>
+								</svg>
 							</div>
 						</div>
 					</div>
@@ -142,8 +131,6 @@ export default {
 		align-items: center;
 
 		svg {
-			width: 25px;
-			height: 25px;
 			fill: #3c3838;
 		}
 
@@ -162,8 +149,6 @@ export default {
 		margin-top: 1rem;
 
 		svg {
-			width: 1.1rem;
-			height: 1.1rem;
 			position: absolute;
 			top: 12px;
 			left: 10px;
@@ -302,14 +287,13 @@ export default {
 							transition: all .5s;
 
 							svg {
-								width: 25px;
-								height: 25px;
 								position: absolute;
 								top: 0;
 								bottom: 0;
 								left: 0;
 								right: 0;
 								margin: auto;
+								fill: #FFFFFF;
 							}
 						}
 					}

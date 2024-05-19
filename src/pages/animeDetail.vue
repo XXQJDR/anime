@@ -320,7 +320,7 @@ export default {
 			this.imagesTotal--;
 
 			//pc端根据图片数量改变瀑布流列数
-			if (this.browserIdentity === 1) {
+			if (this.browserIdentity === 'PC') {
 				this.changeWaterfallCount();
 			}
 
@@ -394,7 +394,7 @@ export default {
 			this.current++;
 
 			//PC端动态改变瀑布流行数
-			if (this.browserIdentity === 1) {
+			if (this.browserIdentity === 'PC') {
 				this.changeWaterfallCount();
 			} else {
 				this.count = 1;

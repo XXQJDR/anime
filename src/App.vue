@@ -34,10 +34,10 @@ export default {
 		//动态获取浏览器宽度
 		getWindowInfo() {
 			if (window.innerWidth <= 768) {
-				this.$store.commit('BROWSER_IDENTITY', 2);
+				this.$store.commit('BROWSER_IDENTITY', 'MOBILE');
 				this.$store.commit('SIDEBAR_FLAG', false);
 			} else {
-				this.$store.commit('BROWSER_IDENTITY', 1);
+				this.$store.commit('BROWSER_IDENTITY', 'PC');
 				this.$store.commit('SIDEBAR_FLAG', true);
 			}
 		},

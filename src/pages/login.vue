@@ -140,7 +140,7 @@ export default {
 	},
 	mounted() {
 		//防止移动端软键盘引起页面高度变下
-		if (this.browserIdentity === 2) {
+		if (this.browserIdentity === 'MOBILE') {
 			this.$refs['login'].style.height = window.innerHeight  + 'px';
 		}
 	}

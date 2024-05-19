@@ -11,14 +11,14 @@ const state = {
 	//用户信息
 	userInfo: JSON.parse(localStorage.getItem('userInfo')) || {},
 
-	//主页内容类型标志：1代表列表
-	homeContentType: 1,
+	//主页内容类型
+	homeContentType: 'animeList',
 
 	//侧边栏显示标志
 	sidebarFlag: false,
 
-	//浏览器身份，1为pc，2为移动
-	browserIdentity: 2,
+	//浏览器身份
+	browserIdentity: 'MOBILE',
 
 	//看板娘位置，默认在左边
 	live2dPosition: 'left',

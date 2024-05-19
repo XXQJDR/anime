@@ -61,9 +61,12 @@ export default {
 
 			//加载动画标志
 			loading: false,
-
-			//动漫是否全部加载完成，true代表加载完所有动漫
-			loadingAllAnimeFlag: false,
+		}
+	},
+	computed: {
+		//动漫是否全部加载完成，true代表加载完所有动漫
+		loadingAllAnimeFlag() {
+			return this.current > 2;
 		}
 	},
 	methods: {

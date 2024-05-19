@@ -255,6 +255,7 @@ export default {
 			float: none;
 			width: 100%;
 			padding-top: 0;
+			margin-right: 0;
 		}
 	}
 }

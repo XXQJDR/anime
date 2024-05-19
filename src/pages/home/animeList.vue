@@ -250,9 +250,12 @@ export default {
 
 			//动漫总数
 			total: 0,
-
-			//动漫是否全部加载完成，true代表加载完所有动漫
-			loadingAllAnimeFlag: false,
+		}
+	},
+	computed: {
+		//动漫是否全部加载完成，true代表加载完所有动漫
+		loadingAllAnimeFlag() {
+			return this.current > 2;
 		}
 	},
 	methods: {
@@ -297,12 +300,13 @@ export default {
 
 			this.$message.success('标记成功！');
 			//更新列表
-			this.animeList[index].watchStatus = status;
 			if (this.selectedTypeName !== '全部') {
 				this.animeList.splice(index, 1);
 
 				//更新动漫统计数量
 				this.total--;
+			} else {
+				this.animeList[index].watchStatus = status;
 			}
 		},
 
@@ -381,11 +385,6 @@ export default {
 
 			//关闭加载动画
 			this.skeletonLoading = false;
-
-			//计算动漫是否全部加载完成
-			setTimeout(() => {
-				this.loadingAllAnimeFlag = !this.hasNext && document.body.scrollHeight > window.innerHeight;
-			}, 100);
 		},
 
 		//分页获取动漫数据
@@ -426,9 +425,6 @@ export default {
 
 			//关闭加载动画
 			this.scrollLoading = false;
-
-			//计算动漫是否全部加载完成
-			this.loadingAllAnimeFlag = !this.hasNext && document.body.scrollHeight > window.innerHeight;
 		},
 
 		//点击动漫分类按钮

@@ -72,6 +72,7 @@ export default {
 		left: 0;
 		z-index: 5;
 		background-color: #F7F3F2;
+		transition: all .5s;
 
 		.icon {
 			height: 100%;

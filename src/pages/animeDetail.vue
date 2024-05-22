@@ -1,94 +1,82 @@
 <template>
 	<div class="animeDetail" ref="animeDetail" v-loading.fullscreen="controlLoading">
-		<header>
-			<div class="back">
-				<svg @click="back" width="20px" height="20.00px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
-					<path d="M303.5 5.7c-9-7.6-22.1-7.6-31.1 0l-264 224c-10.1 8.6-11.3 23.7-2.8 33.8s23.7 11.3 33.8 2.8L64 245.5V432c0 44.2 35.8 80 80 80H432c44.2 0 80-35.8 80-80V245.5l24.5 20.8c10.1 8.6 25.3 7.3 33.8-2.8s7.3-25.3-2.8-33.8l-264-224zM112 432V204.8L288 55.5 464 204.8V432c0 17.7-14.3 32-32 32H384V312c0-22.1-17.9-40-40-40H232c-22.1 0-40 17.9-40 40V464H144c-17.7 0-32-14.3-32-32zm128 32V320h96V464H240z"
-					/>
-				</svg>
-				<svg width="35px" height="18.00px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-					<path d="M305 239c9.4 9.4 9.4 24.6 0 33.9L113 465c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l175-175L79 81c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0L305 239z"
-					/>
-				</svg>
-				<div class="title">{{anime.title}}</div>
-			</div>
-			<div class="arrow" @click="down">
-				<svg width="32px" height="32.00px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-					<path fill="#000000"
-								d="M511.5 789.9 80.6 359c-22.8-22.8-22.8-59.8 0-82.6 22.8-22.8 59.8-22.8 82.6 0l348.3 348.3 348.3-348.3c22.8-22.8 59.8-22.8 82.6 0 22.8 22.8 22.8 59.8 0 82.6L511.5 789.9 511.5 789.9zM511.5 789.9"
-					/>
-				</svg>
-			</div>
-		</header>
-		<main ref="main">
-			<!-- 动漫介绍 -->
-			<div class="animeBox">
-				<div class="anime">
-					<div class="img">
-						<img v-lazy="anime.cover" alt="">
-					</div>
-					<div class="info" v-show="anime.title!=null">
-						<h3>{{anime.title}}</h3>
-						<div>动画种类：{{anime.kind}}</div>
-						<div>首播时间：{{anime.firstPlayDate}}</div>
-						<div>播放状态：{{anime.status}}</div>
-						<div>原作：{{anime.original}}</div>
-						<div>剧情类型：{{anime.storyType}}</div>
-						<div>制作公司：{{anime.company}}</div>
-						<div>简介：{{anime.description}}</div>
-					</div>
+		<div class="back">
+			<svg @click="back" width="20px" height="20.00px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+				<path d="M303.5 5.7c-9-7.6-22.1-7.6-31.1 0l-264 224c-10.1 8.6-11.3 23.7-2.8 33.8s23.7 11.3 33.8 2.8L64 245.5V432c0 44.2 35.8 80 80 80H432c44.2 0 80-35.8 80-80V245.5l24.5 20.8c10.1 8.6 25.3 7.3 33.8-2.8s7.3-25.3-2.8-33.8l-264-224zM112 432V204.8L288 55.5 464 204.8V432c0 17.7-14.3 32-32 32H384V312c0-22.1-17.9-40-40-40H232c-22.1 0-40 17.9-40 40V464H144c-17.7 0-32-14.3-32-32zm128 32V320h96V464H240z"/>
+			</svg>
+			<svg width="35px" height="18.00px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+				<path d="M305 239c9.4 9.4 9.4 24.6 0 33.9L113 465c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l175-175L79 81c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0L305 239z"/>
+			</svg>
+			<div class="title">{{anime.title}}</div>
+		</div>
+
+		<!-- 动漫介绍 -->
+		<div class="animeBox">
+			<div class="anime">
+				<div class="img">
+					<img v-lazy="anime.cover" alt="">
+				</div>
+				<div class="info" v-show="anime.title!=null">
+					<h3>{{anime.title}}</h3>
+					<div>动画种类：{{anime.kind}}</div>
+					<div>首播时间：{{anime.firstPlayDate}}</div>
+					<div>播放状态：{{anime.status}}</div>
+					<div>原作：{{anime.original}}</div>
+					<div>剧情类型：{{anime.storyType}}</div>
+					<div>制作公司：{{anime.company}}</div>
+					<div>简介：{{anime.description}}</div>
 				</div>
 			</div>
+		</div>
 
-			<!-- 文件上传 -->
-			<div class="uploadBox">
-				<el-upload
-						ref="upload"
-						class="upload"
-						action="#"
-						multiple
-						:limit="10"
-						:on-exceed="handleOnExceed"
-						:auto-upload="false"
-				>
-					<el-button type="primary" slot="trigger">选择文件</el-button>
-					<el-button @click="manualUpload" type="success">上传到服务器</el-button>
-					<div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过10MB;一次性最大上传10个文件</div>
-				</el-upload>
-			</div>
+		<!-- 文件上传 -->
+		<div class="uploadBox">
+			<el-upload
+					ref="upload"
+					class="upload"
+					action="#"
+					multiple
+					:limit="10"
+					:on-exceed="handleOnExceed"
+					:auto-upload="false"
+			>
+				<el-button type="primary" slot="trigger">选择文件</el-button>
+				<el-button @click="manualUpload" type="success">上传到服务器</el-button>
+				<div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过10MB;一次性最大上传10个文件</div>
+			</el-upload>
+		</div>
 
-			<!-- 瀑布流 -->
-			<div class="wonderfulMoment">
-				<wc-waterfall :gap="10" :cols="count">
-					<div class="img" v-for="img in images" :key="img.id">
-						<div class="control">
-							<div class="detail" @click="openImageView(img.detailImageUrl)">
-								<i class="el-icon-full-screen" />
-							</div>
-							<div class="delete" @click="deleteImage(img.id)">
-								<i class="el-icon-delete" />
-							</div>
-							<a class="download" :href="toDownloadUrl(img.detailImageUrl)" download>
-								<div>
-									<i class="el-icon-download" />
-								</div>
-							</a>
+		<!-- 瀑布流 -->
+		<div class="wonderfulMoment">
+			<wc-waterfall :gap="10" :cols="count">
+				<div class="img" v-for="img in images" :key="img.id">
+					<div class="control">
+						<div class="detail" @click="openImageView(img.detailImageUrl)">
+							<i class="el-icon-full-screen" />
 						</div>
-						<img class="briefImg" v-lazy="img.briefImageUrl" @load='imgOnLoad' alt="">
+						<div class="delete" @click="deleteImage(img.id)">
+							<i class="el-icon-delete" />
+						</div>
+						<a class="download" :href="toDownloadUrl(img.detailImageUrl)" download>
+							<div>
+								<i class="el-icon-download" />
+							</div>
+						</a>
 					</div>
-				</wc-waterfall>
-				<el-image-viewer v-if="showViewer" :url-list="viewImage" :on-close="closeImageView" />
-			</div>
+					<img class="briefImg" v-lazy="img.briefImageUrl" @load='imgOnLoad' alt="">
+				</div>
+			</wc-waterfall>
+			<el-image-viewer v-if="showViewer" :url-list="viewImage" :on-close="closeImageView" />
+		</div>
 
-			<!-- 空标志 -->
-			<el-empty style="height: 100vh;" v-if="!images.length" :image-size="250" description="暂无精彩瞬间，快来上传吧！"/>
+		<!-- 空标志 -->
+		<el-empty style="height: 100vh;" v-if="!images.length" :image-size="250" description="暂无精彩瞬间，快来上传吧！"/>
 
-			<!-- 滚动加载动画 -->
-			<scroll-animation :loading="scrollLoading" />
+		<!-- 滚动加载动画 -->
+		<scroll-animation :loading="scrollLoading" />
 
-			<!-- 结束标志 -->
-			<end-hr content="我也是有底线的！" v-show="loadingAllAnimeFlag" />
-		</main>
+		<!-- 结束标志 -->
+		<end-hr content="我也是有底线的！" v-show="loadingAllAnimeFlag" />
 	</div>
 </template>
 
@@ -162,14 +150,6 @@ export default {
 		...mapState(['browserIdentity'])
 	},
 	methods: {
-		/* 点击箭头滚动到内容区域 */
-		down() {
-			window.scrollTo({
-				'top': this.$refs['main'].offsetTop,
-				'behavior': 'smooth'
-			});
-		},
-
 		//点击back按钮回到home
 		back() {
 			this.$router.back();
@@ -426,203 +406,171 @@ export default {
 </script>
 
 <style scoped lang="scss">
-/* 箭头跳动动画 */
-@keyframes bounce {
-	0%, 100% {
-		transform: translateY(-25%);
-		animation-timing-function: cubic-bezier(.8, 0, 1, 1);
-	}
-	50% {
-		transform: none;
-		animation-timing-function: cubic-bezier(0, 0, .2, 1);
-	}
-}
-
 .animeDetail {
-	header {
-		width: 100%;
-		height: 100vh;
-		background: url("@/assets/animeDetail/background.jpg") no-repeat fixed center center;
-		background-size: cover;
-		position: relative;
+	.back {
+		display: flex;
+		justify-content: space-evenly;
+		align-items: center;
+		background-color: #FFFFFF;
+		position: fixed;
+		z-index: 1000;
+		top: 1rem;
+		left: 1rem;
+		font-size: 0.9rem;
+		padding: 10px;
+		border-radius: 10px;
+		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
-		.back {
-			display: flex;
-			justify-content: space-evenly;
-			align-items: center;
-			background-color: #FFFFFF;
-			position: fixed;
-			z-index: 1000;
-			top: 1rem;
-			left: 1rem;
-			font-size: 0.9rem;
-			padding: 10px;
-			border-radius: 10px;
-			box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-
-			> svg:nth-child(1) {
-				cursor: pointer;
-				transition: color, transform .3s;
-				&:hover {
-					fill: #2B0AFF;
-					transform: translateY(-2px);
-				}
-			}
-
-			> svg:nth-child(2) {
-				fill: #cac5c4;
+		> svg:nth-child(1) {
+			cursor: pointer;
+			transition: color, transform .3s;
+			&:hover {
+				fill: #2B0AFF;
+				transform: translateY(-2px);
 			}
 		}
 
-		.arrow {
-			position: absolute;
-			bottom: 3rem;
-			width: 100%;
-			text-align: center;
-			animation: bounce 1s infinite;
-			cursor: pointer;
+		> svg:nth-child(2) {
+			fill: #cac5c4;
 		}
 	}
 
-	main {
-		min-height: 100vh;
-		overflow: hidden;
+	.animeBox {
+		margin-top: 3.5rem;
 
-		.animeBox {
-			.anime {
-				width: 95%;
-				margin: 0 auto;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				padding: 1rem;
-				box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-				border-radius: 5px;
+		.anime {
+			width: 95%;
+			margin: 0 auto;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding: 1rem;
+			box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+			border-radius: 5px;
 
-				@media screen and (max-width: 768px) {
-					display: block;
-					width: 100%;
-					box-sizing: border-box;
-				}
-
-				.img {
-					width: 215px;
-					height: 300px;
-					overflow: hidden;
-
-					@media screen and (max-width: 768px) {
-						margin: 0 auto;
-						width: 150px;
-						height: 208px;
-					}
-
-					img {
-						width: 100%;
-						height: 100%;
-						object-fit: cover;
-					}
-				}
-
-				.info {
-					flex: 1;
-					margin-left: 15px;
-
-					@media screen and (max-width: 768px) {
-						width: 100%;
-						min-width: 0;
-						box-sizing: border-box;
-						margin-left: 0;
-					}
-
-					div {
-						margin-top: 8px;
-					}
-
-					h3 {
-						@media screen and (max-width: 768px) {
-							text-align: center;
-							margin-top: 5px;
-						}
-					}
-				}
-			}
-		}
-
-		.uploadBox {
-			margin: 1rem 0;
-
-			.upload {
-				width: 70%;
-				margin: 0 auto;
+			@media screen and (max-width: 768px) {
+				display: block;
+				width: 100%;
 				box-sizing: border-box;
-				padding: 1rem;
-				box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-				border-radius: 5px;
-				text-align: center;
-
-				@media screen and (max-width: 768px) {
-					width: 100%;
-				}
 			}
-		}
-
-		.wonderfulMoment {
-			overflow: hidden;
 
 			.img {
-				font-size: 0;
-				text-align: center;
+				width: 215px;
+				height: 300px;
+				overflow: hidden;
 
-				/* 修改图片加载动画和加载失败大小 */
-				img[lazy="loading"],
-				img[lazy="error"] {
-					/* 保持宽高之比为16 / 9 */
-					aspect-ratio: 16 / 9;
+				@media screen and (max-width: 768px) {
+					margin: 0 auto;
+					width: 150px;
+					height: 208px;
 				}
 
-				.briefImg {
+				img {
 					width: 100%;
 					height: 100%;
 					object-fit: cover;
 				}
+			}
 
-				.control {
+			.info {
+				flex: 1;
+				margin-left: 15px;
+
+				@media screen and (max-width: 768px) {
 					width: 100%;
-					height: 100%;
-					position: absolute;
-					top: 0;
-					left: 0;
-					background-color: rgba(0, 0, 0, 0);
-					font-size: 2rem;
-					color: #FFFFFF;
-					transition: background-color .5s;
-					display: none;
-					justify-content: space-evenly;
-					align-items: center;
-					&:hover {
-						background-color: rgba(0, 0, 0, .4);
+					min-width: 0;
+					box-sizing: border-box;
+					margin-left: 0;
+				}
 
-						.detail,
-						.delete,
-						.download {
-							opacity: 1;
-							visibility: visible;
-						}
+				div {
+					margin-top: 8px;
+				}
+
+				h3 {
+					@media screen and (max-width: 768px) {
+						text-align: center;
+						margin-top: 5px;
 					}
+				}
+			}
+		}
+	}
+
+	.uploadBox {
+		margin: 1rem 0;
+
+		.upload {
+			width: 70%;
+			margin: 0 auto;
+			box-sizing: border-box;
+			padding: 1rem;
+			box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+			border-radius: 5px;
+			text-align: center;
+
+			@media screen and (max-width: 768px) {
+				width: 100%;
+			}
+		}
+	}
+
+	.wonderfulMoment {
+		overflow: hidden;
+
+		.img {
+			font-size: 0;
+			text-align: center;
+
+			/* 修改图片加载动画和加载失败大小 */
+			img[lazy="loading"],
+			img[lazy="error"] {
+				/* 保持宽高之比为16 / 9 */
+				aspect-ratio: 16 / 9;
+			}
+
+			.briefImg {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+
+			.control {
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				top: 0;
+				left: 0;
+				background-color: rgba(0, 0, 0, 0);
+				font-size: 2rem;
+				color: #FFFFFF;
+				transition: background-color .5s;
+				display: none;
+				justify-content: space-evenly;
+				align-items: center;
+				&:hover {
+					background-color: rgba(0, 0, 0, .4);
 
 					.detail,
 					.delete,
 					.download {
-						opacity: 0;
-						visibility: hidden;
-						padding: 5px;
-						cursor: pointer;
-						transition: all .5s;
-						border-radius: 10px;
+						opacity: 1;
+						visibility: visible;
+					}
+				}
 
-						&:hover {
-							background-color: rgb(43, 10, 255);
-						}
+				.detail,
+				.delete,
+				.download {
+					opacity: 0;
+					visibility: hidden;
+					padding: 5px;
+					cursor: pointer;
+					transition: all .5s;
+					border-radius: 10px;
+
+					&:hover {
+						background-color: rgb(43, 10, 255);
 					}
 				}
 			}

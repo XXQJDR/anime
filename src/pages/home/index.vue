@@ -233,7 +233,7 @@ export default {
 
 	.mask {
 		width: calc(100vw - $sidebarWidth);
-		height: 100%;
+		height: 100vh;
 		position: absolute;
 		right: 0;
 		z-index: 100;

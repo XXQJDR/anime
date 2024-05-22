@@ -103,8 +103,6 @@ export default {
 
 			//关闭加载动画
 			this.loading = false;
-
-			this.loadingAllAnimeFlag = !this.hasNext && document.body.scrollHeight > window.innerHeight;
 		},
 
 		//滚动分页
@@ -143,11 +141,6 @@ export default {
 			}
 			this.current++;
 			this.total = result.data.total;
-
-			//计算动漫是否全部加载完成
-			setTimeout(() => {
-				this.loadingAllAnimeFlag = !this.hasNext && document.body.scrollHeight > window.innerHeight;
-			}, 100);
 		}
 	},
 	created() {

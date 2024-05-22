@@ -12,24 +12,13 @@
 			</keep-alive>
 		</transition>
 
-		<div class="live2dBox" v-if="browserIdentity===1" :id="live2dPosition">
-			<live2d />
-		</div>
-
 		<el-backtop :right="20" style="width: 50px;height: 50px;"></el-backtop>
 	</div>
 </template>
 
 <script>
-import live2d  from 'vue-live2d';
-import {mapState} from "vuex";
-
 export default {
 	name: 'App',
-	components: {live2d},
-	computed: {
-		...mapState(['browserIdentity', 'live2dPosition']),
-	},
 	methods: {
 		//动态获取浏览器宽度
 		getWindowInfo() {
@@ -83,43 +72,5 @@ body {
 @include message-style;
 @include skeleton-style;
 @include empty-style;
-/* endregion */
-
-/* region 看板娘样式 */
-.live2dBox {
-	position: fixed;
-	bottom: 0;
-	z-index: 9999;
-	transition: left 1.5s;
-}
-
-#left {
-	left: 0;
-}
-
-#right {
-	left: 100%;
-	transform: translateX(-100%);
-}
-
-/*关闭看板娘功能面板*/
-.vue-live2d-tool {
-	display: none !important;
-}
-
-/*取消鼠标移上看板娘向右移动*/
-.vue-live2d-main-on-right:hover {
-	padding-right: 0 !important;
-}
-
-.vue-live2d {
-	height: 200px !important;
-	width: 200px !important;
-}
-
-#vue-live2d-main {
-	height: 200px !important;
-	cursor: default;
-}
 /* endregion */
 </style>

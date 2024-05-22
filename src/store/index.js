@@ -19,9 +19,6 @@ const state = {
 
 	//浏览器身份
 	browserIdentity: 'MOBILE',
-
-	//看板娘位置，默认在左边
-	live2dPosition: 'left',
 };
 const actions = {};
 const mutations = {
@@ -40,9 +37,6 @@ const mutations = {
 	BROWSER_IDENTITY(state, browserIdentity) {
 		state.browserIdentity = browserIdentity;
 	},
-	LIVE2D_POSITION(state, live2dPosition) {
-		state.live2dPosition = live2dPosition;
-	}
 };
 
 //创建并暴露store

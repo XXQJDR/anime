@@ -149,20 +149,11 @@ router.beforeEach((to, from, next) => {
 		loginStatus = true;
 	}
 
-	//根据前往的路由更改看板娘的位置
-	if (to.path==='/login' || to.path==='/register') {
-		store.state.live2dPosition = 'right';
-	} else {
-		store.state.live2dPosition = 'left';
-	}
-
 	//组件权限控制
 	if (to.path.includes('/home') && !loginStatus) {
 		Message.warning('请先登录！');
-		store.state.live2dPosition = 'right';
 		next('/login');
 	} else if ((to.path === '/login' || to.path === '/welcome') && loginStatus) {
-		store.state.live2dPosition = 'left';
 		next("/home");
 	} else {
 		//更改网页title

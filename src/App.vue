@@ -70,7 +70,6 @@ body {
 /* region element样式修改 */
 @import '@/style/element';
 @include message-style;
-@include skeleton-style;
 @include empty-style;
 /* endregion */
 </style>

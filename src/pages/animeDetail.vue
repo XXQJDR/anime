@@ -12,21 +12,44 @@
 
 		<!-- 动漫介绍 -->
 		<div class="animeBox">
-			<div class="anime">
-				<div class="img">
-					<img v-lazy="anime.cover" alt="">
+			<el-skeleton :loading="skeletonLoading" animated :count="1" class="anime">
+				<div slot="template">
+					<div class="skeleton-img">
+						<el-skeleton-item variant="image"/>
+					</div>
+					<div class="skeleton-text">
+						<el-skeleton-item variant="h3" />
+						<el-skeleton-item variant="text" />
+						<el-skeleton-item variant="text" />
+						<el-skeleton-item variant="text" />
+						<el-skeleton-item variant="text" />
+						<el-skeleton-item variant="text" />
+						<el-skeleton-item variant="text" />
+						<el-skeleton-item variant="text" />
+						<el-skeleton-item variant="text" />
+						<el-skeleton-item variant="text" />
+						<el-skeleton-item variant="text" />
+						<el-skeleton-item variant="text" />
+					</div>
 				</div>
-				<div class="info" v-show="anime.title!=null">
-					<h3>{{anime.title}}</h3>
-					<div>动画种类：{{anime.kind}}</div>
-					<div>首播时间：{{anime.firstPlayDate}}</div>
-					<div>播放状态：{{anime.status}}</div>
-					<div>原作：{{anime.original}}</div>
-					<div>剧情类型：{{anime.storyType}}</div>
-					<div>制作公司：{{anime.company}}</div>
-					<div>简介：{{anime.description}}</div>
-				</div>
-			</div>
+				<template>
+					<div>
+						<div class="img">
+							<img :src="anime.cover" alt="">
+						</div>
+						<div class="info">
+							<h3>{{anime.title}}</h3>
+							<div>动画种类：{{anime.kind}}</div>
+							<div>首播时间：{{anime.firstPlayDate}}</div>
+							<div>播放状态：{{anime.status}}</div>
+							<div>原作：{{anime.original}}</div>
+							<div>剧情类型：{{anime.storyType}}</div>
+							<div>制作公司：{{anime.company}}</div>
+							<div>简介：{{anime.description}}</div>
+						</div>
+					</div>
+				</template>
+			</el-skeleton>
 		</div>
 
 		<!-- 文件上传 -->
@@ -129,6 +152,9 @@ export default {
 
 			//图片总数
 			imagesTotal: 0,
+
+			//骨架屏开启标志
+			skeletonLoading: true,
 		}
 	},
 	computed: {
@@ -224,6 +250,9 @@ export default {
 
 		//获取动漫详细信息
 		async getDetailAnime() {
+			//开启骨架屏
+			this.skeletonLoading = true;
+
 			let result = await reqGetDetailAnime(this.animeId);
 			if (result.code !== 200) {
 				//402为token过期，403为token有误
@@ -231,9 +260,15 @@ export default {
 					this.$message.error(result.msg);
 				}
 
+				//关闭骨架屏
+				this.skeletonLoading = false;
+
 				return ;
 			}
 			this.anime = result.data || {};
+
+			//关闭骨架屏
+			this.skeletonLoading = false;
 		},
 
 		//分页获取动漫精彩瞬间
@@ -435,23 +470,88 @@ export default {
 		}
 	}
 
-	.animeBox {
-		margin-top: 3.5rem;
+	/* 骨架屏样式 */
+	.el-skeleton > div {
+		display: flex;
+		align-items: center;
 
-		.anime {
-			width: 95%;
-			margin: 0 auto;
+		@media screen and (max-width: 768px) {
+			display: block;
+		}
+
+		.skeleton-img {
+			@media screen and (max-width: 768px) {
+				margin-bottom: 10px;
+			}
+
+			.el-skeleton__item {
+				width: 215px;
+				height: 300px;
+
+				@media screen and (max-width: 768px) {
+					margin: 0 auto;
+					width: 150px;
+					height: 208px;
+				}
+			}
+		}
+
+		.skeleton-text {
+			flex: 1;
+			margin-left: 15px;
+
+			@media screen and (max-width: 768px) {
+				margin-left: 0;
+			}
+
+			.el-skeleton__h3 {
+				width: 250px;
+				display: block;
+				margin-bottom: 10px;
+
+				@media screen and (max-width: 768px) {
+					width: 150px;
+					margin: 0 auto;
+					margin-bottom: 4px;
+				}
+			}
+
+			.el-skeleton__text {
+				&:nth-child(-n + 6) {
+					width: 250px;
+					display: block;
+					margin-bottom: 10px;
+
+					@media screen and (max-width: 768px) {
+						width: 150px;
+						margin-bottom: 4px;
+					}
+				}
+			}
+		}
+	}
+
+	.animeBox {
+		width: 95%;
+		margin: 0 auto;
+		margin-top: 3.5rem;
+		padding: 1rem;
+		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+		border-radius: 5px;
+		box-sizing: border-box;
+
+		@media screen and (max-width: 768px) {
+			width: 100%;
+		}
+
+		.anime > div {
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			padding: 1rem;
-			box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-			border-radius: 5px;
 
 			@media screen and (max-width: 768px) {
 				display: block;
 				width: 100%;
-				box-sizing: border-box;
 			}
 
 			.img {

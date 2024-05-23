@@ -50,34 +50,6 @@
   }
 }
 
-/* 骨架屏样式 */
-@mixin skeleton-style {
-  .el-skeleton {
-    margin-top: 1.5rem;
-
-    > div .el-skeleton__image {
-      width: 100%;
-      height: 260px;
-    }
-
-    @media screen and (max-width: 768px) {
-      > div {
-        margin-top: 1rem;
-        width: 100%;
-      }
-    }
-
-    @media screen and (min-width: 750px) {
-      display: flex;
-
-      > div {
-        margin-left: 1rem;
-        width: 280px;
-      }
-    }
-  }
-}
-
 /* 空状态样式 */
 @mixin empty-style {
   .el-empty .el-empty__description p {

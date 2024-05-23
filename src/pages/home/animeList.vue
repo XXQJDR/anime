@@ -777,6 +777,36 @@ export default {
 		}
 	}
 
+	/* 骨架屏样式 */
+	.el-skeleton {
+		margin-top: 1.5rem;
+
+		> div .el-skeleton__image {
+			width: 100%;
+			height: 260px;
+		}
+
+		@media screen and (max-width: 768px) {
+			> div {
+				margin-top: 1rem;
+				width: 100%;
+			}
+
+			> div .el-skeleton__image {
+				margin-bottom: 5px;
+			}
+		}
+
+		@media screen and (min-width: 750px) {
+			display: flex;
+
+			> div {
+				margin-left: 1rem;
+				width: 280px;
+			}
+		}
+	}
+
 	/* 动漫列表 */
 	.list {
 		margin-top: 1.5rem;

@@ -16,30 +16,36 @@
 			</svg>
 			<input type="text" placeholder="请输入关键词(搜索请按回车键)" v-model="keyword" @keyup.enter="searchHandle" @focus="handleFocus">
 			<div class="suggestion" v-show="suggestionFlag" v-loading="loading">
-				<div class="item" v-for="(anime, index) in suggestionList" :key="index">
-					<div class="img">
-						<img v-lazy="anime.cover" alt="">
-						<div class="mask" @click="addAnimeHandle(anime)">
-							<div class="box">
-								<svg width="25px" height="25px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-									<path d="M612.37248 411.62752V30.208h-200.74496v381.41952H30.208v200.74496h381.41952v381.41952h200.74496V612.37248h381.41952v-200.74496z"/>
-								</svg>
+				<transition-group
+						name="list"
+						tag="div"
+						appear
+				>
+					<div class="item" v-for="anime in suggestionList" :key="anime.id">
+						<div class="img">
+							<img v-lazy="anime.cover" alt="">
+							<div class="mask" @click="addAnimeHandle(anime)">
+								<div class="box">
+									<svg width="25px" height="25px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+										<path d="M612.37248 411.62752V30.208h-200.74496v381.41952H30.208v200.74496h381.41952v381.41952h200.74496V612.37248h381.41952v-200.74496z"/>
+									</svg>
+								</div>
 							</div>
 						</div>
+						<div class="info">
+							<h3>{{anime.title}}</h3>
+							<div>动画种类：{{anime.kind}}</div>
+							<div>首播时间：{{anime.firstPlayDate}}</div>
+							<div>播放状态：{{anime.status}}</div>
+							<div>原作：{{anime.original}}</div>
+							<div>剧情类型：{{anime.storyType}}</div>
+							<div>制作公司：{{anime.company}}</div>
+							<el-tooltip effect="dark" :content="anime.description" placement="top" :visible-arrow="false" :open-delay="300">
+								<div class="intro">简介：{{anime.description}}</div>
+							</el-tooltip>
+						</div>
 					</div>
-					<div class="info">
-						<h3>{{anime.title}}</h3>
-						<div>动画种类：{{anime.kind}}</div>
-						<div>首播时间：{{anime.firstPlayDate}}</div>
-						<div>播放状态：{{anime.status}}</div>
-						<div>原作：{{anime.original}}</div>
-						<div>剧情类型：{{anime.storyType}}</div>
-						<div>制作公司：{{anime.company}}</div>
-						<el-tooltip effect="dark" :content="anime.description" placement="top" :visible-arrow="false" :open-delay="300">
-							<div class="intro">简介：{{anime.description}}</div>
-						</el-tooltip>
-					</div>
-				</div>
+				</transition-group>
 			</div>
 		</div>
 		<!-- endregion -->
@@ -105,11 +111,14 @@ export default {
 			this.$message.success(result.msg);
 
 			//从搜索结果中删除添加的动漫
-			this.suggestionList = this.suggestionList.filter(item => item.id !== anime.id);
+			this.suggestionList.splice(this.suggestionList.findIndex(item => item.id===anime.id), 1)
 
 			//如果添加的动漫是搜索结果框中最后一个，关闭搜索框
 			if (this.suggestionList.length === 0) {
-				this.suggestionFlag = false;
+				//等待动画执行完毕后关闭
+				setTimeout(() => {
+					this.suggestionFlag = false;
+				}, 500);
 			}
 		},
 
@@ -122,6 +131,23 @@ export default {
 </script>
 
 <style scoped lang="scss">
+/* 列表删除动画 */
+.list-move,
+.list-enter-active,
+.list-leave-active {
+	transition: all 0.5s ease;
+}
+
+.list-enter,
+.list-leave-to {
+	opacity: 0;
+	transform: translateX(60%);
+}
+
+.list-leave-active {
+	position: absolute;
+}
+
 .addAnime {
 	/* 模块分类名称 */
 	.typeTitle {
@@ -194,6 +220,7 @@ export default {
 			margin-top: 1rem;
 			border-radius: 10px;
 			box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+			position: relative;
 
 			@media screen and (max-width: 768px) {
 				min-height: 230px;
@@ -206,7 +233,7 @@ export default {
 				align-items: center;
 				padding: 10px;
 				border-bottom: 1px solid rgba(0, 0, 0, .1);
-				transition: background-color 0.3s;
+				transition: all 0.5s ease;
 				box-sizing: border-box;
 
 				@media screen and (max-width: 768px) {

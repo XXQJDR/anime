@@ -374,7 +374,7 @@ export default {
 			this.showViewer = true;
 
 			//关闭背后滚动
-			document.body.style.overflow = 'hidden';
+			document.documentElement.style.overflowY = 'hidden';
 		},
 
 		//关闭图片预览
@@ -382,7 +382,7 @@ export default {
 			this.showViewer = false;
 
 			//开启背后滚动
-			document.body.style.overflow = 'auto';
+			document.documentElement.style.overflowY = 'auto';
 		},
 
 		//将访问url转化为下载url

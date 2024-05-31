@@ -80,7 +80,7 @@
 						<div class="delete" @click="deleteImage(img.id)">
 							<i class="el-icon-delete" />
 						</div>
-						<a class="download" :href="toDownloadUrl(img.detailImageUrl)" download>
+						<a class="download" :href="img.detailImageUrl" download>
 							<div>
 								<i class="el-icon-download" />
 							</div>
@@ -383,11 +383,6 @@ export default {
 
 			//开启背后滚动
 			document.documentElement.style.overflowY = 'auto';
-		},
-
-		//将访问url转化为下载url
-		toDownloadUrl(url) {
-			return url.replace('upload-images', 'download');
 		},
 
 		//初始化图片数据

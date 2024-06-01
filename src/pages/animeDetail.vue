@@ -104,9 +104,8 @@
 </template>
 
 <script>
-import {reqGetDetailAnime, reqGetPageWonderfulMoment, reqUpload, reqRemoveWonderfulMoment} from "@/api";
+import {reqGetDetailAnime, reqGetPageWonderfulMoment, reqRemoveWonderfulMoment, reqUpload} from "@/api";
 import WcWaterfall from 'wc-waterfall';
-import _ from "lodash";
 import elImageViewer from 'element-ui/packages/image/src/image-viewer';
 import {mapState} from "vuex";
 import ScrollAnimation from "@/components/scrollAnimation.vue";
@@ -310,38 +309,42 @@ export default {
 		},
 
 		//删除图片
-		deleteImage: _.throttle(async function (id) {
-			//开启加载动画
-			this.controlLoading = true;
+		deleteImage(id) {
+			this.$confirm('此操作将永久删除该图片, 是否继续?', '提示', {
+				type: 'warning',
+			}).then(async () => {
+				//开启加载动画
+				this.controlLoading = true;
 
-			let result = await reqRemoveWonderfulMoment(id);
+				let result = await reqRemoveWonderfulMoment(id);
 
-			if (result.code !== 200) {
-				//402为token过期，403为token有误
-				if (result.code !== 402 && result.code !== 403) {
-					this.$message.error('删除失败！');
+				if (result.code !== 200) {
+					//402为token过期，403为token有误
+					if (result.code !== 402 && result.code !== 403) {
+						this.$message.error('删除失败！');
+					}
+
+					//关闭加载动画
+					this.controlLoading = false;
+
+					return;
+				}
+
+				this.$message.success('删除成功！');
+
+				//更新数据
+				this.images = this.images.filter(item => item.id !== id);
+				this.imagesTotal--;
+
+				//pc端根据图片数量改变瀑布流列数
+				if (this.browserIdentity === 'PC') {
+					this.changeWaterfallCount();
 				}
 
 				//关闭加载动画
 				this.controlLoading = false;
-
-				return;
-			}
-
-			this.$message.success('删除成功！');
-
-			//更新数据
-			this.images = this.images.filter(item => item.id !== id);
-			this.imagesTotal--;
-
-			//pc端根据图片数量改变瀑布流列数
-			if (this.browserIdentity === 'PC') {
-				this.changeWaterfallCount();
-			}
-
-			//关闭加载动画
-			this.controlLoading = false;
-		}, 1000),
+			}).catch(() => {});
+		},
 
 		//根据浏览器可视宽度改变瀑布流行数
 		changeWaterfallCount() {

@@ -80,7 +80,7 @@
 						<div class="delete" @click="deleteImage(img.id)">
 							<i class="el-icon-delete" />
 						</div>
-						<a class="download" :href="img.detailImageUrl" download>
+						<a class="download" :href="`/api/anime/download/${img.id}`" download>
 							<div>
 								<i class="el-icon-download" />
 							</div>

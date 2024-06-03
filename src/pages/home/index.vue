@@ -116,8 +116,10 @@ export default {
 			localStorage.removeItem('token');
 			localStorage.removeItem('userInfo');
 
-			//跳转到欢迎页
-			this.$router.push('/welcome');
+			//跳转到欢迎页并刷新页面
+			this.$router.push('/welcome').then(() => {
+				location.reload();
+			});
 			this.$message.success('退出登录成功！');
 		},
 	}

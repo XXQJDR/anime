@@ -64,3 +64,13 @@
     max-width: 60%;
   }
 }
+
+/* 对话框样式 */
+@mixin message-box-style {
+  .el-message-box {
+    // 防止移动端图片宽度过大导致位置错乱
+    @media screen and (max-width: 768px) {
+      width: 95% !important;
+    }
+  }
+}

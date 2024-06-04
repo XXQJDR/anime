@@ -678,6 +678,9 @@ export default {
 </style>
 
 <style lang="scss">
+@import '@/style/element';
+@include message-box-style;
+
 .upload {
 	.el-button--success,
 	.el-upload--text .el-button,

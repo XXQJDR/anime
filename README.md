@@ -51,4 +51,4 @@
 
 <img src="images/dustbin.png" width="100%">
 
-<div align="center"><img src="images/mobile.png"></div>
+<img src="images/detail.png" width="100%" >

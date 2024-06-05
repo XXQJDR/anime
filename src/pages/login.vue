@@ -282,35 +282,6 @@ export default {
 .loginForm {
 	.el-form-item {
 		height: 81px;
-
-		* {
-			font-size: 1rem;
-		}
-
-		.el-form-item__content {
-			margin-top: -0.5rem;
-		}
-
-		.el-form-item__error {
-			font-size: 0.8rem;
-			white-space: nowrap;
-		}
 	}
-
-	.el-input .el-input__inner {
-		height: 38px;
-		&:focus {
-			border: 2px solid rgb(49, 130, 206);
-		}
-	}
-}
-
-.el-form-item.is-error .el-input__inner,
-.el-form-item.is-error .el-input__inner:focus,
-.el-form-item.is-error .el-textarea__inner,
-.el-form-item.is-error .el-textarea__inner:focus,
-.el-message-box__input input.invalid,
-.el-message-box__input input.invalid:focus {
-	border: 2px solid #F56C6C;
 }
 </style>

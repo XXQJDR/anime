@@ -678,39 +678,38 @@ export default {
 </style>
 
 <style lang="scss">
-@import '@/style/element';
-@include message-box-style;
-
-.upload {
-	.el-button--success,
-	.el-upload--text .el-button,
-	.el-upload__tip,
-	.el-upload-list .el-upload-list__item * {
-		font-size: 1rem;
-	}
-
-	.el-button--success {
-		margin-left: 10px;
-	}
-
-	.el-upload-list {
-		margin-top: 10px;
-	}
-
-	.el-upload-list .el-upload-list__item {
-		line-height: 45px;
-		margin: 0;
-
-		.el-icon-close {
-			top: 10px;
-			font-size: 1.5rem;
+.animeDetail {
+	.upload {
+		.el-button--success,
+		.el-upload--text .el-button,
+		.el-upload__tip,
+		.el-upload-list .el-upload-list__item * {
+			font-size: 1rem;
 		}
 
-		.el-upload-list__item-status-label {
-			top: 10px;
+		.el-button--success {
+			margin-left: 10px;
+		}
 
-			.el-icon-upload-success {
+		.el-upload-list {
+			margin-top: 10px;
+		}
+
+		.el-upload-list .el-upload-list__item {
+			line-height: 45px;
+			margin: 0;
+
+			.el-icon-close {
+				top: 10px;
 				font-size: 1.5rem;
+			}
+
+			.el-upload-list__item-status-label {
+				top: 10px;
+
+				.el-icon-upload-success {
+					font-size: 1.5rem;
+				}
 			}
 		}
 	}

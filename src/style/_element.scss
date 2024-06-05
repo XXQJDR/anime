@@ -45,7 +45,7 @@
     }
 
     .el-message__icon, .el-message__content {
-      font-size: 0.9rem;
+      font-size: 0.9rem !important;
     }
   }
 }
@@ -53,15 +53,15 @@
 /* 空状态样式 */
 @mixin empty-style {
   .el-empty .el-empty__description p {
-    font-size: 1rem;
+    font-size: 1rem !important;
   }
 }
 
 /* 文字提示el-Tooltip样式 */
 @mixin tooltip-style {
   .el-tooltip__popper {
-    font-size: .9rem;
-    max-width: 60%;
+    font-size: .9rem !important;
+    max-width: 60% !important;
   }
 }
 
@@ -72,5 +72,38 @@
     @media screen and (max-width: 768px) {
       width: 95% !important;
     }
+  }
+}
+
+@mixin form-style {
+  .el-form-item {
+    * {
+      font-size: 1rem !important;
+    }
+
+    .el-form-item__content {
+      margin-top: -0.5rem !important;
+    }
+
+    .el-form-item__error {
+      font-size: 0.8rem !important;
+      white-space: nowrap !important;
+    }
+  }
+
+  .el-input .el-input__inner {
+    height: 38px !important;
+    &:focus {
+      border: 2px solid rgb(49, 130, 206) !important;
+    }
+  }
+
+  .el-form-item.is-error .el-input__inner,
+  .el-form-item.is-error .el-input__inner:focus,
+  .el-form-item.is-error .el-textarea__inner,
+  .el-form-item.is-error .el-textarea__inner:focus,
+  .el-message-box__input input.invalid,
+  .el-message-box__input input.invalid:focus {
+    border: 2px solid #F56C6C !important;
   }
 }

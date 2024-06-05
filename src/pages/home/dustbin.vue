@@ -355,10 +355,3 @@ export default {
 	}
 }
 </style>
-
-<style lang="scss">
-/* 弹出框样式 */
-@import '@/style/element';
-@include anime-control-popover-style;
-@include tooltip-style;
-</style>

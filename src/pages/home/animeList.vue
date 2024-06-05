@@ -966,9 +966,3 @@ export default {
 	}
 }
 </style>
-
-<style lang="scss">
-@import '@/style/element';
-@include anime-control-popover-style;
-@include tooltip-style;
-</style>

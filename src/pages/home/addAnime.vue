@@ -347,8 +347,3 @@ export default {
 	}
 }
 </style>
-
-<style lang="scss">
-@import '@/style/element';
-@include tooltip-style;
-</style>

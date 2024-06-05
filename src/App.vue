@@ -71,5 +71,9 @@ body {
 @import '@/style/element';
 @include message-style;
 @include empty-style;
+@include message-box-style;
+@include form-style;
+@include tooltip-style;
+@include anime-control-popover-style;
 /* endregion */
 </style>

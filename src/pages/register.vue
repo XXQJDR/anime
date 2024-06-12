@@ -336,8 +336,8 @@ export default {
 	.el-form-item {
 		margin-bottom: 0.5rem;
 
-		.checkCodeInput {
-			width: 50%;
+		.el-form-item__content {
+			margin-top: -0.5rem;
 		}
 	}
 }

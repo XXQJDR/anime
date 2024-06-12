@@ -282,6 +282,10 @@ export default {
 .loginForm {
 	.el-form-item {
 		height: 81px;
+
+		.el-form-item__content {
+			margin-top: -0.5rem;
+		}
 	}
 }
 </style>

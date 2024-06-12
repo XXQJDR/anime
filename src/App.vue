@@ -58,7 +58,7 @@ html {
 }
 
 body {
-	font-size: 19px;
+	font-size: 18px;
 	width: 100%;
 	font-family: 楷体, 微软雅黑, serif;
 

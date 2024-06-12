@@ -146,25 +146,29 @@ export default {
 		},
 
 		//获取验证码回调
-		async getCode() {
+		getCode() {
 			//判断是否输入邮箱
-			this.$refs.registerForm.validateField('email');
-
-			//开始倒计时
-			this.time--;
-			let interval = setInterval(() => {
-				this.time--;
-				if (this.time === 0) {
-					this.time = 61;
-					clearInterval(interval);
+			this.$refs.registerForm.validateField('email', async (msg) => {
+				if (msg.length !== 0) {
+					return;
 				}
-			}, 1000);
 
-			//获取验证码
-			let result = await reqGetEmailCode(this.formData.email);
-			this.$message({
-				type: result.code === 200 ? 'success' : 'error',
-				message: result.msg
+				//开始倒计时
+				this.time--;
+				let interval = setInterval(() => {
+					this.time--;
+					if (this.time === 0) {
+						this.time = 61;
+						clearInterval(interval);
+					}
+				}, 1000);
+
+				//获取验证码
+				let result = await reqGetEmailCode(this.formData.email);
+				this.$message({
+					type: result.code === 200 ? 'success' : 'error',
+					message: result.msg
+				});
 			});
 		}
 	},

@@ -6,8 +6,8 @@ export const reqIsRegister = (email) => {
 }
 
 //获取邮箱验证码
-export const reqGetEmailCode = (email) => {
-	return axios.get(`/user/getEmailCode/${email}`);
+export const getRegisterEmailCode = (email) => {
+	return axios.get(`/user/getRegisterEmailCode/${email}`);
 }
 
 //注册
@@ -100,4 +100,27 @@ export const reqUpload = (collectId, fileList) => {
 //删除图片
 export const reqRemoveWonderfulMoment = (id) => {
 	return axios.get(`/anime/removeWonderfulMoment/${id}`);
+}
+
+//获取重置密码邮件验证码
+export const reqGetResetPasswordCode = (email) => {
+	return axios.get(`/user/getResetPasswordCode/${email}`);
+}
+
+/**
+ * 重置密码身份校验
+ * @param email 邮箱
+ * @param code 验证码
+ */
+export const reqResetPasswordVerification = (email, code) => {
+	return axios.post('/user/resetPasswordVerification', {email, code});
+}
+
+/**
+ * 重置密码
+ * @param email 邮箱
+ * @param password 新密码
+ */
+export const reqResetPassword = (email, password) => {
+	return axios.post('/user/resetPassword', {email, password});
 }

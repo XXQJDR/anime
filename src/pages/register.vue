@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import {reqIsRegister, reqGetEmailCode, reqRegister} from "@/api";
+import {reqIsRegister, getRegisterEmailCode, reqRegister} from "@/api";
 import {mapState} from "vuex";
 
 export default {
@@ -164,7 +164,7 @@ export default {
 				}, 1000);
 
 				//获取验证码
-				let result = await reqGetEmailCode(this.formData.email);
+				let result = await getRegisterEmailCode(this.formData.email);
 				this.$message({
 					type: result.code === 200 ? 'success' : 'error',
 					message: result.msg

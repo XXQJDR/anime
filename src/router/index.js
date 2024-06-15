@@ -6,6 +6,7 @@ import store from "@/store";
 const Welcome = () => import('@/pages/welcome.vue');
 const Login = () => import('@/pages/login.vue');
 const Register = () => import('@/pages/register.vue');
+const ResetPassword = () => import('@/pages/resetPassword.vue');
 const Home = () => import('@/pages/home/index.vue');
 const Test = () => import('@/pages/test.vue');
 const AnimeList = () => import('@/pages/home/animeList.vue');
@@ -41,6 +42,13 @@ const routes = [
 		component: Register,
 		meta: {
 			title: '注册'
+		}
+	},
+	{
+		path: '/resetPassword',
+		component: ResetPassword,
+		meta: {
+			title: '重置密码'
 		}
 	},
 	{

@@ -34,7 +34,7 @@
 						</div>
 					</el-form-item>
 					<div class="forget">
-						<a href="javascript:void(0);">忘记密码？</a>
+						<router-link to="/resetPassword">忘记密码？</router-link>
 					</div>
 					<div class="loginBtn">
 						<button @click.prevent="login">

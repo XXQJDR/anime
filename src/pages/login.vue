@@ -151,7 +151,7 @@ export default {
 @font-face {
 	font-family: 'logofont';
 	font-display: swap;
-	src: url("@/font/logo/Vampire Wars.ttf");
+	src: url("@/assets/fonts/logo/Vampire Wars.ttf");
 }
 
 .login {
@@ -160,7 +160,7 @@ export default {
 
 	.background {
 		flex: 64% 1 1;
-		background-image: url("@/assets/login/background.jpg");
+		background-image: url("@/assets/images/login/background.jpg");
 		background-position: center bottom;
 		background-repeat: no-repeat;
 		background-attachment: fixed;
@@ -187,7 +187,7 @@ export default {
 				display: inline-block;
 				width: 32px;
 				height: 32px;
-				background-image: url("@/assets/logo.svg");
+				background-image: url("@/assets/images/logo.svg");
 				vertical-align: middle;
 			}
 

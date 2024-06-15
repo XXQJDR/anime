@@ -47,13 +47,13 @@ export default {
 @font-face {
 	font-family: 'logofont';
 	font-display: swap;
-	src: url("@/font/logo/Vampire Wars.ttf");
+	src: url("@/assets/fonts/logo/Vampire Wars.ttf");
 }
 
 .background {
 	width: 100vw;
 	height: 100vh;
-	background-image: url("@/assets/welcome/background.jpg");
+	background-image: url("@/assets/images/welcome/background.jpg");
 	background-position: center center;
 	/* 背景图不平铺 */
 	background-repeat: no-repeat;

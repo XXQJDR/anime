@@ -490,7 +490,7 @@ export default {
 @font-face {
 	font-family: 'numberfont';
 	font-display: swap;
-	src: url("@/font/number/webfont.ttf");
+	src: url("@/assets/fonts/number/webfont.ttf");
 }
 
 .animeList {

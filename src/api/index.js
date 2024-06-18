@@ -75,8 +75,8 @@ export const reqRemoveAnime = (collectId) => {
 }
 
 //获取动漫详细信息
-export const reqGetDetailAnime = (animeId) => {
-	return axios.get(`/anime/getDetailAnime/${animeId}`);
+export const reqGetDetailAnime = (collectId) => {
+	return axios.get(`/anime/getDetailAnime/${collectId}`);
 }
 
 /**
@@ -123,4 +123,13 @@ export const reqResetPasswordVerification = (email, code) => {
  */
 export const reqResetPassword = (email, password) => {
 	return axios.post('/user/resetPassword', {email, password});
+}
+
+/**
+ * 动漫评分
+ * @param collectId 记录id
+ * @param score 分数
+ */
+export const reqRateAnime = (collectId, score) => {
+	return axios.get(`/anime/rateAnime/${collectId}?score=${score}`);
 }

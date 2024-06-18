@@ -48,7 +48,7 @@ export default {
 @import 'animate.css';
 
 html {
-	font-size: 19px;
+	font-size: 18px;
 	width: 100%;
 	overflow-x: hidden;
 

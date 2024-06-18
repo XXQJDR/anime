@@ -136,7 +136,7 @@
 				</div>
 				<template>
 					<div class="list">
-						<div class="item" @click="goAnimeDetail(anime.collectId, anime.animeId)" v-for="(anime, index) in animeList" :key="index">
+						<div class="item" @click="goAnimeDetail(anime.collectId)" v-for="(anime, index) in animeList" :key="index">
 							<div class="img">
 								<img v-lazy="anime.cover" alt="">
 							</div>
@@ -273,9 +273,9 @@ export default {
 		},
 
 		//点击动漫进入详情页面
-		goAnimeDetail(collectId, animeId) {
+		goAnimeDetail(collectId) {
 			//跳转
-			this.$router.push(`/animeDetail?collectId=${collectId}&animeId=${animeId}`);
+			this.$router.push(`/animeDetail?collectId=${collectId}`);
 		},
 
 		/**
@@ -298,7 +298,7 @@ export default {
 				return ;
 			}
 
-			this.$message.success('标记成功！');
+			this.$message.success(`标记成功！${status === 'FINISHED' ? '快去动漫详情页给这部动漫评分吧！' : ''}`);
 			//更新列表
 			if (this.selectedTypeName !== '全部') {
 				this.animeList.splice(index, 1);

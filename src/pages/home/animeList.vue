@@ -136,8 +136,8 @@
 				</div>
 				<template>
 					<div class="list">
-						<div class="item" @click="goAnimeDetail(anime.collectId)" v-for="(anime, index) in animeList" :key="index">
-							<div class="img">
+						<div class="item" v-for="(anime, index) in animeList" :key="index">
+							<div class="img" @click="goAnimeDetail(anime.collectId)">
 								<img v-lazy="anime.cover" alt="">
 							</div>
 							<div class="content">
@@ -843,7 +843,6 @@ export default {
 			box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),0 2px 4px -1px rgba(0, 0, 0, 0.06);
 			overflow: hidden;
 			transition: all $transitionTime;
-			cursor: pointer;
 
 			/* 鼠标移入item给item添加阴影 */
 			&:hover {
@@ -862,6 +861,7 @@ export default {
 			.img {
 				height: 82%;
 				overflow: hidden;
+				cursor: pointer;
 
 				/* 鼠标移入图片放大图片 */
 				&:hover {

@@ -127,11 +127,8 @@ export default {
 				}, 1000);
 
 				let result = await reqGetResetPasswordCode(this.form1.email);
-				this.$message({
-					type: result.code === 200 ? 'success' : 'error',
-					message: result.msg
-				});
 				if (result.code !== 200) {
+					this.$message.error(result.msg);
 					this.time = 61;
 					clearInterval(interval);
 				}
@@ -221,6 +218,10 @@ export default {
 
 				.el-button {
 					margin-left: 2px;
+					width: 160px;
+
+					/* 防止宽度被压缩 */
+					flex: 0 0 auto;
 				}
 			}
 		}

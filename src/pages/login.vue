@@ -259,6 +259,10 @@ export default {
 							opacity: 0.4;
 							cursor: not-allowed;
 						}
+
+						span {
+							margin-left: 5px;
+						}
 					}
 				}
 

@@ -31,8 +31,7 @@
 					<el-form-item label="验证码" prop="checkCode">
 						<div class="checkCode">
 							<el-input v-model="formData.checkCode" class="checkCodeInput" />
-							<div @click="getCode" v-show="time === 61" class="codeBtn1">获取验证码</div>
-							<div v-show="time !== 61" class="codeBtn2">{{ time }}秒后重新获取</div>
+							<el-button plain :disabled="btnDisabled" @click="getCode" ref="getCodeBtn">{{btnMessage}}</el-button>
 						</div>
 					</el-form-item>
 					<div class="registerBtn">
@@ -119,6 +118,16 @@ export default {
 	},
 	computed: {
 		...mapState(['browserIdentity']),
+
+		//按钮显示信息
+		btnMessage() {
+			return this.time === 61 ? '获取验证码' : `${this.time}秒后重新获取`;
+		},
+
+		//是否启用按钮
+		btnDisabled() {
+			return this.time !== 61;
+		},
 	},
 	methods: {
 		//注册按钮回调
@@ -165,10 +174,11 @@ export default {
 
 				//获取验证码
 				let result = await getRegisterEmailCode(this.formData.email);
-				this.$message({
-					type: result.code === 200 ? 'success' : 'error',
-					message: result.msg
-				});
+				if (result.code !== 200) {
+					this.$message.error(result.msg);
+					this.time = 61;
+					clearInterval(interval);
+				}
 			});
 		}
 	},
@@ -267,32 +277,18 @@ export default {
 				.checkCode {
 					display: flex;
 
-					.codeBtn1,
-					.codeBtn2 {
-						width: 50%;
-						border-radius: 5px;
-						background-color: #9C77D1;
-						color: #FFFFFF;
-						box-shadow: 0 0 1px black;
-						font-size: 1rem;
-						text-align: center;
-					}
+					.el-button {
+						margin-left: 2px;
+						width: 160px;
 
-					.codeBtn1 {
-						cursor: pointer;
-						transition: font-size .3s;
-						&:hover {
-							font-size: 1.05rem;
-						}
-					}
-
-					.codeBtn2 {
-						cursor: not-allowed;
+						/* 防止宽度被压缩 */
+						flex: 0 0 auto;
 					}
 				}
 
 				.registerBtn {
 					margin-top: 1rem;
+					position: relative;
 
 					@media screen and (max-width: 768px) {
 						margin-top: 2rem;
@@ -311,6 +307,10 @@ export default {
 						&:disabled {
 							opacity: 0.4;
 							cursor: not-allowed;
+						}
+
+						span {
+							margin-left: 5px;
 						}
 					}
 				}

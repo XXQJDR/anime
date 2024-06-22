@@ -482,7 +482,7 @@ export default {
 	.solve-rate-bug-a {
 		position: absolute;
 		top: 0;
-		right: 0;
+		right: 20px;
 	}
 
 	.back {

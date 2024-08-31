@@ -291,10 +291,7 @@ export default {
 			//更改服务器数据
 			let result = await reqUpdateAnimeWatchStatus(collectId, status);
 			if (result.code !== 200) {
-				if (result.code !== 402 && result.code !== 403) {
-					this.$message.error('标记失败！');
-				}
-
+				this.$message.error('标记失败！');
 				return ;
 			}
 
@@ -322,10 +319,7 @@ export default {
 
 			let result = await reqUpdateAnimeDeleted(collectId, true);
 			if (result.code !== 200) {
-				if (result.code !== 402 && result.code !== 403) {
-					this.$message.error('移入失败！');
-				}
-
+				this.$message.error('移入失败！');
 				return ;
 			}
 
@@ -358,33 +352,29 @@ export default {
 				params.status = 'WATCHING';
 			}
 
-			//获取数据
-			let result = await reqGetPageAnime(params);
-			if (result.code !== 200) {
-				if (result.code !== 402 && result.code !== 403) {
+			try {
+				//获取数据
+				let result = await reqGetPageAnime(params);
+				if (result.code !== 200) {
 					this.$message.error('数据获取失败！');
+					return ;
 				}
 
+				this.animeList = result.data.records || [];
+				this.current++;
+
+				//数据为空展示空状态
+				this.emptyFlag = this.animeList.length === 0;
+
+				//数据为空表示下一页无数据
+				this.hasNext = result.data.current < result.data.pages;
+
+				//获取动漫总数
+				this.total = result.data.total;
+			} finally {
 				//关闭加载动画
 				this.skeletonLoading = false;
-
-				return ;
 			}
-
-			this.animeList = result.data.records || [];
-			this.current++;
-
-			//数据为空展示空状态
-			this.emptyFlag = this.animeList.length === 0;
-
-			//数据为空表示下一页无数据
-			this.hasNext = result.data.current < result.data.pages;
-
-			//获取动漫总数
-			this.total = result.data.total;
-
-			//关闭加载动画
-			this.skeletonLoading = false;
 		},
 
 		//分页获取动漫数据
@@ -406,25 +396,21 @@ export default {
 				params.status = 'WATCHING';
 			}
 
-			//获取数据
-			let result = await reqGetPageAnime(params);
-			if (result.code !== 200) {
-				if (result.code !== 402 && result.code !== 403) {
+			try {
+				//获取数据
+				let result = await reqGetPageAnime(params);
+				if (result.code !== 200) {
 					this.$message.error('数据获取失败！');
+					return ;
 				}
 
+				this.animeList = this.animeList.concat(result.data.records || []);
+				this.current++;
+				this.hasNext = result.data.current < result.data.pages;
+			} finally {
 				//关闭加载动画
 				this.scrollLoading = false;
-
-				return ;
 			}
-
-			this.animeList = this.animeList.concat(result.data.records || []);
-			this.current++;
-			this.hasNext = result.data.current < result.data.pages;
-
-			//关闭加载动画
-			this.scrollLoading = false;
 		},
 
 		//点击动漫分类按钮

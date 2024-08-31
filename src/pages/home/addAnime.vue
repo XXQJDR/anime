@@ -101,10 +101,7 @@ export default {
 		async addAnimeHandle(anime) {
 			let result = await reqAddAnime(anime);
 			if (result.code !== 200) {
-				if (result.code !== 402 && result.code !== 403) {
-					this.$message.error(result.msg);
-				}
-
+				this.$message.error(result.msg);
 				return ;
 			}
 

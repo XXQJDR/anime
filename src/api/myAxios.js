@@ -57,13 +57,19 @@ axios.interceptors.response.use(res => {
 
 		//跳转刷新页面，刷新页面防止页面回到上次路由位置
 		router.push('/login').then(() => {
-			location.reload();
+			//刷新太快导致错误信息消失太快
+			setTimeout(() => {
+				location.reload();
+			}, 200);
 		});
+
+		/*中断*/
+		return Promise.reject('token error!');
 	}
 
 	return res.data;
 }, error => {
-	//取消请求的情况下，终端Promise调用链
+	//取消请求的情况下，中断Promise调用链
 	if (_axios.isCancel(error)) {
 		return new Promise(() => {});
 	} else {

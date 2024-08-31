@@ -88,28 +88,24 @@ export default {
 	methods: {
 		//获取垃圾箱数据
 		async getDustbinData() {
-			//开启加载动画
-			this.loading = true;
+			try {
+				//开启加载动画
+				this.loading = true;
 
-			//获取数据
-			let result = await reqGetDustbinData();
-			if (result.code !== 200) {
-				if (result.code !== 402 && result.code !== 403) {
+				//获取数据
+				let result = await reqGetDustbinData();
+				if (result.code !== 200) {
 					this.$message.error(result.msg);
+					return ;
 				}
+				this.animeList = result.data || [];
 
+				//数据为空展示空状态
+				this.emptyFlag = this.animeList.length === 0;
+			} finally {
 				//关闭加载动画
 				this.loading = false;
-
-				return ;
 			}
-			this.animeList = result.data || [];
-
-			//关闭加载动画
-			this.loading = false;
-
-			//数据为空展示空状态
-			this.emptyFlag = this.animeList.length === 0;
 		},
 
 		//恢复
@@ -119,10 +115,7 @@ export default {
 
 			let result = await reqUpdateAnimeDeleted(collectId, false);
 			if (result.code !== 200) {
-				if (result.code !== 402 && result.code !== 403) {
-					this.$message.error('恢复失败！');
-				}
-
+				this.$message.error('恢复失败！');
 				return ;
 			}
 
@@ -139,10 +132,7 @@ export default {
 
 			let result = await reqRemoveAnime(collectId);
 			if (result.code !== 200) {
-				if (result.code !== 402 && result.code !== 403) {
-					this.$message.error('删除失败！');
-				}
-
+				this.$message.error('删除失败！');
 				return ;
 			}
 

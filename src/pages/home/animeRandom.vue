@@ -53,31 +53,26 @@ export default {
 	},
 	methods: {
 		randomAnime: _.throttle(async function () {
-			//开启加载动画
-			this.loading = true;
+			try {
+				//开启加载动画
+				this.loading = true;
 
-			//获取数据
-			let result = await reqRandomAnime();
-			if (result.code !== 200) {
-				//402、403分别为token过期和token有误
-				if (result.code !== 402 && result.code !== 403) {
+				//获取数据
+				let result = await reqRandomAnime();
+				if (result.code !== 200) {
 					this.$message.error(result.msg);
+					return;
 				}
+				this.anime = result.data || {};
 
+				//无未看动漫
+				if (this.anime.title == null) {
+					this.$message.warning('您的列表里没有一个未看的动漫，快去添加吧！')
+				}
+			} finally {
 				//关闭加载动画
 				this.loading = false;
-
-				return;
 			}
-			this.anime = result.data || {};
-
-			//无未看动漫
-			if (this.anime.title == null) {
-				this.$message.warning('您的列表里没有一个未看的动漫，快去添加吧！')
-			}
-
-			//关闭加载动画
-			this.loading = false;
 		}, 1000),
 	},
 }

@@ -72,37 +72,33 @@ export default {
 	methods: {
 		//分页获取东看
 		async getPageAnime() {
-			//开启加载动画
-			this.loading = true;
+			try {
+				//开启加载动画
+				this.loading = true;
 
-			//获取数据
-			let params = {
-				current: this.current,
-				size: this.size,
-				status: 'FINISHED'
-			}
-			let result = await reqGetPageAnime(params);
-			if (result.code !== 200) {
-				if (result.code !== 402 && result.code !== 403) {
+				//获取数据
+				let params = {
+					current: this.current,
+					size: this.size,
+					status: 'FINISHED'
+				}
+				let result = await reqGetPageAnime(params);
+				if (result.code !== 200) {
 					this.$message.error('获取数据失败！');
+					return ;
 				}
 
+				this.animeList = this.animeList.concat(result.data.records || []);
+				this.hasNext = result.data.current < result.data.pages;
+				if (this.current===1) {
+					this.emptyFlag = this.animeList.length===0;
+				}
+
+				this.current++;
+			} finally {
 				//关闭加载动画
 				this.loading = false;
-
-				return ;
 			}
-
-			this.animeList = this.animeList.concat(result.data.records || []);
-			this.hasNext = result.data.current < result.data.pages;
-			if (this.current===1) {
-				this.emptyFlag = this.animeList.length===0;
-			}
-
-			this.current++;
-
-			//关闭加载动画
-			this.loading = false;
 		},
 
 		//滚动分页
@@ -128,10 +124,7 @@ export default {
 			}
 			let result = await reqGetPageAnime(params);
 			if (result.code !== 200) {
-				if (result.code !== 402 && result.code !== 403) {
-					this.$message.error('获取数据失败！');
-				}
-
+				this.$message.error('获取数据失败！');
 				return;
 			}
 			this.animeList = this.animeList.concat(result.data.records || []);

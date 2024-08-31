@@ -231,85 +231,69 @@ export default {
 				return;
 			}
 
-			//开启加载动画
-			this.controlLoading = true;
+			try {
+				//开启加载动画
+				this.controlLoading = true;
 
-			//上传文件
-			let result = await reqUpload(this.collectId, this.$refs.upload.uploadFiles);
+				//上传文件
+				let result = await reqUpload(this.collectId, this.$refs.upload.uploadFiles);
 
-			if (result.code !== 200) {
-				//402为token过期，403为token有误
-				if (result.code !== 402 && result.code !== 403) {
+				if (result.code !== 200) {
 					this.$message.error('上传失败！');
+					return ;
 				}
 
+				this.$message.success('上传成功！');
+
+				//清空上传列表
+				this.$refs.upload.clearFiles();
+
+				//更新数据
+				await this.getFirstPageWonderfulMoment();
+			} finally {
 				//关闭加载动画
 				this.controlLoading = false;
-
-				return ;
 			}
-
-			this.$message.success('上传成功！');
-
-			//清空上传列表
-			this.$refs.upload.clearFiles();
-
-			//更新数据
-			await this.getFirstPageWonderfulMoment();
-
-			//关闭加载动画
-			this.controlLoading = false;
 		},
 
 		//获取动漫详细信息
 		async getDetailAnime() {
-			//开启骨架屏
-			this.skeletonLoading = true;
+			try {
+				//开启骨架屏
+				this.skeletonLoading = true;
 
-			let result = await reqGetDetailAnime(this.collectId);
-			if (result.code !== 200) {
-				//402为token过期，403为token有误
-				if (result.code !== 402 && result.code !== 403) {
+				let result = await reqGetDetailAnime(this.collectId);
+				if (result.code !== 200) {
 					this.$message.error(result.msg);
+					return ;
 				}
-
+				this.anime = result.data || {};
+				this.scoreTemp = this.anime.score;
+			} finally {
 				//关闭骨架屏
 				this.skeletonLoading = false;
-
-				return ;
 			}
-			this.anime = result.data || {};
-			this.scoreTemp = this.anime.score;
-
-			//关闭骨架屏
-			this.skeletonLoading = false;
 		},
 
 		//分页获取动漫精彩瞬间
 		async getPageWonderfulMoment() {
-			//开启加载动画
-			this.scrollLoading = true;
+			try {
+				//开启加载动画
+				this.scrollLoading = true;
 
-			let result = await reqGetPageWonderfulMoment(this.current, this.size, this.collectId);
-
-			if (result.code !== 200) {
-				//402为token过期，403为token有误
-				if (result.code !== 402 && result.code !== 403) {
+				let result = await reqGetPageWonderfulMoment(this.current, this.size, this.collectId);
+				if (result.code !== 200) {
 					this.$message.error(result.msg);
+					return ;
 				}
 
+				this.images = this.images.concat(result.data.records || []);
+				this.hasNext = result.data.current < result.data.pages;
+				this.current++;
+			} finally {
 				//关闭加载动画
 				this.scrollLoading = false;
-
-				return ;
 			}
-
-			this.images = this.images.concat(result.data.records || []);
-			this.hasNext = result.data.current < result.data.pages;
-			this.current++;
-
-			//关闭加载动画
-			this.scrollLoading = false;
 		},
 
 		//动态加载数据
@@ -328,36 +312,29 @@ export default {
 			this.$confirm('此操作将永久删除该图片, 是否继续?', '提示', {
 				type: 'warning',
 			}).then(async () => {
-				//开启加载动画
-				this.controlLoading = true;
+				try {
+					//开启加载动画
+					this.controlLoading = true;
 
-				let result = await reqRemoveWonderfulMoment(id);
-
-				if (result.code !== 200) {
-					//402为token过期，403为token有误
-					if (result.code !== 402 && result.code !== 403) {
+					let result = await reqRemoveWonderfulMoment(id);
+					if (result.code !== 200) {
 						this.$message.error('删除失败！');
+						return;
 					}
+					this.$message.success('删除成功！');
 
+					//更新数据
+					this.images = this.images.filter(item => item.id !== id);
+					this.imagesTotal--;
+
+					//pc端根据图片数量改变瀑布流列数
+					if (this.browserIdentity === 'PC') {
+						this.changeWaterfallCount();
+					}
+				} finally {
 					//关闭加载动画
 					this.controlLoading = false;
-
-					return;
 				}
-
-				this.$message.success('删除成功！');
-
-				//更新数据
-				this.images = this.images.filter(item => item.id !== id);
-				this.imagesTotal--;
-
-				//pc端根据图片数量改变瀑布流列数
-				if (this.browserIdentity === 'PC') {
-					this.changeWaterfallCount();
-				}
-
-				//关闭加载动画
-				this.controlLoading = false;
 			}).catch(() => {});
 		},
 
@@ -409,11 +386,7 @@ export default {
 			this.current = 1;
 			let result = await reqGetPageWonderfulMoment(this.current, this.size, this.collectId);
 			if (result.code !== 200) {
-				//402为token过期，403为token有误
-				if (result.code !== 402 && result.code !== 403) {
-					this.$message.error(result.msg);
-				}
-
+				this.$message.error(result.msg);
 				return ;
 			}
 			this.images = result.data.records || []
@@ -437,12 +410,8 @@ export default {
 			}).then(async () => { //确认评分
 				let result = await reqRateAnime(this.collectId, score);
 				if (result.code !== 200) {
-					//402为token过期，403为token有误
-					if (result.code !== 402 && result.code !== 403) {
-						this.$message.error(result.msg);
-						this.score = 0;
-					}
-
+					this.$message.error(result.msg);
+					this.score = 0;
 					return;
 				}
 

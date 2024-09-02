@@ -141,13 +141,13 @@
 								<img v-lazy="anime.cover" alt="">
 							</div>
 							<div class="content">
-								<el-tooltip effect="dark" :content="anime.title" placement="top" :visible-arrow="false" :open-delay="300">
-									<div class="info">
+								<div class="info">
+									<el-tooltip effect="dark" :content="anime.title" placement="top" :visible-arrow="false" :open-delay="300">
 										<div class="title">{{anime.title}}</div>
-										<div class="date" v-show="selectedTypeName!=='已看'">与<span>{{anime.createDate}}</span>加入</div>
-										<div class="date" v-show="selectedTypeName==='已看'">与<span>{{anime.finishedDate}}</span>看完</div>
-									</div>
-								</el-tooltip>
+									</el-tooltip>
+									<div class="date" v-show="selectedTypeName!=='已看'">与<span>{{selectedTypeName==='正在看' ? anime.watchingDate : anime.createDate}}</span>加入</div>
+									<div class="date" v-show="selectedTypeName==='已看'">与<span>{{anime.finishedDate}}</span>看完</div>
+								</div>
 								<div class="control">
 									<el-popover
 											:visible-arrow="false"

@@ -136,7 +136,7 @@
 				</div>
 				<template>
 					<div class="list">
-						<div class="item" v-for="(anime, index) in animeList" :key="index">
+						<div class="item" v-for="(anime, index) in animeList" :key="anime.animeId">
 							<div class="img" @click="goAnimeDetail(anime.collectId)">
 								<img v-lazy="anime.cover" alt="">
 							</div>
@@ -298,10 +298,7 @@ export default {
 			this.$message.success(`标记成功！${status === 'FINISHED' ? '快去动漫详情页给这部动漫评分吧！' : ''}`);
 			//更新列表
 			if (this.selectedTypeName !== '全部') {
-				this.animeList.splice(index, 1);
-
-				//更新动漫统计数量
-				this.total--;
+				await this.getFirstPageAnime();
 			} else {
 				this.animeList[index].watchStatus = status;
 			}
@@ -324,11 +321,9 @@ export default {
 			}
 
 			this.$message.success('移入成功！');
-			//更新animeList
-			this.animeList.splice(index, 1);
 
-			//更新动漫总数
-			this.total--;
+			//更新数据
+			await this.getFirstPageAnime();
 		},
 
 		//获取对应分类的第一页数据

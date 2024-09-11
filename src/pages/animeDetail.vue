@@ -112,7 +112,7 @@
 		<scroll-animation :loading="scrollLoading" />
 
 		<!-- 结束标志 -->
-		<end-hr content="我也是有底线的！" v-show="loadingAllAnimeFlag" />
+		<end-hr content="我也是有底线的！" v-show="showEndHr" />
 	</div>
 </template>
 
@@ -181,8 +181,8 @@ export default {
 			return this.$route.query.collectId;
 		},
 
-		//动漫是否全部加载完成，true代表加载完所有动漫
-		loadingAllAnimeFlag() {
+		//是否显示结束分割线
+		showEndHr() {
 			return this.current > 2;
 		},
 
@@ -281,7 +281,7 @@ export default {
 				//开启加载动画
 				this.scrollLoading = true;
 
-				let result = await reqGetPageWonderfulMoment(this.current, this.size, this.collectId);
+				let result = await reqGetPageWonderfulMoment(++this.current, this.size, this.collectId);
 				if (result.code !== 200) {
 					this.$message.error(result.msg);
 					return ;
@@ -289,7 +289,6 @@ export default {
 
 				this.images = this.images.concat(result.data.records || []);
 				this.hasNext = result.data.current < result.data.pages;
-				this.current++;
 			} finally {
 				//关闭加载动画
 				this.scrollLoading = false;
@@ -396,7 +395,6 @@ export default {
 			this.images = result.data.records || []
 			this.hasNext = result.data.current < result.data.pages;
 			this.imagesTotal = result.data.total;
-			this.current++;
 
 			//PC端动态改变瀑布流行数
 			if (this.browserIdentity === 'PC') {

@@ -25,7 +25,7 @@
 		<scroll-animation :loading="loading" />
 
 		<!-- 结束标志 -->
-		<end-hr content="我也是有底线的！" v-show="loadingAllAnimeFlag" />
+		<end-hr content="我也是有底线的！" v-show="showEndHr" />
 	</div>
 </template>
 
@@ -64,10 +64,10 @@ export default {
 		}
 	},
 	computed: {
-		//动漫是否全部加载完成，true代表加载完所有动漫
-		loadingAllAnimeFlag() {
+		//是否显示结束分割线
+		showEndHr() {
 			return this.current > 2;
-		}
+		},
 	},
 	methods: {
 		//分页获取东看
@@ -78,7 +78,7 @@ export default {
 
 				//获取数据
 				let params = {
-					current: this.current,
+					current: ++this.current,
 					size: this.size,
 					status: 'FINISHED'
 				}
@@ -93,8 +93,6 @@ export default {
 				if (this.current===1) {
 					this.emptyFlag = this.animeList.length===0;
 				}
-
-				this.current++;
 			} finally {
 				//关闭加载动画
 				this.loading = false;
@@ -136,7 +134,6 @@ export default {
 			if (this.current === 1) {
 				this.emptyFlag = this.animeList.length === 0;
 			}
-			this.current++;
 			this.total = result.data.total;
 		}
 	},

@@ -202,7 +202,7 @@
 		<scroll-animation :loading="scrollLoading" />
 
 		<!-- 结束标志 -->
-		<end-hr content="我也是有底线的！" v-show="loadingAllAnimeFlag" />
+		<end-hr content="我也是有底线的！" v-show="showEndHr" />
 	</div>
 </template>
 
@@ -253,10 +253,10 @@ export default {
 		}
 	},
 	computed: {
-		//动漫是否全部加载完成，true代表加载完所有动漫
-		loadingAllAnimeFlag() {
+		//是否显示结束分割线
+		showEndHr() {
 			return this.current > 2;
-		}
+		},
 	},
 	methods: {
 		//搜索动漫
@@ -324,6 +324,11 @@ export default {
 
 			//更新数据
 			await this.getFirstPageAnime();
+			/*//更新animeList
+			this.animeList.splice(index, 1);
+
+			//更新动漫总数
+			this.total--;*/
 		},
 
 		//获取对应分类的第一页数据
@@ -356,7 +361,6 @@ export default {
 				}
 
 				this.animeList = result.data.records || [];
-				this.current++;
 
 				//数据为空展示空状态
 				this.emptyFlag = this.animeList.length === 0;
@@ -379,7 +383,7 @@ export default {
 
 			//根据selectFlag决定参数
 			let params = {
-				current: this.current,
+				current: ++this.current,
 				size: this.size,
 				keyword: this.keyword
 			};
@@ -400,7 +404,6 @@ export default {
 				}
 
 				this.animeList = this.animeList.concat(result.data.records || []);
-				this.current++;
 				this.hasNext = result.data.current < result.data.pages;
 			} finally {
 				//关闭加载动画

@@ -298,7 +298,11 @@ export default {
 
 		//动态加载数据
 		lazyLoading() {
-			let bottomOfWindow = document.documentElement.offsetHeight - document.documentElement.scrollTop - window.innerHeight;
+			let scrollHeight= document.documentElement.scrollHeight || document.body.scrollHeight; //document的滚动高度
+			let nowScotop = document.documentElement.clientHeight || document.body.clientHeight;  //可视区高度
+			let wheight= document.documentElement.scrollTop || document.body.scrollTop; //已滚动高度
+
+			let bottomOfWindow = scrollHeight - wheight - nowScotop;
 
 			//当距离底部的距离小于300px时，请求服务器数据
 			if (bottomOfWindow < 300 && this.hasNext) {

@@ -113,7 +113,7 @@ export default {
 			justify-content: space-around;
 			align-items: center;
 
-			@media screen and (min-width: 770px) {
+			@media screen and (min-width: 768px) {
 				display: none;
 			}
 

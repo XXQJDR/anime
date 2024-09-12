@@ -207,7 +207,7 @@
 </template>
 
 <script>
-import {reqGetPageAnime, reqUpdateAnimeDeleted, reqUpdateAnimeWatchStatus} from "@/api";
+import {reqGetPageAnime, reqLogicallyDeleteAnime, reqUpdateAnimeWatchStatus} from "@/api";
 import _ from "lodash";
 import CountTo from "vue-count-to";
 import EndHr from "@/components/endHr.vue";
@@ -282,25 +282,35 @@ export default {
 		 * 更新动漫观看状态
 		 * @param index 当前动漫在数组中的索引
 		 * @param collectId 记录id
-		 * @param status 状态
+		 * @param newStatus 新状态
 		 */
-		async updateAnimeWatchStatus(index, collectId, status) {
+		async updateAnimeWatchStatus(index, collectId, newStatus) {
 			//关闭编辑动漫弹窗
 			this.$refs['popover-' + index][0].doClose();
 
+			let oldStatus = null;
+			switch (this.selectedTypeName) {
+				case '未看': oldStatus = 'NO_WATCH'; break;
+				case '正在看': oldStatus = 'WATCHING'; break;
+				case '已看': oldStatus = 'FINISHED'; break;
+			}
+
 			//更改服务器数据
-			let result = await reqUpdateAnimeWatchStatus(collectId, status);
+			let result = await reqUpdateAnimeWatchStatus(collectId, this.current, this.size, this.keyword, newStatus, oldStatus);
 			if (result.code !== 200) {
 				this.$message.error('标记失败！');
 				return ;
 			}
+			this.$message.success(`标记成功！${newStatus === 'FINISHED' ? '快去动漫详情页给这部动漫评分吧！' : ''}`);
 
-			this.$message.success(`标记成功！${status === 'FINISHED' ? '快去动漫详情页给这部动漫评分吧！' : ''}`);
 			//更新列表
-			if (this.selectedTypeName !== '全部') {
-				await this.getFirstPageAnime();
+			if (this.selectedTypeName === '全部') {
+				this.animeList[index].watchStatus = newStatus;
 			} else {
-				this.animeList[index].watchStatus = status;
+				this.animeList.splice(index, 1);
+				if (result.data != null) {
+					this.animeList.push(result.data);
+				}
 			}
 		},
 
@@ -314,7 +324,13 @@ export default {
 			//关闭编辑动漫弹窗
 			this.$refs['popover-' + index][0].doClose();
 
-			let result = await reqUpdateAnimeDeleted(collectId, true);
+			let status = null;
+			switch (this.selectedTypeName) {
+				case '未看': status = 'NO_WATCH'; break;
+				case '正在看': status = 'WATCHING'; break;
+				case '已看': status = 'FINISHED'; break;
+			}
+			let result = await reqLogicallyDeleteAnime(collectId, this.current, this.size, this.keyword, status);
 			if (result.code !== 200) {
 				this.$message.error('移入失败！');
 				return ;
@@ -322,13 +338,14 @@ export default {
 
 			this.$message.success('移入成功！');
 
-			//更新数据
-			await this.getFirstPageAnime();
-			/*//更新animeList
+			//更新animeList
 			this.animeList.splice(index, 1);
+			if (result.data != null) {
+				this.animeList.push(result.data);
+			}
 
 			//更新动漫总数
-			this.total--;*/
+			this.total--;
 		},
 
 		//获取对应分类的第一页数据

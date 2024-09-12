@@ -47,16 +47,40 @@ export const reqGetPageAnime = (params) => {
 	return axios.post('/anime/getPageAnime', params);
 }
 
-//更改动漫观看状态
-export const reqUpdateAnimeWatchStatus = (collectId, status) => {
-	let params = {collectId, status};
-	return axios.post('/anime/updateAnimeWatchStatus', params);
+
+/**
+ * 更改动漫观看状态
+ * @param collectId 动漫记录id
+ * @param current 当前页
+ * @param size 每页展示数量
+ * @param keyword 关键词
+ * @param newStatus 新状态
+ * @param oldStatus 旧状态
+ * @returns 当前页最后一条数据
+ */
+export const reqUpdateAnimeWatchStatus = (collectId, current, size, keyword, newStatus, oldStatus) => {
+	return axios.post('/anime/updateAnimeWatchStatus', {collectId, current, size, keyword, newStatus, oldStatus});
 }
 
-//更改动漫逻辑删除状态
-export const reqUpdateAnimeDeleted = (collectId, status) => {
-	let params = {collectId, status};
-	return axios.post('/anime/updateAnimeDeleted', params);
+/**
+ * 逻辑删除动漫
+ * @param collectId 动漫记录id
+ * @param current 当前页
+ * @param size 每页展示数量
+ * @param keyword 关键词
+ * @param status 当前分类状态
+ * @returns 当前页最后一条数据
+ */
+export const reqLogicallyDeleteAnime = (collectId, current, size, keyword, status) => {
+	return axios.post('/anime/logicallyDeleteAnime', {collectId, current, size, keyword, status});
+}
+
+/**
+ * 恢复动漫
+ * @param collectId 动漫记录id
+ */
+export const reqRecoverAnime = (collectId) => {
+	return axios.get(`/anime/recoverAnime/${collectId}`);
 }
 
 //随机获取动漫
@@ -97,9 +121,15 @@ export const reqUpload = (collectId, fileList) => {
 	return axios.post(`/anime/upload/${collectId}`, formData);
 }
 
-//删除图片
-export const reqRemoveWonderfulMoment = (id) => {
-	return axios.get(`/anime/removeWonderfulMoment/${id}`);
+/**
+ * 删除精彩瞬间
+ * @param id
+ * @param current 当前页
+ * @param size 每页展示数量
+ * @returns 当前页最后一条数据
+ */
+export const reqRemoveWonderfulMoment = (id, current, size) => {
+	return axios.post('/anime/removeWonderfulMoment', {id, current, size})
 }
 
 //获取重置密码邮件验证码

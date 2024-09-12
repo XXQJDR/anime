@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import {reqGetDustbinData, reqUpdateAnimeDeleted, reqRemoveAnime} from "@/api";
+import {reqGetDustbinData, reqRecoverAnime, reqRemoveAnime} from "@/api";
 
 export default {
 	name: 'dustbinPage',
@@ -113,7 +113,7 @@ export default {
 			//关闭编辑动漫弹窗
 			this.$refs['popover-' + index][0].doClose();
 
-			let result = await reqUpdateAnimeDeleted(collectId, false);
+			let result = await reqRecoverAnime(collectId);
 			if (result.code !== 200) {
 				this.$message.error('恢复失败！');
 				return ;

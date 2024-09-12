@@ -319,7 +319,7 @@ export default {
 					//开启加载动画
 					this.controlLoading = true;
 
-					let result = await reqRemoveWonderfulMoment(id);
+					let result = await reqRemoveWonderfulMoment(id, this.current, this.size);
 					if (result.code !== 200) {
 						this.$message.error('删除失败！');
 						return;
@@ -328,6 +328,9 @@ export default {
 
 					//更新数据
 					this.images = this.images.filter(item => item.id !== id);
+					if (result.data != null) {
+						this.images.push(result.data);
+					}
 					this.imagesTotal--;
 
 					//pc端根据图片数量改变瀑布流列数

@@ -363,7 +363,7 @@ export default {
 
 		//图片加载成功回调
 		imgOnLoad(e) {
-			if (!e.target.src.includes('default')) {
+			if (!e.target.src.includes('image-loading')) {
 				e.target.parentNode.firstChild.style.display = 'flex';
 			}
 		},
@@ -638,6 +638,9 @@ export default {
 		.img {
 			font-size: 0;
 			text-align: center;
+			min-height: 70px;
+			display: flex;
+			align-items: center;
 
 			/* 修改图片加载动画和加载失败大小 */
 			img[lazy="loading"],

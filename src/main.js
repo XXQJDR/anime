@@ -9,8 +9,8 @@ import VueLazyLoad from 'vue-lazyload';
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.use(VueLazyLoad, {
-	error: require('@/assets/images/error/default.webp'),
-	loading: require('@/assets/images/loading/default.gif'),
+	error: require('@/assets/images/error/image-load-error.webp'),
+	loading: require('@/assets/images/loading/image-loading.gif'),
 	attempt: 1,
 	preLoad: 1.3
 });

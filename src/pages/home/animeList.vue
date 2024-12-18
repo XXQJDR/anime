@@ -267,7 +267,7 @@ export default {
 		//添加按钮回调
 		goAddAnime() {
 			//将内容改为添加
-			this.$store.commit('HOME_CONTENT_TYPE', 3);
+			this.$store.commit('HOME_CONTENT_TYPE', 'addAnime');
 
 			this.$router.push('/home/addAnime');
 		},

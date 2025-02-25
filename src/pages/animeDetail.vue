@@ -9,7 +9,7 @@
 			<svg width="35px" height="18.00px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
 				<path d="M305 239c9.4 9.4 9.4 24.6 0 33.9L113 465c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l175-175L79 81c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0L305 239z"/>
 			</svg>
-			<div class="title">{{anime.title}}</div>
+			<div>{{anime.name}}</div>
 		</div>
 
 		<!-- 动漫介绍 -->
@@ -40,7 +40,7 @@
 							<img :src="anime.cover" alt="">
 						</div>
 						<div class="info">
-							<h3>{{anime.title}}</h3>
+							<h3>{{anime.name}}</h3>
 							<el-rate
 									v-model="anime.score"
 									:icon-classes="iconClasses"
@@ -54,7 +54,7 @@
 							</el-rate>
 							<div>动画种类：{{anime.kind}}</div>
 							<div>首播时间：{{anime.firstPlayDate}}</div>
-							<div>播放状态：{{anime.status}}</div>
+							<div>播放状态：{{anime.playStatus}}</div>
 							<div>原作：{{anime.original}}</div>
 							<div>剧情类型：{{anime.storyType}}</div>
 							<div>制作公司：{{anime.company}}</div>
@@ -87,7 +87,7 @@
 			<wc-waterfall :gap="10" :cols="count">
 				<div class="img" v-for="img in images" :key="img.id">
 					<div class="control">
-						<div class="detail" @click="openImageView(img.detailImageUrl)">
+						<div class="detail" @click="openImageView(img.detailUrl)">
 							<i class="el-icon-full-screen" />
 						</div>
 						<div class="delete" @click="deleteImage(img.id)">
@@ -99,7 +99,7 @@
 							</div>
 						</a>
 					</div>
-					<img class="briefImg" v-lazy="img.briefImageUrl" @load='imgOnLoad' alt="">
+					<img class="briefImg" v-lazy="img.briefUrl" @load='imgOnLoad' alt="">
 				</div>
 			</wc-waterfall>
 			<el-image-viewer v-if="showViewer" :url-list="viewImage" :on-close="closeImageView" />
@@ -117,7 +117,7 @@
 </template>
 
 <script>
-import {reqGetDetailAnime, reqGetPageWonderfulMoment, reqRemoveWonderfulMoment, reqUpload, reqRateAnime} from "@/api";
+import {reqGetDetailAnime, reqGetPageAnimeResource, reqDeleteAnimeResource, reqUpload, reqRateAnime} from "@/api";
 import WcWaterfall from 'wc-waterfall';
 import elImageViewer from 'element-ui/packages/image/src/image-viewer';
 import {mapState} from "vuex";
@@ -142,7 +142,7 @@ export default {
 			current: 1,
 
 			//每页展示数量
-			size: 20,
+			size: 3,
 
 			//是否还有下一页数据
 			hasNext: false,
@@ -177,8 +177,8 @@ export default {
 	},
 	computed: {
 		//当前动漫记录id
-		collectId() {
-			return this.$route.query.collectId;
+		animeUserId() {
+			return this.$route.query.animeUserId;
 		},
 
 		//是否显示结束分割线
@@ -236,7 +236,7 @@ export default {
 				this.controlLoading = true;
 
 				//上传文件
-				let result = await reqUpload(this.collectId, this.$refs.upload.uploadFiles);
+				let result = await reqUpload(this.animeUserId, this.$refs.upload.uploadFiles);
 
 				if (result.code !== 200) {
 					this.$message.error('上传失败！');
@@ -262,7 +262,7 @@ export default {
 				//开启骨架屏
 				this.skeletonLoading = true;
 
-				let result = await reqGetDetailAnime(this.collectId);
+				let result = await reqGetDetailAnime(this.animeUserId);
 				if (result.code !== 200) {
 					this.$message.error(result.msg);
 					return ;
@@ -276,12 +276,12 @@ export default {
 		},
 
 		//分页获取动漫精彩瞬间
-		async getPageWonderfulMoment() {
+		async getPageAnimeResource() {
 			try {
 				//开启加载动画
 				this.scrollLoading = true;
 
-				let result = await reqGetPageWonderfulMoment(++this.current, this.size, this.collectId);
+				let result = await reqGetPageAnimeResource(++this.current, this.size, this.animeUserId);
 				if (result.code !== 200) {
 					this.$message.error(result.msg);
 					return ;
@@ -306,7 +306,7 @@ export default {
 			//当距离底部的距离小于300px时，请求服务器数据
 			if (bottomOfWindow < 300 && this.hasNext) {
 				this.hasNext = false;
-				this.getPageWonderfulMoment();
+				this.getPageAnimeResource();
 			}
 		},
 
@@ -319,7 +319,7 @@ export default {
 					//开启加载动画
 					this.controlLoading = true;
 
-					let result = await reqRemoveWonderfulMoment(id, this.current, this.size);
+					let result = await reqDeleteAnimeResource(id, this.current, this.size);
 					if (result.code !== 200) {
 						this.$message.error('删除失败！');
 						return;
@@ -369,9 +369,9 @@ export default {
 		},
 
 		//打开图片预览
-		openImageView(detailImageUrl) {
+		openImageView(detailUrl) {
 			this.viewImage = [];
-			this.viewImage.push(detailImageUrl);
+			this.viewImage.push(detailUrl);
 			this.showViewer = true;
 
 			//关闭背后滚动
@@ -390,7 +390,7 @@ export default {
 		async getFirstPageWonderfulMoment() {
 			//获取第一页数据
 			this.current = 1;
-			let result = await reqGetPageWonderfulMoment(this.current, this.size, this.collectId);
+			let result = await reqGetPageAnimeResource(this.current, this.size, this.animeUserId);
 			if (result.code !== 200) {
 				this.$message.error(result.msg);
 				return ;
@@ -413,7 +413,7 @@ export default {
 			this.$confirm('确认给出该评分？', '提示', {
 				type: 'warning',
 			}).then(async () => { //确认评分
-				let result = await reqRateAnime(this.collectId, score);
+				let result = await reqRateAnime(this.animeUserId, score);
 				if (result.code !== 200) {
 					this.$message.error(result.msg);
 					this.score = 0;

@@ -137,13 +137,13 @@
 				<template>
 					<div class="list">
 						<div class="item" v-for="(anime, index) in animeList" :key="anime.animeId">
-							<div class="img" @click="goAnimeDetail(anime.collectId)">
+							<div class="img" @click="goAnimeDetail(anime.animeUserId)">
 								<img v-lazy="anime.cover" alt="">
 							</div>
 							<div class="content">
 								<div class="info">
-									<el-tooltip effect="dark" :content="anime.title" placement="top" :visible-arrow="false" :open-delay="300">
-										<div class="title">{{anime.title}}</div>
+									<el-tooltip effect="dark" :content="anime.name" placement="top" :visible-arrow="false" :open-delay="300">
+										<div class="name">{{anime.name}}</div>
 									</el-tooltip>
 									<div class="date" v-show="selectedTypeName!=='已看'">与<span>{{selectedTypeName==='正在看' ? anime.watchingDate : anime.createDate}}</span>加入</div>
 									<div class="date" v-show="selectedTypeName==='已看'">与<span>{{anime.finishedDate}}</span>看完</div>
@@ -157,26 +157,26 @@
 											:ref="'popover-' + index"
 											trigger="click">
 										<ul>
-											<li @click="updateAnimeWatchStatus(index, anime.collectId, 'WATCHING')" v-show="anime.watchStatus !== 'WATCHING'">
+											<li @click="updateAnimeWatchStatus(index, anime.animeUserId, 'WATCHING')" v-show="anime.watchStatus !== 'WATCHING'">
 												<svg style="margin-left: -4px;" width="23px" height="23px" stroke="black" stroke-width="20px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
 													<path d="M511.95904 260.90496c177.83296 0 335.872 107.43808 403.712 269.14304l3.456 8.27904-3.456 8.23296a437.93408 437.93408 0 0 1-403.712 269.01504 437.68832 437.68832 0 0 1-403.62496-269.01504l-3.46112-8.23296 3.41504-8.27904a437.632 437.632 0 0 1 403.62496-269.14304h0.04608z m0 42.67008a394.96192 394.96192 0 0 0-364.33408 242.98496l3.584-8.27904 1.408 3.2a394.99264 394.99264 0 0 0 346.67008 231.25504l12.62592 0.16896a395.24864 395.24864 0 0 0 364.37504-242.85696l-3.62496 8.192-1.36704-3.11296a395.15136 395.15136 0 0 0-346.752-231.34208l-12.63104-0.20992h0.04608z" />
 													<path d="M512 426.66496a128 128 0 1 1 0 256.00512 128 128 0 0 1 0-256z m0 42.67008A85.33504 85.33504 0 1 0 512 640a85.33504 85.33504 0 0 0 0-170.66496z" />
 												</svg>
 												<div>标记为正在看</div>
 											</li>
-											<li @click="updateAnimeWatchStatus(index, anime.collectId, 'FINISHED')" v-show="anime.watchStatus !== 'FINISHED'">
+											<li @click="updateAnimeWatchStatus(index, anime.animeUserId, 'FINISHED')" v-show="anime.watchStatus !== 'FINISHED'">
 												<svg width="18px" height="18px" stroke="black" stroke-width="20px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
 													<path d="M939.36 218.912a32 32 0 0 1 45.856 44.672l-538.016 552a32 32 0 0 1-43.776 1.92L63.872 526.048a32 32 0 1 1 41.696-48.544l316.768 271.936L939.36 218.88z"></path>
 												</svg>
 												<div>标记为已看</div>
 											</li>
-											<li @click="updateAnimeWatchStatus(index, anime.collectId, 'NO_WATCH')" v-show="anime.watchStatus !== 'NO_WATCH'">
+											<li @click="updateAnimeWatchStatus(index, anime.animeUserId, 'NO_WATCH')" v-show="anime.watchStatus !== 'NO_WATCH'">
 												<svg width="16px" height="16px" stroke="black" stroke-width="20px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
 													<path d="M547.2 512l416-416c9.6-9.6 9.6-25.6 0-35.2s-25.6-9.6-35.2 0l-416 416-416-416c-9.6-9.6-25.6-9.6-35.2 0s-9.6 25.6 0 35.2l416 416-416 416c-9.6 9.6-9.6 25.6 0 35.2s25.6 9.6 35.2 0l416-416 416 416c9.6 9.6 25.6 9.6 35.2 0s9.6-25.6 0-35.2L547.2 512z"></path>
 												</svg>
 												<div>标记为未看</div>
 											</li>
-											<li @click="toDustbin(index, anime.collectId)">
+											<li @click="toDustbin(index, anime.animeUserId)">
 												<svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
 													<path d="M177.1 48h93.7c2.7 0 5.2 1.3 6.7 3.6l19 28.4h-145l19-28.4c1.5-2.2 4-3.6 6.7-3.6zM354.2 80L317.5 24.9C307.1 9.4 289.6 0 270.9 0H177.1c-18.7 0-36.2 9.4-46.6 24.9L93.8 80H80.1 32 24C10.7 80 0 90.7 0 104s10.7 24 24 24H35.6L59.6 452.7c2.5 33.4 30.3 59.3 63.8 59.3H324.6c33.5 0 61.3-25.9 63.8-59.3L412.4 128H424c13.3 0 24-10.7 24-24s-10.7-24-24-24h-8H367.9 354.2zm10.1 48L340.5 449.2c-.6 8.4-7.6 14.8-16 14.8H123.4c-8.4 0-15.3-6.5-16-14.8L83.7 128H364.3z"></path>
 												</svg>
@@ -273,18 +273,17 @@ export default {
 		},
 
 		//点击动漫进入详情页面
-		goAnimeDetail(collectId) {
-			//跳转
-			this.$router.push(`/animeDetail?collectId=${collectId}`);
+		goAnimeDetail(animeUserId) {
+			this.$router.push(`/animeDetail?animeUserId=${animeUserId}`);
 		},
 
 		/**
 		 * 更新动漫观看状态
 		 * @param index 当前动漫在数组中的索引
-		 * @param collectId 记录id
+		 * @param animeUserId 动漫用户关系id
 		 * @param newStatus 新状态
 		 */
-		async updateAnimeWatchStatus(index, collectId, newStatus) {
+		async updateAnimeWatchStatus(index, animeUserId, newStatus) {
 			//关闭编辑动漫弹窗
 			this.$refs['popover-' + index][0].doClose();
 
@@ -296,7 +295,7 @@ export default {
 			}
 
 			//更改服务器数据
-			let result = await reqUpdateAnimeWatchStatus(collectId, this.current, this.size, this.keyword, newStatus, oldStatus);
+			let result = await reqUpdateAnimeWatchStatus(animeUserId, this.current, this.size, this.keyword, newStatus, oldStatus);
 			if (result.code !== 200) {
 				this.$message.error('标记失败！');
 				return ;
@@ -308,6 +307,7 @@ export default {
 				this.animeList[index].watchStatus = newStatus;
 			} else {
 				this.animeList.splice(index, 1);
+				this.total--;
 				if (result.data != null) {
 					this.animeList.push(result.data);
 				}
@@ -317,10 +317,9 @@ export default {
 		/**
 		 * 将动漫移入垃圾箱
 		 * @param index 当前动漫在数组中的索引
-		 * @param collectId 记录id
-		 * @returns {Promise<void>}
+		 * @param animeUserId 动漫用户关系id
 		 */
-		async toDustbin(index, collectId) {
+		async toDustbin(index, animeUserId) {
 			//关闭编辑动漫弹窗
 			this.$refs['popover-' + index][0].doClose();
 
@@ -330,7 +329,7 @@ export default {
 				case '正在看': status = 'WATCHING'; break;
 				case '已看': status = 'FINISHED'; break;
 			}
-			let result = await reqLogicallyDeleteAnime(collectId, this.current, this.size, this.keyword, status);
+			let result = await reqLogicallyDeleteAnime(animeUserId, this.current, this.size, this.keyword, status);
 			if (result.code !== 200) {
 				this.$message.error('移入失败！');
 				return ;
@@ -354,24 +353,18 @@ export default {
 			this.skeletonLoading = true;
 
 			this.current = 1;
-
-			//根据selectFlag决定参数
-			let params = {
-				current: this.current,
-				size: this.size,
-				keyword: this.keyword
-			};
+			let status;
 			if (this.selectedTypeName === '已看') {
-				params.status = 'FINISHED';
+				status = 'FINISHED';
 			} else if (this.selectedTypeName === '未看') {
-				params.status = 'NO_WATCH';
+				status = 'NO_WATCH';
 			} else if (this.selectedTypeName === '正在看') {
-				params.status = 'WATCHING';
+				status = 'WATCHING';
 			}
 
 			try {
 				//获取数据
-				let result = await reqGetPageAnime(params);
+				let result = await reqGetPageAnime(this.current, this.size, this.keyword, status);
 				if (result.code !== 200) {
 					this.$message.error('数据获取失败！');
 					return ;
@@ -398,23 +391,17 @@ export default {
 			//开启加载动画
 			this.scrollLoading = true;
 
-			//根据selectFlag决定参数
-			let params = {
-				current: ++this.current,
-				size: this.size,
-				keyword: this.keyword
-			};
+			let status;
 			if (this.selectedTypeName === '已看') {
-				params.status = 'FINISHED';
+				status = 'FINISHED';
 			} else if (this.selectedTypeName === '未看') {
-				params.status = 'NO_WATCH';
+				status = 'NO_WATCH';
 			} else if (this.selectedTypeName === '正在看') {
-				params.status = 'WATCHING';
+				status = 'WATCHING';
 			}
-
 			try {
 				//获取数据
-				let result = await reqGetPageAnime(params);
+				let result = await reqGetPageAnime(++this.current, this.size, this.keyword, status);
 				if (result.code !== 200) {
 					this.$message.error('数据获取失败！');
 					return ;
@@ -908,7 +895,7 @@ export default {
 						width: 80%;
 					}
 
-					.title {
+					.name {
 						width: 100%;
 						white-space: nowrap;
 						overflow: hidden;

@@ -11,12 +11,12 @@
 								</div>
 							</div>
 						</div>
-						<div class="value-box" @click="goAnimeDetail(item.collectId)">
+						<div class="value-box" @click="goAnimeDetail(item.animeUserId)">
 							<h4>{{ item.finishedDate }}</h4>
 							<div class="img">
 								<img v-lazy="item.cover" alt="">
 							</div>
-							<h3>{{item.title}}</h3>
+							<h3>{{item.name}}</h3>
 						</div>
 					</div>
 				</div>
@@ -30,8 +30,8 @@ export default {
 	name: 'TimeLine',
 	props: ['animeList'],
 	methods: {
-		goAnimeDetail(collectId) {
-			this.$router.push(`/animeDetail?collectId=${collectId}`);
+		goAnimeDetail(animeUserId) {
+			this.$router.push(`/animeDetail?animeUserId=${animeUserId}`);
 		}
 	}
 }

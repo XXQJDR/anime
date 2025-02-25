@@ -27,9 +27,9 @@
 							<el-input v-model="formData.checkCode" class="checkCodeInput" />
 							<img
 									style="cursor: pointer;width: 30%;height: 40px;"
-									:src="checkCodeUrl"
+									:src="checkCodeImage"
 									alt="code"
-									@click="changeImageCode"
+									@click="getImageCode"
 									ref="imageCode">
 						</div>
 					</el-form-item>
@@ -53,9 +53,7 @@
 </template>
 
 <script>
-import _ from "lodash";
-import {reqLogin} from "@/api";
-import {jwtDecode} from "jwt-decode";
+import {reqGetImageCode, reqGetUserInfoByToken, reqLogin} from "@/api";
 import {mapState} from "vuex";
 
 export default {
@@ -65,8 +63,11 @@ export default {
 			//登录中加载动画开启标志
 			loading: false,
 
-			//根据环境不同验证码url不同
-			checkCodeUrl: `${process.env.VUE_APP_BASE_URL}/user/getImageCode`,
+			//验证码key
+			checkCodeKey: '',
+
+			//验证码图片
+			checkCodeImage: '',
 
 			//表单数据
 			formData: {
@@ -93,34 +94,55 @@ export default {
 		...mapState(['browserIdentity']),
 	},
 	methods: {
-		//提交表单回调
+		//获取图形验证码
+		async getImageCode() {
+			let result = await reqGetImageCode();
+			if (result.code !== 200) {
+				this.$message.error('验证码获取失败');
+				return;
+			}
+			this.checkCodeKey = result.data.key;
+			this.checkCodeImage = result.data.image;
+		},
+
+		//获取用户信息
+		async getUserInfo() {
+			let result = await reqGetUserInfoByToken();
+			if (result.code !== 200) {
+				this.$message.error('用户信息获取失败');
+				return;
+			}
+
+			//将userInfo存入vuex和localStorage
+			let userInfo = result.data;
+			this.$store.commit('USER_INFO', userInfo);
+			localStorage.setItem('userInfo', JSON.stringify(userInfo));
+		},
+
+		//登录
 		async login() {
 			this.$refs['loginForm'].validate(async (valid) => {
 				if (valid) {
 					//开启加载动画
 					this.loading = true;
 
-					let result = await reqLogin(this.formData.email, this.formData.password, this.formData.checkCode);
+					let result = await reqLogin(this.formData.email, this.formData.password, this.checkCodeKey, this.formData.checkCode);
 					if (result.code !== 200) {
 						this.$message.error(result.msg);
 
 						//刷新验证码
-						this.changeImageCode();
+						await this.getImageCode();
 
 						//关闭加载动画
 						this.loading = false;
 					} else {
-						//解析token获取用户信息
-						let token = result.data;
-						let userInfo = jwtDecode(token);
-
 						//将token存入vuex和localStorage
+						let token = result.data;
 						this.$store.commit('TOKEN', token);
 						localStorage.setItem('token', token);
 
-						//将userInfo存入vuex和localStorage
-						this.$store.commit('USER_INFO', userInfo);
-						localStorage.setItem('userInfo', JSON.stringify(userInfo));
+						//获取用户信息
+						await this.getUserInfo();
 
 						//关闭加载动画
 						this.loading = false;
@@ -130,13 +152,11 @@ export default {
 					}
 				}
 			});
-		},
-
-		//更换图片验证码回调
-		changeImageCode: _.throttle(function () {
-			let baseSrc = this.$refs['imageCode'].src.split('?')[0];
-			this.$refs['imageCode'].src = baseSrc+ '?' + Date.now();
-		}, 1000),
+		}
+	},
+	created() {
+		//获取验证码
+		this.getImageCode();
 	},
 	mounted() {
 		//防止移动端软键盘引起页面高度变下

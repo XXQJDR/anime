@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import {reqIsRegister, getRegisterEmailCode, reqRegister} from "@/api";
+import {reqCheckEmailRegistered, reqGetRegisterEmailCode, reqRegister} from "@/api";
 import {mapState} from "vuex";
 
 export default {
@@ -70,7 +70,7 @@ export default {
 
 		//自定义邮箱验证码规则
 		let validateCheckCode = async (rule, value, callback) => {
-			let result = await reqIsRegister(this.formData.email);
+			let result = await reqCheckEmailRegistered(this.formData.email);
 			if (result.code !== 200) {
 				callback(new Error('该邮箱已注册！'));
 			} else {
@@ -173,7 +173,7 @@ export default {
 				}, 1000);
 
 				//获取验证码
-				let result = await getRegisterEmailCode(this.formData.email);
+				let result = await reqGetRegisterEmailCode(this.formData.email);
 				if (result.code !== 200) {
 					this.$message.error(result.msg);
 					this.time = 61;

@@ -23,8 +23,8 @@
 							<img v-lazy="anime.cover" alt="">
 						</div>
 						<div class="content">
-							<el-tooltip effect="dark" :content="anime.title" placement="top" :visible-arrow="false" :open-delay="300">
-								<div class="info">{{anime.title}}</div>
+							<el-tooltip effect="dark" :content="anime.name" placement="top" :visible-arrow="false" :open-delay="300">
+								<div class="info">{{anime.name}}</div>
 							</el-tooltip>
 							<div class="control">
 								<el-popover
@@ -35,13 +35,13 @@
 										:ref="'popover-' + index"
 										trigger="click">
 									<ul>
-										<li @click="recover(index, anime.collectId)">
+										<li @click="recover(index, anime.animeUserId)">
 											<svg width="18px" height="18px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="rotate-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 												<path d="M48.5 224H40c-13.3 0-24-10.7-24-24V72c0-9.7 5.8-18.5 14.8-22.2s19.3-1.7 26.2 5.2L98.6 96.6c87.6-86.5 228.7-86.2 315.8 1c87.5 87.5 87.5 229.3 0 316.8s-229.3 87.5-316.8 0c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0c62.5 62.5 163.8 62.5 226.3 0s62.5-163.8 0-226.3c-62.2-62.2-162.7-62.5-225.3-1L185 183c6.9 6.9 8.9 17.2 5.2 26.2s-12.5 14.8-22.2 14.8H48.5z"></path>
 											</svg>
 											<div>恢复</div>
 										</li>
-										<li @click="thoroughlyRemove(index, anime.collectId)">
+										<li @click="thoroughlyRemove(index, anime.animeUserId)">
 											<svg width="18px" height="18px" aria-hidden="true" focusable="false" data-prefix="far" data-icon="circle-xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 												<path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z"></path>
 											</svg>
@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import {reqGetDustbinData, reqRecoverAnime, reqRemoveAnime} from "@/api";
+import {reqGetDustbinData, reqRecoverAnime, reqDeleteAnime} from "@/api";
 
 export default {
 	name: 'dustbinPage',
@@ -108,12 +108,16 @@ export default {
 			}
 		},
 
-		//恢复
-		async recover(index, collectId) {
+		/**
+		 * 恢复动漫
+		 * @param index 弹窗索引
+		 * @param animeUserId 动漫用户关系id
+		 */
+		async recover(index, animeUserId) {
 			//关闭编辑动漫弹窗
 			this.$refs['popover-' + index][0].doClose();
 
-			let result = await reqRecoverAnime(collectId);
+			let result = await reqRecoverAnime(animeUserId);
 			if (result.code !== 200) {
 				this.$message.error('恢复失败！');
 				return ;
@@ -125,12 +129,16 @@ export default {
 			this.animeList.splice(index, 1);
 		},
 
-		//彻底删除
-		async thoroughlyRemove(index, collectId) {
+		/**
+		 * 彻底删除动漫
+		 * @param index 弹窗索引
+		 * @param animeUserId 动漫用户关系id
+		 */
+		async thoroughlyRemove(index, animeUserId) {
 			//关闭编辑动漫弹窗
 			this.$refs['popover-' + index][0].doClose();
 
-			let result = await reqRemoveAnime(collectId);
+			let result = await reqDeleteAnime(animeUserId);
 			if (result.code !== 200) {
 				this.$message.error('删除失败！');
 				return ;

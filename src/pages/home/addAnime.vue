@@ -28,10 +28,10 @@
 						</div>
 					</div>
 					<div class="info">
-						<h3>{{anime.title}}</h3>
+						<h3>{{anime.name}}</h3>
 						<div>动画种类：{{anime.kind}}</div>
 						<div>首播时间：{{anime.firstPlayDate}}</div>
-						<div>播放状态：{{anime.status}}</div>
+						<div>播放状态：{{anime.playStatus}}</div>
 						<div>原作：{{anime.original}}</div>
 						<div>剧情类型：{{anime.storyType}}</div>
 						<div>制作公司：{{anime.company}}</div>
@@ -48,7 +48,7 @@
 
 <script>
 import _ from "lodash";
-import {reqAddAnime, reqSearchAnimeForAdd} from "@/api";
+import {reqAddAnime, reqSearchAnimeForCrawl} from "@/api";
 
 export default {
 	name: 'AddAnime',
@@ -79,7 +79,7 @@ export default {
 			this.loading = true;
 
 			//搜索动漫
-			let result = await reqSearchAnimeForAdd(this.keyword);
+			let result = await reqSearchAnimeForCrawl(this.keyword);
 			this.suggestionList = result.data || [];
 
 			//搜索结果为空关闭结果框

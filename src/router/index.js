@@ -151,18 +151,12 @@ VueRouter.prototype.push = function (location) {
 };
 
 router.beforeEach((to, from, next) => {
-	//登录状态，存在token且token未过期该状态为true
-	let loginStatus = false;
-	let exp = store.state.userInfo.exp;
-	if (exp != null && Math.floor(Date.now() / 1000) < exp) {
-		loginStatus = true;
-	}
-
 	//组件权限控制
-	if (to.path.includes('/home') && !loginStatus) {
+	let token = store.state.token;
+	if ((to.path.includes('/home') || to.path === '/animeDetail') && token === '') {
 		Message.warning('请先登录！');
 		next('/login');
-	} else if ((to.path === '/login' || to.path === '/welcome') && loginStatus) {
+	} else if ((to.path === '/login' || to.path === '/welcome') && token !== '') {
 		next("/home");
 	} else {
 		//更改网页title

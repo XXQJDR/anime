@@ -77,12 +77,7 @@ export default {
 				this.loading = true;
 
 				//获取数据
-				let params = {
-					current: ++this.current,
-					size: this.size,
-					status: 'FINISHED'
-				}
-				let result = await reqGetPageAnime(params);
+				let result = await reqGetPageAnime(++this.current, this.size, '', 'FINISHED');
 				if (result.code !== 200) {
 					this.$message.error('获取数据失败！');
 					return ;
@@ -119,12 +114,7 @@ export default {
 			this.current = 1;
 
 			//获取数据
-			let params = {
-				current: this.current,
-				size: this.size,
-				status: 'FINISHED'
-			}
-			let result = await reqGetPageAnime(params);
+			let result = await reqGetPageAnime(this.current, this.size, '', 'FINISHED');
 			if (result.code !== 200) {
 				this.$message.error('获取数据失败！');
 				return;

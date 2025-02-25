@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import {reqGetResetPasswordCode, reqResetPasswordVerification, reqResetPassword} from '@/api';
+import {reqGetResetPasswordEmailCode, reqResetPasswordVerify, reqResetPassword} from '@/api';
 
 export default {
 	name: "ResetPassword",
@@ -126,7 +126,7 @@ export default {
 					}
 				}, 1000);
 
-				let result = await reqGetResetPasswordCode(this.form1.email);
+				let result = await reqGetResetPasswordEmailCode(this.form1.email);
 				if (result.code !== 200) {
 					this.$message.error(result.msg);
 					this.time = 61;
@@ -147,7 +147,7 @@ export default {
 					this.loading = true;
 
 					//请求
-					let result = await reqResetPasswordVerification(this.form1.email, this.form1.code);
+					let result = await reqResetPasswordVerify(this.form1.email, this.form1.code);
 
 					//关闭加载动画
 					this.loading = false;

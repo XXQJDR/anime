@@ -15,11 +15,11 @@
 				<div class="img" v-show="anime.cover">
 					<img v-lazy="anime.cover" alt="">
 				</div>
-				<div class="info" v-show="anime.title!=null">
-					<h3>{{anime.title}}</h3>
+				<div class="info" v-show="anime.name!=null">
+					<h3>{{anime.name}}</h3>
 					<div>动画种类：{{anime.kind}}</div>
 					<div>首播时间：{{anime.firstPlayDate}}</div>
-					<div>播放状态：{{anime.status}}</div>
+					<div>播放状态：{{anime.playStatus}}</div>
 					<div>原作：{{anime.original}}</div>
 					<div>剧情类型：{{anime.storyType}}</div>
 					<div>制作公司：{{anime.company}}</div>
@@ -66,7 +66,7 @@ export default {
 				this.anime = result.data || {};
 
 				//无未看动漫
-				if (this.anime.title == null) {
+				if (this.anime.name == null) {
 					this.$message.warning('您的列表里没有一个未看的动漫，快去添加吧！')
 				}
 			} finally {

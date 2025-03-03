@@ -645,6 +645,11 @@ export default {
 		margin: 0 auto;
 		margin-bottom: 1rem;
 
+		@media screen and (max-width: 768px) {
+			width: 100%;
+			padding: 10px;
+		}
+
 		.wonderfulMoment {
 			overflow: hidden;
 

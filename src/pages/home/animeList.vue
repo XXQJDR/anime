@@ -783,6 +783,10 @@ export default {
 		padding: 15px;
 		position: relative;
 
+		@media screen and (max-width: 768px) {
+			padding: 10px;
+		}
+
 		.list {
 			display: grid;
 			grid-gap: 20px;

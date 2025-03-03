@@ -181,6 +181,10 @@ export default {
 		position: relative;
 		margin-top: 1rem;
 
+		@media screen and (max-width: 768px) {
+			padding: 10px;
+		}
+
 		/* 动漫列表 */
 		.list {
 			display: grid;

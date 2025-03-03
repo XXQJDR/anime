@@ -155,6 +155,10 @@ export default {
 		border-radius: 10px;
 		padding: 15px;
 
+		@media screen and (max-width: 768px) {
+			padding: 10px;
+		}
+
 		svg {
 			position: absolute;
 			fill: #cac5c4;
@@ -237,6 +241,8 @@ export default {
 				overflow: hidden;
 				position: relative;
 				cursor: pointer;
+				border-radius: 10px;
+				margin-left: 5px;
 
 				@media screen and (max-width: 768px) {
 					width: 122px;
@@ -308,6 +314,10 @@ export default {
 			.info {
 				flex: 1;
 				padding: 0 15px;
+
+				@media screen and (max-width: 768px) {
+					padding: 0 10px;
+				}
 
 				div {
 					margin-top: 8px;

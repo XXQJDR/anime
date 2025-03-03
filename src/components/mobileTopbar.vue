@@ -59,20 +59,21 @@ export default {
 	margin-bottom: 10px;
 
 	.box {
-		width: 100vw;
+		width: 96vw;
 		height: $mobileTopbarHeight;
 		display: flex;
 		align-items: center;
 		font-size: 1.3rem;
 		font-weight: bold;
-		border-bottom: 1px solid rgb(229, 224, 223);
-		margin-bottom: 8px;
 		position: fixed;
 		top: 0;
-		left: 0;
+		left: 50%;
+		transform: translateX(-50%);
 		z-index: 5;
-		background-color: #F7F3F2;
 		transition: all .5s;
+		background-color: #FFFFFF;
+		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
+		border-radius: 10px;
 
 		.icon {
 			height: 100%;

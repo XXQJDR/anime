@@ -10,57 +10,50 @@
 		<!-- endregion -->
 
 		<!-- region 动漫列表 -->
-		<el-skeleton :loading="loading" animated :throttle="500" :count="3">
-			<div slot="template">
-				<el-skeleton-item variant="image" />
-				<el-skeleton-item variant="text" />
-				<el-skeleton-item variant="text" />
-			</div>
-			<template>
-				<div class="list">
-					<div class="item" v-for="(anime, index) in animeList" :key="index">
-						<div class="img">
-							<img v-lazy="anime.cover" alt="">
-						</div>
-						<div class="content">
-							<el-tooltip effect="dark" :content="anime.name" placement="top" :visible-arrow="false" :open-delay="300">
-								<div class="info">{{anime.name}}</div>
-							</el-tooltip>
-							<div class="control">
-								<el-popover
-										:visible-arrow="false"
-										popper-class="popover"
-										placement="top"
-										width="200"
-										:ref="'popover-' + index"
-										trigger="click">
-									<ul>
-										<li @click="recover(index, anime.animeUserId)">
-											<svg width="18px" height="18px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="rotate-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-												<path d="M48.5 224H40c-13.3 0-24-10.7-24-24V72c0-9.7 5.8-18.5 14.8-22.2s19.3-1.7 26.2 5.2L98.6 96.6c87.6-86.5 228.7-86.2 315.8 1c87.5 87.5 87.5 229.3 0 316.8s-229.3 87.5-316.8 0c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0c62.5 62.5 163.8 62.5 226.3 0s62.5-163.8 0-226.3c-62.2-62.2-162.7-62.5-225.3-1L185 183c6.9 6.9 8.9 17.2 5.2 26.2s-12.5 14.8-22.2 14.8H48.5z"></path>
-											</svg>
-											<div>恢复</div>
-										</li>
-										<li @click="thoroughlyRemove(index, anime.animeUserId)">
-											<svg width="18px" height="18px" aria-hidden="true" focusable="false" data-prefix="far" data-icon="circle-xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-												<path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z"></path>
-											</svg>
-											<div>彻底删除</div>
-										</li>
-									</ul>
-									<button slot="reference" @click.stop>
-										<svg width="20px" height="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-											<path d="M432 256a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zm-160 0a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zM64 304a48 48 0 1 1 0-96 48 48 0 1 1 0 96z"></path>
+		<div class="listBox">
+			<div class="list">
+				<div class="item" v-for="(anime, index) in animeList" :key="index">
+					<div class="img">
+						<img v-lazy="anime.cover" alt="">
+					</div>
+					<div class="content">
+						<el-tooltip effect="dark" :content="anime.name" placement="top" :visible-arrow="false" :open-delay="300">
+							<div class="info">{{anime.name}}</div>
+						</el-tooltip>
+						<div class="control">
+							<el-popover
+									:visible-arrow="false"
+									popper-class="popover"
+									placement="top"
+									width="200"
+									:ref="'popover-' + index"
+									trigger="click">
+								<ul>
+									<li @click="recover(index, anime.animeUserId)">
+										<svg width="18px" height="18px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="rotate-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+											<path d="M48.5 224H40c-13.3 0-24-10.7-24-24V72c0-9.7 5.8-18.5 14.8-22.2s19.3-1.7 26.2 5.2L98.6 96.6c87.6-86.5 228.7-86.2 315.8 1c87.5 87.5 87.5 229.3 0 316.8s-229.3 87.5-316.8 0c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0c62.5 62.5 163.8 62.5 226.3 0s62.5-163.8 0-226.3c-62.2-62.2-162.7-62.5-225.3-1L185 183c6.9 6.9 8.9 17.2 5.2 26.2s-12.5 14.8-22.2 14.8H48.5z"></path>
 										</svg>
-									</button>
-								</el-popover>
-							</div>
+										<div>恢复</div>
+									</li>
+									<li @click="thoroughlyRemove(index, anime.animeUserId)">
+										<svg width="18px" height="18px" aria-hidden="true" focusable="false" data-prefix="far" data-icon="circle-xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+											<path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z"></path>
+										</svg>
+										<div>彻底删除</div>
+									</li>
+								</ul>
+								<button slot="reference" @click.stop>
+									<svg width="20px" height="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+										<path d="M432 256a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zm-160 0a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zM64 304a48 48 0 1 1 0-96 48 48 0 1 1 0 96z"></path>
+									</svg>
+								</button>
+							</el-popover>
 						</div>
 					</div>
 				</div>
-			</template>
-		</el-skeleton>
-		<el-empty v-if="emptyFlag" :image-size="250" description="暂无动漫" />
+			</div>
+			<el-empty v-if="emptyFlag" description="暂无动漫" />
+		</div>
 		<!-- endregion -->
 	</div>
 </template>
@@ -72,9 +65,6 @@ export default {
 	name: 'dustbinPage',
 	data() {
 		return {
-			//加载动画标志，true显示加载动画
-			loading: false,
-
 			//动漫数据
 			animeList: [],
 
@@ -88,24 +78,16 @@ export default {
 	methods: {
 		//获取垃圾箱数据
 		async getDustbinData() {
-			try {
-				//开启加载动画
-				this.loading = true;
-
-				//获取数据
-				let result = await reqGetDustbinData();
-				if (result.code !== 200) {
-					this.$message.error(result.msg);
-					return ;
-				}
-				this.animeList = result.data || [];
-
-				//数据为空展示空状态
-				this.emptyFlag = this.animeList.length === 0;
-			} finally {
-				//关闭加载动画
-				this.loading = false;
+			//获取数据
+			let result = await reqGetDustbinData();
+			if (result.code !== 200) {
+				this.$message.error(result.msg);
+				return ;
 			}
+			this.animeList = result.data || [];
+
+			//数据为空展示空状态
+			this.emptyFlag = this.animeList.length === 0;
 		},
 
 		/**
@@ -157,12 +139,26 @@ export default {
 
 <style scoped lang="scss">
 .dustbin {
+	min-height: calc(100vh - 2.3rem);
+	display: flex;
+	flex-direction: column;
+
+	@media screen and (max-width: 768px) {
+		//减去顶部导航栏高度
+		min-height: calc(100vh - 6px - 60px);
+	}
+
 	/* 模块分类名称 */
 	.typeTitle {
 		min-width: 110px;
 		font-size: 1.5rem;
 		display: flex;
 		align-items: center;
+		margin-left: 1rem;
+
+		@media screen and (max-width: 768px) {
+			margin-left: 6px;
+		}
 
 		svg {
 			fill: #3c3838;
@@ -176,179 +172,167 @@ export default {
 		}
 	}
 
-	/* 骨架屏样式 */
-	.el-skeleton {
-		margin-top: 1.5rem;
+	.listBox {
+		flex: 1;
+		background-color: #FFFFFF;
+		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
+		border-radius: 10px;
+		padding: 15px;
+		position: relative;
+		margin-top: 1rem;
 
-		> div .el-skeleton__image {
-			width: 100%;
-			height: 260px;
-		}
+		/* 动漫列表 */
+		.list {
+			display: grid;
+			grid-gap: 20px;
 
-		@media screen and (max-width: 768px) {
-			> div {
-				margin-top: 1rem;
-				width: 100%;
+			@media screen and (max-width: 600px) {
+				grid-template-columns: repeat(1, 1fr);
 			}
 
-			> div .el-skeleton__image {
-				margin-bottom: 5px;
-			}
-		}
-
-		@media screen and (min-width: 750px) {
-			display: flex;
-
-			> div {
-				margin-left: 1rem;
-				width: 280px;
-			}
-		}
-	}
-
-	/* 动漫列表 */
-	.list {
-		margin-top: 1.5rem;
-		display: grid;
-		grid-gap: 20px;
-
-		@media screen and (max-width: 600px) {
-			grid-template-columns: repeat(1, 1fr);
-		}
-
-		@media screen and (min-width: 600px) and (max-width: 1000px) {
-			grid-template-columns: repeat(2, 1fr);
-		}
-
-		@media screen and (min-width: 1000px) and (max-width: 1260px) {
-			grid-template-columns: repeat(3, 1fr);
-		}
-
-		@media screen and (min-width: 1260px) and (max-width: 1500px) {
-			grid-template-columns: repeat(4, 1fr);
-		}
-
-		@media screen and (min-width: 1500px) {
-			grid-template-columns: repeat(5, 1fr);
-		}
-
-		.item {
-			/* item过渡时间 */
-			$transitionTime: 0.3s;
-
-			/*宽度与高度的比例*/
-			aspect-ratio: 0.8;
-			border-radius: 5px;
-			box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),0 2px 4px -1px rgba(0, 0, 0, 0.06);
-			overflow: hidden;
-			transition: all $transitionTime;
-			cursor: pointer;
-
-			/* 鼠标移入item给item添加阴影 */
-			&:hover {
-				box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),0 4px 6px -2px rgba(0, 0, 0, 0.05);
-				transform: translateY(-1px);
-
-				/* 鼠标移入item给content添加背景 */
-				.content {
-					background-color: #f7f3f2;
-				}
-
-				/* 鼠标移入item放大img */
-				.img img {
-					transform: scale(1.1);
-				}
+			@media screen and (min-width: 600px) and (max-width: 1000px) {
+				grid-template-columns: repeat(2, 1fr);
 			}
 
-			@media screen and (max-width: 768px) {
-				aspect-ratio: 1;
+			@media screen and (min-width: 1000px) and (max-width: 1260px) {
+				grid-template-columns: repeat(3, 1fr);
 			}
 
-			.img {
-				height: 82%;
+			@media screen and (min-width: 1260px) and (max-width: 1500px) {
+				grid-template-columns: repeat(4, 1fr);
+			}
+
+			@media screen and (min-width: 1500px) {
+				grid-template-columns: repeat(5, 1fr);
+			}
+
+			.item {
+				/* item过渡时间 */
+				$transitionTime: 0.3s;
+
+				/*宽度与高度的比例*/
+				aspect-ratio: 0.8;
+				border-radius: 5px;
+				box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),0 2px 4px -1px rgba(0, 0, 0, 0.06);
 				overflow: hidden;
+				transition: all $transitionTime;
+				cursor: pointer;
 
-				img {
-					width: 100%;
-					height: 100%;
-					object-fit: cover;
-					transition: transform $transitionTime;
-				}
-			}
+				/* 鼠标移入item给item添加阴影 */
+				&:hover {
+					box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),0 4px 6px -2px rgba(0, 0, 0, 0.05);
 
-			.content {
-				height: 18%;
-				background-color: #FFFFFF;
-				transition: background-color $transitionTime;
-
-				&::after {
-					content: '';
-					display: block;
-					clear: both;
+					/* 鼠标移入item给content添加背景 */
+					.content {
+						background-color: #f7f3f2;
+					}
 				}
 
-				.info {
-					width: 85%;
-					height: 100%;
-					float: left;
-					display: flex;
-					flex-direction: column;
-					justify-content: space-evenly;
-					text-align: center;
-					white-space: nowrap;
+				@media screen and (max-width: 768px) {
+					aspect-ratio: 1;
+				}
+
+				.img {
+					height: 82%;
 					overflow: hidden;
-					text-overflow: ellipsis;
-					padding-left: 5px;
-					box-sizing: border-box;
 
-					@media screen and (max-width: 768px) {
-						width: 80%;
+					/* 鼠标移入图片放大图片 */
+					&:hover {
+						img {
+							transform: scale(1.1);
+						}
+					}
+
+					img {
+						width: 100%;
+						height: 100%;
+						object-fit: cover;
+						transition: transform $transitionTime;
 					}
 				}
 
-				.control {
-					width: 15%;
-					height: 100%;
-					float: right;
-					position: relative;
+				.content {
+					height: 18%;
+					background-color: #FFFFFF;
+					transition: background-color $transitionTime;
 
-					@media screen and (max-width: 768px) {
-						width: 20%;
+					&::after {
+						content: '';
+						display: block;
+						clear: both;
 					}
 
-					button {
-						width: 30px;
-						height: 30px;
-						border-radius: 50%;
-						position: absolute;
-						top: 50%;
-						left: 50%;
-						transform: translate(-50%, -50%);
-						transition: color, background-color .3s;
-
-						/* 移入文字旁的按钮改变按钮背景色和svg颜色 */
-						&:hover {
-							background-color: #e5e0df;
-							color: #3c3838;
-						}
+					.info {
+						width: 85%;
+						height: 100%;
+						float: left;
+						display: flex;
+						flex-direction: column;
+						justify-content: space-evenly;
+						text-align: center;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						padding-left: 5px;
+						box-sizing: border-box;
 
 						@media screen and (max-width: 768px) {
-							width: 35px;
-							height: 35px;
+							width: 80%;
+						}
+					}
+
+					.control {
+						width: 15%;
+						height: 100%;
+						float: right;
+						position: relative;
+
+						@media screen and (max-width: 768px) {
+							width: 20%;
 						}
 
-						svg {
+						button {
+							width: 30px;
+							height: 30px;
+							border-radius: 50%;
 							position: absolute;
-							top: 0;
-							left: 0;
-							right: 0;
-							bottom: 0;
-							margin: auto;
-							fill: #ada8a8;
+							top: 50%;
+							left: 50%;
+							transform: translate(-50%, -50%);
+							transition: color, background-color .3s;
+
+							/* 移入文字旁的按钮改变按钮背景色和svg颜色 */
+							&:hover {
+								background-color: #e5e0df;
+								color: #3c3838;
+							}
+
+							@media screen and (max-width: 768px) {
+								width: 35px;
+								height: 35px;
+							}
+
+							svg {
+								position: absolute;
+								top: 0;
+								left: 0;
+								right: 0;
+								bottom: 0;
+								margin: auto;
+								fill: #ada8a8;
+							}
 						}
 					}
 				}
 			}
+		}
+
+		.el-empty {
+			padding: 0;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
 		}
 	}
 }

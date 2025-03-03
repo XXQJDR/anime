@@ -82,37 +82,39 @@
 			</el-upload>
 		</div>
 
-		<!-- 瀑布流 -->
-		<div class="wonderfulMoment">
-			<wc-waterfall :gap="10" :cols="count">
-				<div class="img" v-for="img in images" :key="img.id">
-					<div class="control">
-						<div class="detail" @click="openImageView(img.detailUrl)">
-							<i class="el-icon-full-screen" />
-						</div>
-						<div class="delete" @click="deleteImage(img.id)">
-							<i class="el-icon-delete" />
-						</div>
-						<a class="download" :href="`/api/anime/download/${img.id}`" download>
-							<div>
-								<i class="el-icon-download" />
+		<div class="wonderfulMomentBox">
+			<!-- 瀑布流 -->
+			<div class="wonderfulMoment">
+				<wc-waterfall :gap="10" :cols="count">
+					<div class="img" v-for="img in images" :key="img.id">
+						<div class="control">
+							<div class="detail" @click="openImageView(img.detailUrl)">
+								<i class="el-icon-full-screen" />
 							</div>
-						</a>
+							<div class="delete" @click="deleteImage(img.id)">
+								<i class="el-icon-delete" />
+							</div>
+							<a class="download" :href="`/api/anime/download/${img.id}`" download>
+								<div>
+									<i class="el-icon-download" />
+								</div>
+							</a>
+						</div>
+						<img class="briefImg" v-lazy="img.briefUrl" @load='imgOnLoad' alt="">
 					</div>
-					<img class="briefImg" v-lazy="img.briefUrl" @load='imgOnLoad' alt="">
-				</div>
-			</wc-waterfall>
-			<el-image-viewer v-if="showViewer" :url-list="viewImage" :on-close="closeImageView" />
+				</wc-waterfall>
+				<el-image-viewer v-if="showViewer" :url-list="viewImage" :on-close="closeImageView" />
+			</div>
+
+			<!-- 空标志 -->
+			<el-empty v-if="!images.length" description="暂无精彩瞬间，快来上传吧！"/>
+
+			<!-- 滚动加载动画 -->
+			<scroll-animation :loading="scrollLoading" />
+
+			<!-- 结束标志 -->
+			<end-hr content="我也是有底线的！" v-show="showEndHr" />
 		</div>
-
-		<!-- 空标志 -->
-		<el-empty style="height: 100vh;" v-if="!images.length" :image-size="250" description="暂无精彩瞬间，快来上传吧！"/>
-
-		<!-- 滚动加载动画 -->
-		<scroll-animation :loading="scrollLoading" />
-
-		<!-- 结束标志 -->
-		<end-hr content="我也是有底线的！" v-show="showEndHr" />
 	</div>
 </template>
 
@@ -553,8 +555,8 @@ export default {
 		margin: 0 auto;
 		margin-top: 3.5rem;
 		padding: 1rem;
-		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-		border-radius: 5px;
+		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
+		border-radius: 10px;
 		box-sizing: border-box;
 
 		@media screen and (max-width: 768px) {
@@ -575,6 +577,7 @@ export default {
 				width: 215px;
 				height: 300px;
 				overflow: hidden;
+				border-radius: 10px;
 
 				@media screen and (max-width: 768px) {
 					margin: 0 auto;
@@ -618,12 +621,13 @@ export default {
 		margin: 1rem 0;
 
 		.upload {
-			width: 70%;
+			width: 95%;
 			margin: 0 auto;
 			box-sizing: border-box;
+			box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
+			background-color: #FFFFFF;
 			padding: 1rem;
-			box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-			border-radius: 5px;
+			border-radius: 10px;
 			text-align: center;
 
 			@media screen and (max-width: 768px) {
@@ -632,65 +636,79 @@ export default {
 		}
 	}
 
-	.wonderfulMoment {
-		overflow: hidden;
+	.wonderfulMomentBox {
+		width: 95%;
+		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
+		border-radius: 10px;
+		padding: 15px;
+		box-sizing: border-box;
+		margin: 0 auto;
+		margin-bottom: 1rem;
 
-		.img {
-			font-size: 0;
-			text-align: center;
-			min-height: 70px;
-			display: flex;
-			align-items: center;
+		.wonderfulMoment {
+			overflow: hidden;
 
-			/* 修改图片加载动画和加载失败大小 */
-			img[lazy="loading"],
-			img[lazy="error"] {
-				/* 保持宽高之比为16 / 9 */
-				aspect-ratio: 16 / 9;
-			}
-
-			.briefImg {
-				width: 100%;
-				height: 100%;
-				object-fit: cover;
-			}
-
-			.control {
-				width: 100%;
-				height: 100%;
-				position: absolute;
-				top: 0;
-				left: 0;
-				background-color: rgba(0, 0, 0, 0);
-				font-size: 2rem;
-				color: #FFFFFF;
-				transition: background-color .5s;
-				display: none;
-				justify-content: space-evenly;
+			.img {
+				font-size: 0;
+				text-align: center;
+				min-height: 70px;
+				display: flex;
 				align-items: center;
-				&:hover {
-					background-color: rgba(0, 0, 0, .4);
+				background-color: #FFFFFF;
+				box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),0 2px 4px -1px rgba(0, 0, 0, 0.06);
+				border-radius: 10px;
+				overflow: hidden;
+
+				/* 修改图片加载动画和加载失败大小 */
+				img[lazy="loading"],
+				img[lazy="error"] {
+					/* 保持宽高之比为16 / 9 */
+					aspect-ratio: 16 / 9;
+				}
+
+				.briefImg {
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+				}
+
+				.control {
+					width: 100%;
+					height: 100%;
+					position: absolute;
+					top: 0;
+					left: 0;
+					background-color: rgba(0, 0, 0, 0);
+					font-size: 2rem;
+					color: #FFFFFF;
+					transition: background-color .5s;
+					display: none;
+					justify-content: space-evenly;
+					align-items: center;
+					&:hover {
+						background-color: rgba(0, 0, 0, .4);
+
+						.detail,
+						.delete,
+						.download {
+							opacity: 1;
+							visibility: visible;
+						}
+					}
 
 					.detail,
 					.delete,
 					.download {
-						opacity: 1;
-						visibility: visible;
-					}
-				}
+						opacity: 0;
+						visibility: hidden;
+						padding: 5px;
+						cursor: pointer;
+						transition: all .5s;
+						border-radius: 10px;
 
-				.detail,
-				.delete,
-				.download {
-					opacity: 0;
-					visibility: hidden;
-					padding: 5px;
-					cursor: pointer;
-					transition: all .5s;
-					border-radius: 10px;
-
-					&:hover {
-						background-color: rgb(43, 10, 255);
+						&:hover {
+							background-color: rgb(43, 10, 255);
+						}
 					}
 				}
 			}

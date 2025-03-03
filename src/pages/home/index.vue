@@ -128,7 +128,8 @@ export default {
 
 <style scoped lang="scss">
 .home {
-	$sidebarWidth: 250px;
+	$sidebarWidth: 210px; //侧边栏宽度
+	$sidebarMarginLeftWidth: 1rem; //侧边栏距离左侧的距离
 
 	position: relative;
 
@@ -140,7 +141,7 @@ export default {
 
 	/* 侧边栏 */
 	#disableSidebar {
-		transform: translateX(-100%);
+		transform: translateX(calc(-100% - $sidebarMarginLeftWidth));
 	}
 
 	#enableSidebar {
@@ -149,15 +150,18 @@ export default {
 
 	.sidebar {
 		width: $sidebarWidth;
-		height: 100vh;
+		height: 96vh;
 		box-sizing: border-box;
-		padding: 1.2rem;
+		padding: 1.2rem 1rem;
 		position: fixed;
-		top: 0;
+		top: 2vh;
 		left: 0;
 		transition: transform .3s;
 		background-color: white;
 		z-index: 100;
+		margin-left: $sidebarMarginLeftWidth;
+		border-radius: 1.5rem;
+		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
 
 		.user {
 			width: 100%;
@@ -234,7 +238,7 @@ export default {
 	}
 
 	.mask {
-		width: calc(100vw - $sidebarWidth);
+		width: calc(100vw - $sidebarWidth - (100vw - 100%) - $sidebarMarginLeftWidth);
 		height: 100vh;
 		position: fixed;
 		right: 0;
@@ -243,11 +247,9 @@ export default {
 
 	.content {
 		/* 减去滚动条的大小 */
-		width: calc(100vw - $sidebarWidth);
-		margin-right: calc(100% - 100vw);
+		width: calc(100vw - $sidebarWidth - (100vw - 100%) - $sidebarMarginLeftWidth);
 		min-height: 100vh;
-		background-color: #F7F3F2;
-		padding: 1.3rem 2% 10px 2%;
+		padding: 1.3rem 1rem 1rem 1rem;
 		position: absolute;
 		top: 0;
 		right: 0;
@@ -256,8 +258,7 @@ export default {
 		@media screen and (max-width: 768px) {
 			float: none;
 			width: 100%;
-			padding-top: 0;
-			margin-right: 0;
+			padding: 0 6px 6px 6px;
 		}
 	}
 }

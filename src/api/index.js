@@ -102,7 +102,7 @@ export const reqGetPageAnime = (current, size, keyword, status=null) => {
  * @returns 当前页最后一条数据
  */
 export const reqUpdateAnimeWatchStatus = (animeUserId, current, size, keyword, newStatus, oldStatus) => {
-	return axios.patch(`/anime/${animeUserId}/watch-status`, {current, size, keyword, newStatus, oldStatus});
+	return axios.put(`/anime/${animeUserId}/watch-status`, {current, size, keyword, newStatus, oldStatus});
 }
 
 /**
@@ -127,7 +127,7 @@ export const reqLogicallyDeleteAnime = (animeUserId, current, size, keyword, sta
  * @param animeUserId 动漫用户关系id
  */
 export const reqRecoverAnime = (animeUserId) => {
-	return axios.patch(`/anime/${animeUserId}/recover`);
+	return axios.put(`/anime/${animeUserId}/recover`);
 }
 
 /**

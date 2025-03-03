@@ -16,16 +16,16 @@
 			<span>部动漫</span>
 		</div>
 
-		<TimeLine v-show="!emptyFlag" :animeList="animeList" />
+		<div class="timeLineBox">
+			<TimeLine v-show="!emptyFlag" :animeList="animeList" />
+			<el-empty v-if="emptyFlag" description="暂无历程，快去观看吧！" />
 
-		<!-- 空标志 -->
-		<el-empty v-if="emptyFlag" :image-size="250" description="暂无历程，快去观看吧！" />
+			<!-- 滚动加载动画 -->
+			<scroll-animation :loading="loading" />
 
-		<!-- 滚动加载动画 -->
-		<scroll-animation :loading="loading" />
-
-		<!-- 结束标志 -->
-		<end-hr content="我也是有底线的！" v-show="showEndHr" />
+			<!-- 结束标志 -->
+			<end-hr content="我也是有底线的！" v-show="showEndHr" />
+		</div>
 	</div>
 </template>
 
@@ -161,12 +161,26 @@ export default {
 }
 
 .viewingHistory {
+	min-height: calc(100vh - 2.3rem);
+	display: flex;
+	flex-direction: column;
+
+	@media screen and (max-width: 768px) {
+		//减去顶部导航栏高度
+		min-height: calc(100vh - 6px - 60px);
+	}
+
 	/* 模块分类名称 */
 	.typeTitle {
 		min-width: 110px;
 		font-size: 1.5rem;
 		display: flex;
 		align-items: center;
+		margin-left: 1rem;
+
+		@media screen and (max-width: 768px) {
+			margin-left: 6px;
+		}
 
 		svg {
 			fill: #3c3838;
@@ -185,6 +199,10 @@ export default {
 		text-align: center;
 		margin: 1rem 0;
 		font-size: 1.5rem;
+		background-color: #FFFFFF;
+		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
+		border-radius: 10px;
+		padding: 15px;
 
 		.number-font {
 			font-family: "numberfont" !important;
@@ -195,6 +213,23 @@ export default {
 			background-clip: text;
 			color: transparent;
 			font-size: 2rem;
+		}
+	}
+
+	.timeLineBox {
+		flex: 1;
+		background-color: #FFFFFF;
+		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
+		border-radius: 10px;
+		position: relative;
+		padding: 0 15px 15px 15px;
+
+		.el-empty {
+			padding: 0;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
 		}
 	}
 }

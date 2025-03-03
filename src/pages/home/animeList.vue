@@ -128,81 +128,74 @@
 		<!-- endregion -->
 
 		<!-- region 动漫列表 -->
-		<el-skeleton :loading="skeletonLoading" animated :throttle="500" :count="3">
-				<div slot="template">
-					<el-skeleton-item variant="image" />
-					<el-skeleton-item variant="text" />
-					<el-skeleton-item variant="text" />
-				</div>
-				<template>
-					<div class="list">
-						<div class="item" v-for="(anime, index) in animeList" :key="anime.animeId">
-							<div class="img" @click="goAnimeDetail(anime.animeUserId)">
-								<img v-lazy="anime.cover" alt="">
-							</div>
-							<div class="content">
-								<div class="info">
-									<el-tooltip effect="dark" :content="anime.name" placement="top" :visible-arrow="false" :open-delay="300">
-										<div class="name">{{anime.name}}</div>
-									</el-tooltip>
-									<div class="date" v-show="selectedTypeName!=='已看'">与<span>{{selectedTypeName==='正在看' ? anime.watchingDate : anime.createDate}}</span>加入</div>
-									<div class="date" v-show="selectedTypeName==='已看'">与<span>{{anime.finishedDate}}</span>看完</div>
-								</div>
-								<div class="control">
-									<el-popover
-											:visible-arrow="false"
-											popper-class="popover"
-											placement="top"
-											width="200"
-											:ref="'popover-' + index"
-											trigger="click">
-										<ul>
-											<li @click="updateAnimeWatchStatus(index, anime.animeUserId, 'WATCHING')" v-show="anime.watchStatus !== 'WATCHING'">
-												<svg style="margin-left: -4px;" width="23px" height="23px" stroke="black" stroke-width="20px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-													<path d="M511.95904 260.90496c177.83296 0 335.872 107.43808 403.712 269.14304l3.456 8.27904-3.456 8.23296a437.93408 437.93408 0 0 1-403.712 269.01504 437.68832 437.68832 0 0 1-403.62496-269.01504l-3.46112-8.23296 3.41504-8.27904a437.632 437.632 0 0 1 403.62496-269.14304h0.04608z m0 42.67008a394.96192 394.96192 0 0 0-364.33408 242.98496l3.584-8.27904 1.408 3.2a394.99264 394.99264 0 0 0 346.67008 231.25504l12.62592 0.16896a395.24864 395.24864 0 0 0 364.37504-242.85696l-3.62496 8.192-1.36704-3.11296a395.15136 395.15136 0 0 0-346.752-231.34208l-12.63104-0.20992h0.04608z" />
-													<path d="M512 426.66496a128 128 0 1 1 0 256.00512 128 128 0 0 1 0-256z m0 42.67008A85.33504 85.33504 0 1 0 512 640a85.33504 85.33504 0 0 0 0-170.66496z" />
-												</svg>
-												<div>标记为正在看</div>
-											</li>
-											<li @click="updateAnimeWatchStatus(index, anime.animeUserId, 'FINISHED')" v-show="anime.watchStatus !== 'FINISHED'">
-												<svg width="18px" height="18px" stroke="black" stroke-width="20px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
-													<path d="M939.36 218.912a32 32 0 0 1 45.856 44.672l-538.016 552a32 32 0 0 1-43.776 1.92L63.872 526.048a32 32 0 1 1 41.696-48.544l316.768 271.936L939.36 218.88z"></path>
-												</svg>
-												<div>标记为已看</div>
-											</li>
-											<li @click="updateAnimeWatchStatus(index, anime.animeUserId, 'NO_WATCH')" v-show="anime.watchStatus !== 'NO_WATCH'">
-												<svg width="16px" height="16px" stroke="black" stroke-width="20px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
-													<path d="M547.2 512l416-416c9.6-9.6 9.6-25.6 0-35.2s-25.6-9.6-35.2 0l-416 416-416-416c-9.6-9.6-25.6-9.6-35.2 0s-9.6 25.6 0 35.2l416 416-416 416c-9.6 9.6-9.6 25.6 0 35.2s25.6 9.6 35.2 0l416-416 416 416c9.6 9.6 25.6 9.6 35.2 0s9.6-25.6 0-35.2L547.2 512z"></path>
-												</svg>
-												<div>标记为未看</div>
-											</li>
-											<li @click="toDustbin(index, anime.animeUserId)">
-												<svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-													<path d="M177.1 48h93.7c2.7 0 5.2 1.3 6.7 3.6l19 28.4h-145l19-28.4c1.5-2.2 4-3.6 6.7-3.6zM354.2 80L317.5 24.9C307.1 9.4 289.6 0 270.9 0H177.1c-18.7 0-36.2 9.4-46.6 24.9L93.8 80H80.1 32 24C10.7 80 0 90.7 0 104s10.7 24 24 24H35.6L59.6 452.7c2.5 33.4 30.3 59.3 63.8 59.3H324.6c33.5 0 61.3-25.9 63.8-59.3L412.4 128H424c13.3 0 24-10.7 24-24s-10.7-24-24-24h-8H367.9 354.2zm10.1 48L340.5 449.2c-.6 8.4-7.6 14.8-16 14.8H123.4c-8.4 0-15.3-6.5-16-14.8L83.7 128H364.3z"></path>
-												</svg>
-												<div>发送到垃圾箱</div>
-											</li>
-										</ul>
-										<button slot="reference" @click.stop>
-											<svg width="20px" height="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-												<path d="M432 256a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zm-160 0a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zM64 304a48 48 0 1 1 0-96 48 48 0 1 1 0 96z"></path>
-											</svg>
-										</button>
-									</el-popover>
-								</div>
-							</div>
+		<div class="listBox">
+			<div class="list">
+				<div class="item" v-for="(anime, index) in animeList" :key="anime.animeId">
+					<div class="img" @click="goAnimeDetail(anime.animeUserId)">
+						<img v-lazy="anime.cover" alt="">
+					</div>
+					<div class="content">
+						<div class="info">
+							<el-tooltip effect="dark" :content="anime.name" placement="top" :visible-arrow="false" :open-delay="300">
+								<div class="name">{{anime.name}}</div>
+							</el-tooltip>
+							<div class="date" v-show="selectedTypeName!=='已看'">与<span>{{selectedTypeName==='正在看' ? anime.watchingDate : anime.createDate}}</span>加入</div>
+							<div class="date" v-show="selectedTypeName==='已看'">与<span>{{anime.finishedDate}}</span>看完</div>
+						</div>
+						<div class="control">
+							<el-popover
+									:visible-arrow="false"
+									popper-class="popover"
+									placement="top"
+									width="200"
+									:ref="'popover-' + index"
+									trigger="click">
+								<ul>
+									<li @click="updateAnimeWatchStatus(index, anime.animeUserId, 'WATCHING')" v-show="anime.watchStatus !== 'WATCHING'">
+										<svg style="margin-left: -4px;" width="23px" height="23px" stroke="black" stroke-width="20px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+											<path d="M511.95904 260.90496c177.83296 0 335.872 107.43808 403.712 269.14304l3.456 8.27904-3.456 8.23296a437.93408 437.93408 0 0 1-403.712 269.01504 437.68832 437.68832 0 0 1-403.62496-269.01504l-3.46112-8.23296 3.41504-8.27904a437.632 437.632 0 0 1 403.62496-269.14304h0.04608z m0 42.67008a394.96192 394.96192 0 0 0-364.33408 242.98496l3.584-8.27904 1.408 3.2a394.99264 394.99264 0 0 0 346.67008 231.25504l12.62592 0.16896a395.24864 395.24864 0 0 0 364.37504-242.85696l-3.62496 8.192-1.36704-3.11296a395.15136 395.15136 0 0 0-346.752-231.34208l-12.63104-0.20992h0.04608z" />
+											<path d="M512 426.66496a128 128 0 1 1 0 256.00512 128 128 0 0 1 0-256z m0 42.67008A85.33504 85.33504 0 1 0 512 640a85.33504 85.33504 0 0 0 0-170.66496z" />
+										</svg>
+										<div>标记为正在看</div>
+									</li>
+									<li @click="updateAnimeWatchStatus(index, anime.animeUserId, 'FINISHED')" v-show="anime.watchStatus !== 'FINISHED'">
+										<svg width="18px" height="18px" stroke="black" stroke-width="20px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+											<path d="M939.36 218.912a32 32 0 0 1 45.856 44.672l-538.016 552a32 32 0 0 1-43.776 1.92L63.872 526.048a32 32 0 1 1 41.696-48.544l316.768 271.936L939.36 218.88z"></path>
+										</svg>
+										<div>标记为已看</div>
+									</li>
+									<li @click="updateAnimeWatchStatus(index, anime.animeUserId, 'NO_WATCH')" v-show="anime.watchStatus !== 'NO_WATCH'">
+										<svg width="16px" height="16px" stroke="black" stroke-width="20px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+											<path d="M547.2 512l416-416c9.6-9.6 9.6-25.6 0-35.2s-25.6-9.6-35.2 0l-416 416-416-416c-9.6-9.6-25.6-9.6-35.2 0s-9.6 25.6 0 35.2l416 416-416 416c-9.6 9.6-9.6 25.6 0 35.2s25.6 9.6 35.2 0l416-416 416 416c9.6 9.6 25.6 9.6 35.2 0s9.6-25.6 0-35.2L547.2 512z"></path>
+										</svg>
+										<div>标记为未看</div>
+									</li>
+									<li @click="toDustbin(index, anime.animeUserId)">
+										<svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+											<path d="M177.1 48h93.7c2.7 0 5.2 1.3 6.7 3.6l19 28.4h-145l19-28.4c1.5-2.2 4-3.6 6.7-3.6zM354.2 80L317.5 24.9C307.1 9.4 289.6 0 270.9 0H177.1c-18.7 0-36.2 9.4-46.6 24.9L93.8 80H80.1 32 24C10.7 80 0 90.7 0 104s10.7 24 24 24H35.6L59.6 452.7c2.5 33.4 30.3 59.3 63.8 59.3H324.6c33.5 0 61.3-25.9 63.8-59.3L412.4 128H424c13.3 0 24-10.7 24-24s-10.7-24-24-24h-8H367.9 354.2zm10.1 48L340.5 449.2c-.6 8.4-7.6 14.8-16 14.8H123.4c-8.4 0-15.3-6.5-16-14.8L83.7 128H364.3z"></path>
+										</svg>
+										<div>发送到垃圾箱</div>
+									</li>
+								</ul>
+								<button slot="reference" @click.stop>
+									<svg width="20px" height="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+										<path d="M432 256a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zm-160 0a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zM64 304a48 48 0 1 1 0-96 48 48 0 1 1 0 96z"></path>
+									</svg>
+								</button>
+							</el-popover>
 						</div>
 					</div>
-				</template>
-			</el-skeleton>
-		<el-empty v-if="emptyFlag" :image-size="250" description="暂无动漫" />
+				</div>
+			</div>
+			<el-empty v-if="emptyFlag" description="暂无动漫" />
+
+			<!-- region 滚动加载动画 -->
+			<scroll-animation :loading="scrollLoading" />
+
+			<!-- 结束标志 -->
+			<end-hr content="我也是有底线的！" v-show="showEndHr" />
+		</div>
 		<!-- endregion -->
-
-		<!-- region 滚动加载动画 -->
-		<scroll-animation :loading="scrollLoading" />
-
-		<!-- 结束标志 -->
-		<end-hr content="我也是有底线的！" v-show="showEndHr" />
 	</div>
 </template>
 
@@ -223,9 +216,6 @@ export default {
 
 			//移动端筛选详细页面开启标志
 			detailFlag: false,
-
-			//骨架加载动画标志
-			skeletonLoading: false,
 
 			//滚动加载动画标志
 			scrollLoading: false,
@@ -349,9 +339,6 @@ export default {
 
 		//获取对应分类的第一页数据
 		async getFirstPageAnime() {
-			//开启加载动画
-			this.skeletonLoading = true;
-
 			this.current = 1;
 			let status;
 			if (this.selectedTypeName === '已看') {
@@ -362,28 +349,23 @@ export default {
 				status = 'WATCHING';
 			}
 
-			try {
-				//获取数据
-				let result = await reqGetPageAnime(this.current, this.size, this.keyword, status);
-				if (result.code !== 200) {
-					this.$message.error('数据获取失败！');
-					return ;
-				}
-
-				this.animeList = result.data.records || [];
-
-				//数据为空展示空状态
-				this.emptyFlag = this.animeList.length === 0;
-
-				//数据为空表示下一页无数据
-				this.hasNext = result.data.current < result.data.pages;
-
-				//获取动漫总数
-				this.total = result.data.total;
-			} finally {
-				//关闭加载动画
-				this.skeletonLoading = false;
+			//获取数据
+			let result = await reqGetPageAnime(this.current, this.size, this.keyword, status);
+			if (result.code !== 200) {
+				this.$message.error('数据获取失败！');
+				return ;
 			}
+
+			this.animeList = result.data.records || [];
+
+			//数据为空展示空状态
+			this.emptyFlag = this.animeList.length === 0;
+
+			//数据为空表示下一页无数据
+			this.hasNext = result.data.current < result.data.pages;
+
+			//获取动漫总数
+			this.total = result.data.total;
 		},
 
 		//分页获取动漫数据
@@ -486,12 +468,26 @@ export default {
 }
 
 .animeList {
+	min-height: calc(100vh - 2.3rem);
+	display: flex;
+	flex-direction: column;
+
+	@media screen and (max-width: 768px) {
+		//减去顶部导航栏高度
+		min-height: calc(100vh - 6px - 60px);
+	}
+
 	/* 模块分类名称 */
 	.typeTitle {
 		min-width: 110px;
 		font-size: 1.5rem;
 		display: flex;
 		align-items: center;
+		margin-left: 1rem;
+
+		@media screen and (max-width: 768px) {
+			margin-left: 6px;
+		}
 
 		svg {
 			fill: #3c3838;
@@ -508,7 +504,11 @@ export default {
 	/* 添加按钮与搜索框 */
 	> .control {
 		display: flex;
-		margin-top: 1.5rem;
+		margin-top: 1rem;
+		background-color: #FFFFFF;
+		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
+		border-radius: 10px;
+		padding: 15px;
 
 		@media screen and (max-width: 768px) {
 			display: block;
@@ -579,7 +579,7 @@ export default {
 			}
 
 			input {
-				width: 50%;
+				width: 100%;
 				min-width: 250px;
 				height: 44px;
 				box-sizing: border-box;
@@ -612,10 +612,14 @@ export default {
 	/* 列表分类 */
 	.type {
 		height: 38px;
-		margin-top: 1.3rem;
+		margin-top: .6rem;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		background-color: #FFFFFF;
+		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
+		border-radius: 10px;
+		padding: 15px;
 
 		/* pc */
 		.pc {
@@ -769,191 +773,178 @@ export default {
 		}
 	}
 
-	/* 骨架屏样式 */
-	.el-skeleton {
-		margin-top: 1.5rem;
-
-		> div .el-skeleton__image {
-			width: 100%;
-			height: 260px;
-		}
-
-		@media screen and (max-width: 768px) {
-			> div {
-				margin-top: 1rem;
-				width: 100%;
-			}
-
-			> div .el-skeleton__image {
-				margin-bottom: 5px;
-			}
-		}
-
-		@media screen and (min-width: 750px) {
-			display: flex;
-
-			> div {
-				margin-left: 1rem;
-				width: 280px;
-			}
-		}
-	}
-
 	/* 动漫列表 */
-	.list {
-		margin-top: 1.5rem;
-		display: grid;
-		grid-gap: 20px;
+	.listBox {
+		flex: 1;
+		margin-top: .6rem;
+		background-color: #FFFFFF;
+		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
+		border-radius: 10px;
+		padding: 15px;
+		position: relative;
 
-		@media screen and (max-width: 600px) {
-			grid-template-columns: repeat(1, 1fr);
-		}
+		.list {
+			display: grid;
+			grid-gap: 20px;
 
-		@media screen and (min-width: 600px) and (max-width: 1000px) {
-			grid-template-columns: repeat(2, 1fr);
-		}
-
-		@media screen and (min-width: 1000px) and (max-width: 1260px) {
-			grid-template-columns: repeat(3, 1fr);
-		}
-
-		@media screen and (min-width: 1260px) and (max-width: 1500px) {
-			grid-template-columns: repeat(4, 1fr);
-		}
-
-		@media screen and (min-width: 1500px) {
-			grid-template-columns: repeat(5, 1fr);
-		}
-
-		.item {
-			/* item过渡时间 */
-			$transitionTime: 0.3s;
-
-			/*宽度与高度的比例*/
-			aspect-ratio: 0.8;
-			border-radius: 5px;
-			box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),0 2px 4px -1px rgba(0, 0, 0, 0.06);
-			overflow: hidden;
-			transition: all $transitionTime;
-
-			/* 鼠标移入item给item添加阴影 */
-			&:hover {
-				box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),0 4px 6px -2px rgba(0, 0, 0, 0.05);
-
-				/* 鼠标移入item给content添加背景 */
-				.content {
-					background-color: #f7f3f2;
-				}
+			@media screen and (max-width: 600px) {
+				grid-template-columns: repeat(1, 1fr);
 			}
 
-			@media screen and (max-width: 768px) {
-				aspect-ratio: 1;
+			@media screen and (min-width: 600px) and (max-width: 1000px) {
+				grid-template-columns: repeat(2, 1fr);
 			}
 
-			.img {
-				height: 82%;
+			@media screen and (min-width: 1000px) and (max-width: 1260px) {
+				grid-template-columns: repeat(3, 1fr);
+			}
+
+			@media screen and (min-width: 1260px) and (max-width: 1500px) {
+				grid-template-columns: repeat(4, 1fr);
+			}
+
+			@media screen and (min-width: 1500px) {
+				grid-template-columns: repeat(5, 1fr);
+			}
+
+			.item {
+				/* item过渡时间 */
+				$transitionTime: 0.3s;
+
+				/*宽度与高度的比例*/
+				aspect-ratio: 0.8;
+				border-radius: 10px;
+				box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),0 2px 4px -1px rgba(0, 0, 0, 0.06);
 				overflow: hidden;
-				cursor: pointer;
+				transition: all $transitionTime;
 
-				/* 鼠标移入图片放大图片 */
+				/* 鼠标移入item给item添加阴影 */
 				&:hover {
-					img {
-						transform: scale(1.1);
+					box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+					/* 鼠标移入item给content添加背景 */
+					.content {
+						background-color: #f7f3f2;
 					}
 				}
 
-				/* 图片自适应父盒子 */
-				img {
-					width: 100%;
-					height: 100%;
-					object-fit: cover;
-					transition: transform $transitionTime;
-				}
-			}
-
-			.content {
-				height: 18%;
-				background-color: #FFFFFF;
-				transition: background-color $transitionTime;
-
-				&::after {
-					content: '';
-					display: block;
-					clear: both;
+				@media screen and (max-width: 768px) {
+					aspect-ratio: 1;
 				}
 
-				.info {
-					width: 85%;
-					height: 100%;
-					float: left;
-					display: flex;
-					flex-direction: column;
-					justify-content: space-evenly;
-					text-align: center;
+				.img {
+					height: 82%;
+					overflow: hidden;
+					cursor: pointer;
 
-					@media screen and (max-width: 768px) {
-						width: 80%;
-					}
-
-					.name {
-						width: 100%;
-						white-space: nowrap;
-						overflow: hidden;
-						text-overflow: ellipsis;
-						padding-left: 5px;
-						box-sizing: border-box;
-					}
-
-					.date {
-						width: 100%;
-						font-size: 0.8rem;
-						color: #ada8a8;
-					}
-				}
-
-				.control {
-					width: 15%;
-					height: 100%;
-					float: right;
-					position: relative;
-
-					@media screen and (max-width: 768px) {
-						width: 20%;
-					}
-
-					button {
-						width: 30px;
-						height: 30px;
-						border-radius: 50%;
-						position: absolute;
-						top: 50%;
-						left: 50%;
-						transform: translate(-50%, -50%);
-						transition: color, background-color .3s;
-
-						/* 移入文字旁的按钮改变按钮背景色和svg颜色 */
-						&:hover {
-							background-color: #e5e0df;
-							color: #3c3838;
+					/* 鼠标移入图片放大图片 */
+					&:hover {
+						img {
+							transform: scale(1.1);
 						}
+					}
+
+					/* 图片自适应父盒子 */
+					img {
+						width: 100%;
+						height: 100%;
+						object-fit: cover;
+						transition: transform $transitionTime;
+					}
+				}
+
+				.content {
+					height: 18%;
+					background-color: #FFFFFF;
+					transition: background-color $transitionTime;
+
+					&::after {
+						content: '';
+						display: block;
+						clear: both;
+					}
+
+					.info {
+						width: 85%;
+						height: 100%;
+						float: left;
+						display: flex;
+						flex-direction: column;
+						justify-content: space-evenly;
+						text-align: center;
 
 						@media screen and (max-width: 768px) {
-							width: 35px;
-							height: 35px;
+							width: 80%;
 						}
 
-						svg {
+						.name {
+							width: 100%;
+							white-space: nowrap;
+							overflow: hidden;
+							text-overflow: ellipsis;
+							padding-left: 5px;
+							box-sizing: border-box;
+						}
+
+						.date {
+							width: 100%;
+							font-size: 0.8rem;
+							color: #ada8a8;
+						}
+					}
+
+					.control {
+						width: 15%;
+						height: 100%;
+						float: right;
+						position: relative;
+
+						@media screen and (max-width: 768px) {
+							width: 20%;
+						}
+
+						button {
+							width: 30px;
+							height: 30px;
+							border-radius: 50%;
 							position: absolute;
-							top: 0;
-							left: 0;
-							right: 0;
-							bottom: 0;
-							margin: auto;
-							fill: #ada8a8;
+							top: 50%;
+							left: 50%;
+							transform: translate(-50%, -50%);
+							transition: color, background-color .3s;
+
+							/* 移入文字旁的按钮改变按钮背景色和svg颜色 */
+							&:hover {
+								background-color: #e5e0df;
+								color: #3c3838;
+							}
+
+							@media screen and (max-width: 768px) {
+								width: 35px;
+								height: 35px;
+							}
+
+							svg {
+								position: absolute;
+								top: 0;
+								left: 0;
+								right: 0;
+								bottom: 0;
+								margin: auto;
+								fill: #ada8a8;
+							}
 						}
 					}
 				}
 			}
+		}
+
+		.el-empty {
+			padding: 0;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
 		}
 	}
 }

@@ -86,6 +86,12 @@ export default {
 		font-size: 1.5rem;
 		display: flex;
 		align-items: center;
+		align-items: center;
+		margin-left: 1rem;
+
+		@media screen and (max-width: 768px) {
+			margin-left: 6px;
+		}
 
 		svg {
 			fill: #3c3838;
@@ -105,11 +111,12 @@ export default {
 
 		.anime {
 			min-height: 350px;
-			border-radius: 5px;
 			display: flex;
 			align-items: center;
 			padding: 1rem;
 			background-color: #FFFFFF;
+			box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
+			border-radius: 10px;
 			box-sizing: border-box;
 
 			@media screen and (max-width: 768px) {
@@ -163,7 +170,7 @@ export default {
 				padding: 10px;
 				text-align: center;
 				line-height: 40px;
-				border-radius: 5px;
+				border-radius: 10px;
 				background-image: linear-gradient(92.91deg, rgb(51, 0, 217) 2.18%, rgb(157, 32, 201) 44.94%, rgb(223, 122, 108) 99.91%);
 				background-size: 400%;
 				color: #FFFFFF;

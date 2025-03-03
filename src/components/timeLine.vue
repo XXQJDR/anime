@@ -48,7 +48,7 @@ div {
 
 .bigBox {
 	width: 100%;
-	margin-top: 1rem;
+	padding-top: 1rem;
 	overflow: hidden;
 }
 

@@ -61,6 +61,7 @@ body {
 	font-size: 18px;
 	width: 100%;
 	font-family: 楷体, 微软雅黑, serif;
+	background-color: #fafbfe;
 
 	@media screen and (max-width: 768px) {
 		font-size: 14px;

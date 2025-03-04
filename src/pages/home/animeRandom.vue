@@ -14,6 +14,13 @@
 			<div class="anime" v-loading="loading">
 				<div class="img" v-show="anime.cover">
 					<img v-lazy="anime.cover" alt="">
+					<div class="mask" @click="addWatching(anime.animeUserId)">
+						<div class="box">
+							<svg width="25px" height="25px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+								<path d="M612.37248 411.62752V30.208h-200.74496v381.41952H30.208v200.74496h381.41952v381.41952h200.74496V612.37248h381.41952v-200.74496z"/>
+							</svg>
+						</div>
+					</div>
 				</div>
 				<div class="info" v-show="anime.name!=null">
 					<h3>{{anime.name}}</h3>
@@ -37,7 +44,7 @@
 </template>
 
 <script>
-import {reqRandomAnime} from "@/api";
+import {reqRandomAnime, reqUpdateAnimeWatchStatus} from "@/api";
 import _ from "lodash";
 
 export default {
@@ -74,6 +81,17 @@ export default {
 				this.loading = false;
 			}
 		}, 1000),
+
+		//将动漫标记为正在观看
+		async addWatching(animeUserId) {
+			let result = await reqUpdateAnimeWatchStatus(animeUserId, null, null, null, 'WATCHING', null);
+			if (result.code !== 200) {
+				this.$message.error('添加到正在观看失败！');
+				return;
+			}
+
+			this.$message.success('成功添加到正在观看列表！');
+		}
 	},
 }
 </script>
@@ -85,7 +103,6 @@ export default {
 		min-width: 110px;
 		font-size: 1.5rem;
 		display: flex;
-		align-items: center;
 		align-items: center;
 		margin-left: 1rem;
 
@@ -126,16 +143,75 @@ export default {
 			.img {
 				width: 165px;
 				height: 235px;
+				border-radius: 10px;
+				overflow: hidden;
+				position: relative;
+				cursor: pointer;
 
 				@media screen and (max-width: 768px) {
 					width: 122px;
 					height: 170px;
 				}
 
+				@media screen and (min-width: 768px) {
+					&:hover {
+						/* 鼠标移入图片展示遮罩 */
+						.mask {
+							opacity: 1;
+						}
+
+						/* 鼠标移入图片，图片放大 */
+						img {
+							transform: scale(1.1);
+						}
+					}
+
+					/* 鼠标移入添加按钮，添加按钮旋转 */
+					.mask .box:hover {
+						transform: rotateZ(180deg);
+					}
+				}
+
 				img {
 					width: 100%;
 					height: 100%;
 					object-fit: cover;
+					transition: transform 0.3s;
+				}
+
+				.mask {
+					width: 100%;
+					height: 100%;
+					background-color: rgba(0, 0, 0, .4);
+					position: absolute;
+					top: 0;
+					left: 0;
+					opacity: 0;
+					transition: opacity 0.3s;
+
+					.box {
+						width: 50px;
+						height: 50px;
+						background-color: rgba(0, 0, 0, .5);
+						border-radius: 50%;
+						position: absolute;
+						top: 0;
+						bottom: 0;
+						left: 0;
+						right: 0;
+						margin: auto;
+						transition: all .5s;
+
+						svg {
+							position: absolute;
+							top: 0;
+							bottom: 0;
+							left: 0;
+							right: 0;
+							margin: auto;
+							fill: #FFFFFF;
+						}
+					}
 				}
 			}
 

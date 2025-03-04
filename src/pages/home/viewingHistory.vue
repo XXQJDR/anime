@@ -151,12 +151,9 @@ export default {
 			}
 
 			let chartData = [];
-			/*chartData.push({name: '正在观看', value: result.data.watchingCount});
+			chartData.push({name: '正在观看', value: result.data.watchingCount});
 			chartData.push({name: '已观看', value: result.data.finishedCount});
-			chartData.push({name: '未观看', value: result.data.noWatchCount});*/
-			chartData.push({name: '正在观看', value: 1});
-			chartData.push({name: '已观看', value: 59});
-			chartData.push({name: '未观看', value: 40});
+			chartData.push({name: '未观看', value: result.data.noWatchCount});
 
 			//过滤掉值为0的项
 			chartData = chartData.filter(item => item.value !== 0);

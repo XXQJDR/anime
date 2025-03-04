@@ -94,7 +94,7 @@
 							<div class="delete" @click="deleteImage(img.id)">
 								<i class="el-icon-delete" />
 							</div>
-							<a class="download" :href="`/api/anime/download/${img.id}`" download>
+							<a class="download" :href="img.detailUrl" download>
 								<div>
 									<i class="el-icon-download" />
 								</div>
@@ -144,7 +144,7 @@ export default {
 			current: 1,
 
 			//每页展示数量
-			size: 3,
+			size: 10,
 
 			//是否还有下一页数据
 			hasNext: false,

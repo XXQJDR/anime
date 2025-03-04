@@ -17,7 +17,17 @@
 		</div>
 
 		<div class="timeLineBox">
-			<TimeLine v-show="!emptyFlag" :animeList="animeList" />
+			<div class="timeline" v-show="!emptyFlag">
+				<div class="item" v-for="anime in animeList" :key="anime.animeUserId">
+					<div class="content">
+						<div class="anime" @click="goAnimeDetail(anime.animeUserId)">
+							<div class="time">{{anime.finishedDate}}</div>
+							<img class="cover" :src="anime.cover" :alt="anime.name">
+							<div class="name">{{anime.name}}</div>
+						</div>
+					</div>
+				</div>
+			</div>
 			<el-empty v-if="emptyFlag" description="暂无历程，快去观看吧！" />
 
 			<!-- 滚动加载动画 -->
@@ -30,7 +40,6 @@
 </template>
 
 <script>
-import TimeLine from "@/components/timeLine.vue";
 import {reqGetPageAnime} from '@/api';
 import CountTo from "vue-count-to";
 import EndHr from "@/components/endHr.vue";
@@ -38,7 +47,7 @@ import ScrollAnimation from "@/components/scrollAnimation.vue";
 
 export default {
 	name: 'ViewingHistory',
-	components: {EndHr, CountTo, TimeLine, ScrollAnimation},
+	components: {EndHr, CountTo, ScrollAnimation},
 	data() {
 		return {
 			//动漫列表
@@ -125,6 +134,11 @@ export default {
 				this.emptyFlag = this.animeList.length === 0;
 			}
 			this.total = result.data.total;
+		},
+
+		//进入动漫详情
+		goAnimeDetail(animeUserId) {
+			this.$router.push(`/animeDetail?animeUserId=${animeUserId}`);
 		}
 	},
 	created() {
@@ -222,10 +236,128 @@ export default {
 		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
 		border-radius: 10px;
 		position: relative;
+		box-sizing: border-box;
 		padding: 0 15px 15px 15px;
 
 		@media screen and (max-width: 768px) {
 			padding: 0 10px 10px 10px;
+		}
+
+		.timeline {
+			$content-offset: 18px; // 桌面端内容块与时间轴的距离
+			$marker-offset: 12px; // 时间节点指示器与时间轴的距离
+
+			position: relative;
+			margin: 0 auto;
+
+			&::before {
+				content: '';
+				position: absolute;
+				left: 50%;
+				top: 0;
+				height: 100%;
+				width: 2px;
+				background: #e0e0e0;
+				transform: translateX(-50%);
+
+				@media screen and (max-width: 768px) {
+					left: 0;
+				}
+			}
+
+			.item {
+				position: relative;
+				margin: 2rem 0;
+				display: flex;
+				justify-content: flex-start;
+
+				@media screen and (max-width: 768px) {
+					justify-content: flex-start;
+				}
+
+				&:nth-child(even) {
+					justify-content: flex-end;
+
+					@media screen and (max-width: 768px) {
+						justify-content: flex-start;
+					}
+				}
+
+				.content {
+					position: relative;
+					width: calc(50% - $content-offset);
+
+					@media screen and (max-width: 768px) {
+						width: 100%
+					}
+
+					&::before {
+						content: '';
+						position: absolute;
+						top: 20px;
+						right: -$marker-offset;
+						width: 20px;
+						height: 20px;
+						background: #fff;
+						border: 3px solid #4a90e2;
+						border-radius: 50%;
+						z-index: 1;
+
+						@media screen and (max-width: 768px) {
+							left: -$marker-offset;
+							right: auto;
+						}
+					}
+
+					.anime {
+						background: #FFFFFF;
+						padding: 1.5rem;
+						border-radius: 8px;
+						box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+						transition: transform 0.3s ease;
+						box-sizing: border-box;
+						text-align: center;
+						cursor: pointer;
+
+						&:hover {
+							transform: translateY(-10px);
+						}
+
+						@media screen and (max-width: 768px) {
+							margin-left: $content-offset;
+						}
+
+						.time {
+							color: #666;
+							font-size: 1.5rem;
+							margin-bottom: 0.5rem;
+						}
+
+						.cover {
+							width: 170px;
+							height: 236px;
+							border-radius: 5px;
+							overflow: hidden;
+							margin-bottom: 1rem;
+						}
+
+						.name {
+							color: #333;
+							font-size: 1.1rem;
+							font-weight: 600;
+						}
+					}
+				}
+
+				&:nth-child(even) .content::before {
+					right: auto;
+					left: -$marker-offset;
+
+					@media screen and (max-width: 768px) {
+						left: -$marker-offset;
+					}
+				}
+			}
 		}
 
 		.el-empty {

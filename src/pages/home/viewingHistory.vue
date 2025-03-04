@@ -62,7 +62,9 @@ export default {
 			hasNext: true,
 
 			//加载动画标志
-			loading: false
+			loading: false,
+
+			chart: null
 		}
 	},
 	computed: {
@@ -133,6 +135,11 @@ export default {
 			this.$router.push(`/animeDetail?animeUserId=${animeUserId}`);
 		},
 
+		//饼图响应式
+		chartHandleResize() {
+			this.chart.resize();
+		},
+
 		//初始化统计饼图
 		async initChart() {
 			//获取统计数据
@@ -147,7 +154,10 @@ export default {
 			chartData.push({name: '正在观看', value: result.data.watchingCount});
 			chartData.push({name: '已观看', value: result.data.finishedCount});
 			chartData.push({name: '未观看', value: result.data.noWatchCount});
-			let chart = echarts.init(this.$refs.chart);
+
+			//过滤掉值为0的项
+			chartData = chartData.filter(item => item.value !== 0);
+			this.chart = echarts.init(this.$refs.chart);
 			let option = {
 				tooltip: {
 					trigger: 'item'
@@ -171,7 +181,10 @@ export default {
 					}
 				]
 			}
-			chart.setOption(option);
+			this.chart.setOption(option);
+
+			//监听窗口大小变化，重新渲染饼图
+			window.addEventListener('resize', this.chartHandleResize);
 		}
 	},
 	created() {
@@ -189,6 +202,7 @@ export default {
 	},
 	beforeDestroy() {
 		window.removeEventListener('scroll', this.lazyLoading);
+		window.removeEventListener('resize', this.chartHandleResize);
 	},
 	//从详情页面返回
 	activated() {

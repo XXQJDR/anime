@@ -455,6 +455,9 @@ export default {
 
 <style scoped lang="scss">
 .animeDetail {
+	box-sizing: border-box;
+	padding: 0 10px;
+
 	.solve-rate-bug-a {
 		position: absolute;
 		top: 0;
@@ -553,14 +556,16 @@ export default {
 	.animeBox {
 		width: 95%;
 		margin: 0 auto;
-		margin-top: 3.5rem;
+		margin-top: 4rem;
 		padding: 1rem;
 		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
 		border-radius: 10px;
 		box-sizing: border-box;
+		background-color: #FFFFFF;
 
 		@media screen and (max-width: 768px) {
 			width: 100%;
+			margin-top: 4.5rem;
 		}
 
 		.anime > div {

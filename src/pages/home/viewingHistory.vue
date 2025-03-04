@@ -10,11 +10,7 @@
 		<!--endregion-->
 
 		<!-- 动漫统计 -->
-		<div class="total">
-			<span>已经看了</span>
-			<CountTo ref="refcountofore" :start-val="0" :end-val="total" class="number-font" :duration="2000" />
-			<span>部动漫</span>
-		</div>
+		<div class="chart" ref="chart"></div>
 
 		<div class="timeLineBox">
 			<div class="timeline" v-show="!emptyFlag">
@@ -40,14 +36,14 @@
 </template>
 
 <script>
-import {reqGetPageAnime} from '@/api';
-import CountTo from "vue-count-to";
+import {reqGetPageAnime, reqGetWatchStatistics} from '@/api';
 import EndHr from "@/components/endHr.vue";
 import ScrollAnimation from "@/components/scrollAnimation.vue";
+import echarts from "@/echarts";
 
 export default {
 	name: 'ViewingHistory',
-	components: {EndHr, CountTo, ScrollAnimation},
+	components: {EndHr, ScrollAnimation},
 	data() {
 		return {
 			//动漫列表
@@ -65,11 +61,8 @@ export default {
 			//是否还有下一页数据
 			hasNext: true,
 
-			//动漫总数
-			total: 0,
-
 			//加载动画标志
-			loading: false,
+			loading: false
 		}
 	},
 	computed: {
@@ -79,7 +72,7 @@ export default {
 		},
 	},
 	methods: {
-		//分页获取东看
+		//分页获取动漫信息
 		async getPageAnime() {
 			try {
 				//开启加载动画
@@ -133,12 +126,52 @@ export default {
 			if (this.current === 1) {
 				this.emptyFlag = this.animeList.length === 0;
 			}
-			this.total = result.data.total;
 		},
 
 		//进入动漫详情
 		goAnimeDetail(animeUserId) {
 			this.$router.push(`/animeDetail?animeUserId=${animeUserId}`);
+		},
+
+		//初始化统计饼图
+		async initChart() {
+			//获取统计数据
+			let result = await reqGetWatchStatistics();
+
+			if (result.code !== 200) {
+				this.$message.error('获取统计数据失败！');
+				return;
+			}
+
+			let chartData = [];
+			chartData.push({name: '正在观看', value: result.data.watchingCount});
+			chartData.push({name: '已观看', value: result.data.finishedCount});
+			chartData.push({name: '未观看', value: result.data.noWatchCount});
+			let chart = echarts.init(this.$refs.chart);
+			let option = {
+				tooltip: {
+					trigger: 'item'
+				},
+				series: [
+					{
+						type: 'pie',
+						radius: ['40%', '70%'],
+						padAngle: 5,
+						itemStyle: {
+							borderRadius: 10
+						},
+						emphasis: {
+							label: {
+								show: true,
+								fontSize: 30,
+								fontWeight: 'bold'
+							}
+						},
+						data: chartData
+					}
+				]
+			}
+			chart.setOption(option);
 		}
 	},
 	created() {
@@ -150,6 +183,9 @@ export default {
 		setTimeout(() => {
 			window.addEventListener('scroll', this.lazyLoading);
 		}, 500);
+
+		//初始化饼图
+		this.initChart();
 	},
 	beforeDestroy() {
 		window.removeEventListener('scroll', this.lazyLoading);
@@ -209,25 +245,13 @@ export default {
 	}
 
 	/* 动漫统计 */
-	.total {
-		text-align: center;
-		margin: 1rem 0;
-		font-size: 1.5rem;
+	.chart {
+		height: 250px;
+		margin-top: 1rem;
 		background-color: #FFFFFF;
 		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
 		border-radius: 10px;
-		padding: 15px;
-
-		.number-font {
-			font-family: "numberfont" !important;
-			font-style: normal;
-			-webkit-font-smoothing: antialiased;
-			-moz-osx-font-smoothing: grayscale;
-			background-image: linear-gradient(50deg, rgb(43, 10, 255), rgb(255, 91, 138) 49%, rgb(255, 91, 138) 53%, rgb(255, 91, 138) 55%, rgb(251, 166, 75) 77%, rgb(249, 155, 82));
-			background-clip: text;
-			color: transparent;
-			font-size: 2rem;
-		}
+		box-sizing: border-box;
 	}
 
 	.timeLineBox {
@@ -238,6 +262,7 @@ export default {
 		position: relative;
 		box-sizing: border-box;
 		padding: 0 15px 15px 15px;
+		margin-top: 1rem;
 
 		@media screen and (max-width: 768px) {
 			padding: 0 10px 10px 10px;

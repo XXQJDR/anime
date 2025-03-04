@@ -236,3 +236,11 @@ export const reqRateAnime = (animeUserId, score) => {
 	formData.append('score', score);
 	return axios.post(`/anime/${animeUserId}/rate`, formData);
 }
+
+/**
+ * 获取动漫观看统计信息
+ * @returns 统计信息
+ */
+export const reqGetWatchStatistics = () => {
+	return axios.get('/anime/watch-statistics');
+}

@@ -139,8 +139,8 @@
 							<el-tooltip effect="dark" :content="anime.name" placement="top" :visible-arrow="false" :open-delay="300">
 								<div class="name">{{anime.name}}</div>
 							</el-tooltip>
-							<div class="date" v-show="selectedTypeName!=='已看'">与<span>{{selectedTypeName==='正在看' ? anime.watchingDate : anime.createDate}}</span>加入</div>
-							<div class="date" v-show="selectedTypeName==='已看'">与<span>{{anime.finishedDate}}</span>看完</div>
+							<div class="date" v-show="selectedTypeName!=='已看'">于<span>{{selectedTypeName==='正在看' ? anime.watchingDate : anime.createDate}}</span>加入</div>
+							<div class="date" v-show="selectedTypeName==='已看'">于<span>{{anime.finishedDate}}</span>看完</div>
 						</div>
 						<div class="control">
 							<el-popover
@@ -637,7 +637,7 @@ export default {
 				justify-content: center;
 				color: #726e6e;
 				cursor: pointer;
-				margin-left: 1.2rem;
+				margin-left: 10px;
 				transition: all 0.3s;
 
 				&:nth-child(1) {

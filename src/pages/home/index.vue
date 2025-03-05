@@ -162,6 +162,8 @@ export default {
 		margin-left: $sidebarMarginLeftWidth;
 		border-radius: 1.5rem;
 		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
+		background-image: url('@/assets/images/sidebar/waves.png');
+		background-repeat: no-repeat;
 
 		.user {
 			width: 100%;

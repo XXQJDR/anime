@@ -470,7 +470,7 @@ export default {
 		align-items: center;
 		background-color: #FFFFFF;
 		position: fixed;
-		z-index: 1000;
+		z-index: 100;
 		top: 1rem;
 		left: 1rem;
 		font-size: 0.9rem;

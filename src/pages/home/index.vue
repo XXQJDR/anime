@@ -4,10 +4,10 @@
 		<div class="sidebar" :id="sidebarFlag?'enableSidebar':'disableSidebar'">
 			<el-popover
 					:visible-arrow="false"
-					popper-class="popover"
 					placement="bottom"
-					width="200"
-					trigger="click">
+					trigger="click"
+					@show="maskFlag = true"
+			>
 				<ul>
 					<li @click="logout">
 						<svg width="18px" height="18px" aria-hidden="true" focusable="false" data-prefix="far" data-icon="right-from-bracket" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -57,8 +57,6 @@
 		</div>
 		<!-- endregion -->
 
-		<!-- 点击弹窗的其他区域关闭弹窗 -->
-		<div class="mask" v-show="sidebarFlag && browserIdentity==='MOBILE'" @click="closeSidebar"></div>
 		<div class="content">
 			<MobileTopbar v-if="browserIdentity === 'MOBILE'" />
 			<transition
@@ -88,6 +86,16 @@ export default {
 			userInfo: 'userInfo',
 			browserIdentity: 'browserIdentity'
 		}),
+
+		//全局遮罩显示标志
+		maskFlag: {
+			get() {
+				return this.$store.state.maskFlag;
+			},
+			set(val) {
+				this.$store.commit('MASK_FLAG', val);
+			}
+		}
 	},
 	methods: {
 		//点击切换内容类型
@@ -95,15 +103,11 @@ export default {
 			this.$store.commit('HOME_CONTENT_TYPE', type);
 			this.$router.push('/home/' + type);
 
-			//移动端点击后关闭侧边栏
+			//移动端点击后关闭侧边栏及全局遮罩
 			if (this.browserIdentity === 'MOBILE') {
 				this.$store.commit('SIDEBAR_FLAG', false);
+				this.maskFlag = false;
 			}
-		},
-
-		//点击mask遮罩关闭侧边栏
-		closeSidebar() {
-			this.$store.commit('SIDEBAR_FLAG', false);
 		},
 
 		//退出登录
@@ -121,7 +125,7 @@ export default {
 				location.reload();
 			});
 			this.$message.success('退出登录成功！');
-		},
+		}
 	}
 }
 </script>
@@ -130,8 +134,6 @@ export default {
 .home {
 	$sidebarWidth: 210px; //侧边栏宽度
 	$sidebarMarginLeftWidth: 1rem; //侧边栏距离左侧的距离
-
-	position: relative;
 
 	&::after {
 		content: '';
@@ -239,22 +241,12 @@ export default {
 		}
 	}
 
-	.mask {
-		width: calc(100vw - $sidebarWidth - (100vw - 100%) - $sidebarMarginLeftWidth);
-		height: 100vh;
-		position: fixed;
-		right: 0;
-		z-index: 100;
-	}
-
 	.content {
 		/* 减去滚动条的大小 */
 		width: calc(100vw - $sidebarWidth - (100vw - 100%) - $sidebarMarginLeftWidth);
 		min-height: 100vh;
 		padding: 1.3rem 1rem 1rem 1rem;
-		position: absolute;
-		top: 0;
-		right: 0;
+		float: right;
 		box-sizing: border-box;
 
 		@media screen and (max-width: 768px) {

@@ -19,6 +19,12 @@ const state = {
 
 	//浏览器身份
 	browserIdentity: 'MOBILE',
+
+	//全局遮罩显示标志
+	maskFlag: false,
+
+	//复用popover显示标志
+	animeListPopoverFlag: false
 };
 const actions = {};
 const mutations = {
@@ -37,6 +43,12 @@ const mutations = {
 	BROWSER_IDENTITY(state, browserIdentity) {
 		state.browserIdentity = browserIdentity;
 	},
+	MASK_FLAG(state, maskFlag) {
+		state.maskFlag = maskFlag;
+	},
+	ANIME_LIST_POPOVER_FLAG(state, animeListPopoverFlag) {
+		state.animeListPopoverFlag = animeListPopoverFlag;
+	}
 };
 
 //创建并暴露store

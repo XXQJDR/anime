@@ -23,13 +23,21 @@ export default {
 		}
 	},
 	methods: {
-		//点击icon展开侧边栏
+		//点击icon
 		clickHandle() {
+			//展开侧边栏
 			this.$store.commit('SIDEBAR_FLAG', true);
+
+			//打开遮罩
+			this.$store.commit('MASK_FLAG', true);
+
+			//将侧边栏置于顶层
+			let sidebar = document.querySelector('.sidebar');
+			sidebar.style.zIndex = 200;
 		},
 
 		scrolling() {
-			// 滚动条距文档顶部的距离（做兼容处理）===》不懂的可以结合画图理清逻辑
+			// 滚动条距文档顶部的距离
 			let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
 			// 滚动条滚动的距离
 			let scrollStep = scrollTop - this.oldScrollTop;

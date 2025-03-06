@@ -12,7 +12,7 @@
 		<!-- region 动漫列表 -->
 		<div class="listBox">
 			<div class="list">
-				<div class="item" v-for="(anime, index) in animeList" :key="index">
+				<div class="item" v-for="(anime, index) in animeList" :key="anime.animeId">
 					<div class="img">
 						<img v-lazy="anime.cover" alt="">
 					</div>
@@ -21,39 +21,41 @@
 							<div class="info">{{anime.name}}</div>
 						</el-tooltip>
 						<div class="control">
-							<el-popover
-									:visible-arrow="false"
-									popper-class="popover"
-									placement="top"
-									width="200"
-									:ref="'popover-' + index"
-									trigger="click">
-								<ul>
-									<li @click="recover(index, anime.animeUserId)">
-										<svg width="18px" height="18px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="rotate-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-											<path d="M48.5 224H40c-13.3 0-24-10.7-24-24V72c0-9.7 5.8-18.5 14.8-22.2s19.3-1.7 26.2 5.2L98.6 96.6c87.6-86.5 228.7-86.2 315.8 1c87.5 87.5 87.5 229.3 0 316.8s-229.3 87.5-316.8 0c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0c62.5 62.5 163.8 62.5 226.3 0s62.5-163.8 0-226.3c-62.2-62.2-162.7-62.5-225.3-1L185 183c6.9 6.9 8.9 17.2 5.2 26.2s-12.5 14.8-22.2 14.8H48.5z"></path>
-										</svg>
-										<div>恢复</div>
-									</li>
-									<li @click="thoroughlyRemove(index, anime.animeUserId)">
-										<svg width="18px" height="18px" aria-hidden="true" focusable="false" data-prefix="far" data-icon="circle-xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-											<path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z"></path>
-										</svg>
-										<div>彻底删除</div>
-									</li>
-								</ul>
-								<button slot="reference" @click.stop>
-									<svg width="20px" height="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-										<path d="M432 256a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zm-160 0a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zM64 304a48 48 0 1 1 0-96 48 48 0 1 1 0 96z"></path>
-									</svg>
-								</button>
-							</el-popover>
+							<button @click="openPopover(anime.animeUserId, index, $event)">
+								<svg width="20px" height="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+									<path d="M432 256a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zm-160 0a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zM64 304a48 48 0 1 1 0-96 48 48 0 1 1 0 96z"></path>
+								</svg>
+							</button>
 						</div>
 					</div>
 				</div>
 			</div>
 			<el-empty v-if="emptyFlag" description="暂无动漫" />
 		</div>
+		<!-- endregion -->
+
+		<!-- region 复用弹出框 -->
+		<el-popover
+				:visible-arrow="false"
+				trigger="manual"
+				v-model="animeListPopoverFlag"
+				popper-class="animeListPopover"
+		>
+			<ul>
+				<li @click="recover">
+					<svg width="18px" height="18px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="rotate-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+						<path d="M48.5 224H40c-13.3 0-24-10.7-24-24V72c0-9.7 5.8-18.5 14.8-22.2s19.3-1.7 26.2 5.2L98.6 96.6c87.6-86.5 228.7-86.2 315.8 1c87.5 87.5 87.5 229.3 0 316.8s-229.3 87.5-316.8 0c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0c62.5 62.5 163.8 62.5 226.3 0s62.5-163.8 0-226.3c-62.2-62.2-162.7-62.5-225.3-1L185 183c6.9 6.9 8.9 17.2 5.2 26.2s-12.5 14.8-22.2 14.8H48.5z"></path>
+					</svg>
+					<div>恢复</div>
+				</li>
+				<li @click="thoroughlyRemove">
+					<svg width="18px" height="18px" aria-hidden="true" focusable="false" data-prefix="far" data-icon="circle-xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+						<path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z"></path>
+					</svg>
+					<div>彻底删除</div>
+				</li>
+			</ul>
+		</el-popover>
 		<!-- endregion -->
 	</div>
 </template>
@@ -70,6 +72,33 @@ export default {
 
 			//空状态，true显示空状态
 			emptyFlag: true,
+
+			//打开popover对应的动漫数据
+			popover: {
+				animeUserId: 0,
+				index: 0 //动漫在列表中的位置
+			}
+		}
+	},
+	computed: {
+		//全局遮罩显示标志
+		maskFlag: {
+			get() {
+				return this.$store.state.maskFlag;
+			},
+			set(val) {
+				this.$store.commit('MASK_FLAG', val);
+			}
+		},
+
+		//复用popover显示标志
+		animeListPopoverFlag: {
+			get() {
+				return this.$store.state.animeListPopoverFlag;
+			},
+			set(val) {
+				this.$store.commit('ANIME_LIST_POPOVER_FLAG', val);
+			}
 		}
 	},
 	created() {
@@ -92,14 +121,13 @@ export default {
 
 		/**
 		 * 恢复动漫
-		 * @param index 弹窗索引
-		 * @param animeUserId 动漫用户关系id
 		 */
-		async recover(index, animeUserId) {
-			//关闭编辑动漫弹窗
-			this.$refs['popover-' + index][0].doClose();
+		async recover() {
+			//关闭编辑动漫弹窗及全局遮罩
+			this.animeListPopoverFlag = false;
+			this.maskFlag = false;
 
-			let result = await reqRecoverAnime(animeUserId);
+			let result = await reqRecoverAnime(this.popover.animeUserId);
 			if (result.code !== 200) {
 				this.$message.error('恢复失败！');
 				return ;
@@ -108,19 +136,18 @@ export default {
 			this.$message.success('恢复成功！');
 
 			//更新列表
-			this.animeList.splice(index, 1);
+			this.animeList.splice(this.popover.index, 1);
 		},
 
 		/**
 		 * 彻底删除动漫
-		 * @param index 弹窗索引
-		 * @param animeUserId 动漫用户关系id
 		 */
-		async thoroughlyRemove(index, animeUserId) {
-			//关闭编辑动漫弹窗
-			this.$refs['popover-' + index][0].doClose();
+		async thoroughlyRemove() {
+			//关闭编辑动漫弹窗及全局遮罩
+			this.animeListPopoverFlag = false;
+			this.maskFlag = false;
 
-			let result = await reqDeleteAnime(animeUserId);
+			let result = await reqDeleteAnime(this.popover.animeUserId);
 			if (result.code !== 200) {
 				this.$message.error('删除失败！');
 				return ;
@@ -129,9 +156,68 @@ export default {
 			this.$message.success('删除成功！');
 
 			//更新列表
-			this.animeList.splice(index, 1);
+			this.animeList.splice(this.popover.index, 1);
 
 			this.emptyFlag = this.animeList.length === 0;
+		},
+
+		//打开popover
+		openPopover(animeUserId, index, event) {
+			//获取数据
+			this.popover.animeUserId = animeUserId;
+			this.popover.index = index;
+
+			this.animeListPopoverFlag = true;
+			this.maskFlag = true;
+
+			//定位popover的位置
+			this.$nextTick(() => {
+				let popover = document.querySelector('.animeListPopover');
+				if (!popover) return;
+
+				// 获取关键尺寸
+				let popoverWidth = popover.offsetWidth;
+				let popoverHeight = popover.offsetHeight;
+				let viewportWidth = document.documentElement.clientWidth;
+				let viewportHeight = document.documentElement.clientHeight;
+
+				// 获取滚动偏移量
+				let scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+				let scrollY = window.pageYOffset || document.documentElement.scrollTop;
+
+				// 计算文档流坐标
+				const clickDocX = event.clientX + scrollX;
+				const clickDocY = event.clientY + scrollY;
+
+				// ===== 水平居中计算 =====
+				let targetX = clickDocX - popoverWidth / 2;
+
+				// 右侧越界修正
+				if (targetX + popoverWidth > scrollX + viewportWidth) {
+					targetX = scrollX + viewportWidth - popoverWidth - 5;
+				}
+				// 左侧越界修正
+				else if (targetX < scrollX) {
+					targetX = scrollX + 5;
+				}
+
+				// ===== 垂直位置计算 =====
+				let targetY = clickDocY - popoverHeight - 10; // 目标位置：上方 10px
+
+				// 上方空间不足时改为下方显示
+				if (targetY < scrollY) {
+					targetY = clickDocY + 10;
+				}
+
+				// 检查下方越界
+				if (targetY + popoverHeight > scrollY + viewportHeight) {
+					targetY = scrollY + viewportHeight - popoverHeight - 5;
+				}
+
+				// 应用最终坐标
+				popover.style.left = `${Math.floor(targetX)}px`;
+				popover.style.top = `${Math.floor(targetY)}px`;
+			});
 		}
 	}
 }

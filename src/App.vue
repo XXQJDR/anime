@@ -13,23 +13,84 @@
 		</transition>
 
 		<el-backtop :right="20" style="width: 50px;height: 50px;"></el-backtop>
+
+		<div class="appMask" v-show="maskFlag" @click="closeMask" ref="appMask"></div>
 	</div>
 </template>
 
 <script>
 export default {
 	name: 'App',
+	computed: {
+		// 遮罩显示标志
+		maskFlag: {
+			get() {
+				return this.$store.state.maskFlag;
+			},
+			set(val) {
+				this.$store.commit('MASK_FLAG', val);
+			}
+		},
+
+		//侧边栏显示标志
+		sidebarFlag: {
+			get() {
+				return this.$store.state.sidebarFlag;
+			},
+			set(val) {
+				this.$store.commit('SIDEBAR_FLAG', val);
+			}
+		},
+
+		//浏览器标识
+		browserIdentity: {
+			get() {
+				return this.$store.state.browserIdentity;
+			},
+			set(val) {
+				this.$store.commit('BROWSER_IDENTITY', val);
+			}
+		},
+
+		//复用popover显示标志
+		animeListPopoverFlag: {
+			get() {
+				return this.$store.state.animeListPopoverFlag;
+			},
+			set(val) {
+				this.$store.commit('ANIME_LIST_POPOVER_FLAG', val);
+			}
+		}
+	},
 	methods: {
 		//动态获取浏览器宽度
 		getWindowInfo() {
 			if (window.innerWidth <= 768) {
-				this.$store.commit('BROWSER_IDENTITY', 'MOBILE');
-				this.$store.commit('SIDEBAR_FLAG', false);
+				this.browserIdentity = 'MOBILE';
+				this.sidebarFlag = false;
 			} else {
-				this.$store.commit('BROWSER_IDENTITY', 'PC');
-				this.$store.commit('SIDEBAR_FLAG', true);
+				this.browserIdentity = 'PC';
+				this.sidebarFlag = true;
 			}
 		},
+
+		//关闭遮罩
+		closeMask() {
+			//关闭遮罩
+			this.maskFlag = false;
+
+			//关闭复用popover
+			this.animeListPopoverFlag = false;
+
+			//如果遮罩关闭，则重置侧边栏的z-index，防止侧边栏置于全局遮罩上
+			let sidebar = document.querySelector('.sidebar');
+			sidebar.style.zIndex = 100;
+
+			//判断侧边栏是否需要关闭
+			if (this.browserIdentity === 'MOBILE' && this.sidebarFlag) {
+				this.sidebarFlag = false;
+			}
+		}
 	},
 	mounted() {
 		//动态获取浏览器视宽来判断浏览器身份
@@ -50,7 +111,6 @@ export default {
 html {
 	font-size: 18px;
 	width: 100%;
-	overflow-x: hidden;
 
 	@media screen and (max-width: 768px) {
 		font-size: 14px;
@@ -62,9 +122,21 @@ body {
 	width: 100%;
 	font-family: 楷体, 微软雅黑, serif;
 	background-color: #fafbfe;
+	overflow-x: hidden;
 
 	@media screen and (max-width: 768px) {
 		font-size: 14px;
+	}
+
+	.appMask {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		z-index: 111;
+		background-color: #333333;
+		opacity: 0.5;
 	}
 }
 

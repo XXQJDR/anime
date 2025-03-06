@@ -143,58 +143,60 @@
 							<div class="date" v-show="selectedTypeName==='已看'">于<span>{{anime.finishedDate}}</span>看完</div>
 						</div>
 						<div class="control">
-							<el-popover
-									:visible-arrow="false"
-									popper-class="popover"
-									placement="top"
-									width="200"
-									:ref="'popover-' + index"
-									trigger="click">
-								<ul>
-									<li @click="updateAnimeWatchStatus(index, anime.animeUserId, 'WATCHING')" v-show="anime.watchStatus !== 'WATCHING'">
-										<svg style="margin-left: -4px;" width="23px" height="23px" stroke="black" stroke-width="20px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-											<path d="M511.95904 260.90496c177.83296 0 335.872 107.43808 403.712 269.14304l3.456 8.27904-3.456 8.23296a437.93408 437.93408 0 0 1-403.712 269.01504 437.68832 437.68832 0 0 1-403.62496-269.01504l-3.46112-8.23296 3.41504-8.27904a437.632 437.632 0 0 1 403.62496-269.14304h0.04608z m0 42.67008a394.96192 394.96192 0 0 0-364.33408 242.98496l3.584-8.27904 1.408 3.2a394.99264 394.99264 0 0 0 346.67008 231.25504l12.62592 0.16896a395.24864 395.24864 0 0 0 364.37504-242.85696l-3.62496 8.192-1.36704-3.11296a395.15136 395.15136 0 0 0-346.752-231.34208l-12.63104-0.20992h0.04608z" />
-											<path d="M512 426.66496a128 128 0 1 1 0 256.00512 128 128 0 0 1 0-256z m0 42.67008A85.33504 85.33504 0 1 0 512 640a85.33504 85.33504 0 0 0 0-170.66496z" />
-										</svg>
-										<div>标记为正在看</div>
-									</li>
-									<li @click="updateAnimeWatchStatus(index, anime.animeUserId, 'FINISHED')" v-show="anime.watchStatus !== 'FINISHED'">
-										<svg width="18px" height="18px" stroke="black" stroke-width="20px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
-											<path d="M939.36 218.912a32 32 0 0 1 45.856 44.672l-538.016 552a32 32 0 0 1-43.776 1.92L63.872 526.048a32 32 0 1 1 41.696-48.544l316.768 271.936L939.36 218.88z"></path>
-										</svg>
-										<div>标记为已看</div>
-									</li>
-									<li @click="updateAnimeWatchStatus(index, anime.animeUserId, 'NO_WATCH')" v-show="anime.watchStatus !== 'NO_WATCH'">
-										<svg width="16px" height="16px" stroke="black" stroke-width="20px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
-											<path d="M547.2 512l416-416c9.6-9.6 9.6-25.6 0-35.2s-25.6-9.6-35.2 0l-416 416-416-416c-9.6-9.6-25.6-9.6-35.2 0s-9.6 25.6 0 35.2l416 416-416 416c-9.6 9.6-9.6 25.6 0 35.2s25.6 9.6 35.2 0l416-416 416 416c9.6 9.6 25.6 9.6 35.2 0s9.6-25.6 0-35.2L547.2 512z"></path>
-										</svg>
-										<div>标记为未看</div>
-									</li>
-									<li @click="toDustbin(index, anime.animeUserId)">
-										<svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-											<path d="M177.1 48h93.7c2.7 0 5.2 1.3 6.7 3.6l19 28.4h-145l19-28.4c1.5-2.2 4-3.6 6.7-3.6zM354.2 80L317.5 24.9C307.1 9.4 289.6 0 270.9 0H177.1c-18.7 0-36.2 9.4-46.6 24.9L93.8 80H80.1 32 24C10.7 80 0 90.7 0 104s10.7 24 24 24H35.6L59.6 452.7c2.5 33.4 30.3 59.3 63.8 59.3H324.6c33.5 0 61.3-25.9 63.8-59.3L412.4 128H424c13.3 0 24-10.7 24-24s-10.7-24-24-24h-8H367.9 354.2zm10.1 48L340.5 449.2c-.6 8.4-7.6 14.8-16 14.8H123.4c-8.4 0-15.3-6.5-16-14.8L83.7 128H364.3z"></path>
-										</svg>
-										<div>发送到垃圾箱</div>
-									</li>
-								</ul>
-								<button slot="reference" @click.stop>
-									<svg width="20px" height="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-										<path d="M432 256a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zm-160 0a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zM64 304a48 48 0 1 1 0-96 48 48 0 1 1 0 96z"></path>
-									</svg>
-								</button>
-							</el-popover>
+							<button @click="openPopover(anime.animeUserId, anime.watchStatus, index, $event)">
+								<svg width="20px" height="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+									<path d="M432 256a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zm-160 0a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zM64 304a48 48 0 1 1 0-96 48 48 0 1 1 0 96z"></path>
+								</svg>
+							</button>
 						</div>
 					</div>
 				</div>
 			</div>
 			<el-empty v-if="emptyFlag" description="暂无动漫" />
 
-			<!-- region 滚动加载动画 -->
+			<!-- 滚动加载动画 -->
 			<scroll-animation :loading="scrollLoading" />
 
 			<!-- 结束标志 -->
 			<end-hr content="我也是有底线的！" v-show="showEndHr" />
 		</div>
+		<!-- endregion -->
+
+		<!-- region 复用弹出框 -->
+		<el-popover
+				:visible-arrow="false"
+				trigger="manual"
+				v-model="animeListPopoverFlag"
+				popper-class="animeListPopover"
+		>
+			<ul>
+				<li @click="updateAnimeWatchStatus('WATCHING')" v-show="popover.watchStatus !== 'WATCHING'">
+					<svg style="margin-left: -4px;" width="23px" height="23px" stroke="black" stroke-width="20px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+						<path d="M511.95904 260.90496c177.83296 0 335.872 107.43808 403.712 269.14304l3.456 8.27904-3.456 8.23296a437.93408 437.93408 0 0 1-403.712 269.01504 437.68832 437.68832 0 0 1-403.62496-269.01504l-3.46112-8.23296 3.41504-8.27904a437.632 437.632 0 0 1 403.62496-269.14304h0.04608z m0 42.67008a394.96192 394.96192 0 0 0-364.33408 242.98496l3.584-8.27904 1.408 3.2a394.99264 394.99264 0 0 0 346.67008 231.25504l12.62592 0.16896a395.24864 395.24864 0 0 0 364.37504-242.85696l-3.62496 8.192-1.36704-3.11296a395.15136 395.15136 0 0 0-346.752-231.34208l-12.63104-0.20992h0.04608z" />
+						<path d="M512 426.66496a128 128 0 1 1 0 256.00512 128 128 0 0 1 0-256z m0 42.67008A85.33504 85.33504 0 1 0 512 640a85.33504 85.33504 0 0 0 0-170.66496z" />
+					</svg>
+					<div>标记为正在看</div>
+				</li>
+				<li @click="updateAnimeWatchStatus('FINISHED')" v-show="popover.watchStatus !== 'FINISHED'">
+					<svg width="18px" height="18px" stroke="black" stroke-width="20px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+						<path d="M939.36 218.912a32 32 0 0 1 45.856 44.672l-538.016 552a32 32 0 0 1-43.776 1.92L63.872 526.048a32 32 0 1 1 41.696-48.544l316.768 271.936L939.36 218.88z"></path>
+					</svg>
+					<div>标记为已看</div>
+				</li>
+				<li @click="updateAnimeWatchStatus('NO_WATCH')" v-show="popover.watchStatus !== 'NO_WATCH'">
+					<svg width="16px" height="16px" stroke="black" stroke-width="20px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+						<path d="M547.2 512l416-416c9.6-9.6 9.6-25.6 0-35.2s-25.6-9.6-35.2 0l-416 416-416-416c-9.6-9.6-25.6-9.6-35.2 0s-9.6 25.6 0 35.2l416 416-416 416c-9.6 9.6-9.6 25.6 0 35.2s25.6 9.6 35.2 0l416-416 416 416c9.6 9.6 25.6 9.6 35.2 0s9.6-25.6 0-35.2L547.2 512z"></path>
+					</svg>
+					<div>标记为未看</div>
+				</li>
+				<li @click="toDustbin">
+					<svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+						<path d="M177.1 48h93.7c2.7 0 5.2 1.3 6.7 3.6l19 28.4h-145l19-28.4c1.5-2.2 4-3.6 6.7-3.6zM354.2 80L317.5 24.9C307.1 9.4 289.6 0 270.9 0H177.1c-18.7 0-36.2 9.4-46.6 24.9L93.8 80H80.1 32 24C10.7 80 0 90.7 0 104s10.7 24 24 24H35.6L59.6 452.7c2.5 33.4 30.3 59.3 63.8 59.3H324.6c33.5 0 61.3-25.9 63.8-59.3L412.4 128H424c13.3 0 24-10.7 24-24s-10.7-24-24-24h-8H367.9 354.2zm10.1 48L340.5 449.2c-.6 8.4-7.6 14.8-16 14.8H123.4c-8.4 0-15.3-6.5-16-14.8L83.7 128H364.3z"></path>
+					</svg>
+					<div>发送到垃圾箱</div>
+				</li>
+			</ul>
+		</el-popover>
 		<!-- endregion -->
 	</div>
 </template>
@@ -240,6 +242,13 @@ export default {
 
 			//动漫总数
 			total: 0,
+
+			//打开popover对应的动漫数据
+			popover: {
+				animeUserId: 0,
+				watchStatus: '',
+				index: 0 //动漫在列表中的位置
+			}
 		}
 	},
 	computed: {
@@ -247,6 +256,26 @@ export default {
 		showEndHr() {
 			return this.current > 2;
 		},
+
+		//全局遮罩显示标志
+		maskFlag: {
+			get() {
+				return this.$store.state.maskFlag;
+			},
+			set(val) {
+				this.$store.commit('MASK_FLAG', val);
+			}
+		},
+
+		//复用popover显示标志
+		animeListPopoverFlag: {
+			get() {
+				return this.$store.state.animeListPopoverFlag;
+			},
+			set(val) {
+				this.$store.commit('ANIME_LIST_POPOVER_FLAG', val);
+			}
+		}
 	},
 	methods: {
 		//搜索动漫
@@ -269,13 +298,12 @@ export default {
 
 		/**
 		 * 更新动漫观看状态
-		 * @param index 当前动漫在数组中的索引
-		 * @param animeUserId 动漫用户关系id
 		 * @param newStatus 新状态
 		 */
-		async updateAnimeWatchStatus(index, animeUserId, newStatus) {
-			//关闭编辑动漫弹窗
-			this.$refs['popover-' + index][0].doClose();
+		async updateAnimeWatchStatus(newStatus) {
+			//关闭编辑动漫弹窗及全局遮罩
+			this.animeListPopoverFlag = false;
+			this.maskFlag = false;
 
 			let oldStatus = null;
 			switch (this.selectedTypeName) {
@@ -285,7 +313,7 @@ export default {
 			}
 
 			//更改服务器数据
-			let result = await reqUpdateAnimeWatchStatus(animeUserId, this.current, this.size, this.keyword, newStatus, oldStatus);
+			let result = await reqUpdateAnimeWatchStatus(this.popover.animeUserId, this.current, this.size, this.keyword, newStatus, oldStatus);
 			if (result.code !== 200) {
 				this.$message.error('标记失败！');
 				return ;
@@ -294,9 +322,9 @@ export default {
 
 			//更新列表
 			if (this.selectedTypeName === '全部') {
-				this.animeList[index].watchStatus = newStatus;
+				this.animeList[this.popover.index].watchStatus = newStatus;
 			} else {
-				this.animeList.splice(index, 1);
+				this.animeList.splice(this.popover.index, 1);
 				this.total--;
 				if (result.data != null) {
 					this.animeList.push(result.data);
@@ -306,12 +334,11 @@ export default {
 
 		/**
 		 * 将动漫移入垃圾箱
-		 * @param index 当前动漫在数组中的索引
-		 * @param animeUserId 动漫用户关系id
 		 */
-		async toDustbin(index, animeUserId) {
-			//关闭编辑动漫弹窗
-			this.$refs['popover-' + index][0].doClose();
+		async toDustbin() {
+			//关闭编辑动漫弹窗及全局遮罩
+			this.animeListPopoverFlag = false;
+			this.maskFlag = false;
 
 			let status = null;
 			switch (this.selectedTypeName) {
@@ -319,7 +346,7 @@ export default {
 				case '正在看': status = 'WATCHING'; break;
 				case '已看': status = 'FINISHED'; break;
 			}
-			let result = await reqLogicallyDeleteAnime(animeUserId, this.current, this.size, this.keyword, status);
+			let result = await reqLogicallyDeleteAnime(this.popover.animeUserId, this.current, this.size, this.keyword, status);
 			if (result.code !== 200) {
 				this.$message.error('移入失败！');
 				return ;
@@ -328,7 +355,7 @@ export default {
 			this.$message.success('移入成功！');
 
 			//更新animeList
-			this.animeList.splice(index, 1);
+			this.animeList.splice(this.popover.index, 1);
 			if (result.data != null) {
 				this.animeList.push(result.data);
 			}
@@ -433,6 +460,66 @@ export default {
 		//输入框获取焦点自动全选
 		handleFocus(e) {
 			e.currentTarget.select();
+		},
+
+		//打开popover
+		openPopover(animeUserId, watchStatus, index, event) {
+			//获取数据
+			this.popover.animeUserId = animeUserId;
+			this.popover.watchStatus = watchStatus;
+			this.popover.index = index;
+
+			this.animeListPopoverFlag = true;
+			this.maskFlag = true;
+
+			//定位popover的位置
+			this.$nextTick(() => {
+				let popover = document.querySelector('.animeListPopover');
+				if (!popover) return;
+
+				// 获取关键尺寸
+				let popoverWidth = popover.offsetWidth;
+				let popoverHeight = popover.offsetHeight;
+				let viewportWidth = document.documentElement.clientWidth;
+				let viewportHeight = document.documentElement.clientHeight;
+
+				// 获取滚动偏移量
+				let scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+				let scrollY = window.pageYOffset || document.documentElement.scrollTop;
+
+				// 计算文档流坐标
+				const clickDocX = event.clientX + scrollX;
+				const clickDocY = event.clientY + scrollY;
+
+				// ===== 水平居中计算 =====
+				let targetX = clickDocX - popoverWidth / 2;
+
+				// 右侧越界修正
+				if (targetX + popoverWidth > scrollX + viewportWidth) {
+					targetX = scrollX + viewportWidth - popoverWidth - 5;
+				}
+				// 左侧越界修正
+				else if (targetX < scrollX) {
+					targetX = scrollX + 5;
+				}
+
+				// ===== 垂直位置计算 =====
+				let targetY = clickDocY - popoverHeight - 10; // 目标位置：上方 10px
+
+				// 上方空间不足时改为下方显示
+				if (targetY < scrollY) {
+					targetY = clickDocY + 10;
+				}
+
+				// 检查下方越界
+				if (targetY + popoverHeight > scrollY + viewportHeight) {
+					targetY = scrollY + viewportHeight - popoverHeight - 5;
+				}
+
+				// 应用最终坐标
+				popover.style.left = `${Math.floor(targetX)}px`;
+				popover.style.top = `${Math.floor(targetY)}px`;
+			});
 		}
 	},
 	created() {

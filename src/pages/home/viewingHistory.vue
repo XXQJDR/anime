@@ -204,6 +204,9 @@ export default {
 	beforeDestroy() {
 		window.removeEventListener('scroll', this.lazyLoading);
 		window.removeEventListener('resize', this.chartHandleResize);
+
+		//销毁echarts实例
+		this.chart.dispose();
 	},
 	//从详情页面返回
 	activated() {
@@ -276,11 +279,11 @@ export default {
 		border-radius: 10px;
 		position: relative;
 		box-sizing: border-box;
-		padding: 0 15px 15px 15px;
-		margin-top: 1rem;
+		padding: 0 15px;
+		margin-top: .6rem;
 
 		@media screen and (max-width: 768px) {
-			padding: 0 10px 10px 10px;
+			padding: 0 10px;
 		}
 
 		.timeline {
@@ -313,6 +316,14 @@ export default {
 
 				@media screen and (max-width: 768px) {
 					justify-content: flex-start;
+				}
+
+				&:first-child {
+					margin-top: 1rem;
+				}
+
+				&:last-child {
+					margin-bottom: 1rem;
 				}
 
 				&:nth-child(even) {

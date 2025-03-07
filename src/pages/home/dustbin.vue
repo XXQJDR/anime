@@ -39,7 +39,7 @@
 				:visible-arrow="false"
 				trigger="manual"
 				v-model="animeListPopoverFlag"
-				popper-class="animeListPopover"
+				popper-class="dustbinAnimeListPopover"
 		>
 			<ul>
 				<li @click="recover">
@@ -172,7 +172,7 @@ export default {
 
 			//定位popover的位置
 			this.$nextTick(() => {
-				let popover = document.querySelector('.animeListPopover');
+				let popover = document.querySelector('.dustbinAnimeListPopover');
 				if (!popover) return;
 
 				// 获取关键尺寸
@@ -423,6 +423,19 @@ export default {
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%, -50%);
+		}
+	}
+}
+</style>
+
+<style lang="scss">
+.dustbinAnimeListPopover ul {
+	li:last-child {
+		color: red;
+		svg {
+			width: 18px;
+			height: 18px;
+			fill: red;
 		}
 	}
 }

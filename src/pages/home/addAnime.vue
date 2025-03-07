@@ -200,7 +200,7 @@ export default {
 		width: 100%;
 		min-height: 280px;
 		background-color: #FFFFFF;
-		margin-top: 1rem;
+		margin-top: .6rem;
 		border-radius: 10px;
 		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 		position: relative;

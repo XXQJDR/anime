@@ -135,8 +135,6 @@ body {
 		width: 100vw;
 		height: 100vh;
 		z-index: 111;
-		background-color: #333333;
-		opacity: 0.5;
 	}
 }
 

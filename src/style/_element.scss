@@ -16,22 +16,26 @@
       border: 1px solid transparent;
       transition: border,background-color .3s;
       padding: 0 15px;
+      color: #000000;
+      font-size: 1rem;
+      margin-bottom: 5px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
 
       &:hover {
         background-color: #e5e0df;
         border: 1px solid #e5e0df;
       }
 
-      > div {
-        margin-left: 10px;
+      svg {
+        width: 18px;
+        height: 18px;
       }
 
-      &:last-child {
-        color: red;
-
-        svg {
-          fill: red;
-        }
+      > div {
+        margin-left: 10px;
       }
     }
   }

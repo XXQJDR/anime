@@ -37,33 +37,33 @@
 						:visible-arrow="false"
 						placement="bottom"
 						trigger="click"
-						@show="openTypePopover"
-						@hide="closeTypePopover"
+						@show="openFilterPopover('type')"
+						@hide="closeFilterPopover('type')"
 						popper-class="typePopover"
 						v-model="typePopoverFlag"
 				>
 					<ul>
-						<li @click="changeAnimeType('全部')" :class="{typeBtnLiActive:selectedTypeName==='全部'}">
+						<li @click="changeFilterType('全部')" :class="{filterBtnLiActive:selectedTypeName==='全部'}">
 							<svg t="1741331905462" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7742">
 								<path d="M955.904 858.112z" p-id="7743"></path>
 								<path d="M312.832 63.488H75.264C33.792 63.488 0 97.28 0 138.752v237.568c0 41.472 33.792 75.264 75.264 75.264h237.568c41.472 0 75.264-33.792 75.264-75.264V138.752c0-41.472-33.792-75.264-75.264-75.264zM305.152 368.64H82.944V146.432h222.72V368.64zM312.832 572.416H75.264c-41.472 0-75.264 33.792-75.264 75.264v237.568c0 41.472 33.792 75.264 75.264 75.264h237.568c41.472 0 75.264-33.792 75.264-75.264v-237.568c0-41.472-33.792-75.264-75.264-75.264z m-7.68 305.152H82.944v-222.72h222.72v222.72zM518.144 169.984c2.048 1.024 4.608 1.536 6.656 1.536H982.528c2.048 0 4.096-0.512 6.144-1.024 18.944-4.096 32.768-20.48 32.768-39.936 0-18.944-13.312-35.328-31.744-39.936-2.048-1.024-4.608-1.536-7.168-1.536h-457.728c-2.56 0-5.12 0.512-7.168 2.048-17.92 4.608-31.232 20.992-31.232 39.424 0 18.432 13.312 35.328 31.744 39.424zM516.608 398.336c2.56 1.536 5.12 2.048 7.68 2.048h457.728c2.56 0 4.608-0.512 7.168-1.536 18.432-4.608 31.744-20.992 31.744-39.936 0-19.456-13.824-35.84-32.768-39.936-2.048-0.512-4.096-1.024-6.144-1.024H524.288c-2.048 0-4.608 0.512-6.656 1.536-18.432 4.608-31.744 20.992-31.744 39.936 0.512 17.92 13.312 34.304 30.72 38.912zM517.12 704c2.56 1.536 5.12 2.048 7.68 2.048h457.728c1.024 0 2.048 0 3.072-0.512 21.504-1.536 38.4-19.456 38.4-40.96 0-22.528-18.432-41.472-41.472-41.472H524.8c-2.048 0-4.608 0.512-6.656 1.536-18.432 4.608-31.744 20.992-31.744 39.936 0 18.432 12.8 34.304 30.72 39.424zM986.624 827.392c-1.536-0.512-2.56-0.512-4.096-0.512h-457.728c-2.56 0-5.12 0.512-7.68 2.048-17.92 4.608-30.72 20.992-30.72 39.424 0 18.944 13.312 35.328 32.256 39.936 2.048 1.024 4.096 1.024 6.144 1.024h454.656c1.024 0 2.048 0.512 3.072 0.512 22.528 0 41.472-18.432 41.472-41.472 0-20.992-16.384-38.912-37.376-40.96z" p-id="7744"></path>
 							</svg>
 							<div>全部</div>
 						</li>
-						<li @click="changeAnimeType('正在看')" :class="{typeBtnLiActive:selectedTypeName==='正在看'}">
+						<li @click="changeFilterType('正在看')" :class="{filterBtnLiActive:selectedTypeName==='正在看'}">
 							<svg t="1741348465773" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2587">
 								<path d="M512 128C170.666667 128 0 513.770667 0 513.770667S170.666667 896 512 896s512-384 512-384-170.666667-384-512-384z m0 682.666667C286.442667 810.666667 144.032 598.592 96.032 513.578667 144 427.754667 286.442667 213.333333 512 213.333333c225.6 0 368.021333 213.312 415.978667 298.666667C879.936 597.504 737.546667 810.666667 512 810.666667z m0-469.333334c-94.250667 0-170.666667 76.416-170.666667 170.666667 0 94.261333 76.416 170.666667 170.666667 170.666667 94.261333 0 170.666667-76.405333 170.666667-170.666667 0-94.250667-76.405333-170.666667-170.666667-170.666667z m0 256c-47.050667 0-85.333333-38.282667-85.333333-85.333333s38.282667-85.333333 85.333333-85.333333 85.333333 38.282667 85.333333 85.333333-38.282667 85.333333-85.333333 85.333333z" p-id="2588"></path>
 								<path d="M512 128C170.666667 128 0 513.770667 0 513.770667S170.666667 896 512 896s512-384 512-384-170.666667-384-512-384z m0 682.666667C286.442667 810.666667 144.032 598.592 96.032 513.578667 144 427.754667 286.442667 213.333333 512 213.333333c225.6 0 368.021333 213.312 415.978667 298.666667C879.936 597.504 737.546667 810.666667 512 810.666667z m0-469.333334c-94.250667 0-170.666667 76.416-170.666667 170.666667 0 94.261333 76.416 170.666667 170.666667 170.666667 94.261333 0 170.666667-76.405333 170.666667-170.666667 0-94.250667-76.405333-170.666667-170.666667-170.666667z m0 256c-47.050667 0-85.333333-38.282667-85.333333-85.333333s38.282667-85.333333 85.333333-85.333333 85.333333 38.282667 85.333333 85.333333-38.282667 85.333333-85.333333 85.333333z" p-id="2589"></path>
 							</svg>
 							<div>正在看</div>
 						</li>
-						<li @click="changeAnimeType('已看')" :class="{typeBtnLiActive:selectedTypeName==='已看'}">
+						<li @click="changeFilterType('已看')" :class="{filterBtnLiActive:selectedTypeName==='已看'}">
 							<svg t="1741349873518" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5503">
 								<path d="M840.628 128.246c13.12-17.774 38.163-21.548 55.937-8.43 17.775 13.12 21.549 38.163 8.43 55.938L373.18 896.294c-15.988 21.663-48.379 21.663-64.367 0L79.817 586.033c-13.12-17.775-9.345-42.818 8.43-55.937 17.774-13.119 42.817-9.345 55.936 8.43l196.815 266.658 499.63-676.937z" p-id="5504"></path>
 							</svg>
 							<div>已看</div>
 						</li>
-						<li @click="changeAnimeType('未看')" :class="{typeBtnLiActive:selectedTypeName==='未看'}">
+						<li @click="changeFilterType('未看')" :class="{filterBtnLiActive:selectedTypeName==='未看'}">
 							<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
 								<path d="M547.2 512l416-416c9.6-9.6 9.6-25.6 0-35.2s-25.6-9.6-35.2 0l-416 416-416-416c-9.6-9.6-25.6-9.6-35.2 0s-9.6 25.6 0 35.2l416 416-416 416c-9.6 9.6-9.6 25.6 0 35.2s25.6 9.6 35.2 0l416-416 416 416c9.6 9.6 25.6 9.6 35.2 0s9.6-25.6 0-35.2L547.2 512z"></path>
 							</svg>
@@ -84,7 +84,56 @@
 
 			<!-- 排序 -->
 			<div class="sort">
-				sort
+				<el-popover
+						:visible-arrow="false"
+						placement="bottom"
+						trigger="click"
+						@show="openFilterPopover('sort')"
+						@hide="closeFilterPopover('sort')"
+						popper-class="sortPopover"
+						v-model="sortPopoverFlag"
+				>
+					<ul>
+						<li @click="changeFilterSort('JOIN_DESC')" :class="{filterBtnLiActive:selectedSortName === 'JOIN_DESC'}">
+							<svg t="1741356737068" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10826">
+								<path d="M853.333333 170.666667v512h128l-170.666666 213.333333-170.666667-213.333333h128V170.666667h85.333333z m-341.333333 597.333333v85.333333H128v-85.333333h384z m85.333333-298.666667v85.333334H128v-85.333334h469.333333z m0-298.666666v85.333333H128V170.666667h469.333333z" p-id="10827"></path>
+							</svg>
+							<div>按照加入时间降序</div>
+						</li>
+						<li @click="changeFilterSort('JOIN_ASC')" :class="{filterBtnLiActive:selectedSortName === 'JOIN_ASC'}">
+							<svg t="1741356803925" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="11970">
+								<path d="M810.666667 128l170.666666 213.333333h-128v512h-85.333333V341.333333h-128l170.666667-213.333333z m-213.333334 640v85.333333H128v-85.333333h469.333333z m0-298.666667v85.333334H128v-85.333334h469.333333z m-85.333333-298.666666v85.333333H128V170.666667h384z" p-id="11971"></path>
+							</svg>
+							<div>按照加入时间升序</div>
+						</li>
+						<li @click="changeFilterSort('PLAY_DESC')" :class="{filterBtnLiActive:selectedSortName === 'PLAY_DESC'}">
+							<svg t="1741356737068" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10826">
+								<path d="M853.333333 170.666667v512h128l-170.666666 213.333333-170.666667-213.333333h128V170.666667h85.333333z m-341.333333 597.333333v85.333333H128v-85.333333h384z m85.333333-298.666667v85.333334H128v-85.333334h469.333333z m0-298.666666v85.333333H128V170.666667h469.333333z" p-id="10827"></path>
+							</svg>
+							<div>按照播放时间降序</div>
+						</li>
+						<li @click="changeFilterSort('PLAY_ASC')" :class="{filterBtnLiActive:selectedSortName === 'PLAY_ASC'}">
+							<svg t="1741356803925" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="11970">
+								<path d="M810.666667 128l170.666666 213.333333h-128v512h-85.333333V341.333333h-128l170.666667-213.333333z m-213.333334 640v85.333333H128v-85.333333h469.333333z m0-298.666667v85.333334H128v-85.333334h469.333333z m-85.333333-298.666666v85.333333H128V170.666667h384z" p-id="11971"></path>
+							</svg>
+							<div>按照播放时间升序</div>
+						</li>
+					</ul>
+					<div class="btn" slot="reference" ref="sortBtn">
+						<svg t="1741355886874" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7629">
+							<path d="M499.712645 782.909297l-76.488784 66.198125V460.775809a47.971881 47.971881 0 0 0-17.355889-36.247697A64.201429 64.201429 0 0 0 364.039768 409.578497c-15.717575 0-30.718387 5.375718-41.879401 14.949615A47.971881 47.971881 0 0 0 304.855675 460.775809v388.331613l-76.539982-66.198125a64.406219 64.406219 0 0 0-41.623414-14.335247 64.099035 64.099035 0 0 0-41.316231 15.000812 48.023079 48.023079 0 0 0-17.355889 35.735724 47.767092 47.767092 0 0 0 16.639126 35.991711l177.552279 153.591936c5.478112 4.76135 12.031368 8.549951 19.198992 11.161014a67.170874 67.170874 0 0 0 45.360819 0c7.167624-2.559866 13.72088-6.399664 19.250189-11.161014l177.552278-153.591936a47.767092 47.767092 0 0 0 16.58793-35.991711 48.023079 48.023079 0 0 0-17.304692-35.735724 64.150232 64.150232 0 0 0-41.367428-15.000812 64.406219 64.406219 0 0 0-41.623415 14.335247h-0.102395zM879.340715 168.592749l-177.552279-153.591937a59.952053 59.952053 0 0 0-19.301387-11.109816 67.785241 67.785241 0 0 0-45.207226 0 59.900855 59.900855 0 0 0-19.301387 11.109816l-177.552278 153.591937a47.767092 47.767092 0 0 0-16.58793 35.99171 48.023079 48.023079 0 0 0 17.304692 35.786922c11.007422 9.471503 25.854643 14.847221 41.367428 14.949615 15.512786 0.153592 30.462401-5.017337 41.623415-14.335248l76.642376-66.198124v388.331612c0 13.618485 6.246072 26.622602 17.355889 36.247697 11.058619 9.573897 26.110629 14.949615 41.828204 14.949615 15.717575 0 30.718387-5.375718 41.828204-14.949615a47.971881 47.971881 0 0 0 17.407086-36.247697V174.787624l76.488785 66.198124c11.161014 9.317911 26.110629 14.488839 41.623414 14.335248 15.512786-0.102395 30.360006-5.478112 41.316231-14.949615a48.023079 48.023079 0 0 0 17.355889-35.786922 47.767092 47.767092 0 0 0-16.639126-35.99171z" p-id="7630"></path>
+						</svg>
+						<div>
+							<span v-show="selectedSortName === 'JOIN_DESC'">按照加入时间降序</span>
+							<span v-show="selectedSortName === 'JOIN_ASC'">按照加入时间升序</span>
+							<span v-show="selectedSortName === 'PLAY_DESC'">按照播放时间降序</span>
+							<span v-show="selectedSortName === 'PLAY_ASC'">按照播放时间升序</span>
+						</div>
+						<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="chevron-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+							<path d="M239 401c9.4 9.4 24.6 9.4 33.9 0L465 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-175 175L81 175c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9L239 401z"></path>
+						</svg>
+					</div>
+				</el-popover>
 			</div>
 		</div>
 		<!-- endregion -->
@@ -158,27 +207,30 @@
 		>
 			<ul>
 				<li @click="updateAnimeWatchStatus('WATCHING')" v-show="popover.watchStatus !== 'WATCHING'">
-					<svg style="margin-left: -4px;" width="23px" height="23px" stroke="black" stroke-width="20px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-						<path d="M511.95904 260.90496c177.83296 0 335.872 107.43808 403.712 269.14304l3.456 8.27904-3.456 8.23296a437.93408 437.93408 0 0 1-403.712 269.01504 437.68832 437.68832 0 0 1-403.62496-269.01504l-3.46112-8.23296 3.41504-8.27904a437.632 437.632 0 0 1 403.62496-269.14304h0.04608z m0 42.67008a394.96192 394.96192 0 0 0-364.33408 242.98496l3.584-8.27904 1.408 3.2a394.99264 394.99264 0 0 0 346.67008 231.25504l12.62592 0.16896a395.24864 395.24864 0 0 0 364.37504-242.85696l-3.62496 8.192-1.36704-3.11296a395.15136 395.15136 0 0 0-346.752-231.34208l-12.63104-0.20992h0.04608z" />
-						<path d="M512 426.66496a128 128 0 1 1 0 256.00512 128 128 0 0 1 0-256z m0 42.67008A85.33504 85.33504 0 1 0 512 640a85.33504 85.33504 0 0 0 0-170.66496z" />
+					<svg t="1741348465773" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2587">
+						<path d="M512 128C170.666667 128 0 513.770667 0 513.770667S170.666667 896 512 896s512-384 512-384-170.666667-384-512-384z m0 682.666667C286.442667 810.666667 144.032 598.592 96.032 513.578667 144 427.754667 286.442667 213.333333 512 213.333333c225.6 0 368.021333 213.312 415.978667 298.666667C879.936 597.504 737.546667 810.666667 512 810.666667z m0-469.333334c-94.250667 0-170.666667 76.416-170.666667 170.666667 0 94.261333 76.416 170.666667 170.666667 170.666667 94.261333 0 170.666667-76.405333 170.666667-170.666667 0-94.250667-76.405333-170.666667-170.666667-170.666667z m0 256c-47.050667 0-85.333333-38.282667-85.333333-85.333333s38.282667-85.333333 85.333333-85.333333 85.333333 38.282667 85.333333 85.333333-38.282667 85.333333-85.333333 85.333333z" p-id="2588"></path>
+						<path d="M512 128C170.666667 128 0 513.770667 0 513.770667S170.666667 896 512 896s512-384 512-384-170.666667-384-512-384z m0 682.666667C286.442667 810.666667 144.032 598.592 96.032 513.578667 144 427.754667 286.442667 213.333333 512 213.333333c225.6 0 368.021333 213.312 415.978667 298.666667C879.936 597.504 737.546667 810.666667 512 810.666667z m0-469.333334c-94.250667 0-170.666667 76.416-170.666667 170.666667 0 94.261333 76.416 170.666667 170.666667 170.666667 94.261333 0 170.666667-76.405333 170.666667-170.666667 0-94.250667-76.405333-170.666667-170.666667-170.666667z m0 256c-47.050667 0-85.333333-38.282667-85.333333-85.333333s38.282667-85.333333 85.333333-85.333333 85.333333 38.282667 85.333333 85.333333-38.282667 85.333333-85.333333 85.333333z" p-id="2589"></path>
 					</svg>
 					<div>标记为正在看</div>
 				</li>
 				<li @click="updateAnimeWatchStatus('FINISHED')" v-show="popover.watchStatus !== 'FINISHED'">
-					<svg width="18px" height="18px" stroke="black" stroke-width="20px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
-						<path d="M939.36 218.912a32 32 0 0 1 45.856 44.672l-538.016 552a32 32 0 0 1-43.776 1.92L63.872 526.048a32 32 0 1 1 41.696-48.544l316.768 271.936L939.36 218.88z"></path>
+					<svg t="1741349873518" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5503">
+						<path d="M840.628 128.246c13.12-17.774 38.163-21.548 55.937-8.43 17.775 13.12 21.549 38.163 8.43 55.938L373.18 896.294c-15.988 21.663-48.379 21.663-64.367 0L79.817 586.033c-13.12-17.775-9.345-42.818 8.43-55.937 17.774-13.119 42.817-9.345 55.936 8.43l196.815 266.658 499.63-676.937z" p-id="5504"></path>
 					</svg>
 					<div>标记为已看</div>
 				</li>
 				<li @click="updateAnimeWatchStatus('NO_WATCH')" v-show="popover.watchStatus !== 'NO_WATCH'">
-					<svg width="16px" height="16px" stroke="black" stroke-width="20px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+					<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
 						<path d="M547.2 512l416-416c9.6-9.6 9.6-25.6 0-35.2s-25.6-9.6-35.2 0l-416 416-416-416c-9.6-9.6-25.6-9.6-35.2 0s-9.6 25.6 0 35.2l416 416-416 416c-9.6 9.6-9.6 25.6 0 35.2s25.6 9.6 35.2 0l416-416 416 416c9.6 9.6 25.6 9.6 35.2 0s9.6-25.6 0-35.2L547.2 512z"></path>
 					</svg>
 					<div>标记为未看</div>
 				</li>
 				<li @click="toDustbin">
-					<svg width="18px" height="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-						<path d="M177.1 48h93.7c2.7 0 5.2 1.3 6.7 3.6l19 28.4h-145l19-28.4c1.5-2.2 4-3.6 6.7-3.6zM354.2 80L317.5 24.9C307.1 9.4 289.6 0 270.9 0H177.1c-18.7 0-36.2 9.4-46.6 24.9L93.8 80H80.1 32 24C10.7 80 0 90.7 0 104s10.7 24 24 24H35.6L59.6 452.7c2.5 33.4 30.3 59.3 63.8 59.3H324.6c33.5 0 61.3-25.9 63.8-59.3L412.4 128H424c13.3 0 24-10.7 24-24s-10.7-24-24-24h-8H367.9 354.2zm10.1 48L340.5 449.2c-.6 8.4-7.6 14.8-16 14.8H123.4c-8.4 0-15.3-6.5-16-14.8L83.7 128H364.3z"></path>
+					<svg t="1741332809270"  viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="14396">
+						<path d="M944 192l-188.8 0 0-44.8c0-54.4-44.8-99.2-99.2-99.2l-294.4 0c-54.4 0-99.2 44.8-99.2 99.2l0 44.8-179.2 0c-12.8 0-25.6 9.6-25.6 25.6 0 12.8 9.6 25.6 25.6 25.6l60.8 0 0 0 0 633.6c0 54.4 44.8 99.2 99.2 99.2l550.4 0c54.4 0 99.2-44.8 99.2-99.2l0-630.4 0-3.2 51.2 0c12.8 0 25.6-9.6 25.6-25.6C966.4 204.8 960 192 944 192zM316.8 147.2c0-25.6 22.4-48 48-48l294.4 0c25.6 0 48 22.4 48 48l0 44.8-390.4 0L316.8 147.2zM841.6 867.2c0 28.8-16 57.6-41.6 57.6l-550.4 0c-25.6 0-54.4-19.2-54.4-44.8l3.2-636.8 643.2 0 0 0L841.6 867.2z" p-id="14397"></path>
+						<path d="M368 380.8c-16 0-25.6 9.6-25.6 25.6l0 342.4c0 16 12.8 25.6 25.6 25.6 12.8 0 25.6-9.6 25.6-25.6l0-342.4C390.4 393.6 384 380.8 368 380.8z" p-id="14398"></path>
+						<path d="M528 380.8c-16 0-25.6 9.6-25.6 25.6l0 342.4c0 16 12.8 25.6 25.6 25.6 12.8 0 25.6-9.6 25.6-25.6l0-342.4C550.4 393.6 544 380.8 528 380.8z" p-id="14399"></path>
+						<path d="M688 380.8c-16 0-25.6 9.6-25.6 25.6l0 342.4c0 16 12.8 25.6 25.6 25.6 12.8 0 25.6-9.6 25.6-25.6l0-342.4C710.4 393.6 704 380.8 688 380.8z" p-id="14400"></path>
 					</svg>
 					<div>发送到垃圾箱</div>
 				</li>
@@ -200,8 +252,11 @@ export default {
 	components: {CountTo, EndHr, ScrollAnimation},
 	data() {
 		return {
-			//移动端选择的筛选类型名称
+			//选择分类类型
 			selectedTypeName: '全部',
+
+			//选择排序类型
+			selectedSortName: 'JOIN_DESC',
 
 			//滚动加载动画标志
 			scrollLoading: false,
@@ -234,7 +289,11 @@ export default {
 				index: 0 //动漫在列表中的位置
 			},
 
-			typePopoverFlag: false
+			//typePopover显示标志
+			typePopoverFlag: false,
+
+			//sortPopover显示标志
+			sortPopoverFlag: false
 		}
 	},
 	computed: {
@@ -293,13 +352,14 @@ export default {
 
 			let oldStatus = null;
 			switch (this.selectedTypeName) {
+				case '全部': oldStatus = 'ALL'; break;
 				case '未看': oldStatus = 'NO_WATCH'; break;
 				case '正在看': oldStatus = 'WATCHING'; break;
 				case '已看': oldStatus = 'FINISHED'; break;
 			}
 
 			//更改服务器数据
-			let result = await reqUpdateAnimeWatchStatus(this.popover.animeUserId, this.current, this.size, this.keyword, newStatus, oldStatus);
+			let result = await reqUpdateAnimeWatchStatus(this.popover.animeUserId, this.current, this.size, this.keyword, newStatus, oldStatus, this.selectedSortName);
 			if (result.code !== 200) {
 				this.$message.error('标记失败！');
 				return ;
@@ -328,11 +388,12 @@ export default {
 
 			let status = null;
 			switch (this.selectedTypeName) {
+				case '全部': status = 'ALL'; break;
 				case '未看': status = 'NO_WATCH'; break;
 				case '正在看': status = 'WATCHING'; break;
 				case '已看': status = 'FINISHED'; break;
 			}
-			let result = await reqLogicallyDeleteAnime(this.popover.animeUserId, this.current, this.size, this.keyword, status);
+			let result = await reqLogicallyDeleteAnime(this.popover.animeUserId, this.current, this.size, this.keyword, status, this.selectedSortName);
 			if (result.code !== 200) {
 				this.$message.error('移入失败！');
 				return ;
@@ -353,17 +414,16 @@ export default {
 		//获取对应分类的第一页数据
 		async getFirstPageAnime() {
 			this.current = 1;
-			let status;
-			if (this.selectedTypeName === '已看') {
-				status = 'FINISHED';
-			} else if (this.selectedTypeName === '未看') {
-				status = 'NO_WATCH';
-			} else if (this.selectedTypeName === '正在看') {
-				status = 'WATCHING';
+			let status = null;
+			switch (this.selectedTypeName) {
+				case '全部': status = 'ALL'; break;
+				case '未看': status = 'NO_WATCH'; break;
+				case '正在看': status = 'WATCHING'; break;
+				case '已看': status = 'FINISHED'; break;
 			}
 
 			//获取数据
-			let result = await reqGetPageAnime(this.current, this.size, this.keyword, status);
+			let result = await reqGetPageAnime(this.current, this.size, this.keyword, status, this.selectedSortName);
 			if (result.code !== 200) {
 				this.$message.error('数据获取失败！');
 				return ;
@@ -386,17 +446,16 @@ export default {
 			//开启加载动画
 			this.scrollLoading = true;
 
-			let status;
-			if (this.selectedTypeName === '已看') {
-				status = 'FINISHED';
-			} else if (this.selectedTypeName === '未看') {
-				status = 'NO_WATCH';
-			} else if (this.selectedTypeName === '正在看') {
-				status = 'WATCHING';
+			let status = null;
+			switch (this.selectedTypeName) {
+				case '全部': status = 'ALL'; break;
+				case '未看': status = 'NO_WATCH'; break;
+				case '正在看': status = 'WATCHING'; break;
+				case '已看': status = 'FINISHED'; break;
 			}
 			try {
 				//获取数据
-				let result = await reqGetPageAnime(++this.current, this.size, this.keyword, status);
+				let result = await reqGetPageAnime(++this.current, this.size, this.keyword, status, this.selectedSortName);
 				if (result.code !== 200) {
 					this.$message.error('数据获取失败！');
 					return ;
@@ -410,8 +469,8 @@ export default {
 			}
 		},
 
-		//点击动漫分类按钮
-		changeAnimeType(type) {
+		//修改筛选分类
+		changeFilterType(type) {
 			if (this.selectedTypeName === type) {
 				return;
 			}
@@ -508,18 +567,44 @@ export default {
 		},
 
 		//打开typePopover
-		openTypePopover() {
+		openFilterPopover(popoverType) {
 			//打开全局遮罩
 			this.maskFlag = true;
 
 			//添加激活样式
-			this.$refs.typeBtn.classList.add('typeBtnActive');
+			if (popoverType === 'type') {
+				this.$refs.typeBtn.classList.add('filterBtnActive');
+			} else {
+				this.$refs.sortBtn.classList.add('filterBtnActive');
+			}
 		},
 
 		//关闭typePopover
-		closeTypePopover() {
+		closeFilterPopover(popoverType) {
 			this.maskFlag = false;
-			this.$refs.typeBtn.classList.remove('typeBtnActive');
+			if (popoverType === 'type') {
+				this.$refs.typeBtn.classList.remove('filterBtnActive');
+			} else {
+				this.$refs.sortBtn.classList.remove('filterBtnActive');
+			}
+		},
+
+		//修改筛选排序
+		changeFilterSort(sort) {
+			if (this.selectedSortName === sort) {
+				return;
+			}
+
+			this.sortPopoverFlag = false;
+
+			//修改内容标志
+			this.selectedSortName = sort;
+
+			//更改当前页为第一页
+			this.current = 1;
+
+			//获取对应分类第一页动漫数据
+			this.getFirstPageAnime();
 		}
 	},
 	created() {
@@ -588,7 +673,6 @@ export default {
 			min-width: 76px;
 			margin-left: 15px;
 			font-weight: bold;
-			color: #3c3838;
 		}
 	}
 
@@ -603,6 +687,7 @@ export default {
 
 		@media screen and (max-width: 768px) {
 			display: block;
+			padding: 10px;
 		}
 
 		.addBtn {
@@ -715,23 +800,28 @@ export default {
 		display: flex;
 		justify-content: space-between;
 
-		/* 分类 */
-		.type {
-			display: flex;
+		@media screen and (max-width: 768px) {
+			padding: 10px;
+		}
 
-			.typeBtnActive {
-				color: #2B0AFF;
-				background-color: #eae7ff;
+		.filterBtnActive {
+			color: #2B0AFF;
+			background-color: #eae7ff;
 
-				svg {
-					fill: #2b0aff;
-					stroke: #2b0aff;
-				}
-
-				svg:nth-child(3) {
-					transform: rotateZ(180deg);
-				}
+			svg {
+				fill: #2b0aff;
+				stroke: #2b0aff;
 			}
+
+			svg:nth-child(3) {
+				transform: rotateZ(180deg);
+			}
+		}
+
+		/* 分类 */
+		.type,
+		.sort {
+			display: flex;
 
 			.btn {
 				display: flex;
@@ -741,6 +831,10 @@ export default {
 				cursor: pointer;
 				transition: background-color .3s;
 				padding: 10px 15px;
+
+				@media screen and (max-width: 768px) {
+					padding: 10px;
+				}
 
 				&:hover {
 					background-color: #eae7ff;
@@ -757,11 +851,6 @@ export default {
 				}
 			}
 		}
-
-		/* 排序 */
-		.sort {
-
-		}
 	}
 
 	/* 统计 */
@@ -772,6 +861,10 @@ export default {
 		border-radius: 10px;
 		padding: 15px;
 		text-align: center;
+
+		@media screen and (max-width: 768px) {
+			padding: 10px;
+		}
 
 		.number-font {
 			font-family: "numberfont" !important;
@@ -966,10 +1059,17 @@ export default {
 
 	/* 复用popover */
 	.animeListPopover ul {
+		li svg {
+			fill: #000000;
+			stroke: #000000;
+			stroke-width: 10px;
+		}
+
 		li:last-child {
 			color: red;
 			svg {
 				fill: red;
+				stroke: red;
 			}
 		}
 	}
@@ -977,18 +1077,19 @@ export default {
 </style>
 
 <style lang="scss">
-.typePopover ul {
-	.typeBtnLiActive {
-		color: #2B0AFF;
-		background-color: #eae7ff;
+.filterBtnLiActive {
+	color: #2B0AFF !important;
+	background-color: #eae7ff;
 
-		svg {
-			fill: #2b0aff;
-			stroke: #2b0aff;
-		}
+	svg {
+		fill: #2b0aff !important;
+		stroke: #2b0aff !important;
 	}
+}
 
-	li svg {
+.typePopover,
+.sortPopover {
+	ul li svg {
 		fill: #000000;
 		stroke: #000000;
 		stroke-width: 10px;

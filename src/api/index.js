@@ -79,14 +79,15 @@ export const reqAddAnime = (anime) => {
  * @param current 当前页
  * @param size 每页展示数量
  * @param keyword 搜索关键词
- * @param status 分类，null为查询全部
+ * @param type 筛选分类
+ * @param sort 筛选排序
  * @returns 动漫分页数据
  */
-export const reqGetPageAnime = (current, size, keyword, status=null) => {
+export const reqGetPageAnime = (current, size, keyword, type, sort) => {
 	return axios({
 		method: 'GET',
 		url: '/anime',
-		params: {current, size, keyword, status}
+		params: {current, size, keyword, type, sort}
 	});
 }
 
@@ -98,11 +99,12 @@ export const reqGetPageAnime = (current, size, keyword, status=null) => {
  * @param size 每页展示数量
  * @param keyword 关键词
  * @param newStatus 新状态
- * @param oldStatus 旧状态
+ * @param type 筛选分类
+ * @param sort 排序
  * @returns 当前页最后一条数据
  */
-export const reqUpdateAnimeWatchStatus = (animeUserId, current, size, keyword, newStatus, oldStatus) => {
-	return axios.put(`/anime/${animeUserId}/watch-status`, {current, size, keyword, newStatus, oldStatus});
+export const reqUpdateAnimeWatchStatus = (animeUserId, current, size, keyword, newStatus, type, sort) => {
+	return axios.put(`/anime/${animeUserId}/watch-status`, {current, size, keyword, newStatus, type, sort});
 }
 
 /**
@@ -111,14 +113,15 @@ export const reqUpdateAnimeWatchStatus = (animeUserId, current, size, keyword, n
  * @param current 当前页
  * @param size 每页展示数量
  * @param keyword 关键词
- * @param status 当前分类状态
+ * @param type 筛选分类
+ * @param sort 排序
  * @returns 当前页最后一条数据
  */
-export const reqLogicallyDeleteAnime = (animeUserId, current, size, keyword, status) => {
+export const reqLogicallyDeleteAnime = (animeUserId, current, size, keyword, type, sort) => {
 	return axios({
 		method: 'DELETE',
 		url: `/anime/${animeUserId}/soft-delete`,
-		params: {current, size, keyword, status}
+		params: {current, size, keyword, type, sort}
 	});
 }
 

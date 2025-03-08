@@ -2,8 +2,8 @@
 	<div class="viewingHistory">
 		<!--region 模块分类名称-->
 		<div class="typeTitle">
-			<svg width="22px" height="22px" viewBox="0 0 1053 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-				<path d="M526.628571 117.028571c216.502857 0 394.971429 178.468571 394.971429 394.971429S743.131429 906.971429 526.628571 906.971429s-394.971429-178.468571-394.971428-394.971429 178.468571-394.971429 394.971428-394.971429z m0-87.771428c-266.24 0-482.742857 213.577143-482.742857 482.742857 0 266.24 213.577143 482.742857 482.742857 482.742857 266.24 0 482.742857-213.577143 482.742858-482.742857S792.868571 29.257143 526.628571 29.257143z" /><path fill="#3c3838" d="M678.765714 760.685714c-11.702857 0-23.405714-2.925714-32.182857-14.628571l-152.137143-175.542857c-5.851429-5.851429-11.702857-17.554286-11.702857-29.257143V321.828571c0-23.405714 20.48-43.885714 43.885714-43.885714s43.885714 20.48 43.885715 43.885714v201.874286l143.36 160.914286c14.628571 17.554286 11.702857 46.811429-2.925715 61.44-11.702857 11.702857-20.48 14.628571-32.182857 14.628571z"></path>
+			<svg t="1741333367589" viewBox="0 0 1080 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="17228">
+				<path d="M523.637 512 523.637 197.904c0-19.589-15.629-34.995-34.91-34.995-19.414 0-34.908 15.668-34.908 34.995l0 348.919c0 19.589 15.629 34.995 34.908 34.995 1.956 0 3.871-0.159 5.735-0.465 1.854 0.306 3.757 0.465 5.698 0.465l233.134 0c19.285 0 34.705-15.63 34.705-34.909C768 527.495 752.461 512 733.295 512L523.637 512zM512 1024C229.23 1024 0 794.77 0 512S229.23 0 512 0c282.769 0 512 229.23 512 512S794.77 1024 512 1024zM512 954.182c244.21 0 442.181-197.972 442.181-442.182 0-244.21-197.971-442.182-442.181-442.182S69.818 267.79 69.818 512C69.818 756.21 267.79 954.182 512 954.182z" p-id="17229"></path>
 			</svg>
 			<div>观看历程</div>
 		</div>
@@ -64,7 +64,11 @@ export default {
 			//加载动画标志
 			loading: false,
 
-			chart: null
+			//echarts实例
+			chart: null,
+
+			//饼图数据
+			chartData: []
 		}
 	},
 	computed: {
@@ -81,7 +85,7 @@ export default {
 				this.loading = true;
 
 				//获取数据
-				let result = await reqGetPageAnime(++this.current, this.size, '', 'FINISHED');
+				let result = await reqGetPageAnime(++this.current, this.size, null, 'FINISHED', 'JOIN_DESC');
 				if (result.code !== 200) {
 					this.$message.error('获取数据失败！');
 					return ;
@@ -118,7 +122,7 @@ export default {
 			this.current = 1;
 
 			//获取数据
-			let result = await reqGetPageAnime(this.current, this.size, '', 'FINISHED');
+			let result = await reqGetPageAnime(this.current, this.size, null, 'FINISHED', 'JOIN_DESC');
 			if (result.code !== 200) {
 				this.$message.error('获取数据失败！');
 				return;
@@ -157,7 +161,6 @@ export default {
 
 			//过滤掉值为0的项
 			chartData = chartData.filter(item => item.value !== 0);
-			this.chart = echarts.init(this.$refs.chart);
 			let option = {
 				tooltip: {
 					trigger: 'item'
@@ -182,6 +185,7 @@ export default {
 					}
 				]
 			}
+			this.chart = echarts.init(this.$refs.chart);
 			this.chart.setOption(option);
 
 			//监听窗口大小变化，重新渲染饼图
@@ -206,7 +210,9 @@ export default {
 		window.removeEventListener('resize', this.chartHandleResize);
 
 		//销毁echarts实例
-		this.chart.dispose();
+		if (this.chart) {
+			this.chart.dispose();
+		}
 	},
 	//从详情页面返回
 	activated() {
@@ -251,14 +257,17 @@ export default {
 		}
 
 		svg {
-			fill: #3c3838;
+			width: 22px;
+			height: 22px;
+			fill: #000000;
+			stroke: #000000;
+			stroke-width: 20px;
 		}
 
 		div {
 			min-width: 76px;
 			margin-left: 15px;
 			font-weight: bold;
-			color: #3c3838;
 		}
 	}
 

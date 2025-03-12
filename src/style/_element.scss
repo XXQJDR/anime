@@ -1,6 +1,32 @@
 /* element组件自定义 */
 /* element弹出框样式 */
 @mixin anime-control-popover-style {
+  /* popover激活样式 */
+  .popoverActive {
+    color: #2B0AFF;
+    background-color: #eae7ff;
+
+    svg {
+      fill: #2b0aff;
+      stroke: #2b0aff;
+    }
+
+    svg:nth-child(3) {
+      transform: rotateZ(180deg);
+    }
+  }
+
+  /* popover选中项样式 */
+  .popoverLiActive {
+    color: #2B0AFF !important;
+    background-color: #eae7ff !important;
+
+    svg {
+      fill: #2b0aff !important;
+      stroke: #2b0aff !important;
+    }
+  }
+
   .el-popover {
     width: auto !important;
     border-radius: 10px !important;

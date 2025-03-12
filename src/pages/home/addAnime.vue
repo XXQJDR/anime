@@ -18,9 +18,57 @@
 		</div>
 		<!-- endregion -->
 
+		<!-- region 排序 -->
+		<div class="sort">
+			<el-popover
+					:visible-arrow="false"
+					placement="bottom"
+					trigger="click"
+					@show="openSortPopover"
+					@hide="closeSortPopover"
+					popper-class="sortPopover"
+					v-model="sortPopoverFlag"
+			>
+				<ul>
+					<li @click="changeSort('DEFAULT')" :class="{popoverLiActive:selectedSortName === 'DEFAULT'}">
+						<svg t="1741356737068" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10826">
+							<path d="M853.333333 170.666667v512h128l-170.666666 213.333333-170.666667-213.333333h128V170.666667h85.333333z m-341.333333 597.333333v85.333333H128v-85.333333h384z m85.333333-298.666667v85.333334H128v-85.333334h469.333333z m0-298.666666v85.333333H128V170.666667h469.333333z" p-id="10827"></path>
+						</svg>
+						<div>默认排序</div>
+					</li>
+					<li @click="changeSort('PLAY_DESC')" :class="{popoverLiActive:selectedSortName === 'PLAY_DESC'}">
+						<svg t="1741356737068" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10826">
+							<path d="M853.333333 170.666667v512h128l-170.666666 213.333333-170.666667-213.333333h128V170.666667h85.333333z m-341.333333 597.333333v85.333333H128v-85.333333h384z m85.333333-298.666667v85.333334H128v-85.333334h469.333333z m0-298.666666v85.333333H128V170.666667h469.333333z" p-id="10827"></path>
+						</svg>
+						<div>播放时间降序</div>
+					</li>
+					<li @click="changeSort('PLAY_ASC')" :class="{popoverLiActive:selectedSortName === 'PLAY_ASC'}">
+						<svg t="1741356803925" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="11970">
+							<path d="M810.666667 128l170.666666 213.333333h-128v512h-85.333333V341.333333h-128l170.666667-213.333333z m-213.333334 640v85.333333H128v-85.333333h469.333333z m0-298.666667v85.333334H128v-85.333334h469.333333z m-85.333333-298.666666v85.333333H128V170.666667h384z" p-id="11971"></path>
+						</svg>
+						<div>播放时间升序</div>
+					</li>
+				</ul>
+				<div class="btn" slot="reference" ref="sortBtn">
+					<svg t="1741355886874" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7629">
+						<path d="M499.712645 782.909297l-76.488784 66.198125V460.775809a47.971881 47.971881 0 0 0-17.355889-36.247697A64.201429 64.201429 0 0 0 364.039768 409.578497c-15.717575 0-30.718387 5.375718-41.879401 14.949615A47.971881 47.971881 0 0 0 304.855675 460.775809v388.331613l-76.539982-66.198125a64.406219 64.406219 0 0 0-41.623414-14.335247 64.099035 64.099035 0 0 0-41.316231 15.000812 48.023079 48.023079 0 0 0-17.355889 35.735724 47.767092 47.767092 0 0 0 16.639126 35.991711l177.552279 153.591936c5.478112 4.76135 12.031368 8.549951 19.198992 11.161014a67.170874 67.170874 0 0 0 45.360819 0c7.167624-2.559866 13.72088-6.399664 19.250189-11.161014l177.552278-153.591936a47.767092 47.767092 0 0 0 16.58793-35.991711 48.023079 48.023079 0 0 0-17.304692-35.735724 64.150232 64.150232 0 0 0-41.367428-15.000812 64.406219 64.406219 0 0 0-41.623415 14.335247h-0.102395zM879.340715 168.592749l-177.552279-153.591937a59.952053 59.952053 0 0 0-19.301387-11.109816 67.785241 67.785241 0 0 0-45.207226 0 59.900855 59.900855 0 0 0-19.301387 11.109816l-177.552278 153.591937a47.767092 47.767092 0 0 0-16.58793 35.99171 48.023079 48.023079 0 0 0 17.304692 35.786922c11.007422 9.471503 25.854643 14.847221 41.367428 14.949615 15.512786 0.153592 30.462401-5.017337 41.623415-14.335248l76.642376-66.198124v388.331612c0 13.618485 6.246072 26.622602 17.355889 36.247697 11.058619 9.573897 26.110629 14.949615 41.828204 14.949615 15.717575 0 30.718387-5.375718 41.828204-14.949615a47.971881 47.971881 0 0 0 17.407086-36.247697V174.787624l76.488785 66.198124c11.161014 9.317911 26.110629 14.488839 41.623414 14.335248 15.512786-0.102395 30.360006-5.478112 41.316231-14.949615a48.023079 48.023079 0 0 0 17.355889-35.786922 47.767092 47.767092 0 0 0-16.639126-35.99171z" p-id="7630"></path>
+					</svg>
+					<div>
+						<span v-show="selectedSortName === 'DEFAULT'">默认排序</span>
+						<span v-show="selectedSortName === 'PLAY_DESC'">播放时间降序</span>
+						<span v-show="selectedSortName === 'PLAY_ASC'">播放时间升序</span>
+					</div>
+					<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="chevron-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+						<path d="M239 401c9.4 9.4 24.6 9.4 33.9 0L465 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-175 175L81 175c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9L239 401z"></path>
+					</svg>
+				</div>
+			</el-popover>
+		</div>
+		<!-- endregion -->
+
 		<!-- 搜索结果 -->
 		<div class="suggestion" v-show="suggestionFlag" v-loading="loading">
-			<div class="item" v-for="anime in suggestionList" :key="anime.id">
+			<div class="item" v-for="anime in suggestionSortList" :key="anime.id">
 				<div class="img">
 					<img v-lazy="anime.cover" alt="">
 					<div class="mask" @click="addAnimeHandle(anime)">
@@ -59,15 +107,35 @@ export default {
 			//搜索关键词
 			keyword: '',
 
-			//搜索结果列表
+			//原始搜索结果列表
 			suggestionList: [],
+
+			//排序结果列表
+			suggestionSortList: [],
 
 			//搜索结果框显示标志
 			suggestionFlag: false,
 
 			//加载标志
-			loading: false
+			loading: false,
+
+			//排序方式
+			selectedSortName: 'DEFAULT',
+
+			//popover展示标志
+			sortPopoverFlag: false
 		}
+	},
+	computed: {
+		//全局遮罩显示标志
+		maskFlag: {
+			get() {
+				return this.$store.state.maskFlag;
+			},
+			set(val) {
+				this.$store.commit('MASK_FLAG', val);
+			}
+		},
 	},
 	methods: {
 		//按下回车搜索回调
@@ -83,6 +151,20 @@ export default {
 			//搜索动漫
 			let result = await reqSearchAnimeForCrawl(this.keyword);
 			this.suggestionList = result.data || [];
+			this.suggestionSortList = [...this.suggestionList];
+
+			//排序
+			switch (this.selectedSortName) {
+				case 'PLAY_DESC':
+					this.suggestionSortList.sort((a1, a2) => a2.firstPlayDate > a1.firstPlayDate ? 1 : -1);
+					break;
+				case 'PLAY_ASC':
+					this.suggestionSortList.sort((a1, a2) => a1.firstPlayDate > a2.firstPlayDate ? 1 : -1);
+					break;
+				default:
+					this.suggestionSortList = [...this.suggestionList];
+					break;
+			}
 
 			//搜索结果为空关闭结果框
 			if (this.suggestionList.length === 0) {
@@ -115,6 +197,48 @@ export default {
 		//输入框获取焦点自动全选
 		handleFocus(e) {
 			e.currentTarget.select();
+		},
+
+		//打开popover
+		openSortPopover() {
+			//打开全局遮罩
+			this.maskFlag = true;
+
+			//添加激活样式
+			this.$refs.sortBtn.classList.add('popoverActive');
+		},
+
+		//关闭popover
+		closeSortPopover() {
+			this.maskFlag = false;
+			this.$refs.sortBtn.classList.remove('popoverActive');
+		},
+
+		changeSort(sort) {
+			if (this.selectedSortName === sort) {
+				return;
+			}
+
+			//修改内容标志
+			this.selectedSortName = sort;
+
+			//排序
+			if (this.suggestionList.length !== 0) {
+				switch (this.selectedSortName) {
+					case 'PLAY_DESC':
+						this.suggestionSortList.sort((a1, a2) => a2.firstPlayDate > a1.firstPlayDate ? 1 : -1);
+						break;
+					case 'PLAY_ASC':
+						this.suggestionSortList.sort((a1, a2) => a1.firstPlayDate > a2.firstPlayDate ? 1 : -1);
+						break;
+					default:
+						this.suggestionSortList = [...this.suggestionList];
+						break;
+				}
+			}
+
+			//关闭popover
+			this.sortPopoverFlag = false;
 		}
 	}
 }
@@ -170,6 +294,7 @@ export default {
 			transform: translateY(-50%);
 		}
 
+		/* 输入框 */
 		input {
 			width: 100%;
 			height: 45px;
@@ -194,6 +319,57 @@ export default {
 			&::-ms-input-placeholder,
 			&::-webkit-input-placeholder {
 				text-align: center;
+			}
+		}
+	}
+
+	/* 排序 */
+	.sort {
+		margin-top: .6rem;
+		background-color: #FFFFFF;
+		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
+		border-radius: 10px;
+		padding: 15px;
+		display: flex;
+		justify-content: center;
+
+		@media screen and (max-width: 768px) {
+			padding: 10px;
+		}
+
+		.btn {
+			display: flex;
+			align-items: center;
+			font-size: 1.1rem;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color .3s;
+			padding: 10px 15px;
+			box-sizing: border-box;
+
+			@media screen and (max-width: 768px) {
+				padding: 10px;
+			}
+
+			&:hover {
+				background-color: #eae7ff;
+			}
+
+			svg {
+				width: 18px;
+				height: 18px;
+				transition: all .3s;
+			}
+
+			span {
+				display: block;
+				width: 120px;
+				text-align: center;
+				margin: 0 10px;
+
+				@media screen and (max-width: 768px) {
+					width: 94px;
+				}
 			}
 		}
 	}

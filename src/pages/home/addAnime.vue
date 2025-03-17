@@ -187,6 +187,7 @@ export default {
 
 			//从搜索结果中删除添加的动漫
 			this.suggestionList.splice(this.suggestionList.findIndex(item => item.id===anime.id), 1)
+			this.suggestionSortList.splice(this.suggestionSortList.findIndex(item => item.id===anime.id), 1)
 
 			//如果添加的动漫是搜索结果框中最后一个，关闭搜索框
 			if (this.suggestionList.length === 0) {

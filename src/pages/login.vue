@@ -177,6 +177,7 @@ export default {
 .login {
 	display: flex;
 	height: 100vh;
+	background-color: #FFFFFF;
 
 	.background {
 		flex: 64% 1 1;

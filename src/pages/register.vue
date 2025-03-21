@@ -201,6 +201,7 @@ export default {
 .register {
 	display: flex;
 	height: 100vh;
+	background-color: #FFFFFF;
 	overflow: hidden;
 
 	.background {

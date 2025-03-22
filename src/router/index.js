@@ -127,6 +127,7 @@ const routes = [
 ];
 
 const router = new VueRouter({
+	mode: 'history',
 	routes,
 	/* 实现返回上一页，页面停留在原来位置 */
 	scrollBehavior (to, from, savedPosition) {

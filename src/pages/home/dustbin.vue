@@ -1,39 +1,31 @@
 <template>
 	<div class="dustbin">
-		<!-- region 模块分类名称 -->
-		<div class="typeTitle">
-			<svg t="1741332809270"  viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="14396">
-				<path d="M944 192l-188.8 0 0-44.8c0-54.4-44.8-99.2-99.2-99.2l-294.4 0c-54.4 0-99.2 44.8-99.2 99.2l0 44.8-179.2 0c-12.8 0-25.6 9.6-25.6 25.6 0 12.8 9.6 25.6 25.6 25.6l60.8 0 0 0 0 633.6c0 54.4 44.8 99.2 99.2 99.2l550.4 0c54.4 0 99.2-44.8 99.2-99.2l0-630.4 0-3.2 51.2 0c12.8 0 25.6-9.6 25.6-25.6C966.4 204.8 960 192 944 192zM316.8 147.2c0-25.6 22.4-48 48-48l294.4 0c25.6 0 48 22.4 48 48l0 44.8-390.4 0L316.8 147.2zM841.6 867.2c0 28.8-16 57.6-41.6 57.6l-550.4 0c-25.6 0-54.4-19.2-54.4-44.8l3.2-636.8 643.2 0 0 0L841.6 867.2z" p-id="14397"></path>
-				<path d="M368 380.8c-16 0-25.6 9.6-25.6 25.6l0 342.4c0 16 12.8 25.6 25.6 25.6 12.8 0 25.6-9.6 25.6-25.6l0-342.4C390.4 393.6 384 380.8 368 380.8z" p-id="14398"></path>
-				<path d="M528 380.8c-16 0-25.6 9.6-25.6 25.6l0 342.4c0 16 12.8 25.6 25.6 25.6 12.8 0 25.6-9.6 25.6-25.6l0-342.4C550.4 393.6 544 380.8 528 380.8z" p-id="14399"></path>
-				<path d="M688 380.8c-16 0-25.6 9.6-25.6 25.6l0 342.4c0 16 12.8 25.6 25.6 25.6 12.8 0 25.6-9.6 25.6-25.6l0-342.4C710.4 393.6 704 380.8 688 380.8z" p-id="14400"></path>
-			</svg>
-			<div class="title">垃圾箱</div>
-		</div>
-		<!-- endregion -->
-
 		<!-- region 动漫列表 -->
-		<div class="listBox">
+		<div class="list-box">
 			<div class="list">
 				<div class="item" v-for="(anime, index) in animeList" :key="anime.animeId">
 					<div class="img">
 						<img v-lazy="anime.cover" alt="">
 					</div>
 					<div class="content">
-						<el-tooltip effect="dark" :content="anime.name" placement="top" :visible-arrow="false" :open-delay="300">
-							<div class="info">{{anime.name}}</div>
+						<el-tooltip
+								effect="dark"
+								:content="anime.name"
+								placement="top"
+								:visible-arrow="false"
+								:open-delay="300"
+						>
+							<div class="info">{{ anime.name }}</div>
 						</el-tooltip>
 						<div class="control">
 							<button @click="openPopover(anime.animeUserId, index, $event)">
-								<svg width="20px" height="18px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-									<path d="M432 256a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zm-160 0a48 48 0 1 1 -96 0 48 48 0 1 1 96 0zM64 304a48 48 0 1 1 0-96 48 48 0 1 1 0 96z"></path>
-								</svg>
+								<SvgIcon icon="more" color="#ada8a8"/>
 							</button>
 						</div>
 					</div>
 				</div>
 			</div>
-			<el-empty v-if="emptyFlag" description="暂无动漫" />
+			<el-empty v-if="emptyFlag" description="暂无动漫"/>
 		</div>
 		<!-- endregion -->
 
@@ -42,20 +34,16 @@
 				:visible-arrow="false"
 				trigger="manual"
 				v-model="animeListPopoverFlag"
-				popper-class="dustbinAnimeListPopover"
+				popper-class="dustbin-anime-list-popover"
 		>
 			<ul>
 				<li @click="recover">
-					<svg width="18px" height="18px" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="rotate-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-						<path d="M48.5 224H40c-13.3 0-24-10.7-24-24V72c0-9.7 5.8-18.5 14.8-22.2s19.3-1.7 26.2 5.2L98.6 96.6c87.6-86.5 228.7-86.2 315.8 1c87.5 87.5 87.5 229.3 0 316.8s-229.3 87.5-316.8 0c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0c62.5 62.5 163.8 62.5 226.3 0s62.5-163.8 0-226.3c-62.2-62.2-162.7-62.5-225.3-1L185 183c6.9 6.9 8.9 17.2 5.2 26.2s-12.5 14.8-22.2 14.8H48.5z"></path>
-					</svg>
+					<SvgIcon icon="recover"/>
 					<div>恢复</div>
 				</li>
 				<li @click="thoroughlyRemove">
-					<svg width="18px" height="18px" aria-hidden="true" focusable="false" data-prefix="far" data-icon="circle-xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-						<path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z"></path>
-					</svg>
-					<div>彻底删除</div>
+					<SvgIcon icon="circleMistake" color="red"/>
+					<div style="color: red">彻底删除</div>
 				</li>
 			</ul>
 		</el-popover>
@@ -114,7 +102,7 @@ export default {
 			let result = await reqGetDustbinData();
 			if (result.code !== 200) {
 				this.$message.error(result.msg);
-				return ;
+				return;
 			}
 			this.animeList = result.data || [];
 
@@ -133,7 +121,7 @@ export default {
 			let result = await reqRecoverAnime(this.popover.animeUserId);
 			if (result.code !== 200) {
 				this.$message.error('恢复失败！');
-				return ;
+				return;
 			}
 
 			this.$message.success('恢复成功！');
@@ -153,7 +141,7 @@ export default {
 			let result = await reqDeleteAnime(this.popover.animeUserId);
 			if (result.code !== 200) {
 				this.$message.error('删除失败！');
-				return ;
+				return;
 			}
 
 			this.$message.success('删除成功！');
@@ -175,7 +163,7 @@ export default {
 
 			//定位popover的位置
 			this.$nextTick(() => {
-				let popover = document.querySelector('.dustbinAnimeListPopover');
+				let popover = document.querySelector('.dustbin-anime-list-popover');
 				if (!popover) return;
 
 				// 获取关键尺寸
@@ -237,34 +225,7 @@ export default {
 		min-height: calc(100vh - 6px - 60px);
 	}
 
-	/* 模块分类名称 */
-	.typeTitle {
-		min-width: 110px;
-		font-size: 1.5rem;
-		display: flex;
-		align-items: center;
-		margin-left: 1rem;
-
-		@media screen and (max-width: 768px) {
-			margin-left: 6px;
-		}
-
-		svg {
-			width: 22px;
-			height: 22px;
-			fill: #000000;
-			stroke: #000000;
-			stroke-width: 20px;
-		}
-
-		div {
-			min-width: 76px;
-			margin-left: 15px;
-			font-weight: bold;
-		}
-	}
-
-	.listBox {
+	.list-box {
 		flex: 1;
 		background-color: #FFFFFF;
 		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
@@ -309,14 +270,14 @@ export default {
 				/*宽度与高度的比例*/
 				aspect-ratio: 0.8;
 				border-radius: 5px;
-				box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),0 2px 4px -1px rgba(0, 0, 0, 0.06);
+				box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 				overflow: hidden;
 				transition: all $transitionTime;
 				cursor: pointer;
 
 				/* 鼠标移入item给item添加阴影 */
 				&:hover {
-					box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),0 4px 6px -2px rgba(0, 0, 0, 0.05);
+					box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 
 					/* 鼠标移入item给content添加背景 */
 					.content {
@@ -415,7 +376,6 @@ export default {
 								right: 0;
 								bottom: 0;
 								margin: auto;
-								fill: #ada8a8;
 							}
 						}
 					}
@@ -429,19 +389,6 @@ export default {
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%, -50%);
-		}
-	}
-}
-</style>
-
-<style lang="scss">
-.dustbinAnimeListPopover ul {
-	li:last-child {
-		color: red;
-		svg {
-			width: 18px;
-			height: 18px;
-			fill: red;
 		}
 	}
 }

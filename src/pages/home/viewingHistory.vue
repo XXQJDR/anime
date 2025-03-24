@@ -1,36 +1,27 @@
 <template>
-	<div class="viewingHistory">
-		<!--region 模块分类名称-->
-		<div class="typeTitle">
-			<svg t="1741333367589" viewBox="0 0 1080 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="17228">
-				<path d="M523.637 512 523.637 197.904c0-19.589-15.629-34.995-34.91-34.995-19.414 0-34.908 15.668-34.908 34.995l0 348.919c0 19.589 15.629 34.995 34.908 34.995 1.956 0 3.871-0.159 5.735-0.465 1.854 0.306 3.757 0.465 5.698 0.465l233.134 0c19.285 0 34.705-15.63 34.705-34.909C768 527.495 752.461 512 733.295 512L523.637 512zM512 1024C229.23 1024 0 794.77 0 512S229.23 0 512 0c282.769 0 512 229.23 512 512S794.77 1024 512 1024zM512 954.182c244.21 0 442.181-197.972 442.181-442.182 0-244.21-197.971-442.182-442.181-442.182S69.818 267.79 69.818 512C69.818 756.21 267.79 954.182 512 954.182z" p-id="17229"></path>
-			</svg>
-			<div>观看历程</div>
-		</div>
-		<!--endregion-->
-
+	<div class="viewing-history">
 		<!-- 动漫统计 -->
 		<div class="chart" ref="chart"></div>
 
-		<div class="timeLineBox">
+		<div class="time-line-box">
 			<div class="timeline" v-show="!emptyFlag">
 				<div class="item" v-for="anime in animeList" :key="anime.animeUserId">
 					<div class="content">
 						<div class="anime" @click="goAnimeDetail(anime.animeUserId)">
-							<div class="time">{{anime.finishedDate}}</div>
+							<div class="time">{{ anime.finishedDate }}</div>
 							<img class="cover" :src="anime.cover" :alt="anime.name">
-							<div class="name">{{anime.name}}</div>
+							<div class="name">{{ anime.name }}</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<el-empty v-if="emptyFlag" description="暂无历程，快去观看吧！" />
+			<el-empty v-if="emptyFlag" description="暂无历程，快去观看吧！"/>
 
 			<!-- 滚动加载动画 -->
-			<scroll-animation :loading="loading" />
+			<scroll-animation :loading="loading"/>
 
 			<!-- 结束标志 -->
-			<end-hr content="我也是有底线的！" v-show="showEndHr" />
+			<end-hr content="我也是有底线的！" v-show="showEndHr"/>
 		</div>
 	</div>
 </template>
@@ -88,13 +79,13 @@ export default {
 				let result = await reqGetPageAnime(++this.current, this.size, null, 'FINISHED', 'JOIN_DESC');
 				if (result.code !== 200) {
 					this.$message.error('获取数据失败！');
-					return ;
+					return;
 				}
 
 				this.animeList = this.animeList.concat(result.data.records || []);
 				this.hasNext = result.data.current < result.data.pages;
-				if (this.current===1) {
-					this.emptyFlag = this.animeList.length===0;
+				if (this.current === 1) {
+					this.emptyFlag = this.animeList.length === 0;
 				}
 			} finally {
 				//关闭加载动画
@@ -104,9 +95,9 @@ export default {
 
 		//滚动分页
 		lazyLoading() {
-			let scrollHeight= document.documentElement.scrollHeight || document.body.scrollHeight; //document的滚动高度
+			let scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight; //document的滚动高度
 			let nowScotop = document.documentElement.clientHeight || document.body.clientHeight;  //可视区高度
-			let wheight= document.documentElement.scrollTop || document.body.scrollTop; //已滚动高度
+			let wheight = document.documentElement.scrollTop || document.body.scrollTop; //已滚动高度
 
 			let bottomOfWindow = scrollHeight - wheight - nowScotop;
 
@@ -234,7 +225,7 @@ export default {
 	src: url("@/assets/fonts/number/webfont.ttf");
 }
 
-.viewingHistory {
+.viewing-history {
 	min-height: calc(100vh - 2.3rem);
 	display: flex;
 	flex-direction: column;
@@ -242,33 +233,6 @@ export default {
 	@media screen and (max-width: 768px) {
 		//减去顶部导航栏高度
 		min-height: calc(100vh - 6px - 60px);
-	}
-
-	/* 模块分类名称 */
-	.typeTitle {
-		min-width: 110px;
-		font-size: 1.5rem;
-		display: flex;
-		align-items: center;
-		margin-left: 1rem;
-
-		@media screen and (max-width: 768px) {
-			margin-left: 6px;
-		}
-
-		svg {
-			width: 22px;
-			height: 22px;
-			fill: #000000;
-			stroke: #000000;
-			stroke-width: 20px;
-		}
-
-		div {
-			min-width: 76px;
-			margin-left: 15px;
-			font-weight: bold;
-		}
 	}
 
 	/* 动漫统计 */
@@ -281,7 +245,7 @@ export default {
 		box-sizing: border-box;
 	}
 
-	.timeLineBox {
+	.time-line-box {
 		flex: 1;
 		background-color: #FFFFFF;
 		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
@@ -373,7 +337,7 @@ export default {
 						background: #FFFFFF;
 						padding: 1.5rem;
 						border-radius: 8px;
-						box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+						box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 						transition: transform 0.3s ease;
 						box-sizing: border-box;
 						text-align: center;
@@ -429,5 +393,6 @@ export default {
 		}
 	}
 }
+
 /* endregion */
 </style>

@@ -12,8 +12,8 @@
 				</el-form-item>
 				<el-form-item prop="code">
 					<div class="check-code">
-						<el-input v-model="form1.code" placeholder="验证码" />
-						<el-button plain :disabled="btnDisabled" @click="getCode" ref="getCodeBtn">{{btnMessage}}</el-button>
+						<el-input v-model="form1.code" placeholder="验证码"/>
+						<el-button plain :disabled="btnDisabled" @click="getCode" ref="getCodeBtn">{{ btnMessage }}</el-button>
 					</div>
 				</el-form-item>
 			</el-form>
@@ -26,7 +26,7 @@
 				</el-form-item>
 			</el-form>
 			<el-result icon="success" title="重置成功" subTitle="请返回登录页面重新登录" v-show="active === 2"></el-result>
-			<el-button @click="next" type="primary" class="next" :loading="loading">{{nextMessage}}</el-button>
+			<el-button @click="next" type="primary" class="next" :loading="loading">{{ nextMessage }}</el-button>
 		</div>
 	</div>
 </template>
@@ -65,14 +65,18 @@ export default {
 			//校验规则
 			rules: {
 				email: [
-					{required: true, type: 'email', message:'请输入正确的邮箱格式', trigger: 'blur'}
+					{required: true, type: 'email', message: '请输入正确的邮箱格式', trigger: 'blur'}
 				],
 				code: [
-					{required: true, message: '验证码不能为空！' , trigger: 'blur'}
+					{required: true, message: '验证码不能为空！', trigger: 'blur'}
 				],
 				password: [
 					{required: true, message: '密码不能为空', trigger: 'blur'},
-					{pattern: /^(?![a-zA-Z]+$)(?!\d+$)(?![^\da-zA-Z\s]+$).{6,15}$/, message: '密码由字母、数字、特殊字符，任意2种组成，6-15位', trigger: 'blur'}
+					{
+						pattern: /^(?![a-zA-Z]+$)(?!\d+$)(?![^\da-zA-Z\s]+$).{6,15}$/,
+						message: '密码由字母、数字、特殊字符，任意2种组成，6-15位',
+						trigger: 'blur'
+					}
 				],
 				checkPassword: [
 					{validator: validateCheckPassword, trigger: 'blur'}
@@ -154,7 +158,7 @@ export default {
 
 					if (result.code !== 200) {
 						this.$message.error(result.msg);
-						return ;
+						return;
 					}
 
 					this.active++;
@@ -176,7 +180,7 @@ export default {
 
 					if (result.code !== 200) {
 						this.$message.error(result.msg);
-						return ;
+						return;
 					}
 
 					this.active++;

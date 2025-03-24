@@ -1,37 +1,33 @@
 <template>
-	<div class="animeDetail" ref="animeDetail" v-loading.fullscreen="controlLoading">
+	<div class="anime-detail" v-loading.fullscreen="controlLoading">
 		<!-- el-rate与$confirm配合评分后按alt重复弹出提示框，解决方法为让a元素获得焦点 -->
 		<a href="javascript:void(0)" class="solve-rate-bug-a" ref="solveRateBugA"></a>
 		<div class="back">
-			<svg @click="back" width="20px" height="20.00px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
-				<path d="M303.5 5.7c-9-7.6-22.1-7.6-31.1 0l-264 224c-10.1 8.6-11.3 23.7-2.8 33.8s23.7 11.3 33.8 2.8L64 245.5V432c0 44.2 35.8 80 80 80H432c44.2 0 80-35.8 80-80V245.5l24.5 20.8c10.1 8.6 25.3 7.3 33.8-2.8s7.3-25.3-2.8-33.8l-264-224zM112 432V204.8L288 55.5 464 204.8V432c0 17.7-14.3 32-32 32H384V312c0-22.1-17.9-40-40-40H232c-22.1 0-40 17.9-40 40V464H144c-17.7 0-32-14.3-32-32zm128 32V320h96V464H240z"/>
-			</svg>
-			<svg width="35px" height="18.00px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-				<path d="M305 239c9.4 9.4 9.4 24.6 0 33.9L113 465c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l175-175L79 81c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0L305 239z"/>
-			</svg>
-			<div>{{anime.name}}</div>
+			<SvgIcon icon="home" size="20" @click.native="back"/>
+			<SvgIcon icon="rightArrow" color="#cac5c4" :stroke="true"/>
+			<div>{{ anime.name }}</div>
 		</div>
 
 		<!-- 动漫介绍 -->
-		<div class="animeBox">
+		<div class="anime-box">
 			<el-skeleton :loading="skeletonLoading" animated :count="1" class="anime">
 				<div slot="template">
 					<div class="skeleton-img">
 						<el-skeleton-item variant="image"/>
 					</div>
 					<div class="skeleton-text">
-						<el-skeleton-item variant="h3" />
-						<el-skeleton-item variant="text" />
-						<el-skeleton-item variant="text" />
-						<el-skeleton-item variant="text" />
-						<el-skeleton-item variant="text" />
-						<el-skeleton-item variant="text" />
-						<el-skeleton-item variant="text" />
-						<el-skeleton-item variant="text" />
-						<el-skeleton-item variant="text" />
-						<el-skeleton-item variant="text" />
-						<el-skeleton-item variant="text" />
-						<el-skeleton-item variant="text" />
+						<el-skeleton-item variant="h3"/>
+						<el-skeleton-item variant="text"/>
+						<el-skeleton-item variant="text"/>
+						<el-skeleton-item variant="text"/>
+						<el-skeleton-item variant="text"/>
+						<el-skeleton-item variant="text"/>
+						<el-skeleton-item variant="text"/>
+						<el-skeleton-item variant="text"/>
+						<el-skeleton-item variant="text"/>
+						<el-skeleton-item variant="text"/>
+						<el-skeleton-item variant="text"/>
+						<el-skeleton-item variant="text"/>
 					</div>
 				</div>
 				<template>
@@ -40,7 +36,7 @@
 							<img :src="anime.cover" alt="">
 						</div>
 						<div class="info">
-							<h3>{{anime.name}}</h3>
+							<h3>{{ anime.name }}</h3>
 							<el-rate
 									v-model="anime.score"
 									:icon-classes="iconClasses"
@@ -52,13 +48,13 @@
 									@change="rateAnime"
 							>
 							</el-rate>
-							<div>动画种类：{{anime.kind}}</div>
-							<div>首播时间：{{anime.firstPlayDate}}</div>
-							<div>播放状态：{{anime.playStatus}}</div>
-							<div>原作：{{anime.original}}</div>
-							<div>剧情类型：{{anime.storyType}}</div>
-							<div>制作公司：{{anime.company}}</div>
-							<div>简介：{{anime.description}}</div>
+							<div>动画种类：{{ anime.kind }}</div>
+							<div>首播时间：{{ anime.firstPlayDate }}</div>
+							<div>播放状态：{{ anime.playStatus }}</div>
+							<div>原作：{{ anime.original }}</div>
+							<div>剧情类型：{{ anime.storyType }}</div>
+							<div>制作公司：{{ anime.company }}</div>
+							<div>简介：{{ anime.description }}</div>
 						</div>
 					</div>
 				</template>
@@ -66,7 +62,7 @@
 		</div>
 
 		<!-- 文件上传 -->
-		<div class="uploadBox">
+		<div class="upload-box">
 			<el-upload
 					ref="upload"
 					class="upload"
@@ -78,42 +74,48 @@
 			>
 				<el-button type="primary" slot="trigger">选择文件</el-button>
 				<el-button @click="manualUpload" type="success">上传到服务器</el-button>
-				<div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过10MB;一次性最大上传10个文件</div>
+				<div slot="tip" class="el-upload__tip">
+					只能上传jpg/png文件，且不超过10MB;一次性最大上传10个文件
+				</div>
 			</el-upload>
 		</div>
 
-		<div class="wonderfulMomentBox">
+		<div class="wonderful-moment-box">
 			<!-- 瀑布流 -->
-			<div class="wonderfulMoment">
+			<div class="wonderful-moment">
 				<wc-waterfall :gap="10" :cols="count">
 					<div class="img" v-for="img in images" :key="img.id">
 						<div class="control">
 							<div class="detail" @click="openImageView(img.detailUrl)">
-								<i class="el-icon-full-screen" />
+								<i class="el-icon-full-screen"/>
 							</div>
 							<div class="delete" @click="deleteImage(img.id)">
-								<i class="el-icon-delete" />
+								<i class="el-icon-delete"/>
 							</div>
 							<a class="download" :href="img.detailUrl" download>
 								<div>
-									<i class="el-icon-download" />
+									<i class="el-icon-download"/>
 								</div>
 							</a>
 						</div>
-						<img class="briefImg" v-lazy="img.briefUrl" @load='imgOnLoad' alt="">
+						<img class="brief-img" v-lazy="img.briefUrl" @load='imgOnLoad' alt="">
 					</div>
 				</wc-waterfall>
-				<el-image-viewer v-if="showViewer" :url-list="viewImage" :on-close="closeImageView" />
+				<el-image-viewer
+						v-if="showViewer"
+						:url-list="viewImage"
+						:on-close="closeImageView"
+				/>
 			</div>
 
 			<!-- 空标志 -->
 			<el-empty v-if="!images.length" description="暂无精彩瞬间，快来上传吧！"/>
 
 			<!-- 滚动加载动画 -->
-			<scroll-animation :loading="scrollLoading" />
+			<scroll-animation :loading="scrollLoading"/>
 
 			<!-- 结束标志 -->
-			<end-hr content="我也是有底线的！" v-show="showEndHr" />
+			<end-hr content="我也是有底线的！" v-show="showEndHr"/>
 		</div>
 	</div>
 </template>
@@ -242,7 +244,7 @@ export default {
 
 				if (result.code !== 200) {
 					this.$message.error('上传失败！');
-					return ;
+					return;
 				}
 
 				this.$message.success('上传成功！');
@@ -267,7 +269,7 @@ export default {
 				let result = await reqGetDetailAnime(this.animeUserId);
 				if (result.code !== 200) {
 					this.$message.error(result.msg);
-					return ;
+					return;
 				}
 				this.anime = result.data || {};
 				this.scoreTemp = this.anime.score;
@@ -286,7 +288,7 @@ export default {
 				let result = await reqGetPageAnimeResource(++this.current, this.size, this.animeUserId);
 				if (result.code !== 200) {
 					this.$message.error(result.msg);
-					return ;
+					return;
 				}
 
 				this.images = this.images.concat(result.data.records || []);
@@ -299,9 +301,9 @@ export default {
 
 		//动态加载数据
 		lazyLoading() {
-			let scrollHeight= document.documentElement.scrollHeight || document.body.scrollHeight; //document的滚动高度
+			let scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight; //document的滚动高度
 			let nowScotop = document.documentElement.clientHeight || document.body.clientHeight;  //可视区高度
-			let wheight= document.documentElement.scrollTop || document.body.scrollTop; //已滚动高度
+			let wheight = document.documentElement.scrollTop || document.body.scrollTop; //已滚动高度
 
 			let bottomOfWindow = scrollHeight - wheight - nowScotop;
 
@@ -343,7 +345,8 @@ export default {
 					//关闭加载动画
 					this.controlLoading = false;
 				}
-			}).catch(() => {});
+			}).catch(() => {
+			});
 		},
 
 		//根据浏览器可视宽度改变瀑布流行数
@@ -395,7 +398,7 @@ export default {
 			let result = await reqGetPageAnimeResource(this.current, this.size, this.animeUserId);
 			if (result.code !== 200) {
 				this.$message.error(result.msg);
-				return ;
+				return;
 			}
 			this.images = result.data.records || []
 			this.hasNext = result.data.current < result.data.pages;
@@ -454,7 +457,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.animeDetail {
+.anime-detail {
 	box-sizing: border-box;
 	padding: 0 10px;
 
@@ -480,15 +483,15 @@ export default {
 
 		> svg:nth-child(1) {
 			cursor: pointer;
-			transition: color, transform .3s;
+
 			&:hover {
-				fill: #2B0AFF;
+				color: #2B0AFF !important;
 				transform: translateY(-2px);
 			}
 		}
 
 		> svg:nth-child(2) {
-			fill: #cac5c4;
+			margin: 0 5px;
 		}
 	}
 
@@ -553,7 +556,7 @@ export default {
 		}
 	}
 
-	.animeBox {
+	.anime-box {
 		width: 95%;
 		margin: 0 auto;
 		margin-top: 4rem;
@@ -622,7 +625,7 @@ export default {
 		}
 	}
 
-	.uploadBox {
+	.upload-box {
 		margin: 1rem 0;
 
 		.upload {
@@ -641,7 +644,7 @@ export default {
 		}
 	}
 
-	.wonderfulMomentBox {
+	.wonderful-moment-box {
 		width: 95%;
 		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
 		border-radius: 10px;
@@ -655,7 +658,7 @@ export default {
 			padding: 10px;
 		}
 
-		.wonderfulMoment {
+		.wonderful-moment {
 			overflow: hidden;
 
 			.img {
@@ -665,7 +668,7 @@ export default {
 				display: flex;
 				align-items: center;
 				background-color: #FFFFFF;
-				box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),0 2px 4px -1px rgba(0, 0, 0, 0.06);
+				box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 				border-radius: 10px;
 				overflow: hidden;
 
@@ -676,7 +679,7 @@ export default {
 					aspect-ratio: 16 / 9;
 				}
 
-				.briefImg {
+				.brief-img {
 					width: 100%;
 					height: 100%;
 					object-fit: cover;
@@ -695,6 +698,7 @@ export default {
 					display: none;
 					justify-content: space-evenly;
 					align-items: center;
+
 					&:hover {
 						background-color: rgba(0, 0, 0, .4);
 
@@ -729,7 +733,8 @@ export default {
 
 <style lang="scss">
 @import '@/assets/fonts/rate/style.css';
-.animeDetail {
+
+.anime-detail {
 	.upload {
 		.el-button--success,
 		.el-upload--text .el-button,

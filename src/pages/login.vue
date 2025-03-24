@@ -11,20 +11,20 @@
 						:model="formData"
 						label-position="top"
 						:rules="rules"
-						class="loginForm"
+						class="login-form"
 						hide-required-asterisk
 						status-icon
 						ref="loginForm"
 				>
 					<el-form-item label="电子邮箱" prop="email">
-						<el-input v-model="formData.email" />
+						<el-input v-model="formData.email"/>
 					</el-form-item>
 					<el-form-item label="密码" prop="password">
-						<el-input v-model="formData.password" show-password />
+						<el-input v-model="formData.password" show-password/>
 					</el-form-item>
 					<el-form-item label="验证码" prop="checkCode">
 						<div style="display: flex; align-items: center">
-							<el-input v-model="formData.checkCode" class="checkCodeInput" />
+							<el-input v-model="formData.checkCode" class="check-code-input"/>
 							<img
 									style="cursor: pointer;width: 30%;height: 40px;"
 									:src="checkCodeImage"
@@ -36,14 +36,15 @@
 					<div class="forget">
 						<router-link to="/resetPassword">忘记密码？</router-link>
 					</div>
-					<div class="loginBtn">
+					<div class="login-btn">
 						<button @click.prevent="login">
-							<i class="el-icon-loading" v-show="loading" />
+							<i class="el-icon-loading" v-show="loading"/>
 							<span>登录</span>
 						</button>
 					</div>
-					<div class="goRegister">
-						没有账户？去<router-link to="/register">注册</router-link>
+					<div class="go-register">
+						没有账户？去
+						<router-link to="/register">注册</router-link>
 					</div>
 				</el-form>
 			</div>
@@ -161,7 +162,7 @@ export default {
 	mounted() {
 		//防止移动端软键盘引起页面高度变下
 		if (this.browserIdentity === 'MOBILE') {
-			this.$refs['login'].style.height = window.innerHeight  + 'px';
+			this.$refs['login'].style.height = window.innerHeight + 'px';
 		}
 	}
 }
@@ -244,13 +245,13 @@ export default {
 				min-height: 440px;
 			}
 
-			.loginForm {
+			.login-form {
 				width: 100%;
 				position: absolute;
 				top: 50%;
 				transform: translateY(-50%);
 
-				.checkCodeInput {
+				.check-code-input {
 					width: 70%;
 				}
 
@@ -263,7 +264,7 @@ export default {
 					}
 				}
 
-				.loginBtn {
+				.login-btn {
 					margin-top: 2rem;
 
 					button {
@@ -272,7 +273,7 @@ export default {
 						padding: 8px 0;
 						border: 1px solid #e5e0df;
 						border-radius: 5px;
-						box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),0 2px 4px -1px rgba(0, 0, 0, 0.06);
+						box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 						background: linear-gradient(180deg, #FFFFFF 0%, #FCF9F5 100%);
 						transition: opacity 0.5s;
 
@@ -287,7 +288,7 @@ export default {
 					}
 				}
 
-				.goRegister {
+				.go-register {
 					text-align: center;
 					font-size: 0.8rem;
 					margin-top: 2rem;
@@ -304,7 +305,7 @@ export default {
 
 <!-- region 修改element-ui默认样式 -->
 <style lang="scss">
-.loginForm {
+.login-form {
 	.el-form-item {
 		height: 81px;
 

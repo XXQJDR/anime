@@ -5,16 +5,22 @@
 				mode="out-in"
 				enter-active-class="animate__animated animate__fadeIn"
 				leave-active-class="animate__animated animate__fadeOut"
-				:duration="{enter: 400, leave: 400}"
+				:duration="{enter: 300, leave: 300}"
 		>
 			<keep-alive include="HomePage">
-				<router-view />
+				<router-view/>
 			</keep-alive>
 		</transition>
 
 		<el-backtop :right="20" style="width: 50px;height: 50px;"></el-backtop>
 
-		<div class="appMask" v-show="maskFlag" @click="closeMask" ref="appMask"></div>
+		<div
+				class="app-mask"
+				v-show="maskFlag"
+				@click="closeMask"
+				ref="appMask"
+		>
+		</div>
 	</div>
 </template>
 
@@ -128,7 +134,7 @@ body {
 		font-size: 14px;
 	}
 
-	.appMask {
+	.app-mask {
 		position: fixed;
 		top: 0;
 		left: 0;

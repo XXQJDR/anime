@@ -2,13 +2,12 @@
 /* element弹出框样式 */
 @mixin anime-control-popover-style {
   /* popover激活样式 */
-  .popoverActive {
+  .popover-active {
     color: #2B0AFF;
     background-color: #eae7ff;
 
     svg {
-      fill: #2b0aff;
-      stroke: #2b0aff;
+      color: #2b0aff !important;
     }
 
     svg:nth-child(3) {
@@ -17,13 +16,12 @@
   }
 
   /* popover选中项样式 */
-  .popoverLiActive {
+  .popover-li-active {
     color: #2B0AFF !important;
     background-color: #eae7ff !important;
 
     svg {
-      fill: #2b0aff !important;
-      stroke: #2b0aff !important;
+      color: #2b0aff !important;
     }
   }
 

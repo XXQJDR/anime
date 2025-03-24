@@ -1,5 +1,5 @@
 <template>
-	<div class="endHr">
+	<div class="end-hr">
 		<hr class="hr-dashed-content" :data-content="content">
 	</div>
 </template>
@@ -12,7 +12,7 @@ export default {
 </script>
 
 <style scoped>
-.endHr {
+.end-hr {
 	.hr-dashed-content {
 		color: #a2a9b6;
 		border: 0;

@@ -20,8 +20,8 @@
 			</div>
 		</div>
 		<div class="button animate__animated animate__bounce">
-			<button class="loginBtn" @click="goLogin">登 录</button>
-			<button class="registerBtn" @click="goRegister">注 册</button>
+			<button class="login-btn" @click="goLogin">登 录</button>
+			<button class="register-btn" @click="goRegister">注 册</button>
 		</div>
 	</div>
 </template>
@@ -88,7 +88,7 @@ export default {
 		text-align: center;
 		letter-spacing: 0.3rem;
 
-		.pc	{
+		.pc {
 			display: flex;
 			justify-content: space-around;
 			align-items: center;
@@ -130,8 +130,8 @@ export default {
 	.button {
 		text-align: center;
 
-		.loginBtn,
-		.registerBtn {
+		.login-btn,
+		.register-btn {
 			width: 10rem;
 			height: 3rem;
 			background-color: rgb(20, 134, 201);
@@ -145,7 +145,7 @@ export default {
 			}
 		}
 
-		.loginBtn {
+		.login-btn {
 			margin-right: 3rem;
 			@media screen and (max-width: 768px) {
 				width: 80%;
@@ -154,7 +154,7 @@ export default {
 			}
 		}
 
-		.registerBtn {
+		.register-btn {
 			@media screen and (max-width: 768px) {
 				width: 80%;
 				height: 3.5rem;

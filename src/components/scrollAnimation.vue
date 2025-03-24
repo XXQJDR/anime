@@ -1,7 +1,7 @@
 <template>
-	<div class="scrollAnimation" v-show="loading">
+	<div class="scroll-animation" v-show="loading">
 		<div class="box">
-			<bounce-loader :loading="loading" color="#2b0aff" size="40px" />
+			<bounce-loader :loading="loading" color="#2b0aff" size="40px"/>
 			<span>努力加载中...</span>
 		</div>
 	</div>
@@ -18,7 +18,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.scrollAnimation {
+.scroll-animation {
 	height: 40px;
 	position: relative;
 	margin-top: 10px;

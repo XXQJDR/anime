@@ -234,7 +234,9 @@
 							</g>
 							<g id="head">
 
-								<ellipse transform="matrix(0.259 -0.9659 0.9659 0.259 -51.5445 563.2371)" fill="#FFFFFF" stroke="#0E0620" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="341.295" cy="315.211" rx="61.961" ry="60.305"/>
+								<ellipse transform="matrix(0.259 -0.9659 0.9659 0.259 -51.5445 563.2371)" fill="#FFFFFF"
+												 stroke="#0E0620" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+												 stroke-miterlimit="10" cx="341.295" cy="315.211" rx="61.961" ry="60.305"/>
 								<path id="headStripe" fill="none" stroke="#0E0620" stroke-width="3" stroke-linecap="round"
 											stroke-linejoin="round" stroke-miterlimit="10" d="
 				M330.868,261.338c-7.929,1.72-15.381,5.246-21.799,10.246"/>
@@ -324,9 +326,9 @@ export default {
 		});
 
 		gsap.fromTo(
-			"#starsSmall g",
-			{scale: 0, transformOrigin: "50% 50%"},
-			{scale: 1, transformOrigin: "50% 50%", yoyo: true, repeat: -1, stagger: 0.1});
+				"#starsSmall g",
+				{scale: 0, transformOrigin: "50% 50%"},
+				{scale: 1, transformOrigin: "50% 50%", yoyo: true, repeat: -1, stagger: 0.1});
 
 		gsap.to("#circlesSmall circle", {
 			y: -4,

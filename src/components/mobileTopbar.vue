@@ -1,26 +1,83 @@
 <template>
-	<div class="mobileTopbar">
+	<div class="mobile-topbar">
 		<div class="box" ref="box">
 			<div class="icon" @click="clickHandle">
-				<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="bars" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="rgb(34, 8, 204)" d="M0 88C0 74.7 10.7 64 24 64H424c13.3 0 24 10.7 24 24s-10.7 24-24 24H24C10.7 112 0 101.3 0 88zM0 248c0-13.3 10.7-24 24-24H424c13.3 0 24 10.7 24 24s-10.7 24-24 24H24c-13.3 0-24-10.7-24-24zM448 408c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24s10.7-24 24-24H424c13.3 0 24 10.7 24 24z"></path></svg>
+				<SvgIcon icon="menu" color="rgb(34, 8, 204)" :stroke="true"/>
 			</div>
-			<div class="info">{{userInfo.username}}'s Personal Space</div>
+
+			<!-- 通知与用户 -->
+			<div class="notice-and-user">
+				<!-- 通知 -->
+				<el-badge :value="12" class="notice">
+					<SvgIcon icon="notice"/>
+				</el-badge>
+
+				<!-- 用户 -->
+				<el-popover
+						:visible-arrow="false"
+						placement="bottom"
+						trigger="click"
+						@show="openPopover"
+						@hide="closePopover"
+						v-model="popoverFlag"
+				>
+					<ul>
+						<li @click="goToPersonalCenter">
+							<SvgIcon icon="personal"/>
+							<div>个人中心</div>
+						</li>
+						<li @click="logout">
+							<SvgIcon icon="logout" color="red"/>
+							<div style="color: red">退出登录</div>
+						</li>
+					</ul>
+					<div class="user" slot="reference" ref="user">
+						<div class="avatar">
+							<img src="http://q.qlogo.cn/headimg_dl?dst_uin=3124140355&spec=640&img_type=jpg" alt="">
+						</div>
+						<div class="name">{{ username }}</div>
+						<SvgIcon icon="downArrow"/>
+					</div>
+				</el-popover>
+			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-import {mapState} from "vuex";
-
 export default {
 	name: 'MobileTopbar',
-	computed: {
-		...mapState(['userInfo']),
-	},
 	data() {
 		return {
 			oldScrollTop: 0,
+			popoverFlag: false
 		}
+	},
+	computed: {
+		//用户名
+		username() {
+			return this.$store.state.userInfo.username;
+		},
+
+		//全局遮罩显示标志
+		maskFlag: {
+			get() {
+				return this.$store.state.maskFlag;
+			},
+			set(val) {
+				this.$store.commit('MASK_FLAG', val);
+			}
+		},
+
+		//主页内容类型
+		homeContentType: {
+			get() {
+				return this.$store.state.homeContentType;
+			},
+			set(val) {
+				this.$store.commit('HOME_CONTENT_TYPE', val);
+			}
+		},
 	},
 	methods: {
 		//点击icon
@@ -48,6 +105,48 @@ export default {
 			} else {
 				this.$refs['box'].style.top = '0';
 			}
+		},
+
+		//打开遮罩
+		openPopover() {
+			//打开遮罩
+			this.maskFlag = true;
+
+			//添加激活样式
+			this.$refs.user.classList.add('popover-active');
+		},
+
+		//关闭遮罩
+		closePopover() {
+			//关闭遮罩
+			this.maskFlag = false;
+
+			//移除激活样式
+			this.$refs.user.classList.remove('popover-active');
+		},
+
+		//退出登录
+		logout() {
+			//清除vuex中的数据
+			this.$store.commit('TOKEN', '');
+			this.$store.commit('USER_INFO', {});
+
+			//清除localStorage中的用户数据
+			localStorage.removeItem('token');
+			localStorage.removeItem('userInfo');
+
+			//跳转到欢迎页并刷新页面
+			this.$router.push('/welcome').then(() => {
+				location.reload();
+			});
+			this.$message.success('退出登录成功！');
+		},
+
+		//跳转到个人中心
+		goToPersonalCenter() {
+			this.$router.push('/home/personal/panel');
+			this.homeContentType = 'panel';
+			this.popoverFlag = false;
 		}
 	},
 	mounted() {
@@ -60,7 +159,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.mobileTopbar {
+.mobile-topbar {
 	$mobileTopbarHeight: 50px;
 
 	height: $mobileTopbarHeight;
@@ -70,37 +169,80 @@ export default {
 		width: 96vw;
 		height: $mobileTopbarHeight;
 		display: flex;
+		justify-content: space-between;
 		align-items: center;
-		font-size: 1.3rem;
 		font-weight: bold;
 		position: fixed;
 		top: 0;
 		left: 50%;
 		transform: translateX(-50%);
 		z-index: 5;
-		transition: all .5s;
+		transition: all .5s ease;
 		background-color: #FFFFFF;
 		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
 		border-radius: 10px;
+		overflow: hidden;
 
 		.icon {
+			width: 35px;
 			height: 100%;
-			width: 10%;
 			display: flex;
 			justify-content: center;
 			align-items: center;
-
-			svg {
-				width: 18px;
-				height: 18px;
-			}
 		}
 
-		.info {
-			height: 100%;
-			width: 90%;
-			text-align: center;
-			line-height: $mobileTopbarHeight;
+		/* 通知与用户 */
+		.notice-and-user {
+			display: flex;
+			align-items: center;
+			user-select: none;
+
+			.notice {
+				height: 28px;
+				aspect-ratio: 1;
+				margin-right: 1rem;
+				cursor: pointer;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+
+				&:hover {
+					animation: tada;
+					animation-duration: 1s;
+				}
+			}
+
+			.user {
+				display: flex;
+				align-items: center;
+				padding: 5px;
+				cursor: pointer;
+				border-radius: 15px;
+				transition: background-color .3s ease;
+				margin-right: 5px;
+
+				&:hover {
+					background-color: #f7f3f2;
+				}
+
+				.avatar {
+					width: 30px;
+					height: 30px;
+					border-radius: 50%;
+					overflow: hidden;
+
+					img {
+						width: 100%;
+						height: 100%;
+						object-fit: cover;
+					}
+				}
+
+				.name {
+					margin: 0 10px;
+					transition: color .3s ease;
+				}
+			}
 		}
 	}
 }

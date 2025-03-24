@@ -10,38 +10,39 @@
 				<el-form
 						:model="formData"
 						label-position="top"
-						class="registerForm"
+						class="register-form"
 						hide-required-asterisk
 						status-icon
 						ref="registerForm"
 						:rules="rules"
 				>
 					<el-form-item label="电子邮箱" prop="email">
-						<el-input v-model="formData.email" />
+						<el-input v-model="formData.email"/>
 					</el-form-item>
 					<el-form-item label="用户名" prop="username">
-						<el-input v-model="formData.username" />
+						<el-input v-model="formData.username"/>
 					</el-form-item>
 					<el-form-item label="密码" prop="password">
-						<el-input v-model="formData.password" show-password />
+						<el-input v-model="formData.password" show-password/>
 					</el-form-item>
 					<el-form-item label="确认密码" prop="checkPassword">
-						<el-input v-model="formData.checkPassword" show-password />
+						<el-input v-model="formData.checkPassword" show-password/>
 					</el-form-item>
 					<el-form-item label="验证码" prop="checkCode">
 						<div class="checkCode">
-							<el-input v-model="formData.checkCode" class="checkCodeInput" />
-							<el-button plain :disabled="btnDisabled" @click="getCode" ref="getCodeBtn">{{btnMessage}}</el-button>
+							<el-input v-model="formData.checkCode" class="checkCodeInput"/>
+							<el-button plain :disabled="btnDisabled" @click="getCode" ref="getCodeBtn">{{ btnMessage }}</el-button>
 						</div>
 					</el-form-item>
-					<div class="registerBtn">
+					<div class="register-btn">
 						<button @click.prevent="register">
-							<i class="el-icon-loading" v-show="loading" />
+							<i class="el-icon-loading" v-show="loading"/>
 							<span>注册</span>
 						</button>
 					</div>
-					<div class="goLogin">
-						已有账户？去<router-link to="/login">登录</router-link>
+					<div class="go-login">
+						已有账户？去
+						<router-link to="/login">登录</router-link>
 					</div>
 				</el-form>
 			</div>
@@ -94,7 +95,7 @@ export default {
 			//校验规则
 			rules: {
 				email: [
-					{required: true, type: 'email', message:'请输入正确的邮箱格式', trigger: 'blur'},
+					{required: true, type: 'email', message: '请输入正确的邮箱格式', trigger: 'blur'},
 					{validator: validateCheckCode, trigger: 'blur'}
 				],
 				username: [
@@ -102,13 +103,17 @@ export default {
 				],
 				password: [
 					{required: true, message: '密码不能为空', trigger: 'blur'},
-					{pattern: /^(?![a-zA-Z]+$)(?!\d+$)(?![^\da-zA-Z\s]+$).{6,15}$/, message: '密码由字母、数字、特殊字符，任意2种组成，6-15位', trigger: 'blur'}
+					{
+						pattern: /^(?![a-zA-Z]+$)(?!\d+$)(?![^\da-zA-Z\s]+$).{6,15}$/,
+						message: '密码由字母、数字、特殊字符，任意2种组成，6-15位',
+						trigger: 'blur'
+					}
 				],
 				checkPassword: [
 					{validator: validateCheckPassword, trigger: 'blur'}
 				],
 				checkCode: [
-					{required: true, message: '验证码不能为空！' , trigger: 'blur'}
+					{required: true, message: '验证码不能为空！', trigger: 'blur'}
 				]
 			},
 
@@ -185,7 +190,7 @@ export default {
 	mounted() {
 		//防止移动端软键盘引起页面高度变下
 		if (this.browserIdentity === 'MOBILE') {
-			this.$refs['register'].style.height = window.innerHeight  + 'px';
+			this.$refs['register'].style.height = window.innerHeight + 'px';
 		}
 	}
 }
@@ -269,7 +274,7 @@ export default {
 			flex: 1;
 			position: relative;
 
-			.registerForm {
+			.register-form {
 				width: 100%;
 				position: absolute;
 				top: 50%;
@@ -287,7 +292,7 @@ export default {
 					}
 				}
 
-				.registerBtn {
+				.register-btn {
 					margin-top: 1rem;
 					position: relative;
 
@@ -301,7 +306,7 @@ export default {
 						padding: 8px 0;
 						border: 1px solid #e5e0df;
 						border-radius: 5px;
-						box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),0 2px 4px -1px rgba(0, 0, 0, 0.06);
+						box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 						background: linear-gradient(180deg, #FFFFFF 0%, #FCF9F5 100%);
 						transition: opacity 0.5s;
 
@@ -316,7 +321,7 @@ export default {
 					}
 				}
 
-				.goLogin {
+				.go-login {
 					text-align: center;
 					font-size: 0.8rem;
 					margin-top: 1rem;
@@ -337,7 +342,7 @@ export default {
 
 <!-- region 修改element-ui默认样式 -->
 <style lang="scss">
-.registerForm {
+.register-form {
 	.el-form-item {
 		margin-bottom: 0.5rem;
 

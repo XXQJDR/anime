@@ -103,16 +103,15 @@
 
 		<div class="content">
 			<MobileTopbar v-if="browserIdentity === 'MOBILE'"/>
-
+			<UserProfile />
 			<transition
 					mode="out-in"
 					enter-active-class="animate__animated animate__fadeIn"
 					leave-active-class="animate__animated animate__fadeOut"
 					:duration="{enter: 300, leave: 300}"
 			>
-				<ContentTop :key="contentType"/>
+				<ContentType />
 			</transition>
-
 			<transition
 					mode="out-in"
 					enter-active-class="animate__animated animate__fadeIn"
@@ -128,11 +127,12 @@
 <script>
 import MobileTopbar from "@/components/mobileTopbar.vue";
 import {mapState} from "vuex";
-import ContentTop from "@/components/contentTop.vue";
+import UserProfile from "@/components/userProfile.vue";
+import ContentType from "@/components/contentType.vue";
 
 export default {
 	name: 'HomePage',
-	components: {ContentTop, MobileTopbar},
+	components: {MobileTopbar, UserProfile, ContentType},
 	computed: {
 		...mapState({
 			sidebarFlag: 'sidebarFlag',

@@ -90,7 +90,9 @@ export default {
 
 			//如果遮罩关闭，则重置侧边栏的z-index，防止侧边栏置于全局遮罩上
 			let sidebar = document.querySelector('.sidebar');
-			sidebar.style.zIndex = 100;
+			if (sidebar !== null) {
+				sidebar.style.zIndex = 100;
+			}
 
 			//判断侧边栏是否需要关闭
 			if (this.browserIdentity === 'MOBILE' && this.sidebarFlag) {

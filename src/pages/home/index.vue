@@ -322,7 +322,7 @@ export default {
 		/* 减去滚动条的大小 */
 		width: calc(100vw - $sidebarWidth - (100vw - 100%) - $sidebarMarginLeftWidth);
 		min-height: 100vh;
-		padding: 1.3rem 1rem 1rem 1rem;
+		padding: 1rem;
 		float: right;
 		box-sizing: border-box;
 

@@ -684,13 +684,13 @@ export default {
 }
 
 .anime-list {
-	min-height: calc(100vh - 2.3rem);
+	min-height: calc(100vh - 2rem - 50px);
 	display: flex;
 	flex-direction: column;
 
 	@media screen and (max-width: 768px) {
 		//减去顶部导航栏高度
-		min-height: calc(100vh - 6px - 60px);
+		min-height: calc(100vh - 6px - 60px - 25px);
 	}
 
 	/* 添加按钮与搜索框 */

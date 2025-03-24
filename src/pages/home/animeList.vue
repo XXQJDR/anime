@@ -684,13 +684,14 @@ export default {
 }
 
 .anime-list {
+	//100vh - content上下内边距 - contentType
 	min-height: calc(100vh - 2rem - 50px);
 	display: flex;
 	flex-direction: column;
 
 	@media screen and (max-width: 768px) {
-		//减去顶部导航栏高度
-		min-height: calc(100vh - 6px - 60px - 25px);
+		//100vh - content下边距 - 移动端顶部导航 - 移动端顶部导航下外边距 - contentType
+		min-height: calc(100vh - 6px - 50px - 10px - 25px);
 	}
 
 	/* 添加按钮与搜索框 */
@@ -700,11 +701,11 @@ export default {
 		background-color: #FFFFFF;
 		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
 		border-radius: 10px;
-		padding: 15px;
+		padding: 10px;
 
 		@media screen and (max-width: 768px) {
 			display: block;
-			padding: 10px;
+			padding: 8px;
 		}
 
 		.add-btn {
@@ -795,13 +796,13 @@ export default {
 		background-color: #FFFFFF;
 		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
 		border-radius: 10px;
-		padding: 15px;
+		padding: 10px;
 		user-select: none;
 		display: flex;
 		justify-content: space-between;
 
 		@media screen and (max-width: 768px) {
-			padding: 10px;
+			padding: 8px;
 		}
 
 		/* 分类 */
@@ -846,11 +847,11 @@ export default {
 		background-color: #FFFFFF;
 		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
 		border-radius: 10px;
-		padding: 15px;
+		padding: 10px;
 		text-align: center;
 
 		@media screen and (max-width: 768px) {
-			padding: 10px;
+			padding: 8px;
 		}
 
 		.number-font {
@@ -872,11 +873,11 @@ export default {
 		background-color: #FFFFFF;
 		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
 		border-radius: 10px;
-		padding: 15px;
+		padding: 10px;
 		position: relative;
 
 		@media screen and (max-width: 768px) {
-			padding: 10px;
+			padding: 8px;
 		}
 
 		.list {

@@ -100,7 +100,7 @@ export default {
 			min-height: 350px;
 			display: flex;
 			align-items: center;
-			padding: 15px;
+			padding: 10px;
 			background-color: #FFFFFF;
 			box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
 			border-radius: 10px;
@@ -108,7 +108,7 @@ export default {
 
 			@media screen and (max-width: 768px) {
 				min-height: 300px;
-				padding: 10px;
+				padding: 8px;
 			}
 
 			.img {

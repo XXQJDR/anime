@@ -226,13 +226,14 @@ export default {
 }
 
 .viewing-history {
-	min-height: calc(100vh - 2.3rem);
+	//100vh - content上下内边距 - contentType
+	min-height: calc(100vh - 2rem - 50px);
 	display: flex;
 	flex-direction: column;
 
 	@media screen and (max-width: 768px) {
-		//减去顶部导航栏高度
-		min-height: calc(100vh - 6px - 60px);
+		//100vh - content下边距 - 移动端顶部导航 - 移动端顶部导航下外边距 - contentType
+		min-height: calc(100vh - 6px - 50px - 10px - 25px);
 	}
 
 	/* 动漫统计 */
@@ -252,11 +253,11 @@ export default {
 		border-radius: 10px;
 		position: relative;
 		box-sizing: border-box;
-		padding: 0 15px;
+		padding: 0 10px;
 		margin-top: .6rem;
 
 		@media screen and (max-width: 768px) {
-			padding: 0 10px;
+			padding: 0 8px;
 		}
 
 		.timeline {

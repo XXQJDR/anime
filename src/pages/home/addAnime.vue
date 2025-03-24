@@ -251,10 +251,11 @@ export default {
 		background-color: #FFFFFF;
 		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
 		border-radius: 10px;
-		padding: 15px;
+		padding: 10px;
+		box-sizing: border-box;
 
 		@media screen and (max-width: 768px) {
-			padding: 10px;
+			padding: 8px;
 		}
 
 		svg {
@@ -301,12 +302,13 @@ export default {
 		background-color: #FFFFFF;
 		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
 		border-radius: 10px;
-		padding: 15px;
+		padding: 10px;
 		display: flex;
 		justify-content: center;
+		box-sizing: border-box;
 
 		@media screen and (max-width: 768px) {
-			padding: 10px;
+			padding: 8px;
 		}
 
 		.btn {

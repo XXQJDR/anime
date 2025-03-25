@@ -1,65 +1,87 @@
 <template>
 	<div class="personal-info">
-		<div class="item">
-			<div class="title">头像</div>
-			<div class="avatar" @click="dialogVisible = true">
-				<img :src="cropperImg" alt=""/>
+		<div class="basic">
+			<div class="type">基本信息</div>
+			<el-divider />
+			<div class="item">
+				<div class="title">头像</div>
+				<div class="avatar" @click="dialogVisible = true">
+					<img :src="cropperImg" alt=""/>
+				</div>
 			</div>
-		</div>
-		<div class="item">
-			<div class="title">用户名</div>
-			<el-input v-model="username"/>
-		</div>
-		<div class="item">
-			<div class="title">创建日期</div>
-			<div class="content">2023-01-01</div>
-		</div>
-		<div class="btn">
-			<el-button type="primary">保存</el-button>
-			<el-button>取消</el-button>
-		</div>
+			<div class="item">
+				<div class="title">用户名</div>
+				<el-input v-model="username"/>
+			</div>
+			<div class="item">
+				<div class="title">创建日期</div>
+				<div class="content">2023-01-01</div>
+			</div>
+			<div class="btn">
+				<el-button type="primary">保存</el-button>
+				<el-button>取消</el-button>
+			</div>
 
-		<!--头像修改dialog-->
-		<el-dialog
-				title="上传图片"
-				:visible.sync="dialogVisible"
-				center
-				:width="browserIdentity === 'MOBILE' ? '100%' : '50%'"
-				:show-close="false"
-				:close-on-press-escape="false"
-				:close-on-click-modal="false"
-		>
-			<div class="cropper">
-				<VueCropper
-						ref="cropper"
-						:img="uploadImg"
-						outputType="webp"
-						autoCrop
-						autoCropWidth="200"
-						autoCropHeight="200"
-						fixed
-						fixedBox
-						:canMoveBox="false"
-						centerBox
-				></VueCropper>
-			</div>
-			<div class="control">
-				<input
-						type="file"
-						ref="fileInput"
-						accept="image/*"
-						@change="handleFileChange"
-						hidden
-				>
-				<el-button @click="$refs.fileInput.click()">选择图片</el-button>
-				<el-button @click="$refs.cropper.rotateLeft()">左旋转</el-button>
-				<el-button @click="$refs.cropper.rotateRight()">右旋转</el-button>
-			</div>
-			<span slot="footer" class="dialog-footer">
+			<!--头像修改dialog-->
+			<el-dialog
+					title="上传图片"
+					:visible.sync="dialogVisible"
+					center
+					:width="browserIdentity === 'MOBILE' ? '100%' : '50%'"
+					:show-close="false"
+					:close-on-press-escape="false"
+					:close-on-click-modal="false"
+			>
+				<div class="cropper">
+					<VueCropper
+							ref="cropper"
+							:img="uploadImg"
+							outputType="webp"
+							autoCrop
+							autoCropWidth="200"
+							autoCropHeight="200"
+							fixed
+							fixedBox
+							:canMoveBox="false"
+							centerBox
+					></VueCropper>
+				</div>
+				<div class="control">
+					<input
+							type="file"
+							ref="fileInput"
+							accept="image/*"
+							@change="handleFileChange"
+							hidden
+					>
+					<el-button @click="$refs.fileInput.click()">选择图片</el-button>
+					<el-button @click="$refs.cropper.rotateLeft()">左旋转</el-button>
+					<el-button @click="$refs.cropper.rotateRight()">右旋转</el-button>
+				</div>
+				<span slot="footer" class="dialog-footer">
         <el-button @click="upload" type="primary">上传</el-button>
 				<el-button @click="cancel">取消</el-button>
       </span>
-		</el-dialog>
+			</el-dialog>
+		</div>
+
+		<div class="security">
+			<div class="type">安全信息</div>
+			<el-divider />
+			<div class="item">
+				<div class="title">邮箱</div>
+				<div class="content">
+					<div>3124140355@qq.com</div>
+					<SvgIcon icon="rightArrow" :stroke="true" color="#999" />
+				</div>
+			</div>
+			<div class="item">
+				<div class="title">修改密码</div>
+				<div class="content">
+					<SvgIcon icon="rightArrow" :stroke="true" color="#999" />
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -126,80 +148,122 @@ export default {
 
 <style scoped lang="scss">
 .personal-info {
-	//100vh - content上下内边距 - contentType - personalInfo上外边距
-	min-height: calc(100vh - 2rem - 50px - 1rem);
-	background-color: #FFFFFF;
-	box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
-	border-radius: 10px;
-	padding: 10px;
-	box-sizing: border-box;
 	margin-top: 1rem;
-	position: relative;
 
-	@media screen and (max-width: 768px) {
-		//100vh - content下边距 - 移动端顶部导航 - 移动端顶部导航下外边距 - contentType - personalInfo上外边距
-		min-height: calc(100vh - 6px - 50px - 10px - 25px - 1rem);
-		padding: 8px;
-	}
+	.basic,
+	.security {
+		background-color: #FFFFFF;
+		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
+		border-radius: 10px;
+		padding: 10px;
+		box-sizing: border-box;
 
-	.item {
-		display: flex;
-		align-items: center;
-		margin-top: 2rem;
+		@media screen and (max-width: 768px) {
+			padding: 8px;
+		}
 
-		.title {
-			width: 80px;
-			text-align: right;
-			font-size: 1.1rem;
-			margin-left: 1rem;
-			margin-right: 2.5rem;
+		.type {
+			font-size: 1.2rem;
+			font-weight: bold;
+		}
+
+		.el-divider {
+			margin: 10px 0;
 
 			@media screen and (max-width: 768px) {
-				width: 62px;
-				margin-left: 0;
-				margin-right: 1rem;
+				margin: 8px 0;
 			}
 		}
 
-		.avatar {
-			width: 100px;
-			height: 100px;
-			border-radius: 50%;
-			overflow: hidden;
+		.item {
+			display: flex;
+			align-items: center;
+			margin-top: 1.5rem;
+
+			.title {
+				width: 80px;
+				text-align: right;
+				margin-left: 1rem;
+				margin-right: 2.5rem;
+
+				@media screen and (max-width: 768px) {
+					width: 62px;
+					margin-left: 0;
+					margin-right: 1rem;
+				}
+			}
+		}
+	}
+
+	/* 基本信息 */
+	.basic {
+		.item {
+			.avatar {
+				width: 100px;
+				height: 100px;
+				border-radius: 50%;
+				overflow: hidden;
+				cursor: pointer;
+
+				@media screen and (max-width: 768px) {
+					width: 70px;
+					height: 70px;
+				}
+
+				img {
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+				}
+			}
+		}
+
+		.btn {
+			text-align: center;
+			margin-top: 1.5rem;
+
+			.el-button {
+				font-size: 1rem;
+			}
+		}
+
+		.cropper {
+			height: 420px;
+		}
+
+		.control {
+			text-align: center;
+			margin-top: 1rem;
+		}
+	}
+
+	/* 安全信息 */
+	.security {
+		margin-top: .6rem;
+
+		.item {
+			justify-content: space-between;
 			cursor: pointer;
+			border-radius: 5px;
+			padding: 15px 0;
+			transition: background-color .3s ease;
+			margin-top: .6rem;
+			padding-right: 10px;
 
-			@media screen and (max-width: 768px) {
-				width: 70px;
-				height: 70px;
+			&:hover {
+				background-color: #f7f3f2;
 			}
 
-			img {
-				width: 100%;
-				height: 100%;
-				object-fit: cover;
+			.content {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+
+				.svg-icon {
+					margin-left: 10px;
+				}
 			}
 		}
-	}
-
-	.btn {
-		text-align: center;
-		position: absolute;
-		bottom: 3rem;
-		left: 50%;
-		transform: translateX(-50%);
-
-		.el-button {
-			font-size: 1rem;
-		}
-	}
-
-	.cropper {
-		height: 420px;
-	}
-
-	.control {
-		text-align: center;
-		margin-top: 1rem;
 	}
 }
 </style>

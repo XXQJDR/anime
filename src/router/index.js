@@ -19,7 +19,6 @@ const PersonalPanel = () => import('@/pages/home/personal/panel.vue');
 const PersonalInfo = () => import('@/pages/home/personal/info.vue');
 const PersonalPost = () => import('@/pages/home/personal/post.vue');
 const PersonalNotice = () => import('@/pages/home/personal/notice.vue');
-const PersonalSecurity = () => import('@/pages/home/personal/security.vue');
 
 Vue.use(VueRouter);
 
@@ -129,13 +128,6 @@ const routes = [
 				component: PersonalNotice,
 				meta: {
 					title: '通知'
-				}
-			},
-			{
-				path: 'personal/security',
-				component: PersonalSecurity,
-				meta: {
-					title: '安全'
 				}
 			}
 		]

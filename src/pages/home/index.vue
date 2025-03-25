@@ -95,14 +95,6 @@
 							<SvgIcon icon="notice" :stroke="true" stroke-width="10"/>
 							<div class="title">通知</div>
 						</div>
-						<div
-								class="submenu-item"
-								:class="{'item-title-active':contentType==='security'}"
-								@click="changeContentType('security')"
-						>
-							<SvgIcon icon="security" :stroke="true" stroke-width="10"/>
-							<div class="title">安全</div>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -199,9 +191,6 @@ export default {
 					break;
 				case 'notice':
 					path += '/personal/notice';
-					break;
-				case 'security':
-					path += '/personal/security';
 					break;
 			}
 			this.$router.push(path);

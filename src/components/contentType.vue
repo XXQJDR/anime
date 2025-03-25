@@ -37,10 +37,6 @@
 			<SvgIcon icon="notice" size="22" :stroke="true"/>
 			<div class="title">通知</div>
 		</div>
-		<div class="type-title" v-show="homeContentType === 'security'">
-			<SvgIcon icon="security" size="22" :stroke="true"/>
-			<div class="title">安全</div>
-		</div>
 	</div>
 </template>
 

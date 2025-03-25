@@ -1,14 +1,13 @@
 <template>
-	<div class="test">
 
-	</div>
 </template>
 
 <script>
 export default {
-	name: 'TestPage',
+	name: 'PersonalSecurity'
 }
 </script>
 
 <style scoped lang="scss">
+
 </style>

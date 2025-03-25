@@ -22,20 +22,24 @@
 			<div class="title">垃圾箱</div>
 		</div>
 		<div class="type-title" v-show="homeContentType === 'panel'">
-			<i class="el-icon-c-scale-to-original"></i>
+			<SvgIcon icon="panel" size="22" :stroke="true"/>
 			<div class="title">仪表盘</div>
 		</div>
 		<div class="type-title" v-show="homeContentType === 'info'">
-			<i class="el-icon-user"></i>
+			<SvgIcon icon="info" size="22" :stroke="true"/>
 			<div class="title">个人信息</div>
 		</div>
 		<div class="type-title" v-show="homeContentType === 'post'">
-			<i class="el-icon-document"></i>
+			<SvgIcon icon="file" size="22" :stroke="true"/>
 			<div class="title">帖子</div>
 		</div>
 		<div class="type-title" v-show="homeContentType === 'notice'">
-			<i class="el-icon-bell"></i>
+			<SvgIcon icon="notice" size="22" :stroke="true"/>
 			<div class="title">通知</div>
+		</div>
+		<div class="type-title" v-show="homeContentType === 'security'">
+			<SvgIcon icon="security" size="22" :stroke="true"/>
+			<div class="title">安全</div>
 		</div>
 	</div>
 </template>

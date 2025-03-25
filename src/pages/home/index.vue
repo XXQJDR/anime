@@ -68,7 +68,7 @@
 								:class="{'item-title-active':contentType==='panel'}"
 								@click="changeContentType('panel')"
 						>
-							<i class="el-icon-c-scale-to-original"></i>
+							<SvgIcon icon="panel" :stroke="true" stroke-width="10"/>
 							<div class="title">仪表盘</div>
 						</div>
 						<div
@@ -76,7 +76,7 @@
 								:class="{'item-title-active':contentType==='info'}"
 								@click="changeContentType('info')"
 						>
-							<i class="el-icon-user"></i>
+							<SvgIcon icon="info" :stroke="true" stroke-width="10"/>
 							<div class="title">个人信息</div>
 						</div>
 						<div
@@ -84,7 +84,7 @@
 								:class="{'item-title-active':contentType==='post'}"
 								@click="changeContentType('post')"
 						>
-							<i class="el-icon-document"></i>
+							<SvgIcon icon="file" :stroke="true" stroke-width="10"/>
 							<div class="title">帖子</div>
 						</div>
 						<div
@@ -92,8 +92,16 @@
 								:class="{'item-title-active':contentType==='notice'}"
 								@click="changeContentType('notice')"
 						>
-							<i class="el-icon-bell"></i>
+							<SvgIcon icon="notice" :stroke="true" stroke-width="10"/>
 							<div class="title">通知</div>
+						</div>
+						<div
+								class="submenu-item"
+								:class="{'item-title-active':contentType==='security'}"
+								@click="changeContentType('security')"
+						>
+							<SvgIcon icon="security" :stroke="true" stroke-width="10"/>
+							<div class="title">安全</div>
 						</div>
 					</div>
 				</div>
@@ -103,14 +111,14 @@
 
 		<div class="content">
 			<MobileTopbar v-if="browserIdentity === 'MOBILE'"/>
-			<UserProfile />
+			<UserProfile/>
 			<transition
 					mode="out-in"
 					enter-active-class="animate__animated animate__fadeIn"
 					leave-active-class="animate__animated animate__fadeOut"
 					:duration="{enter: 300, leave: 300}"
 			>
-				<ContentType />
+				<ContentType/>
 			</transition>
 			<transition
 					mode="out-in"
@@ -191,6 +199,9 @@ export default {
 					break;
 				case 'notice':
 					path += '/personal/notice';
+					break;
+				case 'security':
+					path += '/personal/security';
 					break;
 			}
 			this.$router.push(path);

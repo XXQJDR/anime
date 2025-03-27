@@ -28,21 +28,21 @@
 							@click="changeSort('DEFAULT')"
 							:class="{'popover-li-active':selectedSortName === 'DEFAULT'}"
 					>
-						<SvgIcon icon="descOrder"/>
+						<SvgIcon icon="descSort"/>
 						<div>默认排序</div>
 					</li>
 					<li
 							@click="changeSort('PLAY_DESC')"
 							:class="{'popover-li-active':selectedSortName === 'PLAY_DESC'}"
 					>
-						<SvgIcon icon="descOrder"/>
+						<SvgIcon icon="descSort"/>
 						<div>播放时间降序</div>
 					</li>
 					<li
 							@click="changeSort('PLAY_ASC')"
 							:class="{'popover-li-active':selectedSortName === 'PLAY_ASC'}"
 					>
-						<SvgIcon icon="ascOrder"/>
+						<SvgIcon icon="ascSort"/>
 						<div>播放时间升序</div>
 					</li>
 				</ul>

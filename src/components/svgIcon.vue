@@ -5,9 +5,7 @@
       fontSize: size + 'px',
       width: width + 'px',
       height: height + 'px',
-      color: color,
-      stroke: stroke ? 'CurrentColor' : 'none',
-      strokeWidth: strokeWidth + 'px'
+      color: color
     }"
 	>
 		<use :xlink:href="iconName"></use>
@@ -31,7 +29,7 @@ export default {
 		//svg图标大小
 		size: {
 			type: [Number, String],
-			default: 18
+			default: 22
 		},
 		//svg图标宽度
 		width: {
@@ -40,16 +38,6 @@ export default {
 		//svg图标高度
 		height: {
 			type: [Number, String]
-		},
-		//svg是否加粗
-		stroke: {
-			type: Boolean,
-			default: false
-		},
-		//svg图标加粗宽度
-		strokeWidth: {
-			type: [Number, String],
-			default: 20
 		}
 	},
 	computed: {

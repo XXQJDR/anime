@@ -3,7 +3,7 @@
 		<!-- region 添加按钮与搜索框 -->
 		<div class="control">
 			<div class="add-btn" @click="goAddAnime">
-				<SvgIcon icon="add" color="#f7f3f2" :stroke="true"/>
+				<SvgIcon icon="add" color="#f7f3f2" />
 				<div>添加</div>
 			</div>
 			<div class="search">
@@ -37,28 +37,28 @@
 								@click="changeFilterType('全部')"
 								:class="{'popover-li-active':selectedTypeName==='全部'}"
 						>
-							<SvgIcon icon="list" :stroke="true" stroke-width="10"/>
+							<SvgIcon icon="list"/>
 							<div>全部</div>
 						</li>
 						<li
 								@click="changeFilterType('正在看')"
 								:class="{'popover-li-active':selectedTypeName==='正在看'}"
 						>
-							<SvgIcon icon="eye" :stroke="true" stroke-width="10"/>
+							<SvgIcon icon="eye"/>
 							<div>正在看</div>
 						</li>
 						<li
 								@click="changeFilterType('已看')"
 								:class="{'popover-li-active':selectedTypeName==='已看'}"
 						>
-							<SvgIcon icon="right" :stroke="true" stroke-width="10"/>
+							<SvgIcon icon="right"/>
 							<div>已看</div>
 						</li>
 						<li
 								@click="changeFilterType('未看')"
 								:class="{'popover-li-active':selectedTypeName==='未看'}"
 						>
-							<SvgIcon icon="mistake" :stroke="true" stroke-width="10"/>
+							<SvgIcon icon="cancel"/>
 							<div>未看</div>
 						</li>
 					</ul>
@@ -85,28 +85,28 @@
 								@click="changeFilterSort('JOIN_DESC')"
 								:class="{'popover-li-active':selectedSortName === 'JOIN_DESC'}"
 						>
-							<SvgIcon icon="descOrder"/>
+							<SvgIcon icon="descSort"/>
 							<div>加入时间降序</div>
 						</li>
 						<li
 								@click="changeFilterSort('JOIN_ASC')"
 								:class="{'popover-li-active':selectedSortName === 'JOIN_ASC'}"
 						>
-							<SvgIcon icon="ascOrder"/>
+							<SvgIcon icon="ascSort"/>
 							<div>加入时间升序</div>
 						</li>
 						<li
 								@click="changeFilterSort('PLAY_DESC')"
 								:class="{'popover-li-active':selectedSortName === 'PLAY_DESC'}"
 						>
-							<SvgIcon icon="descOrder"/>
+							<SvgIcon icon="descSort"/>
 							<div>播放时间降序</div>
 						</li>
 						<li
 								@click="changeFilterSort('PLAY_ASC')"
 								:class="{'popover-li-active':selectedSortName === 'PLAY_ASC'}"
 						>
-							<SvgIcon icon="ascOrder"/>
+							<SvgIcon icon="ascSort"/>
 							<div>播放时间升序</div>
 						</li>
 					</ul>
@@ -225,25 +225,25 @@
 						@click="updateAnimeWatchStatus('WATCHING')"
 						v-show="popover.watchStatus !== 'WATCHING'"
 				>
-					<SvgIcon icon="eye" :stroke="true" stroke-width="10"/>
+					<SvgIcon icon="eye"/>
 					<div>标记为正在看</div>
 				</li>
 				<li
 						@click="updateAnimeWatchStatus('FINISHED')"
 						v-show="popover.watchStatus !== 'FINISHED'"
 				>
-					<SvgIcon icon="right" :stroke="true" stroke-width="10"/>
+					<SvgIcon icon="right"/>
 					<div>标记为已看</div>
 				</li>
 				<li
 						@click="updateAnimeWatchStatus('NO_WATCH')"
 						v-show="popover.watchStatus !== 'NO_WATCH'"
 				>
-					<SvgIcon icon="mistake" :stroke="true" stroke-width="10"/>
+					<SvgIcon icon="cancel"/>
 					<div>标记为未看</div>
 				</li>
 				<li @click="toDustbin">
-					<SvgIcon icon="dustbin" color="red" :stroke="true" stroke-width="10"/>
+					<SvgIcon icon="dustbin" color="red"/>
 					<div>发送到垃圾箱</div>
 				</li>
 			</ul>
@@ -755,9 +755,9 @@ export default {
 				margin-top: 1rem;
 			}
 
-			svg {
+			.svg-icon {
 				position: absolute;
-				top: 14px;
+				top: 10px;
 				left: 14px;
 			}
 

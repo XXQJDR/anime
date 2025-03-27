@@ -2,7 +2,7 @@
 	<div class="mobile-topbar">
 		<div class="box" ref="box">
 			<div class="icon" @click="clickHandle">
-				<SvgIcon icon="menu" color="rgb(34, 8, 204)" :stroke="true"/>
+				<SvgIcon icon="menu" color="rgb(34, 8, 204)"/>
 			</div>
 		</div>
 	</div>

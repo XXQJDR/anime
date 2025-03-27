@@ -3,8 +3,8 @@
 		<!-- el-rate与$confirm配合评分后按alt重复弹出提示框，解决方法为让a元素获得焦点 -->
 		<a href="javascript:void(0)" class="solve-rate-bug-a" ref="solveRateBugA"></a>
 		<div class="back">
-			<SvgIcon icon="home" size="20" @click.native="back"/>
-			<SvgIcon icon="rightArrow" color="#cac5c4" :stroke="true"/>
+			<SvgIcon icon="home" size="24" @click.native="back"/>
+			<SvgIcon icon="rightArrow" size="28" color="#cac5c4"/>
 			<div>{{ anime.name }}</div>
 		</div>
 
@@ -86,16 +86,27 @@
 				<wc-waterfall :gap="10" :cols="count">
 					<div class="img" v-for="img in images" :key="img.id">
 						<div class="control">
-							<div class="detail" @click="openImageView(img.detailUrl)">
-								<i class="el-icon-full-screen"/>
-							</div>
-							<div class="delete" @click="deleteImage(img.id)">
-								<i class="el-icon-delete"/>
-							</div>
-							<a class="download" :href="img.detailUrl" download>
-								<div>
-									<i class="el-icon-download"/>
-								</div>
+							<SvgIcon
+									icon="fullScreen"
+									color="#FFF"
+									size="38"
+									class="detail"
+									@click="openImageView(img.detailUrl)"
+							/>
+							<SvgIcon
+									icon="dustbin"
+									color="#FFF"
+									size="38"
+									class="delete"
+									@click="deleteImage(img.id)"
+							/>
+							<a :href="img.detailUrl" download>
+								<SvgIcon
+										icon="download"
+										color="#FFF"
+										size="38"
+										class="delete"
+								/>
 							</a>
 						</div>
 						<img class="brief-img" v-lazy="img.briefUrl" @load='imgOnLoad' alt="">
@@ -692,9 +703,7 @@ export default {
 					top: 0;
 					left: 0;
 					background-color: rgba(0, 0, 0, 0);
-					font-size: 2rem;
-					color: #FFFFFF;
-					transition: background-color .5s;
+					transition: background-color .5s ease;
 					display: none;
 					justify-content: space-evenly;
 					align-items: center;
@@ -715,13 +724,11 @@ export default {
 					.download {
 						opacity: 0;
 						visibility: hidden;
-						padding: 5px;
+						padding: 8px;
 						cursor: pointer;
-						transition: all .5s;
-						border-radius: 10px;
 
 						&:hover {
-							background-color: rgb(43, 10, 255);
+							color: #2B0AFF !important;
 						}
 					}
 				}

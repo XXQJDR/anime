@@ -72,13 +72,13 @@
 				<div class="title">邮箱</div>
 				<div class="content">
 					<div>3124140355@qq.com</div>
-					<SvgIcon icon="rightArrow" :stroke="true" color="#999" />
+					<SvgIcon icon="rightArrow" color="#999" />
 				</div>
 			</div>
 			<div class="item">
 				<div class="title">修改密码</div>
 				<div class="content">
-					<SvgIcon icon="rightArrow" :stroke="true" color="#999" />
+					<SvgIcon icon="rightArrow" color="#999" />
 				</div>
 			</div>
 		</div>

@@ -42,7 +42,7 @@
 					<div>恢复</div>
 				</li>
 				<li @click="thoroughlyRemove">
-					<SvgIcon icon="circleMistake" color="red"/>
+					<SvgIcon icon="cancel" color="red"/>
 					<div style="color: red">彻底删除</div>
 				</li>
 			</ul>

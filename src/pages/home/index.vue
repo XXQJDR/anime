@@ -13,7 +13,7 @@
 							:class="{'item-title-active':contentType==='animeList'}"
 							@click="changeContentType('animeList')"
 					>
-						<SvgIcon icon="list" :stroke="true"/>
+						<SvgIcon icon="list"/>
 						<div class="title">列表</div>
 					</div>
 				</div>
@@ -23,7 +23,7 @@
 							:class="{'item-title-active':contentType==='viewingHistory'}"
 							@click="changeContentType('viewingHistory')"
 					>
-						<SvgIcon icon="history" :stroke="true"/>
+						<SvgIcon icon="history"/>
 						<div class="title">历程</div>
 					</div>
 				</div>
@@ -33,7 +33,7 @@
 							:class="{'item-title-active':contentType==='animeRandom'}"
 							@click="changeContentType('animeRandom')"
 					>
-						<SvgIcon icon="random" :stroke="true"/>
+						<SvgIcon icon="random"/>
 						<div class="title">随机</div>
 					</div>
 				</div>
@@ -43,7 +43,7 @@
 							:class="{'item-title-active':contentType==='addAnime'}"
 							@click="changeContentType('addAnime')"
 					>
-						<SvgIcon icon="add" :stroke="true"/>
+						<SvgIcon icon="add"/>
 						<div class="title">添加</div>
 					</div>
 				</div>
@@ -53,7 +53,7 @@
 							:class="{'item-title-active':contentType==='community'}"
 							@click="changeContentType('community')"
 					>
-						<SvgIcon icon="community" :stroke="true"/>
+						<SvgIcon icon="community"/>
 						<div class="title">社区</div>
 					</div>
 				</div>
@@ -63,13 +63,13 @@
 							:class="{'item-title-active':contentType==='dustbin'}"
 							@click="changeContentType('dustbin')"
 					>
-						<SvgIcon icon="dustbin" :stroke="true"/>
+						<SvgIcon icon="dustbin"/>
 						<div class="title">垃圾箱</div>
 					</div>
 				</div>
 				<div class="menu-item">
 					<div class="menu-item-title">
-						<SvgIcon icon="personal" :stroke="true"/>
+						<SvgIcon icon="personal"/>
 						<div class="title">个人中心</div>
 					</div>
 					<div class="submenu">
@@ -78,7 +78,7 @@
 								:class="{'item-title-active':contentType==='panel'}"
 								@click="changeContentType('panel')"
 						>
-							<SvgIcon icon="panel" :stroke="true" stroke-width="10"/>
+							<SvgIcon icon="panel"/>
 							<div class="title">仪表盘</div>
 						</div>
 						<div
@@ -86,7 +86,7 @@
 								:class="{'item-title-active':contentType==='info'}"
 								@click="changeContentType('info')"
 						>
-							<SvgIcon icon="info" :stroke="true" stroke-width="10"/>
+							<SvgIcon icon="info"/>
 							<div class="title">个人信息</div>
 						</div>
 						<div
@@ -94,7 +94,7 @@
 								:class="{'item-title-active':contentType==='post'}"
 								@click="changeContentType('post')"
 						>
-							<SvgIcon icon="file" :stroke="true" stroke-width="10"/>
+							<SvgIcon icon="file"/>
 							<div class="title">帖子</div>
 						</div>
 						<div
@@ -102,7 +102,7 @@
 								:class="{'item-title-active':contentType==='notice'}"
 								@click="changeContentType('notice')"
 						>
-							<SvgIcon icon="notice" :stroke="true" stroke-width="10"/>
+							<SvgIcon icon="notice"/>
 							<div class="title">通知</div>
 						</div>
 					</div>
@@ -297,6 +297,11 @@ export default {
 
 						&:hover {
 							background-color: #f7f3f2;
+						}
+
+						.svg-icon {
+							width: 20px;
+							height: 20px;
 						}
 
 						.title {

@@ -8,7 +8,7 @@
 				:hidden="false"
 				@click.native="goToNotice"
 		>
-			<SvgIcon icon="notice" size="22"/>
+			<SvgIcon icon="notice" size="26"/>
 		</el-badge>
 
 		<!-- 用户 -->
@@ -22,7 +22,7 @@
 		>
 			<ul>
 				<li @click="goToPersonalCenter">
-					<SvgIcon icon="personal" :stroke="true"/>
+					<SvgIcon icon="personal"/>
 					<div>个人中心</div>
 				</li>
 				<li @click="logout">
@@ -153,8 +153,8 @@ export default {
 
 		@media screen and (max-width: 768px) {
 			.svg-icon {
-				width: 18px;
-				height: 18px;
+				width: 22px;
+				height: 22px;
 			}
 		}
 	}

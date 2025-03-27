@@ -272,7 +272,6 @@ export default {
 .personal-info {
 	.el-input {
 		flex: 1;
-		font-size: 1rem;
 
 		.el-input__inner {
 			color: #000000;

@@ -770,7 +770,7 @@ export default {
 				outline-offset: 2px;
 				border: 1px solid #DCDFE6;
 				border-radius: 5px;
-				transition: all 0.2s;
+				transition: all 0.3s ease;
 				padding-left: 45px;
 
 				&:hover {
@@ -778,8 +778,8 @@ export default {
 				}
 
 				&:focus {
-					border-color: rgb(49, 130, 206);
-					box-shadow: rgb(49, 130, 206) 0 0 0 1px;
+					border-color: #2b0aff;
+					box-shadow: #2b0aff 0 0 0 1px;
 					background-color: #FFFFFF;
 				}
 

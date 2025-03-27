@@ -261,7 +261,7 @@ export default {
 		svg {
 			position: absolute;
 			top: 50%;
-			left: 1.8rem;
+			left: 25px;
 			transform: translateY(-50%);
 		}
 
@@ -273,25 +273,25 @@ export default {
 			outline-offset: 2px;
 			border: 1px solid #DCDFE6;
 			border-radius: 5px;
-			transition: all 0.2s;
+			transition: all 0.3s ease;
 
 			/* 使输入文字居中 */
 			text-align: center;
+
+			/* placeholder居中 */
+			&::-ms-input-placeholder,
+			&::-webkit-input-placeholder {
+				text-align: center;
+			}
 
 			&:hover {
 				border-color: #C0C4CC;
 			}
 
 			&:focus {
-				border-color: rgb(49, 130, 206);
-				box-shadow: rgb(49, 130, 206) 0 0 0 1px;
+				border-color: #2b0aff;
+				box-shadow: #2b0aff 0 0 0 1px;
 				background-color: #FFFFFF;
-			}
-
-			/* placeholder居中 */
-			&::-ms-input-placeholder,
-			&::-webkit-input-placeholder {
-				text-align: center;
 			}
 		}
 	}

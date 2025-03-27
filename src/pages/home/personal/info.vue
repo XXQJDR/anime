@@ -11,7 +11,7 @@
 			</div>
 			<div class="item">
 				<div class="title">用户名</div>
-				<el-input v-model="username"/>
+				<input type="text" v-model="username">
 			</div>
 			<div class="item">
 				<div class="title">创建日期</div>
@@ -216,6 +216,28 @@ export default {
 					object-fit: cover;
 				}
 			}
+
+			input {
+				width: 100%;
+				height: 45px;
+				box-sizing: border-box;
+				outline: transparent solid 2px;
+				outline-offset: 2px;
+				border: 1px solid #DCDFE6;
+				border-radius: 5px;
+				transition: all 0.3s ease;
+				padding-left: 15px;
+
+				&:hover {
+					border-color: #C0C4CC;
+				}
+
+				&:focus {
+					border-color: #2b0aff;
+					box-shadow: #2b0aff 0 0 0 1px;
+					background-color: #FFFFFF;
+				}
+			}
 		}
 
 		.btn {
@@ -270,14 +292,6 @@ export default {
 
 <style lang="scss">
 .personal-info {
-	.el-input {
-		flex: 1;
-
-		.el-input__inner {
-			color: #000000;
-		}
-	}
-
 	.el-dialog {
 		position: absolute;
 		top: 50%;

@@ -757,14 +757,14 @@ export default {
 
 			.svg-icon {
 				position: absolute;
-				top: 10px;
-				left: 14px;
+				top: 50%;
+				left: 15px;
+				transform: translateY(-50%);
 			}
 
 			input {
 				width: 100%;
-				min-width: 250px;
-				height: 44px;
+				height: 45px;
 				box-sizing: border-box;
 				outline: transparent solid 2px;
 				outline-offset: 2px;
@@ -781,10 +781,6 @@ export default {
 					border-color: #2b0aff;
 					box-shadow: #2b0aff 0 0 0 1px;
 					background-color: #FFFFFF;
-				}
-
-				@media screen and (max-width: 768px) {
-					width: 100%;
 				}
 			}
 		}

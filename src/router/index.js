@@ -19,6 +19,7 @@ const PersonalPanel = () => import('@/pages/home/personal/panel.vue');
 const PersonalInfo = () => import('@/pages/home/personal/info.vue');
 const PersonalPost = () => import('@/pages/home/personal/post.vue');
 const PersonalNotice = () => import('@/pages/home/personal/notice.vue');
+const Community = () => import('@/pages/home/community.vue');
 
 Vue.use(VueRouter);
 
@@ -94,6 +95,13 @@ const routes = [
 				meta: {
 					title: '添加动漫'
 				},
+			},
+			{
+				path: 'community',
+				component: Community,
+				meta: {
+					title: '社区'
+				}
 			},
 			{
 				path: 'dustbin',

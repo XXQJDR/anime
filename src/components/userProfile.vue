@@ -1,7 +1,13 @@
 <template>
 	<div class="user-profile">
 		<!-- 通知 -->
-		<el-badge class="notice" :value="100" :max="99" :hidden="false">
+		<el-badge
+				class="notice"
+				:value="100"
+				:max="99"
+				:hidden="false"
+				@click.native="goToNotice"
+		>
 			<SvgIcon icon="notice" size="22"/>
 		</el-badge>
 
@@ -102,6 +108,13 @@ export default {
 		goToPersonalCenter() {
 			this.$router.push("/home/personal/panel");
 			this.homeContentType = 'panel';
+			this.popoverFlag = false;
+		},
+
+		//跳转到消息管理
+		goToNotice() {
+			this.$router.push("/home/personal/notice");
+			this.homeContentType = 'notice';
 			this.popoverFlag = false;
 		}
 	}

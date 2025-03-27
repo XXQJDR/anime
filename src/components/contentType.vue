@@ -17,6 +17,10 @@
 			<SvgIcon icon="add" size="22" :stroke="true"/>
 			<div>添加动漫</div>
 		</div>
+		<div class="type-title" v-show="homeContentType === 'community'">
+			<SvgIcon icon="community" size="22" :stroke="true"/>
+			<div>社区</div>
+		</div>
 		<div class="type-title" v-show="homeContentType === 'dustbin'">
 			<SvgIcon icon="dustbin" size="22" :stroke="true"/>
 			<div class="title">垃圾箱</div>

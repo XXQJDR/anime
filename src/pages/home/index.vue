@@ -50,6 +50,16 @@
 				<div class="menu-item">
 					<div
 							class="menu-item-title"
+							:class="{'item-title-active':contentType==='community'}"
+							@click="changeContentType('community')"
+					>
+						<SvgIcon icon="community" :stroke="true"/>
+						<div class="title">社区</div>
+					</div>
+				</div>
+				<div class="menu-item">
+					<div
+							class="menu-item-title"
 							:class="{'item-title-active':contentType==='dustbin'}"
 							@click="changeContentType('dustbin')"
 					>
@@ -110,7 +120,7 @@
 					leave-active-class="animate__animated animate__fadeOut"
 					:duration="{enter: 300, leave: 300}"
 			>
-				<ContentType/>
+				<ContentType :key="contentType"/>
 			</transition>
 			<transition
 					mode="out-in"
@@ -163,36 +173,16 @@ export default {
 		//点击切换内容类型
 		changeContentType(type) {
 			this.contentType = type;
-			let path = '/home';
+			let path = '/home/';
 			switch (type) {
-				case 'animeList':
-					path += '/animeList';
-					break;
-				case 'viewingHistory':
-					path += '/viewingHistory';
-					break;
-				case 'animeRandom':
-					path += '/animeRandom';
-					break;
-				case 'addAnime':
-					path += '/addAnime';
-					break;
-				case 'dustbin':
-					path += '/dustbin';
-					break;
 				case 'panel':
-					path += '/personal/panel';
-					break;
 				case 'info':
-					path += '/personal/info';
-					break;
 				case 'post':
-					path += '/personal/post';
-					break;
 				case 'notice':
-					path += '/personal/notice';
+					path += 'personal/';
 					break;
 			}
+			path += type;
 			this.$router.push(path);
 
 			//移动端点击后关闭侧边栏及全局遮罩

@@ -91,6 +91,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "@/style/common";
 .anime-random {
 	/* 随机模块 */
 	> .box {
@@ -100,15 +101,10 @@ export default {
 			min-height: 350px;
 			display: flex;
 			align-items: center;
-			padding: 10px;
-			background-color: #FFFFFF;
-			box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
-			border-radius: 10px;
-			box-sizing: border-box;
+			@include box-style;
 
 			@media screen and (max-width: 768px) {
 				min-height: 300px;
-				padding: 8px;
 			}
 
 			.img {

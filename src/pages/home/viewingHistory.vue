@@ -219,6 +219,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "@/style/common";
 @font-face {
 	font-family: 'numberfont';
 	font-display: swap;
@@ -240,21 +241,15 @@ export default {
 	.chart {
 		height: 250px;
 		margin-top: 1rem;
-		background-color: #FFFFFF;
-		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
-		border-radius: 10px;
-		box-sizing: border-box;
+		@include box-style;
 	}
 
 	.time-line-box {
 		flex: 1;
-		background-color: #FFFFFF;
-		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
-		border-radius: 10px;
 		position: relative;
-		box-sizing: border-box;
-		padding: 0 10px;
 		margin-top: .6rem;
+		@include box-style;
+		padding: 0 10px;
 
 		@media screen and (max-width: 768px) {
 			padding: 0 8px;

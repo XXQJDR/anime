@@ -194,6 +194,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "@/style/common";
 .reset-password {
 	width: 100vw;
 	height: 100vh;
@@ -207,12 +208,8 @@ export default {
 
 	.box {
 		width: 450px;
-		background-color: #ffffff;
-		box-shadow: rgba(0, 0, 0, 0.05) 0 0.5rem 2rem;
-		border-radius: 5px;
-		padding: 1rem;
-		box-sizing: border-box;
 		text-align: center;
+		@include box-style;
 
 		.form {
 			margin-top: 3rem;

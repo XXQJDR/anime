@@ -677,6 +677,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "@/style/common";
 @font-face {
 	font-family: 'numberfont';
 	font-display: swap;
@@ -698,14 +699,10 @@ export default {
 	> .control {
 		display: flex;
 		margin-top: 1rem;
-		background-color: #FFFFFF;
-		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
-		border-radius: 10px;
-		padding: 10px;
+		@include box-style;
 
 		@media screen and (max-width: 768px) {
 			display: block;
-			padding: 8px;
 		}
 
 		.add-btn {
@@ -762,26 +759,10 @@ export default {
 				transform: translateY(-50%);
 			}
 
+			/* 输入框样式 */
+			@include input-style;
 			input {
-				width: 100%;
-				height: 45px;
-				box-sizing: border-box;
-				outline: transparent solid 2px;
-				outline-offset: 2px;
-				border: 1px solid #DCDFE6;
-				border-radius: 5px;
-				transition: all 0.3s ease;
 				padding-left: 45px;
-
-				&:hover {
-					border-color: #C0C4CC;
-				}
-
-				&:focus {
-					border-color: #2b0aff;
-					box-shadow: #2b0aff 0 0 0 1px;
-					background-color: #FFFFFF;
-				}
 			}
 		}
 	}
@@ -789,17 +770,10 @@ export default {
 	/* 筛选 */
 	.filter {
 		margin-top: .6rem;
-		background-color: #FFFFFF;
-		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
-		border-radius: 10px;
-		padding: 10px;
 		user-select: none;
 		display: flex;
 		justify-content: space-between;
-
-		@media screen and (max-width: 768px) {
-			padding: 8px;
-		}
+		@include box-style;
 
 		/* 分类 */
 		.type .btn span {
@@ -840,15 +814,8 @@ export default {
 	/* 统计 */
 	.total {
 		margin-top: .6rem;
-		background-color: #FFFFFF;
-		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
-		border-radius: 10px;
-		padding: 10px;
 		text-align: center;
-
-		@media screen and (max-width: 768px) {
-			padding: 8px;
-		}
+		@include box-style;
 
 		.number-font {
 			font-family: "numberfont" !important;
@@ -866,15 +833,8 @@ export default {
 	.list-box {
 		flex: 1;
 		margin-top: .6rem;
-		background-color: #FFFFFF;
-		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
-		border-radius: 10px;
-		padding: 10px;
 		position: relative;
-
-		@media screen and (max-width: 768px) {
-			padding: 8px;
-		}
+		@include box-style;
 
 		.list {
 			display: grid;

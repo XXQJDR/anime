@@ -468,6 +468,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "@/style/common";
 .anime-detail {
 	box-sizing: border-box;
 	padding: 0 10px;
@@ -571,11 +572,7 @@ export default {
 		width: 95%;
 		margin: 0 auto;
 		margin-top: 4rem;
-		padding: 1rem;
-		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
-		border-radius: 10px;
-		box-sizing: border-box;
-		background-color: #FFFFFF;
+		@include box-style;
 
 		@media screen and (max-width: 768px) {
 			width: 100%;
@@ -642,12 +639,8 @@ export default {
 		.upload {
 			width: 95%;
 			margin: 0 auto;
-			box-sizing: border-box;
-			box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
-			background-color: #FFFFFF;
-			padding: 1rem;
-			border-radius: 10px;
 			text-align: center;
+			@include box-style;
 
 			@media screen and (max-width: 768px) {
 				width: 100%;
@@ -657,16 +650,12 @@ export default {
 
 	.wonderful-moment-box {
 		width: 95%;
-		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
-		border-radius: 10px;
-		padding: 15px;
-		box-sizing: border-box;
 		margin: 0 auto;
 		margin-bottom: 1rem;
+		@include box-style;
 
 		@media screen and (max-width: 768px) {
 			width: 100%;
-			padding: 10px;
 		}
 
 		.wonderful-moment {

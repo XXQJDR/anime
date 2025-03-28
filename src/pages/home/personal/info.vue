@@ -147,20 +147,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "@/style/common";
 .personal-info {
 	margin-top: 1rem;
 
 	.basic,
 	.security {
-		background-color: #FFFFFF;
-		box-shadow: 0 0 35px 0 rgba(154, 161, 171, .15);
-		border-radius: 10px;
-		padding: 10px;
-		box-sizing: border-box;
-
-		@media screen and (max-width: 768px) {
-			padding: 8px;
-		}
+		@include box-style;
 
 		.type {
 			font-size: 1.2rem;
@@ -217,26 +210,9 @@ export default {
 				}
 			}
 
+			@include input-style;
 			input {
-				width: 100%;
-				height: 45px;
-				box-sizing: border-box;
-				outline: transparent solid 2px;
-				outline-offset: 2px;
-				border: 1px solid #DCDFE6;
-				border-radius: 5px;
-				transition: all 0.3s ease;
 				padding-left: 15px;
-
-				&:hover {
-					border-color: #C0C4CC;
-				}
-
-				&:focus {
-					border-color: #2b0aff;
-					box-shadow: #2b0aff 0 0 0 1px;
-					background-color: #FFFFFF;
-				}
 			}
 		}
 

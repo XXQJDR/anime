@@ -227,20 +227,14 @@ export default {
 }
 
 .viewing-history {
-	//100vh - content上下内边距 - contentType
-	min-height: calc(100vh - 2rem - 50px);
 	display: flex;
 	flex-direction: column;
-
-	@media screen and (max-width: 768px) {
-		//100vh - content下边距 - 移动端顶部导航 - 移动端顶部导航下外边距 - contentType
-		min-height: calc(100vh - 6px - 50px - 10px - 25px);
-	}
+	margin-top: 1rem;
+	@include content-min-height;
 
 	/* 动漫统计 */
 	.chart {
 		height: 250px;
-		margin-top: 1rem;
 		@include box-style;
 	}
 

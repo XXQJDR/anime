@@ -4,10 +4,6 @@
 
 <center>一个你的动漫历程记录者</center>
 
-- [线上地址在这里](http://47.108.90.243/)
-- 体验账户：`123@163.com`
-- 密码：`123qwe`
-
 <img src="images/list.png" width="100%">
 
 # 🎈 简介
@@ -33,6 +29,10 @@
 - 🛫 垃圾箱：支持删除添加的动漫
 - 🦴 图片：支持上传图片，以瀑布流的方式展示图片
 - 😶‍🌫️ 移动端：支持移动端
+- 📢 TODO
+  - 社区
+  - 个人中心
+
 
 # 📜 开源许可
 本项目仅供个人学习研究使用，禁止用于商业及非法用途。
@@ -52,3 +52,7 @@
 <img src="images/dustbin.png" width="100%">
 
 <img src="images/detail.png" width="100%" >
+
+<img src="images/images.png" width="100%" >
+
+<img src="images/mobile.jpg" height="800px" >

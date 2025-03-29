@@ -22,6 +22,7 @@
 		border: 1px solid #DCDFE6;
 		border-radius: 5px;
 		transition: all 0.3s ease;
+		box-sizing: border-box;
 
 		&:hover {
 			border-color: #C0C4CC;
@@ -32,5 +33,16 @@
 			box-shadow: #2b0aff 0 0 0 1px;
 			background-color: #FFFFFF;
 		}
+	}
+}
+
+/* content最小高度 */
+@mixin content-min-height {
+	//100vh - content上下内边距 - contentType - contentType下外边距
+	min-height: calc(100vh - 2rem - 50px - 1rem);
+
+	@media screen and (max-width: 768px) {
+		//100vh - content下边距 - 移动端顶部导航 - 移动端顶部导航下外边距 - contentType - contentType下外边距
+		min-height: calc(100vh - 6px - 50px - 10px - 25px - 1rem);
 	}
 }

@@ -685,20 +685,14 @@ export default {
 }
 
 .anime-list {
-	//100vh - content上下内边距 - contentType
-	min-height: calc(100vh - 2rem - 50px);
 	display: flex;
 	flex-direction: column;
-
-	@media screen and (max-width: 768px) {
-		//100vh - content下边距 - 移动端顶部导航 - 移动端顶部导航下外边距 - contentType
-		min-height: calc(100vh - 6px - 50px - 10px - 25px);
-	}
+	margin-top: 1rem;
+	@include content-min-height;
 
 	/* 添加按钮与搜索框 */
 	> .control {
 		display: flex;
-		margin-top: 1rem;
 		@include box-style;
 
 		@media screen and (max-width: 768px) {
@@ -838,13 +832,14 @@ export default {
 
 		.list {
 			display: grid;
-			grid-gap: 20px;
+			grid-gap: 15px;
 
-			@media screen and (max-width: 600px) {
+			@media screen and (max-width: 768px) {
 				grid-template-columns: repeat(1, 1fr);
+				grid-gap: 10px;
 			}
 
-			@media screen and (min-width: 600px) and (max-width: 1000px) {
+			@media screen and (min-width: 768px) and (max-width: 1000px) {
 				grid-template-columns: repeat(2, 1fr);
 			}
 
@@ -893,7 +888,7 @@ export default {
 					/* 鼠标移入图片放大图片 */
 					&:hover {
 						img {
-							transform: scale(1.1);
+							transform: scale(1.05);
 						}
 					}
 

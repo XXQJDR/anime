@@ -571,12 +571,12 @@ export default {
 	.anime-box {
 		width: 95%;
 		margin: 0 auto;
-		margin-top: 4rem;
+		margin-top: 4.5rem;
 		@include box-style;
 
 		@media screen and (max-width: 768px) {
 			width: 100%;
-			margin-top: 4.5rem;
+			margin-top: 5rem;
 		}
 
 		.anime > div {

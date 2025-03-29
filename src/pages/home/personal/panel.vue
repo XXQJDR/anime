@@ -50,18 +50,12 @@ export default {
 <style scoped lang="scss">
 @import "@/style/common";
 .personal-panel {
-	//100vh - content上下内边距 - contentType - personalPanel上外边距
-	min-height: calc(100vh - 2rem - 50px - 1rem);
 	margin-top: 1rem;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	@include box-style;
-
-	@media screen and (max-width: 768px) {
-		//100vh - content下边距 - 移动端顶部导航 - 移动端顶部导航下外边距 - contentType - personalPanel上外边距
-		min-height: calc(100vh - 6px - 50px - 10px - 25px - 1rem);
-	}
+	@include content-min-height;
 
 	.box {
 		width: 70%;

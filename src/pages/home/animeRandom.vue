@@ -7,7 +7,7 @@
 					<img v-lazy="anime.cover" alt="">
 					<div class="mask" @click="addWatching(anime.animeUserId)">
 						<div class="box">
-							<SvgIcon icon="boldAdd" size="25" color="#FFF"/>
+							<SvgIcon icon="boldAdd" size="32" color="#FFF"/>
 						</div>
 					</div>
 				</div>
@@ -129,7 +129,7 @@ export default {
 
 						/* 鼠标移入图片，图片放大 */
 						img {
-							transform: scale(1.1);
+							transform: scale(1.05);
 						}
 					}
 

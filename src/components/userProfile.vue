@@ -1,5 +1,5 @@
 <template>
-	<div class="user-profile">
+	<div class="user-profile" ref="userProfile">
 		<!-- 通知 -->
 		<el-badge
 				class="notice"
@@ -46,7 +46,8 @@ export default {
 	name: 'UserProfile',
 	data() {
 		return {
-			popoverFlag: false
+			popoverFlag: false,
+			oldScrollTop: 0
 		}
 	},
 	computed: {
@@ -67,6 +68,22 @@ export default {
 			},
 			set(val) {
 				this.$store.commit('HOME_CONTENT_TYPE', val);
+			}
+		},
+
+		//浏览器身份
+		browserIdentity() {
+			return this.$store.state.browserIdentity;
+		}
+	},
+	watch: {
+		browserIdentity() {
+			if (this.browserIdentity === 'MOBILE') {
+				this.$refs.userProfile.style.position = 'fixed';
+				this.$refs.userProfile.style.top = '5px';
+			} else {
+				this.$refs.userProfile.style.position = 'absolute';
+				this.$refs.userProfile.style.top = '1.3rem';
 			}
 		}
 	},
@@ -116,7 +133,32 @@ export default {
 			this.$router.push("/home/personal/notice");
 			this.homeContentType = 'notice';
 			this.popoverFlag = false;
+		},
+
+		scrolling() {
+			if (this.browserIdentity !== 'MOBILE') {
+				return;
+			}
+
+			// 滚动条距文档顶部的距离
+			let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+			// 滚动条滚动的距离
+			let scrollStep = scrollTop - this.oldScrollTop;
+			// 更新——滚动前，滚动条距文档顶部的距离
+			this.oldScrollTop = scrollTop;
+			this.$refs.userProfile.style.position = 'fixed';
+			if (scrollStep > 0) {
+				this.$refs.userProfile.style.top = '-60px';
+			} else {
+				this.$refs.userProfile.style.top = '5px';
+			}
 		}
+	},
+	mounted() {
+		window.addEventListener("scroll", this.scrolling);
+	},
+	beforeDestroy() {
+		window.removeEventListener("scroll", this.scrolling);
 	}
 }
 </script>
@@ -130,6 +172,7 @@ export default {
 	top: 1.3rem;
 	right: 1rem;
 	z-index: 10;
+	transition: all .5s ease;
 
 	@media screen and (max-width: 768px) {
 		top: 5px;

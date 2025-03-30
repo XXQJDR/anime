@@ -20,6 +20,7 @@ const PersonalInfo = () => import('@/pages/home/personal/info.vue');
 const PersonalPost = () => import('@/pages/home/personal/post.vue');
 const PersonalNotice = () => import('@/pages/home/personal/notice.vue');
 const Community = () => import('@/pages/home/community.vue');
+const PostDetail = () => import('@/pages/postDetail.vue');
 
 Vue.use(VueRouter);
 
@@ -148,6 +149,13 @@ const routes = [
 		}
 	},
 	{
+		path: '/postDetail',
+		component: PostDetail,
+		meta: {
+			title: '帖子详情'
+		}
+	},
+	{
 		path: '/test',
 		component: Test,
 		meta: {
@@ -179,7 +187,7 @@ const router = new VueRouter({
 				} else {
 					resolve({x: 0, y: 0})
 				}
-			}, 450)
+			}, 350);
 		})
 	}
 });

@@ -155,10 +155,22 @@ export default {
 		}
 	},
 	mounted() {
-		window.addEventListener("scroll", this.scrolling);
+		setTimeout(() => {
+			window.addEventListener("scroll", this.scrolling);
+		});
 	},
 	beforeDestroy() {
 		window.removeEventListener("scroll", this.scrolling);
+	},
+	//从详情页面返回
+	activated() {
+		setTimeout(() => {
+			window.addEventListener('scroll', this.scrolling);
+		}, 500);
+	},
+	//进入详情页面取消滚动加载
+	deactivated() {
+		window.removeEventListener('scroll', this.scrolling);
 	}
 }
 </script>

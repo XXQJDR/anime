@@ -21,6 +21,7 @@ const PersonalPost = () => import('@/pages/home/personal/post.vue');
 const PersonalNotice = () => import('@/pages/home/personal/notice.vue');
 const Community = () => import('@/pages/home/community.vue');
 const PostDetail = () => import('@/pages/postDetail.vue');
+const PublishPost = () => import('@/pages/publishPost.vue');
 
 Vue.use(VueRouter);
 
@@ -153,6 +154,13 @@ const routes = [
 		component: PostDetail,
 		meta: {
 			title: '帖子详情'
+		}
+	},
+	{
+		path: '/publishPost',
+		component: PublishPost,
+		meta: {
+			title: '发布帖子'
 		}
 	},
 	{

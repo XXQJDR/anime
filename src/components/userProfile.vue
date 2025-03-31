@@ -201,7 +201,6 @@ export default {
 		align-items: center;
 
 		&:hover {
-			height: 28px;
 			animation: tada;
 			animation-duration: 1s;
 		}

@@ -219,7 +219,7 @@ export default {
 		width: $sidebarWidth;
 		height: 96vh;
 		box-sizing: border-box;
-		padding: 1.2rem 1rem;
+		padding: 1.2rem 1rem 0 1rem;
 		position: fixed;
 		top: 2vh;
 		left: 0;
@@ -232,6 +232,7 @@ export default {
 		background-image: url('@/assets/images/sidebar/waves.png');
 		background-repeat: no-repeat;
 		user-select: none;
+		overflow-y: auto;
 
 		.logo {
 			text-align: center;

@@ -9,7 +9,7 @@
 			/>
 		</div>
 		<div class="post-list">
-			<div class="post" v-for="i in 3">
+			<div class="post" v-for="i in 10" @click="goToPostDetail">
 				<!-- 封面 -->
 				<div class="cover">
 					<img src="https://cdn.aqdstatic.com:966/age/20180017.jpg" alt="">
@@ -51,7 +51,12 @@
 
 <script>
 export default {
-	name: 'CommunityPage'
+	name: 'CommunityPage',
+	methods: {
+		goToPostDetail() {
+			this.$router.push('/postDetail');
+		}
+	}
 }
 </script>
 

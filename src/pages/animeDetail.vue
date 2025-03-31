@@ -91,14 +91,14 @@
 									color="#FFF"
 									size="38"
 									class="detail"
-									@click="openImageView(img.detailUrl)"
+									@click.native="openImageView(img.detailUrl)"
 							/>
 							<SvgIcon
 									icon="dustbin"
 									color="#FFF"
 									size="38"
 									class="delete"
-									@click="deleteImage(img.id)"
+									@click.native="deleteImage(img.id)"
 							/>
 							<a :href="img.detailUrl" download>
 								<SvgIcon
@@ -671,6 +671,7 @@ export default {
 				box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 				border-radius: 10px;
 				overflow: hidden;
+				user-select: none;
 
 				/* 修改图片加载动画和加载失败大小 */
 				img[lazy="loading"],
@@ -693,7 +694,6 @@ export default {
 					left: 0;
 					background-color: rgba(0, 0, 0, 0);
 					transition: background-color .5s ease;
-					display: none;
 					justify-content: space-evenly;
 					align-items: center;
 

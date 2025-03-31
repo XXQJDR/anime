@@ -12,13 +12,12 @@
 			<div class="post" v-for="i in 10" @click="goToPostDetail">
 				<!-- 封面 -->
 				<div class="cover">
-					<img src="https://cdn.aqdstatic.com:966/age/20180017.jpg" alt="">
+					<img src="https://img.dexbug.com/i/2025/03/31/qrkppa.jpg" alt="">
 				</div>
 
 				<!-- 信息 -->
 				<div class="info">
-					<div class="title">每个人心中都有一个太太</div>
-					<div class="desc">每个人心中都有一个太太，而我已经找到！</div>
+					<div class="content">每个人心中都有一个太太，而我已经找到！</div>
 					<div class="data">
 						<div class="like">
 							<SvgIcon icon="like" size="0.9rem"/>
@@ -95,16 +94,29 @@ export default {
 		@include box-style;
 		display: grid;
 		grid-gap: 15px;
-		grid-template-columns: repeat(2, 1fr);
 
 		@media screen and (max-width: 768px) {
 			grid-template-columns: repeat(1, 1fr);
 			grid-gap: 10px;
 		}
 
+		@media screen and (min-width: 768px) and (max-width: 1000px) {
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		@media screen and (min-width: 1000px) and (max-width: 1260px) {
+			grid-template-columns: repeat(3, 1fr);
+		}
+
+		@media screen and (min-width: 1260px) and (max-width: 1500px) {
+			grid-template-columns: repeat(4, 1fr);
+		}
+
+		@media screen and (min-width: 1500px) {
+			grid-template-columns: repeat(5, 1fr);
+		}
+
 		.post {
-			display: flex;
-			align-items: center;
 			box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 			background-color: #FFFFFF;
 			border-radius: 10px;
@@ -119,17 +131,14 @@ export default {
 				}
 			}
 
-			/* 左侧封面 */
+			/* 封面 */
 			.cover {
-				height: 180px;
+				height: 150px;
 				border-radius: 10px;
 				overflow: hidden;
 
-				/* 防止图片被压缩 */
-				flex-shrink: 0;
-
 				@media screen and (max-width: 768px) {
-					height: 150px;
+					height: 200px;
 				}
 
 				img {
@@ -140,9 +149,8 @@ export default {
 				}
 			}
 
-			/*右侧信息*/
+			/* 信息 */
 			.info {
-				height: 100%;
 				padding: 10px;
 				box-sizing: border-box;
 				display: flex;
@@ -152,30 +160,24 @@ export default {
 					padding: 5px;
 				}
 
-				/* 标题 */
-				.title {
-					font-size: 1.2rem;
-					font-weight: 700;
-				}
-
-				/* 简要内容 */
-				.desc {
-					flex: 1;
+				.content {
 					margin-top: 10px;
+					height: 64px;
+					word-break: break-all;
+					overflow: hidden;
+					display: -webkit-box;
+					-webkit-line-clamp: 3;
+					-webkit-box-orient: vertical;
 
 					@media screen and (max-width: 768px) {
-						margin-top: 5px;
+						height: 50px;
 					}
 				}
 
 				/* 数据 */
 				.data {
 					display: flex;
-					margin-top: 20px;
-
-					@media screen and (max-width: 768px) {
-						margin-top: 10px;
-					}
+					margin-top: 10px;
 
 					.like,
 					.comment,
@@ -184,6 +186,7 @@ export default {
 						align-items: center;
 						color: #8A919F;
 						margin-right: 10px;
+						font-size: .9rem;
 
 						.svg-icon {
 							color: #8A919F !important;

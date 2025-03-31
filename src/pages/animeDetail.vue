@@ -2,8 +2,8 @@
 	<div class="anime-detail" v-loading.fullscreen="controlLoading">
 		<!-- el-rate与$confirm配合评分后按alt重复弹出提示框，解决方法为让a元素获得焦点 -->
 		<a href="javascript:void(0)" class="solve-rate-bug-a" ref="solveRateBugA"></a>
-		<div class="back">
-			<SvgIcon icon="home" size="24" @click.native="back"/>
+		<div class="back" @click="$router.back()">
+			<SvgIcon icon="home" size="24"/>
 			<SvgIcon icon="rightArrow" size="28" color="#cac5c4"/>
 			<div>{{ anime.name }}</div>
 		</div>
@@ -204,11 +204,6 @@ export default {
 		...mapState(['browserIdentity'])
 	},
 	methods: {
-		//点击back按钮回到home
-		back() {
-			this.$router.back();
-		},
-
 		//文件个数超过最大个数回调
 		handleOnExceed() {
 			this.$message.error('一次性最大上传10个文件！');
@@ -483,22 +478,21 @@ export default {
 		display: flex;
 		justify-content: space-evenly;
 		align-items: center;
-		background-color: #FFFFFF;
 		position: fixed;
 		z-index: 100;
 		top: 1rem;
 		left: 1rem;
 		font-size: 0.9rem;
-		padding: 10px;
-		border-radius: 10px;
-		box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+		@include box-style;
+		cursor: pointer;
+		transition: all .3s ease;
 
-		> svg:nth-child(1) {
-			cursor: pointer;
+		&:hover {
+			background-color: #eae7ff;
+			color: #2B0AFF;
 
-			&:hover {
+			.svg-icon {
 				color: #2B0AFF !important;
-				transform: translateY(-2px);
 			}
 		}
 

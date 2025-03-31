@@ -1,5 +1,11 @@
 <template>
 	<div class="publish-post">
+		<div class="back" @click="$router.back()">
+			<SvgIcon icon="home" size="24"/>
+			<SvgIcon icon="rightArrow" size="28" color="#cac5c4"/>
+			<span>返回</span>
+		</div>
+
 		<h2>发布帖子</h2>
 
 		<!-- 文本框 -->
@@ -246,6 +252,24 @@ export default {
 	margin: 1rem auto;
 	padding: 1rem;
 	position: relative;
+
+	.back {
+		position: absolute;
+		@include box-style;
+		cursor: pointer;
+		transition: all .3s ease;
+		display: flex;
+		align-items: center;
+
+		&:hover {
+			background-color: #eae7ff;
+			color: #2B0AFF;
+
+			.svg-icon {
+				color: #2B0AFF !important;
+			}
+		}
+	}
 
 	h2 {
 		text-align: center;

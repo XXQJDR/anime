@@ -11,6 +11,11 @@
 			<SvgIcon icon="notice" size="26"/>
 		</el-badge>
 
+		<!-- 发布帖子 -->
+		<div class="publish-post" @click="goToPublishPost">
+			<SvgIcon icon="addFile" size="26"/>
+		</div>
+
 		<!-- 用户 -->
 		<el-popover
 				:visible-arrow="false"
@@ -132,7 +137,6 @@ export default {
 		goToNotice() {
 			this.$router.push("/home/personal/notice");
 			this.homeContentType = 'notice';
-			this.popoverFlag = false;
 		},
 
 		scrolling() {
@@ -152,6 +156,11 @@ export default {
 			} else {
 				this.$refs.userProfile.style.top = '5px';
 			}
+		},
+
+		//跳转到发布帖子页面
+		goToPublishPost() {
+			this.$router.push("/publishPost");
 		}
 	},
 	mounted() {
@@ -204,6 +213,19 @@ export default {
 			animation: tada;
 			animation-duration: 1s;
 		}
+
+		@media screen and (max-width: 768px) {
+			.svg-icon {
+				width: 22px;
+				height: 22px;
+			}
+		}
+	}
+
+	.publish-post {
+		margin-left: 3px;
+		margin-right: 10px;
+		cursor: pointer;
 
 		@media screen and (max-width: 768px) {
 			.svg-icon {

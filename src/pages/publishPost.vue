@@ -117,7 +117,7 @@
 								@click="selectAnime(i)"
 						>
 							<div class="img">
-								<img src="https://cdn.aqdstatic.com:966/age/20250044.jpg" alt="">
+								<img v-lazy="'https://cdn.aqdstatic.com:966/age/20250044.jpg'" alt="">
 							</div>
 							<div class="name">地缚少年花子君 第二季</div>
 						</div>
@@ -129,7 +129,7 @@
 					<h3 class="title">请选择图片</h3>
 					<div class="image-list">
 						<div class="img" v-for="i in 10" :key="i">
-							<img src="https://picsum.photos/300/200" alt=""></img>
+							<img v-lazy="'https://picsum.photos/300/200'" alt=""></img>
 						</div>
 					</div>
 				</div>

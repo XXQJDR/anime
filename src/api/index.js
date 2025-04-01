@@ -247,3 +247,23 @@ export const reqRateAnime = (animeUserId, score) => {
 export const reqGetWatchStatistics = () => {
 	return axios.get('/anime/watch-statistics');
 }
+
+/**
+ * 上传头像
+ * @param file 头像文件
+ * @returns 用户信息
+ */
+export const reqUploadAvatar = (file) => {
+	let formData = new FormData();
+	formData.append('file', file);
+	return axios.post(`/users/avatar`, formData);
+}
+
+/**
+ *
+ * @param username 用户名
+ * @returns 用户信息
+ */
+export const reqUpdateUserInfo = (username) => {
+	return axios.put('/users', {username});
+}

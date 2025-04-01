@@ -37,7 +37,7 @@
 			</ul>
 			<div class="user" slot="reference" ref="user">
 				<div class="avatar">
-					<img src="http://q.qlogo.cn/headimg_dl?dst_uin=3124140355&spec=640&img_type=jpg" alt="">
+					<img :src="$store.state.userInfo.avatar" alt="">
 				</div>
 				<div class="name">{{ $store.state.userInfo.username }}</div>
 				<SvgIcon icon="downArrow"/>

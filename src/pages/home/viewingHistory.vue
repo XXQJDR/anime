@@ -9,7 +9,7 @@
 					<div class="content">
 						<div class="anime" @click="goAnimeDetail(anime.animeUserId)">
 							<div class="time">{{ anime.finishedDate }}</div>
-							<img class="cover" :src="anime.cover" :alt="anime.name">
+							<img class="cover" v-lazy="anime.cover" :alt="anime.name">
 							<div class="name">{{ anime.name }}</div>
 						</div>
 					</div>

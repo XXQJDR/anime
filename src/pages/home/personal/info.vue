@@ -1,12 +1,12 @@
 <template>
-	<div class="personal-info">
+	<div class="personal-info" v-loading.fullscreen="loading">
 		<div class="basic">
 			<div class="type">基本信息</div>
-			<el-divider />
+			<el-divider/>
 			<div class="item">
 				<div class="title">头像</div>
 				<div class="avatar" @click="dialogVisible = true">
-					<img :src="cropperImg" alt=""/>
+					<img v-lazy="$store.state.userInfo.avatar" alt=""/>
 				</div>
 			</div>
 			<div class="item">
@@ -15,11 +15,11 @@
 			</div>
 			<div class="item">
 				<div class="title">创建日期</div>
-				<div class="content">2023-01-01</div>
+				<div class="content">{{ $store.state.userInfo.createDate }}</div>
 			</div>
 			<div class="btn">
-				<el-button type="primary">保存</el-button>
-				<el-button>取消</el-button>
+				<el-button type="primary" @click="changeBasicInfo" :disabled="changeBtnDisabled">保存</el-button>
+				<el-button @click="cancelChangeBasicInfo">取消</el-button>
 			</div>
 
 			<!--头像修改dialog-->
@@ -60,25 +60,25 @@
 				</div>
 				<span slot="footer" class="dialog-footer">
         <el-button @click="upload" type="primary">上传</el-button>
-				<el-button @click="cancel">取消</el-button>
+				<el-button @click="cancelUpload">取消</el-button>
       </span>
 			</el-dialog>
 		</div>
 
 		<div class="security">
 			<div class="type">安全信息</div>
-			<el-divider />
-			<div class="item">
+			<el-divider/>
+			<div class="item" @click="changeEmail">
 				<div class="title">邮箱</div>
 				<div class="content">
 					<div>3124140355@qq.com</div>
-					<SvgIcon icon="rightArrow" color="#999" />
+					<SvgIcon icon="rightArrow" color="#999"/>
 				</div>
 			</div>
-			<div class="item">
+			<div class="item" @click="changePassword">
 				<div class="title">修改密码</div>
 				<div class="content">
-					<SvgIcon icon="rightArrow" color="#999" />
+					<SvgIcon icon="rightArrow" color="#999"/>
 				</div>
 			</div>
 		</div>
@@ -87,21 +87,28 @@
 
 <script>
 import {VueCropper} from 'vue-cropper';
+import {reqUpdateUserInfo, reqUploadAvatar} from "@/api";
 
 export default {
 	name: 'PersonalInfo',
 	components: {VueCropper},
 	data() {
 		return {
-			username: 'ensolitude',
+			username: this.$store.state.userInfo.username,
 			dialogVisible: false,
 			uploadImg: '',
-			cropperImg: 'http://q.qlogo.cn/headimg_dl?dst_uin=3124140355&spec=640&img_type=jpg'
+			loading: false, //上传图片加载动画标志
 		}
 	},
 	computed: {
+		//浏览器身份
 		browserIdentity() {
 			return this.$store.state.browserIdentity;
+		},
+
+		//修改按钮是否禁用
+		changeBtnDisabled() {
+			return this.username === this.$store.state.userInfo.username;
 		}
 	},
 	methods: {
@@ -112,7 +119,13 @@ export default {
 
 			if (!/\.(jpg|jpeg|png|gif)$/i.test(file.name)) {
 				this.$message.error('图片格式不正确')
-				return
+				return;
+			}
+
+			//图片大小不能超过10MB
+			if (file.size > 1024 * 1024 * 10) {
+				this.$message.error('图片大小不能超过10MB');
+				return;
 			}
 
 			const reader = new FileReader();
@@ -129,18 +142,70 @@ export default {
 				return;
 			}
 
-			this.$refs.cropper.getCropData(data => {
-				this.cropperImg = data;
+			//开启加载动画
+			this.loading = true;
+
+			this.$refs.cropper.getCropBlob(async data => {
+				let result = await reqUploadAvatar(data);
+
+				this.loading = false;
 				this.dialogVisible = false;
 				this.uploadImg = '';
-				this.$message.success('上传成功');
+				this.$refs.cropper.clearCrop();
+
+				if (result.code !== 200) {
+					this.$message.error("头像上传失败！");
+					return;
+				}
+
+				//更新用户信息
+				let userInfo = result.data;
+				this.$store.commit('USER_INFO', userInfo);
+				localStorage.setItem('userInfo', JSON.stringify(userInfo));
+
+				this.$message.success("头像上传成功！");
+
+				//刷新页面
+				setTimeout(() => {
+					window.location.reload();
+				}, 300);
 			});
 		},
 
-		//取消
-		cancel() {
+		//取消上传
+		cancelUpload() {
 			this.dialogVisible = false;
 			this.uploadImg = '';
+		},
+
+		//修改
+		async changeBasicInfo() {
+			let result = await reqUpdateUserInfo(this.username);
+			if (result.code !== 200) {
+				this.$message.error("修改失败！");
+				return;
+			}
+
+			//更新用户信息
+			let userInfo = result.data;
+			this.$store.commit('USER_INFO', userInfo);
+			localStorage.setItem('userInfo', JSON.stringify(userInfo));
+			this.$message.success("修改成功！");
+		},
+
+		//取消修改
+		cancelChangeBasicInfo() {
+			this.username = this.$store.state.userInfo.username;
+		},
+
+		//修改邮箱
+		changeEmail() {
+
+		},
+
+		//修改密码
+		changePassword() {
+
 		}
 	}
 }
@@ -148,6 +213,7 @@ export default {
 
 <style scoped lang="scss">
 @import "@/style/common";
+
 .personal-info {
 	margin-top: 1rem;
 
@@ -211,6 +277,7 @@ export default {
 			}
 
 			@include input-style;
+
 			input {
 				padding-left: 15px;
 			}

@@ -33,7 +33,7 @@
 				<template>
 					<div>
 						<div class="img">
-							<img :src="anime.cover" alt="">
+							<img v-lazy="anime.cover" alt="">
 						</div>
 						<div class="info">
 							<h3>{{ anime.name }}</h3>

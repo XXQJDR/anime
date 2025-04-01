@@ -12,7 +12,7 @@
 			<div class="post" v-for="i in 10" @click="goToPostDetail">
 				<!-- 封面 -->
 				<div class="cover">
-					<img src="https://img.dexbug.com/i/2025/03/31/qrkppa.jpg" alt="">
+					<img v-lazy="'https://img.dexbug.com/i/2025/03/31/qrkppa.jpg'" alt="">
 				</div>
 
 				<!-- 信息 -->
@@ -34,7 +34,7 @@
 					</div>
 					<div class="user">
 						<div class="avatar">
-							<img src="https://q.qlogo.cn/headimg_dl?dst_uin=3124140355&spec=640&img_type=jpg" alt="">
+							<img v-lazy="'https://q.qlogo.cn/headimg_dl?dst_uin=3124140355&spec=640&img_type=jpg'" alt="">
 						</div>
 						<div class="username">ensolitude</div>
 						<div class="time">

@@ -362,6 +362,9 @@ export default {
 						width: 100%;
 						height: 100%;
 						object-fit: cover;
+
+						//防止图片下圆角显示不正常
+						display: block;
 					}
 				}
 
@@ -423,6 +426,8 @@ export default {
 						height: 120px;
 						border-radius: 10px;
 						overflow: hidden;
+
+						//防止图片被压缩
 						flex-shrink: 0;
 
 						@media screen and (max-width: 768px) {
@@ -433,6 +438,9 @@ export default {
 							width: 100%;
 							height: 100%;
 							object-fit: cover;
+
+							//防止图片下圆角显示不正常
+							display: block;
 						}
 					}
 
@@ -466,8 +474,10 @@ export default {
 					width: 100%;
 					border-radius: 10px;
 					overflow: hidden;
-					flex-shrink: 0;
 					cursor: pointer;
+
+					//防止图片被压缩
+					flex-shrink: 0;
 
 					@media screen and (max-width: 768px) {
 						height: 80px;
@@ -477,6 +487,9 @@ export default {
 						width: 100%;
 						height: 100%;
 						object-fit: cover;
+
+						//防止图片下圆角显示不正常
+						display: block;
 					}
 				}
 			}

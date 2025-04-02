@@ -146,6 +146,9 @@ export default {
 					height: 100%;
 					object-fit: cover;
 					transition: transform .3s ease;
+
+					//防止图片下圆角显示不正常
+					display: block;
 				}
 			}
 

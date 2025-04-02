@@ -349,7 +349,9 @@ export default {
 				position: relative;
 				cursor: pointer;
 				border-radius: 10px;
-				margin-left: 5px;
+
+				//防止图片被压缩
+				flex-shrink: 0;
 
 				@media screen and (max-width: 768px) {
 					width: 122px;
@@ -380,6 +382,9 @@ export default {
 					height: 100%;
 					object-fit: cover;
 					transition: transform 0.3s;
+
+					//防止图片下圆角显示不正常
+					display: block;
 				}
 
 				.mask {
@@ -419,10 +424,10 @@ export default {
 
 			.info {
 				flex: 1;
-				padding: 0 15px;
+				padding-left: 15px;
 
 				@media screen and (max-width: 768px) {
-					padding: 0 10px;
+					padding-left: 10px;
 				}
 
 				div {

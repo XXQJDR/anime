@@ -589,6 +589,9 @@ export default {
 				overflow: hidden;
 				border-radius: 10px;
 
+				//防止图片被压缩
+				flex-shrink: 0;
+
 				@media screen and (max-width: 768px) {
 					margin: 0 auto;
 					width: 150px;
@@ -599,6 +602,9 @@ export default {
 					width: 100%;
 					height: 100%;
 					object-fit: cover;
+
+					//防止图片下圆角显示不正常
+					display: block;
 				}
 			}
 
@@ -678,6 +684,9 @@ export default {
 					width: 100%;
 					height: 100%;
 					object-fit: cover;
+
+					//防止图片下圆角显示不正常
+					display: block;
 				}
 
 				.control {

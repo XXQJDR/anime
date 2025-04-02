@@ -115,6 +115,9 @@ export default {
 				position: relative;
 				cursor: pointer;
 
+				//防止图片被压缩
+				flex-shrink: 0;
+
 				@media screen and (max-width: 768px) {
 					width: 122px;
 					height: 170px;
@@ -144,6 +147,9 @@ export default {
 					height: 100%;
 					object-fit: cover;
 					transition: transform 0.3s;
+
+					//防止图片下圆角显示不正常
+					display: block;
 				}
 
 				.mask {

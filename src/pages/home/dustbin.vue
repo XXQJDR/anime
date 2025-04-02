@@ -290,6 +290,9 @@ export default {
 						height: 100%;
 						object-fit: cover;
 						transition: transform $transitionTime;
+
+						//防止图片下圆角显示不正常
+						display: block;
 					}
 				}
 

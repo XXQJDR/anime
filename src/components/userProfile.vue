@@ -262,6 +262,9 @@ export default {
 				width: 100%;
 				height: 100%;
 				object-fit: cover;
+
+				//防止图片下圆角显示不正常
+				display: block;
 			}
 		}
 

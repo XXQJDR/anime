@@ -259,7 +259,8 @@ export default {
 		}
 	},
 	created() {
-		// this.images = this.generateRandomImages(10);
+		this.images = this.generateRandomImages(4);
+		this.cols = this.images.length < this.cols ? this.images.length : this.cols;
 	}
 }
 </script>

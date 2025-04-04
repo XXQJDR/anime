@@ -270,7 +270,7 @@
 import {gsap} from "gsap";
 
 export default {
-	name: 'ErrorPage',
+	name: 'Error',
 	mounted() {
 		gsap.set("svg", {visibility: "visible"});
 		gsap.to("#headStripe", {

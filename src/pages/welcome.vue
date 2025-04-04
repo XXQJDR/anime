@@ -28,7 +28,7 @@
 
 <script>
 export default {
-	name: 'WelcomePage',
+	name: 'Welcome',
 	methods: {
 		//登录按钮回调
 		goLogin() {

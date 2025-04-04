@@ -12,6 +12,7 @@
     "axios": "^1.6.2",
     "consolidate": "^1.0.3",
     "core-js": "^3.37.0",
+    "dayjs": "^1.11.13",
     "echarts": "^5.6.0",
     "element-ui": "^2.15.14",
     "gsap": "^3.1.1",

@@ -146,7 +146,7 @@ const routes = [
 		path: '/animeDetail',
 		component: AnimeDetail,
 		meta: {
-			title: '详情'
+			title: '动漫详情'
 		}
 	},
 	{
@@ -158,6 +158,7 @@ const routes = [
 	},
 	{
 		path: '/publishPost',
+		name: 'PublishPost',
 		component: PublishPost,
 		meta: {
 			title: '发布帖子'

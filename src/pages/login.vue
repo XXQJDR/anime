@@ -58,7 +58,7 @@ import {reqGetImageCode, reqGetUserInfoByToken, reqLogin} from "@/api";
 import {mapState} from "vuex";
 
 export default {
-	name: 'LoginPage',
+	name: 'Login',
 	data() {
 		return {
 			//登录中加载动画开启标志

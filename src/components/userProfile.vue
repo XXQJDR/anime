@@ -37,7 +37,7 @@
 			</ul>
 			<div class="user" slot="reference" ref="user">
 				<div class="avatar">
-					<img :src="$store.state.userInfo.avatar" alt="">
+					<img v-lazy="$store.state.userInfo.avatar" alt="">
 				</div>
 				<div class="name">{{ $store.state.userInfo.username }}</div>
 				<SvgIcon icon="downArrow"/>

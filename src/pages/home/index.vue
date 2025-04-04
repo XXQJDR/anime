@@ -141,7 +141,7 @@ import UserProfile from "@/components/userProfile.vue";
 import ContentType from "@/components/contentType.vue";
 
 export default {
-	name: 'HomePage',
+	name: 'Home',
 	components: {MobileTopbar, UserProfile, ContentType},
 	computed: {
 		...mapState({

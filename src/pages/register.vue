@@ -56,7 +56,7 @@ import {reqCheckEmailRegistered, reqGetRegisterEmailCode, reqRegister} from "@/a
 import {mapState} from "vuex";
 
 export default {
-	name: 'RegisterPage',
+	name: 'Register',
 	data() {
 		//自定义确认密码规则
 		let validateCheckPassword = (rule, value, callback) => {

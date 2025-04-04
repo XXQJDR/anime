@@ -1,5 +1,5 @@
 <template>
-	<div class="publish-post">
+	<div class="publish-post" v-loading.fullscreen.lock="loading">
 		<div class="back" @click="$router.back()">
 			<SvgIcon icon="home" size="24"/>
 			<SvgIcon icon="rightArrow" size="28" color="#cac5c4"/>
@@ -13,27 +13,24 @@
 				type="textarea"
 				:autosize="{minRows: 2}"
 				placeholder="分享你的想法！"
-				v-model="text"
+				v-model="content"
 		/>
 
 		<!-- 图片上传 -->
 		<div class="image-upload">
 
 			<!-- 上传按钮 -->
-			<div class="upload-options">
-				<el-tooltip placement="top">
-					<el-button @click="$refs.fileInput.click()">本地图片</el-button>
-					<div slot="content">
-						<div>1.图片最大不超过10MB</div>
-						<div>2.最多添加10张图片</div>
-						<div>3.
-							<SvgIcon icon="crown" color="#fff"/>
-							表示封面图片
-						</div>
+			<el-tooltip placement="top">
+				<el-button @click="$refs.fileInput.click()">选择图片</el-button>
+				<div slot="content">
+					<div>1.图片最大不超过10MB</div>
+					<div>2.至少添加1张，最多添加10张图片</div>
+					<div>3.
+						<SvgIcon icon="crown" color="#fff"/>
+						表示封面图片
 					</div>
-				</el-tooltip>
-				<el-button @click="dialogVisible = true">选择已上传图片</el-button>
-			</div>
+				</div>
+			</el-tooltip>
 			<input
 					type="file"
 					ref="fileInput"
@@ -45,7 +42,7 @@
 
 			<!-- 图片预览 -->
 			<div class="image-preview">
-				<div class="box" v-for="(image, index) in images" :key="index">
+				<div class="box" v-for="(image, index) in previewImages" :key="index">
 					<div class="img">
 						<div class="control">
 							<SvgIcon
@@ -74,14 +71,14 @@
 					</div>
 
 					<!-- 封面标志 -->
-					<SvgIcon icon="crown" class="crown" size="32" v-show="crownImageIndex === index"/>
+					<SvgIcon icon="crown" class="crown" size="32" v-show="coverImageIndex === index"/>
 				</div>
 			</div>
 
 			<!-- 大图预览 -->
 			<el-image-viewer
 					v-if="showViewer"
-					:url-list="images"
+					:url-list="previewImages"
 					:on-close="closeImageView"
 					:initialIndex="currentImageIndex"
 			/>
@@ -95,98 +92,105 @@
 				@click="publish"
 		>发布
 		</el-button>
-
-		<!-- 选择动漫图片对话框 -->
-		<el-dialog
-				:visible.sync="dialogVisible"
-				:width="browserIdentity === 'MOBILE' ? '100%' : '80%'"
-		>
-			<div class="anime-image-select">
-				<!-- 动漫列表 -->
-				<div class="left">
-					<!-- 搜索框 -->
-					<input type="text" placeholder="请输入动漫名称！">
-
-					<!-- 列表 -->
-					<div class="anime-list">
-						<div
-								class="anime"
-								:class="{'anime-active': i === currentAnimeIndex}"
-								v-for="i in 10"
-								:key="i"
-								@click="selectAnime(i)"
-						>
-							<div class="img">
-								<img v-lazy="'https://cdn.aqdstatic.com:966/age/20250044.jpg'" alt="">
-							</div>
-							<div class="name">地缚少年花子君 第二季</div>
-						</div>
-					</div>
-				</div>
-
-				<!-- 图片列表 -->
-				<div class="right">
-					<h3 class="title">请选择图片</h3>
-					<div class="image-list">
-						<div class="img" v-for="i in 10" :key="i">
-							<img v-lazy="'https://picsum.photos/300/200'" alt=""></img>
-						</div>
-					</div>
-				</div>
-			</div>
-		</el-dialog>
 	</div>
 </template>
 
 <script>
 import elImageViewer from 'element-ui/packages/image/src/image-viewer';
+import {reqPublishPost} from "@/api";
 
 export default {
 	name: 'PublishPost',
 	components: {elImageViewer},
 	data() {
 		return {
-			text: '', //发布内容
-			images: [], //上传图片
+			content: '', //发布内容
+			previewImages: [], //上传图片
 			showViewer: false, //大图预览标志
 			currentImageIndex: 0, //当前大图预览索引
-			crownImageIndex: 0, //封面图片索引
-			dialogVisible: false, //对话框标志
-			currentAnimeIndex: -1, //当前选中动漫索引
+			coverImageIndex: 0, //封面图片索引
+			compressedFiles: [], //存储压缩后的文件信息
+			loading: false, //加载标志
 		}
 	},
 	computed: {
 		//发布按钮禁用标志
 		publicBtnDisabled() {
-			return this.text.length === 0;
-		},
-
-		//浏览器身份
-		browserIdentity() {
-			return this.$store.state.browserIdentity;
+			return this.content.length === 0 || this.previewImages.length === 0;
 		}
 	},
 	methods: {
-		handleImageUpload(e) {
+		//处理上传图片
+		async handleImageUpload(e) {
 			const files = Array.from(e.target.files);
 
-			files.forEach(file => {
+			if (this.previewImages.length + files.length > 10) {
+				this.$message.warning('最多添加10张图片');
+				return;
+			}
+
+			for (const file of files) {
 				if (!file.type.match('image.*')) {
 					this.$message.warning('请选择正确的图片文件');
-					return;
+					continue;
 				}
 
+				// 压缩并获取Blob对象
+				const compressedBlob = await this.compressImage(file);
+				if (compressedBlob) {
+					// 转换为可预览的DataURL
+					const dataUrl = URL.createObjectURL(compressedBlob);
+					this.previewImages.push(dataUrl);
+
+					// 也可以直接上传压缩后的文件
+					const compressedFile = new File([compressedBlob], file.name, {
+						type: file.type,
+						lastModified: Date.now()
+					});
+					this.compressedFiles.push(compressedFile);
+				}
+			}
+		},
+
+		//压缩图片
+		compressImage(file) {
+			return new Promise((resolve) => {
 				const reader = new FileReader();
-
 				reader.onload = (event) => {
-					this.images.push(event.target.result);
-					console.log(event.target);
-				};
+					const img = new Image();
+					img.src = event.target.result;
 
+					img.onload = () => {
+						const canvas = document.createElement('canvas');
+						const ctx = canvas.getContext('2d');
+
+						// 保持原始尺寸
+						canvas.width = img.naturalWidth;
+						canvas.height = img.naturalHeight;
+
+						// 绘制原始尺寸图像
+						ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+						// 获取原始图片类型
+						const mimeType = file.type || 'image/jpeg';
+
+						// 设置压缩质量（建议范围）
+						let quality = 0.7; // 默认质量
+						if (mimeType === 'image/png') quality = 0.9; // PNG需要更高设置
+
+						// 转换为Blob对象
+						canvas.toBlob(
+								(blob) => resolve(blob),
+								mimeType,
+								quality
+						);
+					};
+				};
 				reader.readAsDataURL(file);
 			});
 		},
 
+		//打开大图预览
 		openImageView(index) {
 			this.showViewer = true;
 			this.currentImageIndex = index;
@@ -195,6 +199,7 @@ export default {
 			document.documentElement.style.overflowY = 'hidden';
 		},
 
+		//关闭大图预览
 		closeImageView() {
 			this.showViewer = false;
 
@@ -202,41 +207,68 @@ export default {
 			document.documentElement.style.overflowY = 'auto';
 		},
 
+		//标记为封面
 		markCrown(index) {
-			if (index === this.crownImageIndex) {
+			if (index === this.coverImageIndex) {
 				return;
 			}
 
 			this.$confirm('是否将当前图片设为封面？', '提示', {
 				type: 'warning'
 			}).then(() => {
-				this.crownImageIndex = index;
+				this.coverImageIndex = index;
 				this.$message.success('设置成功！')
 			}).catch(() => {
 			});
 		},
 
+		//删除图片
 		deleteImage(index) {
 			this.$confirm('是否删除该图片？', '提示', {
 				type: 'warning'
 			}).then(() => {
-				if (index === this.crownImageIndex) {
-					this.crownImageIndex = 0;
-				} else if (index < this.crownImageIndex) {
-					this.crownImageIndex--;
+				if (index === this.coverImageIndex) {
+					this.coverImageIndex = 0;
+				} else if (index < this.coverImageIndex) {
+					this.coverImageIndex--;
 				}
-				this.images.splice(index, 1);
-				this.$message.success('删除成功！')
+				this.previewImages.splice(index, 1);
+				this.compressedFiles.splice(index, 1);
+				this.$message.success('删除成功！');
 			}).catch(() => {
 			});
 		},
 
-		selectAnime(index) {
-			this.currentAnimeIndex = index;
+		// 清理上传内容
+		clearUploadedFiles() {
+			//释放所有预览图片的 Object URL
+			this.previewImages.forEach(url => {
+				URL.revokeObjectURL(url);
+			});
+
+			//清空预览图片数组
+			this.previewImages = [];
+
+			//清空压缩后的文件数组
+			this.compressedFiles = [];
+
+			this.content = '';
 		},
 
-		publish() {
+		//发布帖子
+		async publish() {
+			this.loading = true;
+			let result = await reqPublishPost(this.content, this.coverImageIndex, this.compressedFiles);
+			if (result.code !== 200) {
+				this.$message.error('发布失败！');
+				this.loading = false;
+				return;
+			}
+			this.$message.success('发布成功！');
 
+			//清理内存
+			this.clearUploadedFiles();
+			this.loading = false;
 		}
 	}
 }
@@ -384,117 +416,6 @@ export default {
 		margin-top: 1rem;
 		font-size: 1rem;
 	}
-
-	.anime-image-select {
-		display: flex;
-		font-size: 1rem;
-
-		.left {
-			flex: 1;
-			height: 500px;
-			@include box-style;
-			@include input-style;
-			overflow-y: auto;
-
-			input {
-				text-align: center;
-			}
-
-			.anime-list {
-				margin-top: 1rem;
-
-				.anime-active {
-					background-color: #eae7ff !important;
-					color: #2b0aff;
-					font-weight: 700;
-				}
-
-				.anime {
-					display: flex;
-					align-items: center;
-					padding: 3px 0;
-					border-bottom: 1px solid rgba(0, 0, 0, .1);
-					cursor: pointer;
-					transition: all .5s ease;
-					border-radius: 10px;
-
-					&:hover {
-						background-color: #F7F3F2;
-					}
-
-					.img {
-						height: 120px;
-						border-radius: 10px;
-						overflow: hidden;
-
-						//防止图片被压缩
-						flex-shrink: 0;
-
-						@media screen and (max-width: 768px) {
-							height: 80px;
-						}
-
-						img {
-							width: 100%;
-							height: 100%;
-							object-fit: cover;
-
-							//防止图片下圆角显示不正常
-							display: block;
-						}
-					}
-
-					.name {
-						margin-left: 5px;
-					}
-				}
-			}
-		}
-
-		.right {
-			flex: 1;
-			height: 500px;
-			@include box-style;
-			margin-left: 10px;
-			overflow-y: auto;
-
-			@media screen and (max-width: 768px) {
-				margin-left: 5px;
-			}
-
-			.title {
-				color: #000000;
-				text-align: center;
-			}
-
-			.image-list {
-				margin-top: 1rem;
-
-				.img {
-					width: 100%;
-					border-radius: 10px;
-					overflow: hidden;
-					cursor: pointer;
-
-					//防止图片被压缩
-					flex-shrink: 0;
-
-					@media screen and (max-width: 768px) {
-						height: 80px;
-					}
-
-					img {
-						width: 100%;
-						height: 100%;
-						object-fit: cover;
-
-						//防止图片下圆角显示不正常
-						display: block;
-					}
-				}
-			}
-		}
-	}
 }
 </style>
 
@@ -507,21 +428,6 @@ export default {
 		&:focus {
 			border-color: #2b0aff;
 			box-shadow: #2b0aff 0 0 0 1px;
-		}
-	}
-
-	.el-dialog {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		margin-top: 0 !important;
-		margin-bottom: 0 !important;
-
-		.el-dialog__body {
-			@media screen and (max-width: 768px) {
-				padding: 5px;
-			}
 		}
 	}
 }

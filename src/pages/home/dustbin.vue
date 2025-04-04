@@ -55,7 +55,7 @@
 import {reqGetDustbinData, reqRecoverAnime, reqDeleteAnime} from "@/api";
 
 export default {
-	name: 'dustbinPage',
+	name: 'Dustbin',
 	data() {
 		return {
 			//动漫数据

@@ -6,7 +6,7 @@
 				leave-active-class="animate__animated animate__fadeOut"
 				:duration="{enter: 300, leave: 300}"
 		>
-			<keep-alive include="HomePage">
+			<keep-alive include="Home">
 				<router-view/>
 			</keep-alive>
 		</transition>

@@ -267,3 +267,28 @@ export const reqUploadAvatar = (file) => {
 export const reqUpdateUserInfo = (username) => {
 	return axios.put('/users', {username});
 }
+
+/**
+ * 发表帖子
+ * @param content 内容
+ * @param coverImageIndex 封面图片索引
+ * @param fileList 文件列表
+ */
+export const reqPublishPost = (content, coverImageIndex, fileList) => {
+	let formData = new FormData();
+	formData.append('content', content);
+	formData.append('coverImageIndex', coverImageIndex);
+	fileList.forEach(file => formData.append('fileList', file));
+	return axios.post('/posts', formData);
+}
+
+/**
+ * 分页获取帖子
+ * @param current 当前页
+ * @param size 每页展示数量
+ * @param keyword 搜索关键词
+ * @returns 分页数据
+ */
+export const reqGetPagePost = (current, size, keyword) => {
+	return axios.get(`/posts?current=${current}&size=${size}&keyword=${keyword}`);
+}

@@ -292,3 +292,51 @@ export const reqPublishPost = (content, coverImageIndex, fileList) => {
 export const reqGetPagePost = (current, size, keyword) => {
 	return axios.get(`/posts?current=${current}&size=${size}&keyword=${keyword}`);
 }
+
+/**
+ * 获取帖子信息
+ * @param postId 帖子id
+ * @returns post
+ */
+export const reqGetPostInfo = (postId) => {
+	return axios.get(`/posts/${postId}`);
+}
+
+/**
+ * 获取帖子资源
+ * @param postId 帖子id
+ * @returns images
+ */
+export const reqGetPostResource = (postId) => {
+	return axios.get(`/posts/${postId}/resources`);
+}
+
+/**
+ * 获取帖子作者信息
+ * @param postId
+ * @returns author
+ */
+export const reqGetPostAuthor = (postId) => {
+	return axios.get(`/posts/${postId}/author`);
+}
+
+/**
+ * 发表评论
+ * @param postId 帖子id
+ * @param content 内容
+ * @param parentId 父评论id
+ * @param replyUserId 回复用户id
+ * @returns comment
+ */
+export const reqPublishComment = (postId, content, parentId = null, replyUserId = null) => {
+	return axios.post(`/posts/${postId}/comments`, {content, parentId, replyUserId});
+}
+
+/**
+ * 获取帖子评论
+ * @param postId 帖子id
+ * @returns comments
+ */
+export const reqGetPostComments = (postId) => {
+	return axios.get(`/posts/${postId}/comments`);
+}

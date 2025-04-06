@@ -12,7 +12,7 @@
 
 		<div class="list-box">
 			<div class="post-list">
-				<div class="post" v-for="post in postList" @click="goToPostDetail">
+				<div class="post" v-for="post in postList" @click="goToPostDetail(post.id)">
 					<!-- 封面 -->
 					<div class="cover">
 						<img v-lazy="post.cover" alt="">
@@ -96,8 +96,8 @@ export default {
 		},
 	},
 	methods: {
-		goToPostDetail() {
-			this.$router.push('/postDetail');
+		goToPostDetail(postId) {
+			this.$router.push(`/postDetail?postId=${postId}`);
 		},
 
 		//获取第一页数据

@@ -8,52 +8,52 @@
 
 		<div class="header">
 			<div class="avatar">
-				<img src="http://q.qlogo.cn/headimg_dl?dst_uin=3124140355&spec=640&img_type=jpg" alt="">
+				<img v-lazy="author.avatar" alt="">
 			</div>
 			<div class="info">
 				<div class="name-follow-box">
-					<div class="name">ensolitude</div>
+					<div class="name">{{ author.username }}</div>
 					<div class="follow">
-						<SvgIcon icon="follow" />
+						<SvgIcon icon="follow"/>
 						<div>关注</div>
 					</div>
 				</div>
 				<div class="data">
-					<div class="item">关注 8</div>
-					<div class="item">粉丝 1</div>
-					<div class="item">获赞 10</div>
-					<div class="item">作品 20</div>
+					<div class="item">关注 {{ author.followCount }}</div>
+					<div class="item">粉丝 {{ author.fanCount }}</div>
+					<div class="item">作品 {{ author.postCount }}</div>
 				</div>
 			</div>
 		</div>
 		<div class="main">
-			<div class="post-content">每个人心中都有一个太太，我已经找到！</div>
+			<div class="date">{{ post.createDate }}</div>
+			<div class="post-content">{{ post.content }}</div>
 			<div class="images">
 				<wc-waterfall :gap="gap" :cols="cols">
-					<div class="img" v-for="(img, index) in images" :key="index">
-						<img :src="img" alt="">
+					<div class="img" v-for="img in images" :key="img.id">
+						<img v-lazy="img.url" alt="">
 					</div>
 				</wc-waterfall>
 			</div>
 			<div class="post-actions">
 				<div class="item like-btn">
 					<SvgIcon icon="fillLike" color="rgb(107, 114, 128)" size="38"/>
-					<div class="count">76</div>
+					<div class="count">{{ post.likeCount }}</div>
 				</div>
 				<div class="item star-btn">
 					<SvgIcon icon="fillStar" color="rgb(107, 114, 128)" size="38"/>
-					<div class="count">33</div>
+					<div class="count">{{ post.favoriteCount }}</div>
 				</div>
 				<div class="item share-btn">
 					<SvgIcon icon="share" color="rgb(107, 114, 128)" size="38"/>
 				</div>
 			</div>
 			<div class="comment-box">
-				<div class="count">59 评论</div>
+				<div class="count">{{ post.commentCount }} 评论</div>
 				<el-divider></el-divider>
 				<div class="input">
 					<div class="avatar">
-						<img src="http://q.qlogo.cn/headimg_dl?dst_uin=3124140355&spec=640&img_type=jpg" alt="">
+						<img v-lazy="user.avatar" alt="">
 					</div>
 					<el-input
 							type="textarea"
@@ -61,27 +61,28 @@
 							maxlength="100"
 							show-word-limit
 							:autosize="{minRows: 2}"
+							v-model="text"
 					>
 					</el-input>
-					<el-button>发送</el-button>
+					<el-button :disabled="commentDisabled" @click="handleComment">发送</el-button>
 				</div>
 				<div class="list">
 					<div class="item" v-for="comment in commentList" :key="comment.id">
 						<div class="avatar">
-							<img :src="comment.avatar" alt="">
+							<img v-lazy="comment.avatar" alt="">
 						</div>
 						<div class="info">
-							<div class="name">{{comment.username}}</div>
-							<div class="content">{{comment.content}}</div>
+							<div class="name">{{ comment.username }}</div>
+							<div class="content">{{ comment.content }}</div>
 							<div class="control">
-								<div class="time">{{comment.time}}</div>
+								<div class="time">{{ formatTime(comment.date) }}</div>
 								<div class="like-btn">
 									<SvgIcon icon="like" color="rgb(107, 114, 128)" size="18"/>
-									<div class="count">{{comment.likeCount}}</div>
+									<div class="count">{{ comment.likeCount }}</div>
 								</div>
-								<div class="comment-btn" @click="handleReply(comment.id)">
+								<div class="comment-btn" @click="showReplyInput(comment.id)">
 									<SvgIcon icon="comment" color="rgb(107, 114, 128)" size="18"/>
-									<div class="count">{{comment.commentCount}}</div>
+									<div class="count">{{ comment.commentCount }}</div>
 								</div>
 							</div>
 							<transition
@@ -97,32 +98,32 @@
 											maxlength="100"
 											show-word-limit
 											:autosize="{minRows: 2}"
+											v-model="replyText"
 									>
 									</el-input>
-									<el-button>发送</el-button>
+									<el-button :disabled="replyDisabled" @click="handleReplyRoot(comment)">发送</el-button>
 								</div>
 							</transition>
 							<div class="reply-list">
 								<div class="item" v-for="subComment in comment.replyList" :key="subComment.id">
 									<div class="avatar">
-										<img :src="subComment.avatar" alt="">
+										<img v-lazy="subComment.avatar" alt="">
 									</div>
 									<div class="info">
 										<div class="info-header">
-											<div class="name">{{subComment.username}}</div>
-											<span>回复</span>
-											<div class="reply-name">{{subComment.replyName}}</div>
+											<div class="name">{{ subComment.username }}</div>
+											<span v-if="subComment.replyName">回复</span>
+											<div class="reply-name" v-if="subComment.replyName">{{ subComment.replyName }}</div>
 										</div>
-										<div class="content">{{subComment.content}}</div>
+										<div class="content">{{ subComment.content }}</div>
 										<div class="control">
-											<div class="time">{{subComment.time}}</div>
+											<div class="time">{{ formatTime(subComment.date) }}</div>
 											<div class="like-btn">
 												<SvgIcon icon="like" color="rgb(107, 114, 128)" size="18"/>
-												<div class="count">{{subComment.likeCount}}</div>
+												<div class="count">{{ subComment.likeCount }}</div>
 											</div>
-											<div class="comment-btn" @click="handleReply(subComment.id)">
+											<div class="comment-btn" @click="showReplyInput(subComment.id)">
 												<SvgIcon icon="comment" color="rgb(107, 114, 128)" size="18"/>
-												<div class="count">{{subComment.commentCount}}</div>
 											</div>
 										</div>
 										<transition
@@ -138,9 +139,10 @@
 														maxlength="100"
 														show-word-limit
 														:autosize="{minRows: 2}"
+														v-model="replyText"
 												>
 												</el-input>
-												<el-button>发送</el-button>
+												<el-button :disabled="replyDisabled" @click="handleReplyReply(comment, subComment)">发送</el-button>
 											</div>
 										</transition>
 									</div>
@@ -157,65 +159,51 @@
 <script>
 import WcWaterfall from "wc-waterfall";
 import EndHr from "@/components/endHr.vue";
+import {reqGetPostAuthor, reqGetPostComments, reqGetPostInfo, reqGetPostResource, reqPublishComment} from "@/api";
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import 'dayjs/locale/zh-cn';
 
 export default {
 	name: 'PostDetail',
 	components: {EndHr, WcWaterfall},
 	data() {
 		return {
-			images: [], //图片
+			text: '',
+			replyText: '',
 			cols: 3, //瀑布流列数
 			gap: 10, //瀑布流图片间距
 			currentReplyId: -1, //当前打开回复输入框的评论id
-			commentList: [ //评论列表
-				{
-					id: 1,
-					avatar: 'http://q.qlogo.cn/headimg_dl?dst_uin=1070373183&spec=640&img_type=jpg',
-					username: '怀名亦未寝',
-					content: '我觉得这网站写得太好了！',
-					time: '刚刚',
-					likeCount: 1,
-					commentCount: 2,
-					replyList: [
-						{
-							id: 2,
-							avatar: 'http://q.qlogo.cn/headimg_dl?dst_uin=3124140355&spec=640&img_type=jpg',
-							username: 'ensolitude',
-							content: '点赞点赞',
-							time: '刚刚',
-							likeCount: 0,
-							commentCount: 0,
-							replyName: '怀名亦未寝'
-						},
-						{
-							id: 3,
-							avatar: 'http://q.qlogo.cn/headimg_dl?dst_uin=3124140355&spec=640&img_type=jpg',
-							username: 'ensolitude',
-							content: '那可不，不看是谁写的！',
-							time: '刚刚',
-							likeCount: 0,
-							commentCount: 0,
-							replyName: '怀名亦未寝'
-						}
-					]
-				},
-				{
-					id: 4,
-					avatar: 'http://q.qlogo.cn/headimg_dl?dst_uin=3124140355&spec=640&img_type=jpg',
-					username: 'ensolitude',
-					content: '太难写了！',
-					time: '3小时前',
-					likeCount: 99,
-					commentCount: 29,
-					replyList: []
-				}
-			],
+			author: {}, //作者信息
+			post: {}, //帖子信息
+			images: [], //图片信息
+			commentList: []
 		}
 	},
 	computed: {
 		//浏览器身份
 		browserIdentity() {
 			return this.$store.state.browserIdentity;
+		},
+
+		//帖子id
+		postId() {
+			return this.$route.query.postId;
+		},
+
+		//帖子评论按钮禁用标志
+		commentDisabled() {
+			return this.text.length === 0;
+		},
+
+		//回复按钮禁用标志
+		replyDisabled() {
+			return this.replyText.length === 0;
+		},
+
+		//用户信息
+		user() {
+			return this.$store.state.userInfo;
 		}
 	},
 	watch: {
@@ -233,40 +221,159 @@ export default {
 		}
 	},
 	methods: {
-		generateRandomImages(count = 10, minSize = 100, maxSize = 1000) {
-			const images = [];
-			for (let i = 0; i < count; i++) {
-				// 首先生成随机宽度（确保足够大以容纳高度）
-				const width = Math.floor(Math.random() * (maxSize - minSize) + minSize);
-				// 高度随机，但必须小于宽度
-				const height = Math.floor(Math.random() * (width - minSize) + minSize);
-
-				// 如果高度意外>=宽度（极小概率），强制调整
-				const finalHeight = Math.min(height, width - 1);
-
-				// 构建图片对象（可扩展其他字段）
-				images.push(`https://picsum.photos/${width}/${height}?random=${Date.now() + i}`);
-			}
-			return images;
-		},
-
-		handleReply(id) {
+		//点击回复按钮
+		showReplyInput(id) {
 			if (this.currentReplyId === id) {
 				this.currentReplyId = -1;
 				return;
 			}
 			this.currentReplyId = id;
+			this.replyText = '';
+		},
+
+		//获取帖子详情
+		async getPostInfo() {
+			let result = await reqGetPostInfo(this.postId);
+			if (result.code !== 200) {
+				this.$message.error('帖子信息获取失败！');
+				return;
+			}
+			this.post = result.data;
+		},
+
+		//获取帖子资源
+		async getPostResources() {
+			let result = await reqGetPostResource(this.postId);
+			if (result.code !== 200) {
+				this.$message.error('帖子资源获取失败！');
+				return;
+			}
+			this.images = result.data;
+			this.cols = this.images.length < this.cols ? this.images.length : this.cols;
+		},
+
+		//获取作者信息
+		async getPostAuthor() {
+			let result = await reqGetPostAuthor(this.postId);
+			if (result.code !== 200) {
+				this.$message.error('作者信息获取失败！');
+				return;
+			}
+			this.author = result.data;
+		},
+
+		//评论帖子
+		async handleComment() {
+			let result = await reqPublishComment(this.postId, this.text);
+			this.$message({
+				type: result.code === 200 ? 'success' : 'error',
+				message: result.code === 200 ? '评论成功！' : '评论失败！'
+			});
+			this.text = '';
+
+			//更新数据
+			if (result.code === 200) {
+				let comment = {
+					id: result.data.id,
+					userId: result.data.userId,
+					avatar: this.user.avatar,
+					username: this.user.username,
+					content: result.data.content,
+					date: Date.now(),
+					likeCount: 0,
+					commentCount: 0,
+					replyList: []
+				};
+				this.commentList.unshift(comment);
+				this.post.commentCount++;
+			}
+		},
+
+		//回复一级评论
+		async handleReplyRoot(rootComment) {
+			let result = await reqPublishComment(this.postId, this.replyText, rootComment.id);
+			this.$message({
+				type: result.code === 200 ? 'success' : 'error',
+				message: result.code === 200 ? '评论成功！' : '评论失败！'
+			});
+			this.replyText = '';
+
+			//更新数据
+			if (result.code === 200) {
+				let reply = {
+					id: result.data.id,
+					userId: result.data.userId,
+					avatar: this.user.avatar,
+					username: this.user.username,
+					content: result.data.content,
+					date: Date.now(),
+					likeCount: 0,
+					replyName: rootComment.username
+				};
+				rootComment.replyList.unshift(reply);
+				this.post.commentCount++;
+				rootComment.commentCount++;
+			}
+		},
+
+		//回复二级评论
+		async handleReplyReply(rootComment, replyComment) {
+			let result = await reqPublishComment(this.postId, this.replyText, rootComment.id, replyComment.userId);
+			this.$message({
+				type: result.code === 200 ? 'success' : 'error',
+				message: result.code === 200 ? '评论成功！' : '评论失败！'
+			});
+			this.replyText = '';
+
+			//更新数据
+			if (result.code === 200) {
+				let reply = {
+					id: result.data.id,
+					userId: result.data.userId,
+					avatar: this.user.avatar,
+					username: this.user.username,
+					content: result.data.content,
+					date: Date.now(),
+					likeCount: 0,
+					replyName: replyComment.username
+				};
+				rootComment.replyList.unshift(reply);
+				this.post.commentCount++;
+				rootComment.commentCount++;
+			}
+		},
+
+		//格式化时间
+		formatTime(dateString) {
+			return dayjs(dateString).fromNow().replace(/\s+/g, '');
+		},
+
+		//获取帖子评论
+		async getPostComments() {
+			let result = await reqGetPostComments(this.postId);
+			if (result.code !== 200) {
+				this.$message.error('评论获取失败！');
+				return;
+			}
+			this.commentList = result.data;
 		}
 	},
 	created() {
-		this.images = this.generateRandomImages(4);
-		this.cols = this.images.length < this.cols ? this.images.length : this.cols;
+		this.getPostInfo();
+		this.getPostResources();
+		this.getPostAuthor();
+		this.getPostComments();
+	},
+	mounted() {
+		dayjs.extend(relativeTime);
+		dayjs.locale('zh-cn');
 	}
 }
 </script>
 
 <style scoped lang="scss">
 @import '@/style/common';
+
 .post-detail {
 	.back {
 		position: fixed;
@@ -398,7 +505,7 @@ export default {
 	.main {
 		width: 768px;
 		max-width: 100%;
-		margin: 2rem auto;
+		margin: 1rem auto;
 		padding: 10px;
 		box-sizing: border-box;
 
@@ -406,9 +513,15 @@ export default {
 			padding: 8px;
 		}
 
+		.date {
+			color: rgb(161, 161, 170);
+			text-align: center;
+		}
+
 		.post-content {
 			text-align: center;
 			font-size: 1.1rem;
+			margin-top: 2rem;
 		}
 
 		.images {
@@ -426,6 +539,13 @@ export default {
 
 					//防止图片下圆角显示不正常
 					display: block;
+				}
+
+				/* 修改图片加载动画和加载失败大小 */
+				img[lazy="loading"],
+				img[lazy="error"] {
+					/* 保持宽高之比为16 / 9 */
+					aspect-ratio: 16 / 9;
 				}
 			}
 		}
@@ -553,6 +673,7 @@ export default {
 								display: flex;
 								align-items: center;
 								cursor: pointer;
+								user-select: none;
 
 								.count {
 									margin-left: 5px;

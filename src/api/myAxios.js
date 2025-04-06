@@ -23,7 +23,7 @@ config对象中包含请求头信息
  */
 axios.interceptors.request.use(config => {
 	//非/auth请求添加token
-	if (!config.url.includes('/auth')) {
+	if (!config.url.includes('/auth/')) {
 		config.headers.Authorization = 'Bearer ' + store.state.token;
 	}
 

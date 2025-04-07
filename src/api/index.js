@@ -174,7 +174,7 @@ export const reqGetDetailAnime = (animeUserId) => {
  * @returns 动漫资源分页数据
  */
 export const reqGetPageAnimeResource = (current, size, animeUserId) => {
-	return axios.get(`/animeResources?current=${current}&size=${size}&animeUserId=${animeUserId}`)
+	return axios.get(`/anime/${animeUserId}/resources?current=${current}&size=${size}`)
 }
 
 /**
@@ -185,7 +185,7 @@ export const reqGetPageAnimeResource = (current, size, animeUserId) => {
 export const reqUpload = (animeUserId, fileList) => {
 	let formData = new FormData();
 	fileList.forEach(item => formData.append('fileList', item.raw));
-	return axios.post(`/animeResources/${animeUserId}/upload`, formData);
+	return axios.post(`/anime/${animeUserId}/upload`, formData);
 }
 
 /**

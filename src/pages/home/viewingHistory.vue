@@ -3,7 +3,7 @@
 		<!-- 动漫统计 -->
 		<div class="chart" ref="chart"></div>
 
-		<div class="time-line-box">
+		<div class="time-line-box" v-loading="dataLoading">
 			<div class="timeline" v-show="!emptyFlag">
 				<div class="item" v-for="anime in animeList" :key="anime.animeUserId">
 					<div class="content">
@@ -18,7 +18,7 @@
 			<el-empty v-if="emptyFlag" description="暂无历程，快去观看吧！"/>
 
 			<!-- 滚动加载动画 -->
-			<scroll-animation :loading="loading"/>
+			<scroll-animation :loading="scrollLoading"/>
 
 			<!-- 结束标志 -->
 			<end-hr content="我也是有底线的！" v-show="showEndHr"/>
@@ -53,10 +53,16 @@ export default {
 			hasNext: true,
 
 			//加载动画标志
-			loading: false,
+			scrollLoading: false,
 
 			//echarts实例
-			chart: null
+			chart: null,
+
+			//图标数据加载标志
+			chartDataLoading: false,
+
+			//动漫数据加载标志
+			dataLoading: false
 		}
 	},
 	computed: {
@@ -70,7 +76,7 @@ export default {
 		async getPageAnime() {
 			try {
 				//开启加载动画
-				this.loading = true;
+				this.scrollLoading = true;
 
 				//获取数据
 				let result = await reqGetPageAnime(++this.current, this.size, null, 'FINISHED', 'JOIN_DESC');
@@ -86,7 +92,7 @@ export default {
 				}
 			} finally {
 				//关闭加载动画
-				this.loading = false;
+				this.scrollLoading = false;
 			}
 		},
 
@@ -107,12 +113,14 @@ export default {
 
 		//获取第一页数据
 		async getFirstPageAnime() {
+			this.dataLoading = true;
 			this.current = 1;
 
 			//获取数据
 			let result = await reqGetPageAnime(this.current, this.size, null, 'FINISHED', 'JOIN_DESC');
 			if (result.code !== 200) {
 				this.$message.error('获取数据失败！');
+				this.dataLoading = false;
 				return;
 			}
 			this.animeList = this.animeList.concat(result.data.records || []);
@@ -120,6 +128,7 @@ export default {
 			if (this.current === 1) {
 				this.emptyFlag = this.animeList.length === 0;
 			}
+			this.dataLoading = false;
 		},
 
 		//进入动漫详情
@@ -150,9 +159,9 @@ export default {
 			//过滤掉值为0的项
 			chartData = chartData.filter(item => item.value !== 0);
 			if (chartData.length === 0) {
-				this.$refs.chart.style.display = 'none';
 				return;
 			}
+			this.$refs.chart.style.display = 'block';
 			let option = {
 				tooltip: {
 					trigger: 'item'
@@ -237,6 +246,8 @@ export default {
 	.chart {
 		height: 250px;
 		@include box-style;
+		width: 100%;
+		display: none;
 	}
 
 	.time-line-box {

@@ -1,7 +1,7 @@
 <template>
 	<div class="dustbin">
 		<!-- region 动漫列表 -->
-		<div class="list-box">
+		<div class="list-box" v-loading="loading">
 			<div class="list">
 				<div class="item" v-for="(anime, index) in animeList" :key="anime.animeId">
 					<div class="img">
@@ -68,7 +68,10 @@ export default {
 			popover: {
 				animeUserId: 0,
 				index: 0 //动漫在列表中的位置
-			}
+			},
+
+			//数据加载标志
+			loading: false
 		}
 	},
 	computed: {
@@ -98,16 +101,20 @@ export default {
 	methods: {
 		//获取垃圾箱数据
 		async getDustbinData() {
+			this.loading = true;
+
 			//获取数据
 			let result = await reqGetDustbinData();
 			if (result.code !== 200) {
 				this.$message.error(result.msg);
+				this.loading = false;
 				return;
 			}
 			this.animeList = result.data || [];
 
 			//数据为空展示空状态
 			this.emptyFlag = this.animeList.length === 0;
+			this.loading = false;
 		},
 
 		/**
@@ -217,11 +224,12 @@ export default {
 <style scoped lang="scss">
 @import "@/style/common.scss";
 .dustbin {
-	margin-top: 1rem;
-	@include box-style;
-	@include content-min-height;
-
 	.list-box {
+		margin-top: 1rem;
+		position: relative;
+		@include box-style;
+		@include content-min-height;
+
 		/* 动漫列表 */
 		.list {
 			display: grid;

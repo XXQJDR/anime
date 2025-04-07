@@ -7,10 +7,12 @@
 					type="text"
 					placeholder="请输入关键词(搜索请按回车键)"
 					v-model="keyword"
+					@keyup.enter="searchHandle"
+					@focus="handleFocus"
 			/>
 		</div>
 
-		<div class="list-box">
+		<div class="list-box" v-loading="dataLoading">
 			<div class="post-list">
 				<div class="post" v-for="post in postList" @click="goToPostDetail(post.id)">
 					<!-- 封面 -->
@@ -68,6 +70,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/zh-cn';
 import ScrollAnimation from "@/components/scrollAnimation.vue";
 import EndHr from "@/components/endHr.vue";
+import _ from "lodash";
 
 export default {
 	name: 'Community',
@@ -86,7 +89,10 @@ export default {
 			hasNext: false,
 
 			//是否显示空标志
-			emptyFlag: false
+			emptyFlag: false,
+
+			//数据加载标志
+			dataLoading: false,
 		}
 	},
 	computed: {
@@ -102,6 +108,7 @@ export default {
 
 		//获取第一页数据
 		async getFirstPagePost() {
+			this.dataLoading = true;
 			this.current = 0;
 			let result = await reqGetPagePost(++this.current, this.size, this.keyword);
 			if (result.code !== 200) {
@@ -115,7 +122,8 @@ export default {
 			this.emptyFlag = this.postList.length === 0;
 
 			//判断是否存在下一页数据
-			this.hasNext = result.data.current < result.data.pages;
+			this.hasNext = this.postList.length < result.data.total;
+			this.dataLoading = false;
 		},
 
 		//分页获取数据
@@ -129,7 +137,7 @@ export default {
 			}
 
 			this.postList = this.postList.concat(result.data.records || []);
-			this.hasNext = result.data.current < result.data.pages;
+			this.hasNext = this.postList.length < result.data.total;
 			this.scrollLoading = false;
 		},
 
@@ -151,6 +159,16 @@ export default {
 				this.hasNext = false;
 				this.getPagePost();
 			}
+		},
+
+		//按下回车搜索回调
+		searchHandle: _.throttle(function () {
+			this.getFirstPagePost();
+		}, 1000),
+
+		//输入框获取焦点自动全选
+		handleFocus(e) {
+			e.currentTarget.select();
 		},
 	},
 	created() {
@@ -216,6 +234,7 @@ export default {
 		margin-top: .6rem;
 		@include box-style;
 		position: relative;
+		overflow: hidden;
 
 		/* 帖子列表 */
 		.post-list {

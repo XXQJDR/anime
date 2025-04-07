@@ -171,7 +171,7 @@
 		<!-- endregion -->
 
 		<!-- region 动漫列表 -->
-		<div class="list-box">
+		<div class="list-box" v-loading="dataLoading">
 			<div class="list">
 				<div class="item" v-for="(anime, index) in animeList" :key="anime.animeId">
 					<div class="img" @click="goAnimeDetail(anime.animeUserId)">
@@ -305,7 +305,10 @@ export default {
 			typePopoverFlag: false,
 
 			//sortPopover显示标志
-			sortPopoverFlag: false
+			sortPopoverFlag: false,
+
+			//数据加载标志
+			dataLoading: false
 		}
 	},
 	computed: {
@@ -441,6 +444,7 @@ export default {
 
 		//获取对应分类的第一页数据
 		async getFirstPageAnime() {
+			this.dataLoading = true;
 			this.current = 1;
 			let status = null;
 			switch (this.selectedTypeName) {
@@ -462,6 +466,7 @@ export default {
 			let result = await reqGetPageAnime(this.current, this.size, this.keyword, status, this.selectedSortName);
 			if (result.code !== 200) {
 				this.$message.error('数据获取失败！');
+				this.dataLoading = false;
 				return;
 			}
 
@@ -475,6 +480,8 @@ export default {
 
 			//获取动漫总数
 			this.total = result.data.total;
+
+			this.dataLoading = false;
 		},
 
 		//分页获取动漫数据
@@ -829,6 +836,7 @@ export default {
 		margin-top: .6rem;
 		position: relative;
 		@include box-style;
+		overflow: hidden;
 
 		.list {
 			display: grid;

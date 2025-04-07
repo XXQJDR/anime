@@ -56,10 +56,7 @@ export default {
 			loading: false,
 
 			//echarts实例
-			chart: null,
-
-			//饼图数据
-			chartData: []
+			chart: null
 		}
 	},
 	computed: {
@@ -152,6 +149,10 @@ export default {
 
 			//过滤掉值为0的项
 			chartData = chartData.filter(item => item.value !== 0);
+			if (chartData.length === 0) {
+				this.$refs.chart.style.display = 'none';
+				return;
+			}
 			let option = {
 				tooltip: {
 					trigger: 'item'

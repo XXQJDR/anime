@@ -365,6 +365,7 @@ export default {
 
 							.svg-icon {
 								color: #8A919F !important;
+								margin-right: 5px;
 							}
 						}
 					}

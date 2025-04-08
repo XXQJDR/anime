@@ -36,11 +36,11 @@
 				</wc-waterfall>
 			</div>
 			<div class="post-actions">
-				<div class="item like-btn">
+				<div class="item like-btn" :class="{'like-btn-active':isLike}" @click="handleLike">
 					<SvgIcon icon="fillLike" color="rgb(107, 114, 128)" size="38"/>
 					<div class="count">{{ post.likeCount }}</div>
 				</div>
-				<div class="item star-btn">
+				<div class="item star-btn" :class="{'star-btn-active':isFavorite}" @click="handleStar">
 					<SvgIcon icon="fillStar" color="rgb(107, 114, 128)" size="38"/>
 					<div class="count">{{ post.favoriteCount }}</div>
 				</div>
@@ -142,7 +142,8 @@
 														v-model="replyText"
 												>
 												</el-input>
-												<el-button :disabled="replyDisabled" @click="handleReplyReply(comment, subComment)">发送</el-button>
+												<el-button :disabled="replyDisabled" @click="handleReplyReply(comment, subComment)">发送
+												</el-button>
 											</div>
 										</transition>
 									</div>
@@ -159,10 +160,22 @@
 <script>
 import WcWaterfall from "wc-waterfall";
 import EndHr from "@/components/endHr.vue";
-import {reqGetPostAuthor, reqGetPostComments, reqGetPostInfo, reqGetPostResource, reqPublishComment} from "@/api";
+import {
+	reqFavoritePost,
+	reqGetPostAuthor,
+	reqGetPostComments,
+	reqGetPostInfo,
+	reqGetPostResource,
+	reqGetPostStatus,
+	reqLikePost,
+	reqPublishComment,
+	reqUnFavoritePost,
+	reqUnLikePost
+} from "@/api";
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/zh-cn';
+import _ from "lodash";
 
 export default {
 	name: 'PostDetail',
@@ -177,7 +190,9 @@ export default {
 			author: {}, //作者信息
 			post: {}, //帖子信息
 			images: [], //图片信息
-			commentList: []
+			commentList: [], //评论列表
+			isLike: false, //是否点赞
+			isFavorite: false, //是否收藏
 		}
 	},
 	computed: {
@@ -312,8 +327,7 @@ export default {
 					username: this.user.username,
 					content: result.data.content,
 					date: Date.now(),
-					likeCount: 0,
-					replyName: rootComment.username
+					likeCount: 0
 				};
 				rootComment.replyList.unshift(reply);
 				this.post.commentCount++;
@@ -361,10 +375,68 @@ export default {
 				return;
 			}
 			this.commentList = result.data;
-		}
+		},
+
+		//获取帖子点赞收藏状态
+		async getPostStatus() {
+			let result = await reqGetPostStatus(this.postId);
+			if (result.code !== 200) {
+				this.$message.error('帖子状态获取失败！');
+				return;
+			}
+			this.isLike = result.data.isLike;
+			this.isFavorite = result.data.isFavorite;
+		},
+
+		//点赞帖子
+		handleLike: _.throttle(async function () {
+			if (this.isLike) {
+				let result = await reqUnLikePost(this.postId);
+				if (result.code !== 200) {
+					this.$message.error('取消点赞失败！');
+					return;
+				}
+				this.$message.success('取消点赞成功！');
+				this.isLike = false;
+				this.post.likeCount--;
+			} else {
+				let result = await reqLikePost(this.postId);
+				if (result.code !== 200) {
+					this.$message.error('点赞失败！');
+					return;
+				}
+				this.$message.success('点赞成功！');
+				this.isLike = true;
+				this.post.likeCount++;
+			}
+		}, 1000),
+
+		//收藏帖子
+		handleStar: _.throttle(async function () {
+			if (this.isFavorite) {
+				let result = await reqUnFavoritePost(this.postId);
+				if (result.code !== 200) {
+					this.$message.error('取消收藏失败！');
+					return;
+				}
+				this.$message.success('取消收藏成功！');
+				this.isFavorite = false;
+				this.post.favoriteCount--;
+			} else {
+				let result = await reqFavoritePost(this.postId);
+				if (result.code !== 200) {
+					this.$message.error('收藏失败！');
+					return;
+				}
+				this.$message.success('收藏成功！');
+				this.isFavorite = true;
+				this.post.favoriteCount++;
+			}
+		}, 1000),
 	},
 	created() {
 		this.getPostInfo();
+		this.getPostStatus();
 		this.getPostResources();
 		this.getPostAuthor();
 		this.getPostComments();
@@ -567,6 +639,7 @@ export default {
 				color: rgb(107, 114, 128);
 				cursor: pointer;
 				transition: color .3s ease;
+				user-select: none;
 
 				.count {
 					margin-left: 5px;
@@ -581,7 +654,23 @@ export default {
 				}
 			}
 
+			.like-btn-active {
+				color: #f91880;
+
+				.svg-icon {
+					color: #f91880 !important;
+				}
+			}
+
 			.star-btn:hover {
+				color: #fbbf24;
+
+				.svg-icon {
+					color: #fbbf24 !important;
+				}
+			}
+
+			.star-btn-active {
 				color: #fbbf24;
 
 				.svg-icon {

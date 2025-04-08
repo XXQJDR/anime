@@ -340,3 +340,44 @@ export const reqPublishComment = (postId, content, parentId = null, replyUserId 
 export const reqGetPostComments = (postId) => {
 	return axios.get(`/posts/${postId}/comments`);
 }
+
+/**
+ * 获取帖子点赞收藏状态
+ * @param postId
+ * @returns status
+ */
+export const reqGetPostStatus = (postId) => {
+	return axios.get(`/posts/${postId}/status`);
+}
+
+/**
+ * 点赞帖子
+ * @param postId 帖子id
+ */
+export const reqLikePost = (postId) => {
+	return axios.post(`/posts/${postId}/like`);
+}
+
+/**
+ * 取消点赞帖子
+ * @param postId 帖子id
+ */
+export const reqUnLikePost = (postId) => {
+	return axios.delete(`/posts/${postId}/like`);
+}
+
+/**
+ * 收藏帖子
+ * @param postId 帖子id
+ */
+export const reqFavoritePost = (postId) => {
+	return axios.post(`/posts/${postId}/favorite`);
+}
+
+/**
+ * 取消收藏帖子
+ * @param postId 帖子id
+ */
+export const reqUnFavoritePost = (postId) => {
+	return axios.delete(`/posts/${postId}/favorite`);
+}

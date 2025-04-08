@@ -216,6 +216,11 @@ export default {
 					this.cols = 2;
 					this.gap = 5;
 				}
+
+				//如果图片数量小于列数，则设置列数为图片数量
+				if (this.images.length > 0) {
+					this.cols = this.images.length < this.cols ? this.images.length : this.cols;
+				}
 			},
 			immediate: true
 		}

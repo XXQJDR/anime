@@ -731,8 +731,6 @@ export default {
 </style>
 
 <style lang="scss">
-@import '@/assets/fonts/rate/style.css';
-
 .anime-detail {
 	.upload {
 		.el-button--success,

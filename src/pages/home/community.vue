@@ -177,6 +177,12 @@ export default {
 	mounted() {
 		dayjs.extend(relativeTime);
 		dayjs.locale('zh-cn');
+		setTimeout(() => {
+			window.addEventListener('scroll', this.lazyLoading);
+		}, 500);
+	},
+	beforeDestroy() {
+		window.removeEventListener('scroll', this.lazyLoading);
 	},
 	//其他页面返回
 	activated() {

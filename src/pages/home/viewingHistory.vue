@@ -10,6 +10,14 @@
 						<div class="anime" @click="goAnimeDetail(anime.animeUserId)">
 							<div class="time">{{ anime.finishedDate }}</div>
 							<img class="cover" v-lazy="anime.cover" :alt="anime.name">
+							<div class="rate">
+								<el-rate
+										:value="anime.score"
+										:colors="['#eee', '#F7BA2A', '#FF9900']"
+										disabled
+								>
+								</el-rate>
+							</div>
 							<div class="name">{{ anime.name }}</div>
 						</div>
 					</div>
@@ -275,8 +283,8 @@ export default {
 				top: 0;
 				height: 100%;
 				width: 2px;
-				background: #e0e0e0;
 				transform: translateX(-50%);
+				background: linear-gradient(to bottom, #6e58e9, #eae7ff);
 
 				@media screen and (max-width: 768px) {
 					left: 0;
@@ -285,20 +293,21 @@ export default {
 
 			.item {
 				position: relative;
-				margin: 2rem 0;
+				margin-top: 1rem;
 				display: flex;
 				justify-content: flex-start;
 
 				@media screen and (max-width: 768px) {
 					justify-content: flex-start;
-				}
-
-				&:first-child {
-					margin-top: 1rem;
+					margin-top: .6rem;
 				}
 
 				&:last-child {
 					margin-bottom: 1rem;
+
+					@media screen and (max-width: 768px) {
+						margin-top: .6rem;
+					}
 				}
 
 				&:nth-child(even) {
@@ -325,7 +334,7 @@ export default {
 						width: 20px;
 						height: 20px;
 						background: #fff;
-						border: 3px solid #4a90e2;
+						border: 3px solid #6e58e9;
 						border-radius: 50%;
 						z-index: 1;
 
@@ -337,7 +346,7 @@ export default {
 
 					.anime {
 						background: #FFFFFF;
-						padding: 1.5rem;
+						padding: 15px;
 						border-radius: 8px;
 						box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 						transition: transform 0.3s ease;
@@ -350,26 +359,28 @@ export default {
 						}
 
 						@media screen and (max-width: 768px) {
+							padding: 10px;
 							margin-left: $content-offset;
 						}
 
 						.time {
 							color: #666;
-							font-size: 1.5rem;
+							font-size: 1.2rem;
 							margin-bottom: 0.5rem;
 						}
 
 						.cover {
-							width: 170px;
-							height: 236px;
+							height: 200px;
 							border-radius: 5px;
 							overflow: hidden;
-							margin-bottom: 1rem;
+
+							@media screen and (max-width: 768px) {
+								height: 150px;
+							}
 						}
 
 						.name {
 							color: #333;
-							font-size: 1.1rem;
 							font-weight: 600;
 						}
 					}
@@ -395,6 +406,13 @@ export default {
 		}
 	}
 }
-
 /* endregion */
+</style>
+
+<style lang="scss">
+.viewing-history {
+	.el-rate {
+		margin: 5px 0;
+	}
+}
 </style>

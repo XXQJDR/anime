@@ -188,12 +188,7 @@
 							>
 								<div class="name">{{ anime.name }}</div>
 							</el-tooltip>
-							<div class="date" v-show="selectedTypeName!=='已看'">
-								于<span>{{ selectedTypeName === '正在看' ? anime.watchingDate : anime.createDate }}</span>加入
-							</div>
-							<div class="date" v-show="selectedTypeName==='已看'">
-								于<span>{{ anime.finishedDate }}</span>看完
-							</div>
+							<div class="date" v-text="calculateAnimeDate(anime)"></div>
 						</div>
 						<div class="control">
 							<button @click="openAnimeListPopover(anime.animeUserId, anime.watchStatus, index, $event)">
@@ -258,6 +253,9 @@ import _ from "lodash";
 import CountTo from "vue-count-to";
 import EndHr from "@/components/endHr.vue";
 import ScrollAnimation from "@/components/scrollAnimation.vue";
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import 'dayjs/locale/zh-cn';
 
 export default {
 	name: 'AnimeList',
@@ -656,6 +654,19 @@ export default {
 
 			//获取对应分类第一页动漫数据
 			this.getFirstPageAnime();
+		},
+
+		//计算动漫时间
+		calculateAnimeDate(anime) {
+			switch (this.selectedTypeName) {
+				case '全部':
+				case '未看':
+					return dayjs(anime.createDate).fromNow().replace(/\s+/g, '');
+				case '正在看':
+					return dayjs(anime.watchingDate).fromNow().replace(/\s+/g, '');
+				case '已看':
+					return dayjs(anime.finishedDate).fromNow().replace(/\s+/g, '');
+			}
 		}
 	},
 	created() {
@@ -663,6 +674,8 @@ export default {
 		this.getFirstPageAnime();
 	},
 	mounted() {
+		dayjs.extend(relativeTime);
+		dayjs.locale('zh-cn');
 		setTimeout(() => {
 			window.addEventListener('scroll', this.lazyLoading);
 		}, 500);
@@ -843,23 +856,19 @@ export default {
 			grid-gap: 15px;
 
 			@media screen and (max-width: 768px) {
-				grid-template-columns: repeat(1, 1fr);
+				grid-template-columns: repeat(2, 1fr);
 				grid-gap: 10px;
 			}
 
 			@media screen and (min-width: 768px) and (max-width: 1000px) {
-				grid-template-columns: repeat(2, 1fr);
-			}
-
-			@media screen and (min-width: 1000px) and (max-width: 1260px) {
 				grid-template-columns: repeat(3, 1fr);
 			}
 
-			@media screen and (min-width: 1260px) and (max-width: 1500px) {
+			@media screen and (min-width: 1000px) and (max-width: 1260px) {
 				grid-template-columns: repeat(4, 1fr);
 			}
 
-			@media screen and (min-width: 1500px) {
+			@media screen and (min-width: 1260px) {
 				grid-template-columns: repeat(5, 1fr);
 			}
 
@@ -868,7 +877,7 @@ export default {
 				$transitionTime: 0.3s;
 
 				/*宽度与高度的比例*/
-				aspect-ratio: 0.8;
+				aspect-ratio: 1 / 1.618;
 				border-radius: 10px;
 				box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 				overflow: hidden;
@@ -882,10 +891,6 @@ export default {
 					.content {
 						background-color: #f7f3f2;
 					}
-				}
-
-				@media screen and (max-width: 768px) {
-					aspect-ratio: 1;
 				}
 
 				.img {

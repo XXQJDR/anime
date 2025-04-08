@@ -114,6 +114,7 @@ export default {
 <style lang="scss">
 @import '@/style/normalize.css';
 @import 'animate.css';
+@import '@/assets/fonts/rate/style.css';
 
 html {
 	font-size: 18px;
@@ -128,7 +129,6 @@ body {
 	font-size: 18px;
 	width: 100%;
 	font-family: 楷体, 微软雅黑, serif;
-	background-color: #fafbfe;
 	overflow-x: hidden;
 
 	@media screen and (max-width: 768px) {

@@ -41,7 +41,7 @@
 				</wc-waterfall>
 			</div>
 			<div class="post-actions">
-				<div class="item like-btn" :class="{'like-btn-active':post.isLike}" @click="handleLike">
+				<div class="item like-btn" :class="{'like-btn-active':post.isLike}" @click="likePost">
 					<SvgIcon icon="fillLike" color="rgb(107, 114, 128)" size="38"/>
 					<div class="count">{{ post.likeCount }}</div>
 				</div>
@@ -81,7 +81,11 @@
 							<div class="content">{{ comment.content }}</div>
 							<div class="control">
 								<div class="time">{{ formatTime(comment.date) }}</div>
-								<div class="like-btn">
+								<div
+										class="like-btn"
+										:class="{'like-btn-active':comment.isLike}"
+										@click="likeComment(comment)"
+								>
 									<SvgIcon icon="like" color="rgb(107, 114, 128)" size="18"/>
 									<div class="count">{{ comment.likeCount }}</div>
 								</div>
@@ -123,7 +127,11 @@
 										<div class="content">{{ subComment.content }}</div>
 										<div class="control">
 											<div class="time">{{ formatTime(subComment.date) }}</div>
-											<div class="like-btn">
+											<div
+													class="like-btn"
+													:class="{'like-btn-active':subComment.isLike}"
+													@click="likeComment(subComment)"
+											>
 												<SvgIcon icon="like" color="rgb(107, 114, 128)" size="18"/>
 												<div class="count">{{ subComment.likeCount }}</div>
 											</div>
@@ -166,14 +174,18 @@
 import WcWaterfall from "wc-waterfall";
 import EndHr from "@/components/endHr.vue";
 import {
-	reqFavoritePost, reqFollowUser,
+	reqFavoritePost,
+	reqFollowUser,
 	reqGetPostAuthor,
 	reqGetPostComments,
 	reqGetPostInfo,
 	reqGetPostResource,
+	reqLikeComment,
 	reqLikePost,
 	reqPublishComment,
-	reqUnFavoritePost, reqUnFollowUser,
+	reqUnFavoritePost,
+	reqUnFollowUser,
+	reqUnLikeComment,
 	reqUnLikePost
 } from "@/api";
 import dayjs from 'dayjs';
@@ -380,14 +392,13 @@ export default {
 		},
 
 		//点赞或取消点赞帖子
-		handleLike: _.throttle(async function () {
+		likePost: _.throttle(async function () {
 			if (this.post.isLike) {
 				let result = await reqUnLikePost(this.postId);
 				if (result.code !== 200) {
 					this.$message.error('取消点赞失败！');
 					return;
 				}
-				this.$message.success('取消点赞成功！');
 				this.post.isLike = false;
 				this.post.likeCount--;
 			} else {
@@ -396,7 +407,6 @@ export default {
 					this.$message.error('点赞失败！');
 					return;
 				}
-				this.$message.success('点赞成功！');
 				this.post.isLike = true;
 				this.post.likeCount++;
 			}
@@ -410,7 +420,6 @@ export default {
 					this.$message.error('取消收藏失败！');
 					return;
 				}
-				this.$message.success('取消收藏成功！');
 				this.post.isFavorite = false;
 				this.post.favoriteCount--;
 			} else {
@@ -419,7 +428,6 @@ export default {
 					this.$message.error('收藏失败！');
 					return;
 				}
-				this.$message.success('收藏成功！');
 				this.post.isFavorite = true;
 				this.post.favoriteCount++;
 			}
@@ -433,7 +441,6 @@ export default {
 					this.$message.error('取消关注失败！');
 					return;
 				}
-				this.$message.success('取消关注成功！');
 				this.author.isFollow = false;
 				this.author.fanCount--;
 			} else {
@@ -445,6 +452,27 @@ export default {
 				this.$message.success('关注成功！');
 				this.author.isFollow = true;
 				this.author.fanCount++;
+			}
+		}, 1000),
+
+		//点赞或取消点赞评论
+		likeComment: _.throttle(async function (comment) {
+			if (comment.isLike) {
+				let result = await reqUnLikeComment(comment.id);
+				if (result.code !== 200) {
+					this.$message.error('取消点赞失败！');
+					return;
+				}
+				comment.isLike = false;
+				comment.likeCount--;
+			} else {
+				let result = await reqLikeComment(comment.id);
+				if (result.code !== 200) {
+					this.$message.error('点赞失败！');
+					return;
+				}
+				comment.isLike = true;
+				comment.likeCount++;
 			}
 		}, 1000),
 	},
@@ -623,6 +651,14 @@ export default {
 			margin-top: 2rem;
 		}
 
+		.like-btn-active {
+			color: #f91880;
+
+			.svg-icon {
+				color: #f91880 !important;
+			}
+		}
+
 		.images {
 			margin-top: 2rem;
 			user-select: none;
@@ -669,14 +705,6 @@ export default {
 			}
 
 			.like-btn:hover {
-				color: #f91880;
-
-				.svg-icon {
-					color: #f91880 !important;
-				}
-			}
-
-			.like-btn-active {
 				color: #f91880;
 
 				.svg-icon {

@@ -388,3 +388,19 @@ export const reqFollowUser = (followUserId) => {
 export const reqUnFollowUser = (followUserId) => {
 	return axios.delete(`/posts/follow/${followUserId}`);
 }
+
+/**
+ * 点赞评论
+ * @param commentId 评论id
+ */
+export const reqLikeComment = (commentId) => {
+	return axios.post(`/comments/${commentId}/like`);
+}
+
+/**
+ * 取消点赞评论
+ * @param commentId 评论id
+ */
+export const reqUnLikeComment = (commentId) => {
+	return axios.delete(`/comments/${commentId}/like`);
+}

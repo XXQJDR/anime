@@ -13,9 +13,14 @@
 			<div class="info">
 				<div class="name-follow-box">
 					<div class="name">{{ author.username }}</div>
-					<div class="follow">
+					<div
+							class="follow"
+							:class="{'follow-active':author.isFollow}"
+							@click="handleFollow"
+							v-if="user.id !== author.id"
+					>
 						<SvgIcon icon="follow"/>
-						<div>关注</div>
+						<div>{{ author.isFollow ? '取消关注' : '关注'}}</div>
 					</div>
 				</div>
 				<div class="data">
@@ -36,11 +41,11 @@
 				</wc-waterfall>
 			</div>
 			<div class="post-actions">
-				<div class="item like-btn" :class="{'like-btn-active':isLike}" @click="handleLike">
+				<div class="item like-btn" :class="{'like-btn-active':post.isLike}" @click="handleLike">
 					<SvgIcon icon="fillLike" color="rgb(107, 114, 128)" size="38"/>
 					<div class="count">{{ post.likeCount }}</div>
 				</div>
-				<div class="item star-btn" :class="{'star-btn-active':isFavorite}" @click="handleStar">
+				<div class="item star-btn" :class="{'star-btn-active':post.isFavorite}" @click="handleStar">
 					<SvgIcon icon="fillStar" color="rgb(107, 114, 128)" size="38"/>
 					<div class="count">{{ post.favoriteCount }}</div>
 				</div>
@@ -161,15 +166,14 @@
 import WcWaterfall from "wc-waterfall";
 import EndHr from "@/components/endHr.vue";
 import {
-	reqFavoritePost,
+	reqFavoritePost, reqFollowUser,
 	reqGetPostAuthor,
 	reqGetPostComments,
 	reqGetPostInfo,
 	reqGetPostResource,
-	reqGetPostStatus,
 	reqLikePost,
 	reqPublishComment,
-	reqUnFavoritePost,
+	reqUnFavoritePost, reqUnFollowUser,
 	reqUnLikePost
 } from "@/api";
 import dayjs from 'dayjs';
@@ -191,8 +195,6 @@ export default {
 			post: {}, //帖子信息
 			images: [], //图片信息
 			commentList: [], //评论列表
-			isLike: false, //是否点赞
-			isFavorite: false, //是否收藏
 		}
 	},
 	computed: {
@@ -377,27 +379,16 @@ export default {
 			this.commentList = result.data;
 		},
 
-		//获取帖子点赞收藏状态
-		async getPostStatus() {
-			let result = await reqGetPostStatus(this.postId);
-			if (result.code !== 200) {
-				this.$message.error('帖子状态获取失败！');
-				return;
-			}
-			this.isLike = result.data.isLike;
-			this.isFavorite = result.data.isFavorite;
-		},
-
-		//点赞帖子
+		//点赞或取消点赞帖子
 		handleLike: _.throttle(async function () {
-			if (this.isLike) {
+			if (this.post.isLike) {
 				let result = await reqUnLikePost(this.postId);
 				if (result.code !== 200) {
 					this.$message.error('取消点赞失败！');
 					return;
 				}
 				this.$message.success('取消点赞成功！');
-				this.isLike = false;
+				this.post.isLike = false;
 				this.post.likeCount--;
 			} else {
 				let result = await reqLikePost(this.postId);
@@ -406,21 +397,21 @@ export default {
 					return;
 				}
 				this.$message.success('点赞成功！');
-				this.isLike = true;
+				this.post.isLike = true;
 				this.post.likeCount++;
 			}
 		}, 1000),
 
-		//收藏帖子
+		//收藏或收藏帖子
 		handleStar: _.throttle(async function () {
-			if (this.isFavorite) {
+			if (this.post.isFavorite) {
 				let result = await reqUnFavoritePost(this.postId);
 				if (result.code !== 200) {
 					this.$message.error('取消收藏失败！');
 					return;
 				}
 				this.$message.success('取消收藏成功！');
-				this.isFavorite = false;
+				this.post.isFavorite = false;
 				this.post.favoriteCount--;
 			} else {
 				let result = await reqFavoritePost(this.postId);
@@ -429,14 +420,36 @@ export default {
 					return;
 				}
 				this.$message.success('收藏成功！');
-				this.isFavorite = true;
+				this.post.isFavorite = true;
 				this.post.favoriteCount++;
+			}
+		}, 1000),
+
+		//关注或取消关注作者
+		handleFollow: _.throttle(async function () {
+			if (this.author.isFollow) {
+				let result = await reqUnFollowUser(this.author.id);
+				if (result.code !== 200) {
+					this.$message.error('取消关注失败！');
+					return;
+				}
+				this.$message.success('取消关注成功！');
+				this.author.isFollow = false;
+				this.author.fanCount--;
+			} else {
+				let result = await reqFollowUser(this.author.id);
+				if (result.code !== 200) {
+					this.$message.error('关注失败！');
+					return;
+				}
+				this.$message.success('关注成功！');
+				this.author.isFollow = true;
+				this.author.fanCount++;
 			}
 		}, 1000),
 	},
 	created() {
 		this.getPostInfo();
-		this.getPostStatus();
 		this.getPostResources();
 		this.getPostAuthor();
 		this.getPostComments();
@@ -534,24 +547,33 @@ export default {
 
 				.follow {
 					display: flex;
-					justify-content: center;
 					align-items: center;
-					@include box-style;
+					justify-content: center;
+					gap: 4px;
+					padding: 6px 12px;
+					border-radius: 1rem;
 					cursor: pointer;
-					transition: all .3s ease;
-					background-color: #eae7ff;
-
-					div {
-						margin-left: 5px;
-					}
+					transition: all 0.3s ease;
+					border: 1px solid rgb(249 115 22 /1);
+					color: rgb(249 115 22 /1);
+					background-color: white;
+					user-select: none;
 
 					&:hover {
-						background-color: #e1dcfe;
-						color: #2B0AFF;
+						opacity: .8;
+					}
 
-						.svg-icon {
-							color: #2B0AFF !important;
-						}
+					.svg-icon {
+						color: rgb(249 115 22 /1) !important;
+					}
+				}
+
+				.follow-active {
+					background-color: rgb(249 115 22 /1);
+					color: white;
+
+					.svg-icon {
+						color: white !important;
 					}
 				}
 			}

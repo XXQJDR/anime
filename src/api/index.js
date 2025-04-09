@@ -342,15 +342,6 @@ export const reqGetPostComments = (postId) => {
 }
 
 /**
- * 获取帖子点赞收藏状态
- * @param postId
- * @returns status
- */
-export const reqGetPostStatus = (postId) => {
-	return axios.get(`/posts/${postId}/status`);
-}
-
-/**
  * 点赞帖子
  * @param postId 帖子id
  */
@@ -380,4 +371,20 @@ export const reqFavoritePost = (postId) => {
  */
 export const reqUnFavoritePost = (postId) => {
 	return axios.delete(`/posts/${postId}/favorite`);
+}
+
+/**
+ * 关注用户
+ * @param followUserId 被关注用户id
+ */
+export const reqFollowUser = (followUserId) => {
+	return axios.post(`/posts/follow/${followUserId}`);
+}
+
+/**
+ * 取消关注用户
+ * @param followUserId 被关注用户id
+ */
+export const reqUnFollowUser = (followUserId) => {
+	return axios.delete(`/posts/follow/${followUserId}`);
 }

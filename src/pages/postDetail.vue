@@ -441,6 +441,7 @@ export default {
 					this.$message.error('取消关注失败！');
 					return;
 				}
+				this.$message.success('已取消关注！');
 				this.author.isFollow = false;
 				this.author.fanCount--;
 			} else {
@@ -574,34 +575,55 @@ export default {
 				}
 
 				.follow {
-					display: flex;
-					align-items: center;
-					justify-content: center;
-					gap: 4px;
-					padding: 6px 12px;
-					border-radius: 1rem;
+					$followBtnColor: #5e44ed;
 					cursor: pointer;
-					transition: all 0.3s ease;
-					border: 1px solid rgb(249 115 22 /1);
-					color: rgb(249 115 22 /1);
-					background-color: white;
-					user-select: none;
+					position: relative;
+					padding: 10px 24px;
+					color: $followBtnColor;
+					border: 2px solid $followBtnColor;
+					border-radius: 34px;
+					background-color: transparent;
+					transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+					overflow: hidden;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					gap: 5px;
+
+					&::before {
+						content: '';
+						position: absolute;
+						inset: 0;
+						margin: auto;
+						width: 50px;
+						height: 50px;
+						border-radius: inherit;
+						scale: 0;
+						z-index: -1;
+						background-color: $followBtnColor;
+						transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+					}
+
+					&:hover::before {
+						scale: 3;
+					}
 
 					&:hover {
-						opacity: .8;
+						color: #ffffff;
+						scale: 1.1;
+						box-shadow: 0 0px 20px rgba(43, 10, 255, 0.4);
+
+						.svg-icon {
+							color: #ffffff !important;
+						}
+					}
+
+					&:active {
+						scale: 1;
 					}
 
 					.svg-icon {
-						color: rgb(249 115 22 /1) !important;
-					}
-				}
-
-				.follow-active {
-					background-color: rgb(249 115 22 /1);
-					color: white;
-
-					.svg-icon {
-						color: white !important;
+						color: $followBtnColor !important;
 					}
 				}
 			}

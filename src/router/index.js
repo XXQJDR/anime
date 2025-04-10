@@ -18,7 +18,6 @@ const ViewingHistory = () => import('@/pages/home/viewingHistory.vue');
 const PersonalPanel = () => import('@/pages/home/personal/panel.vue');
 const PersonalInfo = () => import('@/pages/home/personal/info.vue');
 const PersonalPost = () => import('@/pages/home/personal/post.vue');
-const PersonalNotice = () => import('@/pages/home/personal/notice.vue');
 const Community = () => import('@/pages/home/community.vue');
 const PostDetail = () => import('@/pages/postDetail.vue');
 const PublishPost = () => import('@/pages/publishPost.vue');
@@ -131,13 +130,6 @@ const routes = [
 				component: PersonalPost,
 				meta: {
 					title: '帖子'
-				}
-			},
-			{
-				path: 'personal/notice',
-				component: PersonalNotice,
-				meta: {
-					title: '通知'
 				}
 			}
 		]

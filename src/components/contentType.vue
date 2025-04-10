@@ -37,10 +37,6 @@
 			<SvgIcon icon="file"/>
 			<div class="title">帖子</div>
 		</div>
-		<div class="type-title" v-show="homeContentType === 'notice'">
-			<SvgIcon icon="notice"/>
-			<div class="title">通知</div>
-		</div>
 	</div>
 </template>
 

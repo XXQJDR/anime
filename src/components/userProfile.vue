@@ -1,16 +1,5 @@
 <template>
 	<div class="user-profile" ref="userProfile">
-		<!-- 通知 -->
-		<el-badge
-				class="notice"
-				:value="100"
-				:max="99"
-				:hidden="false"
-				@click.native="goToNotice"
-		>
-			<SvgIcon icon="notice" size="26"/>
-		</el-badge>
-
 		<!-- 发布帖子 -->
 		<div class="publish-post" @click="goToPublishPost">
 			<SvgIcon icon="addFile" size="26"/>
@@ -133,12 +122,6 @@ export default {
 			this.popoverFlag = false;
 		},
 
-		//跳转到消息管理
-		goToNotice() {
-			this.$router.push("/home/personal/notice");
-			this.homeContentType = 'notice';
-		},
-
 		scrolling() {
 			if (this.browserIdentity !== 'MOBILE') {
 				return;
@@ -198,28 +181,6 @@ export default {
 	@media screen and (max-width: 768px) {
 		top: 5px;
 		right: 15px;
-	}
-
-	.notice {
-		height: 32px;
-		aspect-ratio: 1;
-		margin-right: 1rem;
-		cursor: pointer;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-
-		&:hover {
-			animation: tada;
-			animation-duration: 1s;
-		}
-
-		@media screen and (max-width: 768px) {
-			.svg-icon {
-				width: 22px;
-				height: 22px;
-			}
-		}
 	}
 
 	.publish-post {

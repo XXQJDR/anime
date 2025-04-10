@@ -97,14 +97,6 @@
 							<SvgIcon icon="file"/>
 							<div class="title">帖子</div>
 						</div>
-						<div
-								class="submenu-item"
-								:class="{'item-title-active':contentType==='notice'}"
-								@click="changeContentType('notice')"
-						>
-							<SvgIcon icon="notice"/>
-							<div class="title">通知</div>
-						</div>
 					</div>
 				</div>
 			</div>

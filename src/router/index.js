@@ -21,6 +21,8 @@ const PersonalPost = () => import('@/pages/home/personal/post.vue');
 const Community = () => import('@/pages/home/community.vue');
 const PostDetail = () => import('@/pages/postDetail.vue');
 const PublishPost = () => import('@/pages/publishPost.vue');
+const AiSearch = () => import('@/pages/home/ai/search.vue');
+const AiChat = () => import('@/pages/home/ai/chat.vue');
 
 Vue.use(VueRouter);
 
@@ -130,6 +132,20 @@ const routes = [
 				component: PersonalPost,
 				meta: {
 					title: '帖子'
+				}
+			},
+			{
+				path: 'ai/search',
+				component: AiSearch,
+				meta: {
+					title: 'AI识别'
+				}
+			},
+			{
+				path: 'ai/chat',
+				component: AiChat,
+				meta: {
+					title: 'AI对话'
 				}
 			}
 		]

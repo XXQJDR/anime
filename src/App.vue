@@ -123,6 +123,20 @@ html {
 	@media screen and (max-width: 768px) {
 		font-size: 14px;
 	}
+
+	::-webkit-scrollbar {
+		width: 6px;
+		height: 6px;
+	}
+
+	::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	::-webkit-scrollbar-thumb {
+		background: rgba(0, 0, 0, 0.2);
+		border-radius: 3px;
+	}
 }
 
 body {

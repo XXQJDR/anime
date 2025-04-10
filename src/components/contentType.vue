@@ -37,6 +37,14 @@
 			<SvgIcon icon="file"/>
 			<div class="title">帖子</div>
 		</div>
+		<div class="type-title" v-show="homeContentType === 'search'">
+			<SvgIcon icon="aiSearch"/>
+			<div class="title">AI识别</div>
+		</div>
+		<div class="type-title" v-show="homeContentType === 'chat'">
+			<SvgIcon icon="aiChat"/>
+			<div class="title">AI对话</div>
+		</div>
 	</div>
 </template>
 

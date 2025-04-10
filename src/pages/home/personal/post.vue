@@ -22,7 +22,7 @@
 						@click="goToPostDetail(post.id)"
 				>
 					<div class="cover">
-						<img :src="post.cover" alt="" >
+						<img v-lazy="post.cover" alt="" >
 					</div>
 					<div class="info">
 						<div class="content">{{post.content}}</div>

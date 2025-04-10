@@ -48,6 +48,30 @@
 					</div>
 				</div>
 				<div class="menu-item">
+					<div class="menu-item-title">
+						<SvgIcon icon="ai"/>
+						<div class="title">AI</div>
+					</div>
+					<div class="submenu">
+						<div
+								class="submenu-item"
+								:class="{'item-title-active':contentType==='search'}"
+								@click="changeContentType('search')"
+						>
+							<SvgIcon icon="aiSearch"/>
+							<div class="title">识别</div>
+						</div>
+						<div
+								class="submenu-item"
+								:class="{'item-title-active':contentType==='chat'}"
+								@click="changeContentType('chat')"
+						>
+							<SvgIcon icon="aiChat"/>
+							<div class="title">对话</div>
+						</div>
+					</div>
+				</div>
+				<div class="menu-item">
 					<div
 							class="menu-item-title"
 							:class="{'item-title-active':contentType==='community'}"
@@ -170,8 +194,11 @@ export default {
 				case 'panel':
 				case 'info':
 				case 'post':
-				case 'notice':
 					path += 'personal/';
+					break;
+				case 'search':
+				case 'chat':
+					path += 'ai/';
 					break;
 			}
 			path += type;

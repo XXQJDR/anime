@@ -18,9 +18,12 @@
 							<div class="info">{{ anime.name }}</div>
 						</el-tooltip>
 						<div class="control">
-							<button @click="openPopover(anime.animeUserId, index, $event)">
-								<SvgIcon icon="more" color="#ada8a8"/>
-							</button>
+							<SvgIcon
+									icon="more"
+									color="#ada8a8"
+									size="26"
+									@click.native="openPopover(anime.animeUserId, index, $event)"
+							/>
 						</div>
 					</div>
 				</div>
@@ -33,7 +36,7 @@
 		<el-popover
 				:visible-arrow="false"
 				trigger="manual"
-				v-model="animeListPopoverFlag"
+				v-model="reusePopoverFlag"
 				popper-class="dustbin-anime-list-popover"
 		>
 			<ul>
@@ -86,12 +89,12 @@ export default {
 		},
 
 		//复用popover显示标志
-		animeListPopoverFlag: {
+		reusePopoverFlag: {
 			get() {
-				return this.$store.state.animeListPopoverFlag;
+				return this.$store.state.reusePopoverFlag;
 			},
 			set(val) {
-				this.$store.commit('ANIME_LIST_POPOVER_FLAG', val);
+				this.$store.commit('REUSE_POPOVER_FLAG', val);
 			}
 		}
 	},
@@ -122,7 +125,7 @@ export default {
 		 */
 		async recover() {
 			//关闭编辑动漫弹窗及全局遮罩
-			this.animeListPopoverFlag = false;
+			this.reusePopoverFlag = false;
 			this.maskFlag = false;
 
 			let result = await reqRecoverAnime(this.popover.animeUserId);
@@ -142,7 +145,7 @@ export default {
 		 */
 		async thoroughlyRemove() {
 			//关闭编辑动漫弹窗及全局遮罩
-			this.animeListPopoverFlag = false;
+			this.reusePopoverFlag = false;
 			this.maskFlag = false;
 
 			let result = await reqDeleteAnime(this.popover.animeUserId);
@@ -165,7 +168,7 @@ export default {
 			this.popover.animeUserId = animeUserId;
 			this.popover.index = index;
 
-			this.animeListPopoverFlag = true;
+			this.reusePopoverFlag = true;
 			this.maskFlag = true;
 
 			//定位popover的位置
@@ -226,9 +229,14 @@ export default {
 .dustbin {
 	.list-box {
 		margin-top: 1rem;
-		position: relative;
 		@include box-style;
 		@include content-min-height;
+
+		//使空标志居中
+		position: relative;
+
+		//防止加载动画溢出
+		overflow: hidden;
 
 		/* 动漫列表 */
 		.list {
@@ -300,83 +308,40 @@ export default {
 					height: 18%;
 					background-color: #FFFFFF;
 					transition: background-color $transitionTime;
-
-					&::after {
-						content: '';
-						display: block;
-						clear: both;
-					}
+					display: flex;
+					align-items: center;
 
 					.info {
-						width: 85%;
-						height: 100%;
-						float: left;
-						display: flex;
-						flex-direction: column;
-						justify-content: space-evenly;
+						flex: 1;
 						text-align: center;
 						white-space: nowrap;
 						overflow: hidden;
 						text-overflow: ellipsis;
 						padding-left: 5px;
-						box-sizing: border-box;
-
-						@media screen and (max-width: 768px) {
-							width: 80%;
-						}
 					}
 
 					.control {
-						width: 15%;
-						height: 100%;
-						float: right;
-						position: relative;
+						width: 35px;
+						display: flex;
+						justify-content: center;
+						align-items: center;
 
-						@media screen and (max-width: 768px) {
-							width: 20%;
-						}
-
-						button {
-							width: 30px;
-							height: 30px;
+						.svg-icon {
 							border-radius: 50%;
-							position: absolute;
-							top: 50%;
-							left: 50%;
-							transform: translate(-50%, -50%);
 							transition: color, background-color .3s;
+							cursor: pointer;
+							margin-right: 3px;
+							padding: 3px;
 
 							/* 移入文字旁的按钮改变按钮背景色和svg颜色 */
 							&:hover {
 								background-color: #e5e0df;
 								color: #3c3838;
 							}
-
-							@media screen and (max-width: 768px) {
-								width: 35px;
-								height: 35px;
-							}
-
-							svg {
-								position: absolute;
-								top: 0;
-								left: 0;
-								right: 0;
-								bottom: 0;
-								margin: auto;
-							}
 						}
 					}
 				}
 			}
-		}
-
-		.el-empty {
-			padding: 0;
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
 		}
 	}
 }

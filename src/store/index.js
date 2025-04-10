@@ -24,7 +24,7 @@ const state = {
 	maskFlag: false,
 
 	//复用popover显示标志
-	animeListPopoverFlag: false
+	reusePopoverFlag: false
 };
 const actions = {};
 const mutations = {
@@ -46,8 +46,8 @@ const mutations = {
 	MASK_FLAG(state, maskFlag) {
 		state.maskFlag = maskFlag;
 	},
-	ANIME_LIST_POPOVER_FLAG(state, animeListPopoverFlag) {
-		state.animeListPopoverFlag = animeListPopoverFlag;
+	REUSE_POPOVER_FLAG(state, reusePopoverFlag) {
+		state.reusePopoverFlag = reusePopoverFlag;
 	}
 };
 

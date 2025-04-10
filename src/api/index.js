@@ -287,10 +287,11 @@ export const reqPublishPost = (content, coverImageIndex, fileList) => {
  * @param current 当前页
  * @param size 每页展示数量
  * @param keyword 搜索关键词
+ * @param isUser 是否为获取当前用户帖子
  * @returns 分页数据
  */
-export const reqGetPagePost = (current, size, keyword) => {
-	return axios.get(`/posts?current=${current}&size=${size}&keyword=${keyword}`);
+export const reqGetPagePost = (current, size, keyword, isUser = false) => {
+	return axios.get(`/posts?current=${current}&size=${size}&keyword=${keyword}&isUser=${isUser}`);
 }
 
 /**
@@ -403,4 +404,12 @@ export const reqLikeComment = (commentId) => {
  */
 export const reqUnLikeComment = (commentId) => {
 	return axios.delete(`/comments/${commentId}/like`);
+}
+
+/**
+ * 删除帖子
+ * @param postId 帖子id
+ */
+export const reqDeletePost = (postId) => {
+	return axios.delete(`/posts/${postId}`);
 }

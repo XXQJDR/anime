@@ -52,7 +52,7 @@
 			</div>
 
 			<!-- 空标志 -->
-			<el-empty v-if="emptyFlag" description="暂无动漫"/>
+			<el-empty v-if="emptyFlag" description="暂无帖子"/>
 
 			<!-- 滚动加载动画 -->
 			<scroll-animation :loading="scrollLoading"/>
@@ -112,7 +112,7 @@ export default {
 			this.current = 0;
 			let result = await reqGetPagePost(++this.current, this.size, this.keyword);
 			if (result.code !== 200) {
-				this.$message.error(result.message);
+				this.$message.error('获取数据失败！');
 				return;
 			}
 
@@ -131,7 +131,7 @@ export default {
 			this.scrollLoading = true;
 			let result = await reqGetPagePost(++this.current, this.size, this.keyword);
 			if (result.code !== 200) {
-				this.$message.error(result.message);
+				this.$message.error('获取数据失败！');
 				this.scrollLoading = false;
 				return;
 			}
@@ -239,7 +239,11 @@ export default {
 		flex: 1;
 		margin-top: .6rem;
 		@include box-style;
+
+		//使空标志居中
 		position: relative;
+
+		//防止加载动画溢出
 		overflow: hidden;
 
 		/* 帖子列表 */
@@ -318,16 +322,10 @@ export default {
 
 					.content {
 						margin-top: 10px;
-						height: 64px;
-						word-break: break-all;
+						white-space: nowrap;
 						overflow: hidden;
-						display: -webkit-box;
-						-webkit-line-clamp: 3;
-						-webkit-box-orient: vertical;
-
-						@media screen and (max-width: 768px) {
-							height: 50px;
-						}
+						text-overflow: ellipsis;
+						text-align: center;
 					}
 
 					/* 数据 */
@@ -396,14 +394,6 @@ export default {
 					}
 				}
 			}
-		}
-
-		.el-empty {
-			padding: 0;
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
 		}
 	}
 }

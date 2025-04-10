@@ -23,6 +23,8 @@
 					</div>
 				</div>
 			</div>
+
+			<!-- 空标志 -->
 			<el-empty v-if="emptyFlag" description="暂无历程，快去观看吧！"/>
 
 			<!-- 滚动加载动画 -->
@@ -260,10 +262,15 @@ export default {
 
 	.time-line-box {
 		flex: 1;
-		position: relative;
 		margin-top: .6rem;
 		@include box-style;
 		padding: 0 10px;
+
+		//使空标志居中
+		position: relative;
+
+		//防止加载动画溢出
+		overflow: hidden;
 
 		@media screen and (max-width: 768px) {
 			padding: 0 8px;
@@ -395,14 +402,6 @@ export default {
 					}
 				}
 			}
-		}
-
-		.el-empty {
-			padding: 0;
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
 		}
 	}
 }

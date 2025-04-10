@@ -268,6 +268,12 @@ export default {
 		//获取帖子详情
 		async getPostInfo() {
 			let result = await reqGetPostInfo(this.postId);
+
+			if (result.data === null) {
+				await this.$router.push('/404');
+				return;
+			}
+
 			if (result.code !== 200) {
 				this.$message.error('帖子信息获取失败！');
 				return;

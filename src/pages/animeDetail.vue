@@ -80,7 +80,7 @@
 			</el-upload>
 		</div>
 
-		<div class="wonderful-moment-box">
+		<div class="wonderful-moment-box" v-loading="imageLoading">
 			<!-- 瀑布流 -->
 			<div class="wonderful-moment">
 				<wc-waterfall :gap="10" :cols="count">
@@ -176,6 +176,9 @@ export default {
 
 			//滚动加载标志
 			scrollLoading: false,
+
+			//图片数据加载标志
+			imageLoading: true,
 
 			//图片总数
 			imagesTotal: 0,
@@ -400,10 +403,12 @@ export default {
 		//初始化图片数据
 		async getFirstPageWonderfulMoment() {
 			//获取第一页数据
+			this.imageLoading = true;
 			this.current = 1;
 			let result = await reqGetPageAnimeResource(this.current, this.size, this.animeUserId);
 			if (result.code !== 200) {
-				this.$message.error(result.msg);
+				this.$message.error(result.msg)
+				this.imageLoading = false;
 				return;
 			}
 			this.images = result.data.records || []
@@ -416,6 +421,7 @@ export default {
 			} else {
 				this.count = 1;
 			}
+			this.imageLoading = false;
 		},
 
 		//动漫评价
@@ -650,9 +656,16 @@ export default {
 
 	.wonderful-moment-box {
 		width: 95%;
+		min-height: 250px;
 		margin: 0 auto;
 		margin-bottom: 1rem;
 		@include box-style;
+
+		//使空标志居中
+		position: relative;
+
+		//防止加载动画溢出
+		overflow: hidden;
 
 		@media screen and (max-width: 768px) {
 			width: 100%;

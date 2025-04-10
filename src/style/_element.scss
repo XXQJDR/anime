@@ -27,7 +27,7 @@
   }
 
   .el-popover {
-    width: auto !important;
+    min-width: inherit !important;
     border-radius: 10px !important;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
     font-size: 0.9rem !important;
@@ -81,6 +81,14 @@
 
 /* 空状态样式 */
 @mixin empty-style {
+  .el-empty {
+    padding: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
   .el-empty .el-empty__description p {
     font-size: 1rem !important;
   }

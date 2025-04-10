@@ -58,12 +58,12 @@ export default {
 		},
 
 		//复用popover显示标志
-		animeListPopoverFlag: {
+		reusePopoverFlag: {
 			get() {
-				return this.$store.state.animeListPopoverFlag;
+				return this.$store.state.reusePopoverFlag;
 			},
 			set(val) {
-				this.$store.commit('ANIME_LIST_POPOVER_FLAG', val);
+				this.$store.commit('REUSE_POPOVER_FLAG', val);
 			}
 		}
 	},
@@ -85,7 +85,7 @@ export default {
 			this.maskFlag = false;
 
 			//关闭复用popover
-			this.animeListPopoverFlag = false;
+			this.reusePopoverFlag = false;
 
 			//如果遮罩关闭，则重置侧边栏的z-index，防止侧边栏置于全局遮罩上
 			let sidebar = document.querySelector('.sidebar');

@@ -260,7 +260,7 @@
 				<h2>UH OH! 页面丢失</h2>
 				<p>您所寻找的页面不存在。你可以点击下面的按钮，返回主页。
 				</p>
-				<button class="btn green" @click="$router.push('/home')">返回首页</button>
+				<button class="btn green" @click="goToHome">返回首页</button>
 			</div>
 		</div>
 	</div>
@@ -359,6 +359,13 @@ export default {
 			repeatDelay: 8,
 			delay: 2
 		});
+	},
+	methods: {
+		goToHome() {
+			this.$router.push('/home').then(() => {
+				location.reload();
+			});
+		}
 	}
 }
 </script>

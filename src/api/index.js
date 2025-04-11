@@ -413,3 +413,11 @@ export const reqUnLikeComment = (commentId) => {
 export const reqDeletePost = (postId) => {
 	return axios.delete(`/posts/${postId}`);
 }
+
+/**
+ * 获取用户面板数据
+ * @returns panelData
+ */
+export const reqGetUserPanelData = () => {
+	return axios.get('/users/panel');
+}

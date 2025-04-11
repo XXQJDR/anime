@@ -2,53 +2,75 @@
 	<div class="personal-panel">
 		<div class="box">
 			<div class="item">
-				<div class="title">作品</div>
-				<div class="count">11</div>
-			</div>
-			<div class="item">
-				<div class="title">评论</div>
-				<div class="count">8</div>
-			</div>
-			<div class="item">
-				<div class="title">点赞</div>
-				<div class="count">20</div>
-			</div>
-			<div class="item">
-				<div class="title">关注</div>
-				<div class="count">5</div>
-			</div>
-			<div class="item">
-				<div class="title">收藏</div>
-				<div class="count">110</div>
-			</div>
-			<div class="item">
-				<div class="title">粉丝</div>
-				<div class="count">24</div>
-			</div>
-			<div class="item">
 				<div class="title">动漫总数</div>
-				<div class="count">21</div>
+				<div class="count">{{ panelData.animeCount }}</div>
 			</div>
 			<div class="item">
 				<div class="title">已观看</div>
-				<div class="count">22</div>
+				<div class="count">{{ panelData.watchedCount }}</div>
 			</div>
 			<div class="item">
 				<div class="title">未观看</div>
-				<div class="count">23</div>
+				<div class="count">{{ panelData.noWatchCount }}</div>
+			</div>
+			<div class="item">
+				<div class="title">帖子</div>
+				<div class="count">{{ panelData.postCount }}</div>
+			</div>
+			<div class="item">
+				<div class="title">关注</div>
+				<div class="count">{{ panelData.followCount }}</div>
+			</div>
+			<div class="item">
+				<div class="title">粉丝</div>
+				<div class="count">{{ panelData.fanCount }}</div>
+			</div>
+			<div class="item">
+				<div class="title">评论</div>
+				<div class="count">{{ panelData.commentCount }}</div>
+			</div>
+			<div class="item">
+				<div class="title">点赞</div>
+				<div class="count">{{ panelData.likeCount }}</div>
+			</div>
+			<div class="item">
+				<div class="title">收藏</div>
+				<div class="count">{{ panelData.favoriteCount }}</div>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+import {reqGetUserPanelData} from "@/api";
+
 export default {
-	name: 'PersonalPanel'
+	name: 'PersonalPanel',
+	data() {
+		return {
+			panelData: {}
+		}
+	},
+	methods: {
+		async getUserPanelData() {
+			let result = await reqGetUserPanelData();
+			if (result.code !== 200) {
+				this.$message.error('获取数据失败！');
+				return;
+			}
+
+			this.panelData = result.data;
+		}
+	},
+	created() {
+		this.getUserPanelData();
+	}
 }
 </script>
 
 <style scoped lang="scss">
 @import "@/style/common";
+
 .personal-panel {
 	margin-top: 1rem;
 	display: flex;

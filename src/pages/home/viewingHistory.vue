@@ -8,7 +8,7 @@
 				<div class="item" v-for="anime in animeList" :key="anime.animeUserId">
 					<div class="content">
 						<div class="anime" @click="goAnimeDetail(anime.animeUserId)">
-							<div class="time">{{ anime.finishedDate }}</div>
+							<div class="time" v-text="formatDate(anime.finishedDate)"></div>
 							<img class="cover" v-lazy="anime.cover" :alt="anime.name">
 							<div class="rate">
 								<el-rate
@@ -201,6 +201,15 @@ export default {
 
 			//监听窗口大小变化，重新渲染饼图
 			window.addEventListener('resize', this.chartHandleResize);
+		},
+
+		//格式化时间
+		formatDate(date) {
+			let d = new Date(date);
+			let year = d.getFullYear();
+			let month = (d.getMonth() + 1).toString().padStart(2, '0');
+			let day = d.getDate().toString().padStart(2, '0');
+			return `${year}年${month}月${day}日`;
 		}
 	},
 	created() {

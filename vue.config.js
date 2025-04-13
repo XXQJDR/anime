@@ -17,7 +17,10 @@ module.exports = defineConfig({
 			'/api': {
 				target: 'http://localhost:8080'
 			}
-		}
+		},
+
+		//配合流式响应
+		compress: false
 	},
 	chainWebpack(config) {
 		//设置svg

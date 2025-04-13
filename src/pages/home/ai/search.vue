@@ -401,8 +401,8 @@ export default {
 				gap: 8px;
 
 				.genre-tag {
-					background-color: #e0f2f1;
-					color: #00796b;
+					background-color: #eae7ff;
+					color: #2b0aff;
 					padding: 4px 10px;
 					border-radius: 20px;
 					font-size: 14px;

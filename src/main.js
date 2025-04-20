@@ -11,7 +11,7 @@ Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.use(VueLazyLoad, {
 	error: require('@/assets/images/error/image-load-error.webp'),
-	scrollLoading: require('@/assets/images/loading/image-loading.gif'),
+	loading: require('@/assets/images/loading/image-loading.gif'),
 	attempt: 1,
 	preLoad: 1.3
 });

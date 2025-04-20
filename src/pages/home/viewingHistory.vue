@@ -9,7 +9,9 @@
 					<div class="content">
 						<div class="anime" @click="goAnimeDetail(anime.animeUserId)">
 							<div class="time" v-text="formatDate(anime.finishedDate)"></div>
-							<img class="cover" v-lazy="anime.cover" :alt="anime.name">
+							<div class="cover">
+								<img v-lazy="anime.cover" :alt="anime.name">
+							</div>
 							<div class="rate">
 								<el-rate
 										:value="anime.score"
@@ -386,12 +388,22 @@ export default {
 						}
 
 						.cover {
+							width: 144px;
 							height: 200px;
 							border-radius: 5px;
 							overflow: hidden;
+							margin: 0 auto;
 
 							@media screen and (max-width: 768px) {
+								width: 108px;
 								height: 150px;
+							}
+
+							img {
+								width: 100%;
+								height: 100%;
+								object-fit: cover;
+								display: block;
 							}
 						}
 

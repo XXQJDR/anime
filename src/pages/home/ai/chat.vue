@@ -15,7 +15,7 @@
 					>
 					<img
 							v-else
-							src="http://192.168.52.130:9000/anime/avatar/defaultAvatar.svg"
+							:src="aiAvatar"
 							alt="AI助手"
 					>
 				</div>
@@ -77,6 +77,7 @@ export default {
 			msg: '',
 			model: 'DeepSeek-R1',
 			eventSource: null,
+			aiAvatar: process.env.VUE_APP_AI_AVATAR_URL,
 			messages: JSON.parse(localStorage.getItem('messages')) ||
 					[{role: 'ai', content: '您好！我是AI助手，有什么可以帮您的吗？', name: 'DeepSeek-R1'}]
 		}

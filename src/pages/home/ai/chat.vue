@@ -28,7 +28,7 @@
 			<!-- 加载状态 -->
 			<div v-if="isLoading" class="message ai">
 				<div class="avatar">
-					<img src="http://192.168.52.130:9000/anime/avatar/defaultAvatar.svg" alt="AI助手">
+					<img :src="aiAvatar" alt="AI助手">
 				</div>
 				<div class="content">
 					<div class="loading-dots">

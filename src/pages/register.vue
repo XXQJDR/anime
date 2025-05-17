@@ -145,7 +145,7 @@ export default {
 					let result = await reqRegister(this.formData.username, this.formData.password, this.formData.email, this.formData.checkCode);
 					this.$message({
 						type: result.code === 200 ? 'success' : 'error',
-						message: result.code === 200 ? '注册成功！' : '注册失败！'
+						message: result.code === 200 ? '注册成功！' : result.msg
 					});
 
 					//关闭加载动画

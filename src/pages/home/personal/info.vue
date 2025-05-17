@@ -182,7 +182,7 @@ export default {
 		async changeBasicInfo() {
 			let result = await reqUpdateUserInfo(this.username);
 			if (result.code !== 200) {
-				this.$message.error("修改失败！");
+				this.$message.error(result.msg);
 				return;
 			}
 

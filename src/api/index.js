@@ -190,15 +190,15 @@ export const reqUpload = (animeUserId, fileList) => {
 
 /**
  * 删除动漫资源
- * @param id
+ * @param resourceId
  * @param current 当前页
  * @param size 每页展示数量
  * @returns 当前页最后一条数据
  */
-export const reqDeleteAnimeResource = (id, current, size) => {
+export const reqDeleteAnimeResource = (resourceId, current, size) => {
 	return axios({
 		method: 'DELETE',
-		url: `/animeResources/${id}`,
+		url: `/anime/${resourceId}/resources`,
 		params: {current, size}
 	});
 }
@@ -347,7 +347,11 @@ export const reqGetPostComments = (postId) => {
  * @param postId 帖子id
  */
 export const reqLikePost = (postId) => {
-	return axios.post(`/posts/${postId}/like`);
+	return axios({
+		method: 'PUT',
+		url: `/posts/${postId}/like`,
+		params: {isLike: true}
+	});
 }
 
 /**
@@ -355,7 +359,11 @@ export const reqLikePost = (postId) => {
  * @param postId 帖子id
  */
 export const reqUnLikePost = (postId) => {
-	return axios.delete(`/posts/${postId}/like`);
+	return axios({
+		method: 'PUT',
+		url: `/posts/${postId}/like`,
+		params: {isLike: false}
+	});
 }
 
 /**
@@ -363,7 +371,11 @@ export const reqUnLikePost = (postId) => {
  * @param postId 帖子id
  */
 export const reqFavoritePost = (postId) => {
-	return axios.post(`/posts/${postId}/favorite`);
+	return axios({
+		method: 'PUT',
+		url: `/posts/${postId}/favorite`,
+		params: {isFavorite: true}
+	});
 }
 
 /**
@@ -371,7 +383,11 @@ export const reqFavoritePost = (postId) => {
  * @param postId 帖子id
  */
 export const reqUnFavoritePost = (postId) => {
-	return axios.delete(`/posts/${postId}/favorite`);
+	return axios({
+		method: 'PUT',
+		url: `/posts/${postId}/favorite`,
+		params: {isFavorite: false}
+	});
 }
 
 /**
@@ -379,7 +395,11 @@ export const reqUnFavoritePost = (postId) => {
  * @param followUserId 被关注用户id
  */
 export const reqFollowUser = (followUserId) => {
-	return axios.post(`/posts/follow/${followUserId}`);
+	return axios({
+		method: 'PUT',
+		url: `/users/${followUserId}/follow`,
+		params: {isFollow: true}
+	});
 }
 
 /**
@@ -387,7 +407,11 @@ export const reqFollowUser = (followUserId) => {
  * @param followUserId 被关注用户id
  */
 export const reqUnFollowUser = (followUserId) => {
-	return axios.delete(`/posts/follow/${followUserId}`);
+	return axios({
+		method: 'PUT',
+		url: `/users/${followUserId}/follow`,
+		params: {isFollow: false}
+	});
 }
 
 /**
@@ -395,7 +419,11 @@ export const reqUnFollowUser = (followUserId) => {
  * @param commentId 评论id
  */
 export const reqLikeComment = (commentId) => {
-	return axios.post(`/comments/${commentId}/like`);
+	return axios({
+		method: 'PUT',
+		url: `/posts/comments/${commentId}/like`,
+		params: {isLike: true}
+	});
 }
 
 /**
@@ -403,7 +431,11 @@ export const reqLikeComment = (commentId) => {
  * @param commentId 评论id
  */
 export const reqUnLikeComment = (commentId) => {
-	return axios.delete(`/comments/${commentId}/like`);
+	return axios({
+		method: 'PUT',
+		url: `/posts/comments/${commentId}/like`,
+		params: {isLike: false}
+	});
 }
 
 /**
